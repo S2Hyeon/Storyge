@@ -1,0 +1,13 @@
+## 1차 DB 설계
+    - Table
+        - user : user의 정보를 저장
+        - follow : user끼리의 follow 관계를 저장
+        - limit_amount : user가 쓸 수 있는 diary와 trash의 개수를 제한
+        - diary : user가 작성하는 diary를 저장
+        - emotion : 감정을 나타내는 이모티콘의 url을 저장
+        - ai_emotion : 자연어 처리 기반으로 AI가 추천해준 감정을 저장 => 다시 생각해봐야함
+        - theme : user의 감정에 따라 나타낼 테마 저장
+        - diary_emotion : user가 작성한 각 diary에 대한 감정 이모티콘을 저장
+        - quote : 한줄 글귀 저장
+        - trash : 감정 쓰레기 통으로 user가 작성한 감정 종이 저장
+        - following_diary : following의 diary가 업데이트 되면 정보를 알려주기 위한 테이블

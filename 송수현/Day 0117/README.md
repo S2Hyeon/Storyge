@@ -3,6 +3,7 @@
 ## To Do List
 :white_check_mark: 유튜브 라이브 강의 : Front-End 개발 시작해보기 : React 및 2주차 News <br/>
 :white_check_mark: 로드밸런서 <br/>
+:white_check_mark: 스토리보드 초안 작성 <br/>
 
 --------
 ## React 및 2주차 News
@@ -38,6 +39,6 @@
     - 최소 연결 방식
     - 가중 라운드로빈 방식
 
-
-
-
+--------
+## 스토리보드 초안 작성
+![스토리보드](./story1.png)

@@ -4,7 +4,7 @@ export const Nav = styled.div`
   position: fixed;
   bottom: 0;
   display: flex;
-  height: 66px;
+  height: 70px;
   width: 100%;
   background: #ffffff;
   box-shadow: 0px 2px 15px rgba(184, 184, 210, 0.5);
@@ -27,4 +27,5 @@ export const CenterCircle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 `;

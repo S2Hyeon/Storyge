@@ -8,9 +8,14 @@ export default function Intro() {
         movePage('/login');
     }
 
+    function gologininfo() {
+        movePage('/logininfo')
+    }
+
     return (
         <div>
             <button onClick={gologin}>로그인으로이동</button>
+            <button onClick={gologininfo}>로그인 추가 정보 입력으로이동</button>
         </div>
     );
 }

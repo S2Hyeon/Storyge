@@ -5,3 +5,6 @@ react-social-login-buttons
 
 react-router-dom 사용 환경 준비
 `npm install react-router-dom`
+
+
+npm install --save react-image-upload --force

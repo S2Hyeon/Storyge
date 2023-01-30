@@ -1,17 +1,25 @@
-import React from 'react';
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Intro() {
-    const movePage = useNavigate();
+  const movePage = useNavigate();
 
-    function gologin(){
-        movePage('/login');
-    }
+  function gologin() {
+    movePage("/login");
+  }
 
-    return (
-        <div>
-            <button onClick={gologin}>로그인으로이동</button>
-        </div>
-    );
+  function goMain() {
+    movePage("/main");
+  }
+
+  return (
+    <>
+      <div>
+        <button onClick={gologin}>로그인으로이동</button>
+      </div>
+      <div>
+        <button onClick={goMain}>메인으로이동</button>
+      </div>
+    </>
+  );
 }
-

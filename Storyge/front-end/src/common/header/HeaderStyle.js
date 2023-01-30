@@ -8,6 +8,7 @@ export const Header = styled.div`
   display: flex;
   justify-contents: center;
   align-items: center;
+  font-family: "S-CoreDream-6Bold";
 `;
 
 export const Img = styled.img`

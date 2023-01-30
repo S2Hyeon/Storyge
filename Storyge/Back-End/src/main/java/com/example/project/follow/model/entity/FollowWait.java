@@ -1,5 +1,6 @@
 package com.example.project.follow.model.entity;
 
+import com.example.project.user.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,12 +19,12 @@ public class FollowWait {
     @Column(name = "waiting_id")
     private Long waitingId;
 
-//    @ManyToOne
-//    @JoinColumn(name="user_id")
-//    private User following;
-//
-//    @ManyToOne
-//    @JoinColumn(name="user_id")
-//    private User userId;
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User following;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User userId;
 
 }

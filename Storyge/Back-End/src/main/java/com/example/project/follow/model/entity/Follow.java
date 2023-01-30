@@ -1,5 +1,6 @@
 package com.example.project.follow.model.entity;
 
+import com.example.project.user.model.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,13 +17,13 @@ public class Follow {
     @Column(name = "follow_id")
     private Long followId;
 
-//    @ManyToOne
-//    @JoinColumn(name="user_id")
-//    private User following;
-//
-//    @ManyToOne
-//    @JoinColumn(name="user_id")
-//    private User follower;
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User following;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User follower;
 
 
 }

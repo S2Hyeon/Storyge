@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/1_login/Login';
 import LoginInfo from './pages/1_login/LoginInfo';
 import Intro from './pages/0_intro/Intro';
+import Music from './pages/8_music/Music';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route path="/" element={<Intro />} />
             <Route path="login" element={<Login />} />
             <Route path="logininfo" element={<LoginInfo />} />
+            <Route path="music" element={ <Music /> } />
           </Routes>
       </BrowserRouter>
     </div>

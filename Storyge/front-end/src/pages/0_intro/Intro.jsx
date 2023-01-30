@@ -12,10 +12,15 @@ export default function Intro() {
         movePage('/logininfo')
     }
 
+    function gomusic() {
+        movePage('/music')
+    }
+
     return (
         <div>
-            <button onClick={gologin}>로그인으로이동</button>
-            <button onClick={gologininfo}>로그인 추가 정보 입력으로이동</button>
+            <button onClick={gologin}>로그인으로 이동</button>
+            <button onClick={gologininfo}>로그인 추가 정보 입력으로 이동</button>
+            <button onClick={gomusic}>음악 추천으로 이동</button>
         </div>
     );
 }

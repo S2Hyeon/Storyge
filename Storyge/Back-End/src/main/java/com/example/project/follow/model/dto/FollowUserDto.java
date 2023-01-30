@@ -15,4 +15,5 @@ public class FollowUserDto {
     private Long followId;
     private Long following;
     private Long follower;
+
 }

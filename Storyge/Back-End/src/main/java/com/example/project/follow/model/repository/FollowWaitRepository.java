@@ -6,6 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FollowWaitRepository extends JpaRepository<FollowWait, Long> {
 
-    FollowWait findByFollowingAndUserId(Long following, Long userId);
 
 }

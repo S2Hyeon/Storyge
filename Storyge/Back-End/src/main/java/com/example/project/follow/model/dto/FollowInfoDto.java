@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FollowUserDto {
+public class FollowInfoDto {
 
     private Long followId;
     private Long following;

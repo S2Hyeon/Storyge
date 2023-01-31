@@ -24,8 +24,8 @@ export const Profile = styled.div`
   width: 60px;
   border-radius: 100px;
   flex-direction: column;
-  margin-left: 5px;
-  margin-right: 5px;
+  // margin-left: 5px;
+  // margin-right: 5px;
   // flex: 0 0 auto;
   background-color: black;
 `;
@@ -33,20 +33,56 @@ export const Profile = styled.div`
 export const Container = styled.div`
   padding-left: 20px;
   padding-right: 20px;
-  // background-color: #eaf2ea;
 `;
 
 export const CalendarContainer = styled.div`
   width: 100%;
-  min-height: 392px;
-  background: 
+  margin: 20px 0 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const CalendarBox = styled.div`
+  width: 100%;
+  min-height: 390px;
+  background: var(--color-white);
+  box-shadow: 0px 16px 40px -4px rgba(112, 144, 176, 0.2);
+  border-radius: 12px;
+`;
+
+export const CalendarToggle = styled.div`
+  width: 100%;
+  font-family: "S-CoreDream-5Medium";
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+`;
+
+export const ToggleOne = styled.div`
+  margin: 0 5px;
 `;
 
 export const WiseBox = styled.div`
   width: 100%;
   height: 108px;
-  background: #ffffff;
+  background: var(--color-white);
   box-shadow: 0px 16px 40px -4px rgba(112, 144, 176, 0.2);
   border-radius: 12px;
-  margin: 20px 0 20px 0;
+  margin: 10px 0;
+  font-family: "SeoulHangangM";
+  font-size: 12px;
+`;
+
+export const Wise = styled.div`
+  padding-top: 25px;
+  line-height: 130%;
+`;
+
+export const WiseFrom = styled.div`
+  color: #b8b8d2;
+  padding-top: 10px;
 `;

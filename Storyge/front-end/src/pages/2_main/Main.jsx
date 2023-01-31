@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import Nav from "../../common/footer/Nav";
 import Header from "../../common/header/Header";
 import * as S from "./MainStyle";
 import newDiaryData from "./NewDiaryData";
+import { BsCircleFill } from "react-icons/bs";
 
 function Main() {
+  let [diary, setDiary] = useState(true);
+  let [statistic, setStatistic] = useState(false);
+
+  function switchDiary() {
+    setDiary(true);
+    setStatistic(false);
+  }
+
+  function switchStatistic() {
+    setDiary(false);
+    setStatistic(true);
+  }
+
   return (
     <S.All>
       <Header />
@@ -15,13 +29,50 @@ function Main() {
         })}
       </S.NewDiary>
       <S.Container>
+        <S.CalendarContainer>
+          <S.CalendarBox></S.CalendarBox>
+          <S.CalendarToggle>
+            <S.ToggleOne onClick={() => switchDiary()}>
+              <BsCircleFill
+                size={7}
+                color={diary ? "var(--color-primary)" : "var(--color-darkgrey)"}
+              />
+              <span
+                style={{
+                  color: diary ? "var(--color-black)" : "var(--color-darkgrey)",
+                }}
+              >
+                {" "}
+                다이어리
+              </span>
+            </S.ToggleOne>
+            <S.ToggleOne onClick={() => switchStatistic()}>
+              <BsCircleFill
+                size={7}
+                color={
+                  statistic ? "var(--color-primary)" : "var(--color-darkgrey)"
+                }
+              />
+              <span
+                style={{
+                  color: statistic
+                    ? "var(--color-black)"
+                    : "var(--color-darkgrey)",
+                }}
+              >
+                {" "}
+                통계
+              </span>
+            </S.ToggleOne>
+          </S.CalendarToggle>
+        </S.CalendarContainer>
         <S.WiseBox>
-          <div>
+          <S.Wise>
             우리가 출발한 곳은 선택할 수 없지만,
             <br />
             그곳에서 어딜 향해 갈지는 선택할 수 있어.
-          </div>
-          <div>영화 &lt;월 플라워&gt; 중</div>
+          </S.Wise>
+          <S.WiseFrom>영화 &lt;월 플라워&gt; 중</S.WiseFrom>
         </S.WiseBox>
       </S.Container>
 

@@ -1,30 +1,25 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import Header from './../../common/header/Header';
+import Nav from './../../common/footer/Nav';
+import './../8_music/Music.css'
+import { useNavigate } from "react-router-dom";
+
 
 export default function Music() {
+  const movePage = useNavigate();
+
+  function gomusicresult() {
+    movePage("/musicresult");
+  }
   return (
     <div>
-      <h1>Music</h1>
-      <Box
-      component="form"
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField
-          id="outlined-multiline-static"
-          label="Multiline"
-          multiline
-          rows={10}
-          defaultValue="사연을 작성해주세요."
-        />
-    </Box>
-      
-
-
+      <Header />
+      <div className="rectangle">
+        <textarea></textarea>
+      </div>
+      <button className='registeBtn' onClick={gomusicresult}>버튼</button>
+      <h3>애니메이션 추가</h3>
+      <Nav />
     </div>
   );
 }

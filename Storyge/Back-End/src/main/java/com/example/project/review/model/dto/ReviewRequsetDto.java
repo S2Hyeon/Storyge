@@ -11,12 +11,12 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReviewDto {
+public class ReviewRequsetDto {
 
-    Long ReviewId;
+    Long reviewId;
     Long userId;
     Long diaryId;
     String reviewContent;
-    LocalDateTime createdAt;
+//    LocalDateTime createdAt;
 
 }

@@ -22,11 +22,11 @@ public interface FollowService {
     //팔로워 목록
     List<UserDto> selectAllFollower(UserDto userId);
     //팔로우 대기 삭제
-    void deleteFollowWait(UserDto waitId);
+    void deleteFollowWait(UserDto wait);
     //팔로잉 삭제
-    void deleteFollowing(UserDto followId);
+    void deleteFollowing(UserDto follow);
     //팔로우 삭제
-    void deleteFollower(UserDto followId);
+    void deleteFollower(UserDto follow);
 
 
 }

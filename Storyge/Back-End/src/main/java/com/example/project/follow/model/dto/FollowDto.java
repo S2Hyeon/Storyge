@@ -15,5 +15,6 @@ public class FollowDto {
     private UserDto userDto;
     private Boolean isFollowing;
     private Boolean isFollower;
+    private Boolean isWaiting;
 
 }

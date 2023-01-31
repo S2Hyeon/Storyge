@@ -1,5 +1,6 @@
 package com.example.project.follow.model.service;
 
+import com.example.project.follow.model.dto.UserIdDto;
 import com.example.project.follow.model.entity.Follow;
 import com.example.project.follow.model.entity.FollowWait;
 import com.example.project.follow.model.repository.FollowRepository;
@@ -24,28 +25,38 @@ public class FollowServiceImpl implements FollowService {
     private final FollowWaitRepository followWaitRepository;
     private final UserRepository userRepository;
 
+    // 팔로우 대기 신청
     @Override
-    public void insertFollowWait(UserDto userDto) {
+    public void insertFollowWait(UserIdDto following) {
         User currentUser = null;
-//        User following = userRepository.getOne(userDto.getUserId());
+        Optional<User> followingUser = userRepository.findById(following.getUserId());
+
         followWaitRepository.save(FollowWait.builder()
                 .userId(currentUser)
-//                .following(following)
+                .following(followingUser.get())
                 .build());
     }
 
+    // 팔로우 수락
     @Override
-    public void insertFollower(UserDto userDto) {
+    public void insertFollower(UserIdDto follower) {
         User currentUser = null;
+        Optional<User> followerUser = userRepository.findById(follower.getUserId());
+
+        // 대기 상태에서 삭제
+        followWaitRepository.deleteByFollowingAndUserId(currentUser.getUserId(), followerUser.get().getUserId());
+
 //        User following = userRepository.getOne(userDto.getUserId());
 
+        // follow table에 insert (팔로우 수락)
         followRepository.save(Follow.builder()
-//                .following(currentUser.getUserId())
-//                .follower(following)
+                .following(currentUser)
+                .follower(followerUser.get())
                 .build());
 
     }
 
+    // 팔로우 대기 목록
     @Override
     public List<UserDto> selectAllFollowWait() {
 
@@ -104,6 +115,7 @@ public class FollowServiceImpl implements FollowService {
         return followerUserDtoList;
     }
 
+    //팔로우 거절(대기 상태 삭제)
     @Override
     public void deleteFollowWait(UserDto wait) {
         long currentUserId = (long)0; //나

@@ -1,6 +1,7 @@
 package com.example.project.follow.model.service;
 
 import com.example.project.follow.model.dto.FollowDto;
+import com.example.project.follow.model.dto.UserIdDto;
 import com.example.project.follow.model.entity.Follow;
 import com.example.project.follow.model.entity.FollowWait;
 import com.example.project.user.model.dto.UserDto;
@@ -11,9 +12,9 @@ import java.util.List;
 public interface FollowService {
 
     //follow 대기(following 신청)
-    void insertFollowWait(UserDto following);
+    void insertFollowWait(UserIdDto following);
     // follow 등록(follower 수락)
-    void insertFollower(UserDto userDto);
+    void insertFollower(UserIdDto follower);
 
     // 팔로우 대기 목록
     List<UserDto> selectAllFollowWait();

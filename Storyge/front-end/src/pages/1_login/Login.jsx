@@ -1,19 +1,31 @@
 import React from 'react';
-import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
-import KakaologinBtn from '../../components/button/KakaologinBtn';
+import '../1_login/login.css'
+import { AiFillFacebook } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
+import { RiKakaoTalkFill } from "react-icons/ri";
 
 export default function Login() {
+
     return (
+        
         <div className='login'>
             <h1>Login</h1>
-            <FacebookLoginButton onClick={() => alert("Hello")}>
-                <span>Facebook Login</span>
-            </FacebookLoginButton>
-            <GoogleLoginButton onClick={() => alert("Hello")}>
-                <span>Google Login</span>
-            </GoogleLoginButton>
-            <KakaologinBtn onClick={() => alert("Hello")}>
-            </KakaologinBtn>
+            <button className='login__btn__facebook' onClick={() => alert("facebook")}>
+                <a href="#1">
+                    <AiFillFacebook />
+                    Facebook Login
+                </a>
+            </button>
+
+            <button className='login__btn__google' onClick={() => alert("google")}>
+                <FcGoogle />
+                Google Login
+            </button>
+
+            <button className='login__btn__kakao' onClick={() => alert("kakao")}>
+                <RiKakaoTalkFill />
+                Kakao Login
+            </button>
         </div>
     );
 }

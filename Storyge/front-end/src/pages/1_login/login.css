@@ -1,0 +1,50 @@
+:root {
+  /* Color */
+  --color-facebook: #3B5998;
+  --color-google: #ffffff;
+  --color-kakao: #FFEB00;
+
+  /* Size */
+  --size-border-radius: 15px;
+  --size-border-thickness: 1px;
+
+  /* Font size */
+  --font-large: 48px;
+  --font-medium: 28px;
+  --font-regular: 18px;
+  --font-small: 16px;
+  --font-micro: 14px;
+  
+  /* Font weight */
+  --weight-bold: 700;
+  --weight-semi-bold: 600;
+  --weight-regular: 400;
+  
+  /* Annimation */
+  --animation-duration: 400ms;
+}
+
+button {
+  width: 250px;
+  height: 40px;
+  border-radius: var(--size-border-radius);
+  border: var(--size-border-thickness);
+}
+
+button:hover {
+  filter: brightness(0.8);
+  transition: var(--animation-duration);
+}
+
+.login__btn__facebook {
+  background-color: var(--color-facebook);
+  color: white;
+}
+
+.login__btn__google {
+  background-color: var(--color-google);
+}
+
+.login__btn__kakao {
+  background-color: var(--color-kakao);
+}

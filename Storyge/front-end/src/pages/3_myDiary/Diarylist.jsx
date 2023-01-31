@@ -6,7 +6,7 @@ import Header from "../../common/header/Header";
 import Nav from "../../common/footer/Nav";
 import * as S from "./MyDiaryStyle";
 
-export default function Creatediary() {
+export default function Diarylist() {
   const navigate = useNavigate();
   const contentRef = useRef();
   const [content, setContent] = useState("");

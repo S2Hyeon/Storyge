@@ -19,7 +19,7 @@ export default function Intro() {
     movePage("/createDiary");
   }
   function goMain() {
-    movePage("/main");
+    movePage("/");
   }
 
   return (

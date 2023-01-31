@@ -1,7 +1,6 @@
 import React from 'react';
 import ImageUploader from 'react-image-upload'
 import 'react-image-upload/dist/index.css'
-import './../../pages/1_login/login.css'
 
 export default function ProfileBox() {
     function getImageFileObject(imageFile) {

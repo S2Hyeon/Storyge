@@ -1,6 +1,6 @@
 import React from "react";
 import ProfileBox from "./../../components/profileBox/ProfileBox";
-import "../1_login/login.css";
+import "../1_login/Login.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import RegisterBtn from "./../../components/button/RegisterBtn";

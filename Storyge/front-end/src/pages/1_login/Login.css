@@ -23,6 +23,12 @@
   /* Annimation */
   --animation-duration: 400ms;
 }
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
 
 .login {
   display: flex;
@@ -31,7 +37,11 @@
   justify-content: space-between;
 }
 
-a {
+.login button {
+  margin: 15%;
+}
+
+button {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -40,7 +50,6 @@ a {
   text-decoration: none;
   border-radius: var(--size-border-radius);
   border: var(--size-border-thickness) solid black;
-  margin: 5%;
   font-size: var(--font-regular);
   color: black;
   flex-grow: 1 2;
@@ -62,8 +71,4 @@ button:hover {
 
 .login__btn__kakao {
   background-color: var(--color-kakao);
-}
-
-.icon {
-  font-weight: 100px;
 }

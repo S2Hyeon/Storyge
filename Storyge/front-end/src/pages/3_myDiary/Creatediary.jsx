@@ -2,6 +2,9 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Clock from "react-live-clock";
 import Modal from "./Modal";
+import Header from "../../common/header/Header";
+import Nav from "../../common/footer/Nav";
+import * as S from "./MyDiaryStyle";
 
 export default function Creatediary() {
   const navigate = useNavigate();
@@ -29,24 +32,35 @@ export default function Creatediary() {
   }
 
   return (
-    <div className="createDiary">
-      <h1>일기 작성 페이지</h1>
-      <Clock format={"작성날짜 YYYY.MM.DD 작성시간 HH:mm"} ticking={true} />
-      <hr />
-      <textarea
-        placeholder="대충 멋진 문구로 글쓰기를 자극하라"
-        ref={contentRef}
-        value={content}
-        onChange={onChange}
-      />
-      <div>{content.length} / 100</div>
-      <div>
-        <button onClick={() => navigate(-1)}>일단 뒤로가기 버튼</button>
+    <>
+      <Header />
+      <S.Mother>
+        <h1>일기 작성 페이지</h1>
+        <Clock format={"작성날짜 YYYY.MM.DD 작성시간 HH:mm"} ticking={true} />
+        <hr />
+        <S.Card>
+          <S.TextBox
+            placeholder="대충 멋진 문구로 글쓰기를 자극하라"
+            ref={contentRef}
+            value={content}
+            onChange={onChange}
+          />
+          <S.CardFoot>
+            <div>{content.length} / 100</div>
+            <button>버튼</button>
+          </S.CardFoot>
+        </S.Card>
         <div>
-          <button onClick={isWritten}>감정분석하기 버튼</button>
-          {modalOpen && <Modal />}
+          <div>
+            <S.BtnPositive onClick={isWritten}>감정분석하기 버튼</S.BtnPositive>
+          </div>
+          <S.BtnNegative onClick={() => navigate(-1)}>
+            일단 뒤로가기 버튼
+          </S.BtnNegative>
         </div>
-      </div>
-    </div>
+      </S.Mother>
+      <Nav />
+      {modalOpen && <Modal setModalOpen={setModalOpen} />}
+    </>
   );
 }

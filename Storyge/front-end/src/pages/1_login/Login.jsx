@@ -10,20 +10,20 @@ export default function Login() {
             <div className='login'>
                 <h1>Login</h1>
 
-                <a href="#!" className='login__btn__google' onClick={() => alert("google")}>
+                <button href="#!" className='login__btn__google' onClick={() => alert("google")}>
                     <FcGoogle className='icon'/>
-                    Google Login
-                </a>
+                    <div>Google Login</div>
+                </button>
 
-                <a href="#!" className='login__btn__kakao' type="button" onClick={() => alert("kakao")}>
+                <button href="#!" className='login__btn__kakao' type="button" onClick={() => alert("kakao")}>
                     <RiKakaoTalkFill className='icon'/>
-                    Kakao Login
-                </a>
+                    <div>Kakao Login</div>
+                </button>
                 
-                <a href="#!" className='login__btn__facebook' type="button" onClick={() => alert("facebook")}>
+                <button href="#!" className='login__btn__facebook' type="button" onClick={() => alert("facebook")}>
                     <AiFillFacebook className='icon'/>
-                    Facebook Login
-                </a>
+                    <div>Facebook Login</div>
+                </button>
             </div>
         </div>
     );

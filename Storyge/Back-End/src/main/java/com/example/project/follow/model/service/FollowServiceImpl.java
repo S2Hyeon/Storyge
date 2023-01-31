@@ -64,9 +64,9 @@ public class FollowServiceImpl implements FollowService {
         return followWaitUserDtoList;
     }
 
-    //팔로잉 목록
+    //내 팔로잉 목록
     @Override
-    public List<UserDto> selectAllFollowing(UserDto userId) {
+    public List<UserDto> selectAllFollowing() {
         //내가 팔로워인 사람들 리스트 가져오기
         Long currentUserId = (long)0;
         List<Follow> followingList = followRepository.findByFollower(currentUserId);
@@ -84,9 +84,9 @@ public class FollowServiceImpl implements FollowService {
         return followingUserDtoList;
     }
 
-    //팔로워 목록
+    //내 팔로워 목록
     @Override
-    public List<UserDto> selectAllFollower(UserDto userId) {
+    public List<UserDto> selectAllFollower() {
         //내가 팔로잉에 있는 리스트
         Long currentUserId = (long)0;
         List<Follow> followingList = followRepository.findByFollowing(currentUserId);

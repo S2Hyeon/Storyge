@@ -18,9 +18,9 @@ public interface FollowService {
     // 팔로우 대기 목록
     List<UserDto> selectAllFollowWait();
     //팔로잉 목록
-    List<UserDto> selectAllFollowing(UserDto userId);
+    List<UserDto> selectAllFollowing();
     //팔로워 목록
-    List<UserDto> selectAllFollower(UserDto userId);
+    List<UserDto> selectAllFollower();
     //팔로우 대기 삭제
     void deleteFollowWait(UserDto wait);
     //팔로잉 삭제

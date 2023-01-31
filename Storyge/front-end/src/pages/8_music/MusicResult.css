@@ -1,0 +1,14 @@
+.center {
+  display: block;
+  justify-content: center;
+  align-items:center;
+  min-height: 100vh;
+}
+
+.registeBtn{
+  margin-bottom: 20px;
+}
+
+.player {
+  margin: auto;
+}

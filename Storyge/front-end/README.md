@@ -16,3 +16,6 @@ material React UI tools
 
 react-icons
 `npm install react-icons --save`
+
+react-player
+`npm install react-player --save`

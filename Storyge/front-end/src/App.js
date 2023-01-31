@@ -6,6 +6,7 @@ import Intro from "./pages/0_intro/Intro";
 import Music from "./pages/8_music/Music";
 import Creatediary from "./pages/3_myDiary/Creatediary";
 import Main from "./pages/2_main/Main";
+import MusicResult from './pages/8_music/MusicResult';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="music" element={<Music />} />
           <Route path="createDiary" element={<Creatediary />} />
           <Route path="main" element={<Main />} />
+          <Route path="musicresult" element={<MusicResult />} />
         </Routes>
       </BrowserRouter>
     </div>

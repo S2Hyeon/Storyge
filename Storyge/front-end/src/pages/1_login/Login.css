@@ -3,10 +3,11 @@
   --color-facebook: #3b5998;
   --color-google: #ffffff;
   --color-kakao: #ffeb00;
+  --color-border-line: #222222;
 
   /* Size */
-  --size-border-radius: 20px;
-  --size-border-thickness: 0.7px;
+  --size-border-radius: 100px;
+  --size-border-thickness: 1px;
 
   /* Font size */
   --font-large: 48px;
@@ -24,6 +25,13 @@
   --animation-duration: 400ms;
 }
 
+.center{
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  min-height: 100vh;
+}
+
 .login {
   display: flex;
   flex-direction: column;
@@ -39,8 +47,8 @@ a {
   height: 40px;
   text-decoration: none;
   border-radius: var(--size-border-radius);
-  border: var(--size-border-thickness) solid black;
-  margin: 5%;
+  border: var(--size-border-thickness) solid var(--color-border-line);
+  margin: 13%;
   font-size: var(--font-regular);
   color: black;
   flex-grow: 1 2;

@@ -16,8 +16,7 @@ export const NewDiary = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
 
-  overflow-x: auto;
-  white-space: nowrap;
+  overflow-x: scroll;
 `;
 
 export const Profile = styled.div`
@@ -27,7 +26,7 @@ export const Profile = styled.div`
   flex-direction: column;
   margin-left: 5px;
   margin-right: 5px;
-  flex: 0 0 auto;
+  // flex: 0 0 auto;
   background-color: black;
 `;
 
@@ -35,6 +34,12 @@ export const Container = styled.div`
   padding-left: 20px;
   padding-right: 20px;
   // background-color: #eaf2ea;
+`;
+
+export const CalendarContainer = styled.div`
+  width: 100%;
+  min-height: 392px;
+  background: 
 `;
 
 export const WiseBox = styled.div`

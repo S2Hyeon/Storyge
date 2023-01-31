@@ -35,4 +35,8 @@ public class Review {
     @Column(name = "created_at")
     LocalDateTime createdAt;
 
+    public void updateReview(String reviewContent){
+        reviewContent = this.reviewContent;
+    }
+
 }

@@ -11,9 +11,11 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReviewGetDto {
+public class ReviewResponseDto {
     Long reviewId;
+    Long userId;
     String nickname;
+    String profileImg;
     String reviewContent;
     LocalDateTime createdAt;
 }

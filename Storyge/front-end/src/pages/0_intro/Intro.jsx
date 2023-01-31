@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Intro() {
-    const movePage = useNavigate();
+  const movePage = useNavigate();
 
     function gologin(){
         movePage('/login');
@@ -24,4 +24,3 @@ export default function Intro() {
         </div>
     );
 }
-

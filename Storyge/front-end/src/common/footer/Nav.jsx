@@ -1,64 +1,37 @@
-import { TbHome, TbMusic, TbPlus, TbBell, TbUser } from "react-icons/tb";
-import * as S from "./NavStyle";
 import React from "react";
-import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import * as S from "./NavStyle";
+import { TbHome, TbMusic, TbPlus, TbBell, TbUser } from "react-icons/tb";
 
 function Footer() {
-  const [home, setHome] = useState(true);
-  const [music, setMusic] = useState(false);
-  const [alert, setAlert] = useState(false);
-  const [user, setUser] = useState(false);
-
-  function goHome() {
-    setHome(true);
-    setMusic(false);
-    setAlert(false);
-    setUser(false);
-  }
-  function goMusic() {
-    setHome(false);
-    setMusic(true);
-    setAlert(false);
-    setUser(false);
-  }
-  function goWrite() {
-    setHome(false);
-    setMusic(false);
-    setAlert(false);
-    setUser(false);
-  }
-  function goAlert() {
-    setHome(false);
-    setMusic(false);
-    setAlert(true);
-    setUser(false);
-  }
-  function goUser() {
-    setHome(false);
-    setMusic(false);
-    setAlert(false);
-    setUser(true);
-  }
+  const location = useLocation();
+  const movePage = useNavigate();
 
   return (
     <S.Nav>
       <S.IconContainer
         onClick={() => {
-          goHome();
+          movePage("/");
         }}
       >
-        <TbHome size={30} color={home ? "#ACCEBC" : "#D9D9D9"} />
+        <TbHome
+          size={30}
+          color={location.pathname === "/" ? "#ACCEBC" : "#D9D9D9"}
+        />
       </S.IconContainer>
       <S.IconContainer
         onClick={() => {
-          goMusic();
+          movePage("/music");
         }}
       >
-        <TbMusic size={30} color={music ? "#ACCEBC" : "#D9D9D9"} />
+        <TbMusic
+          size={30}
+          color={location.pathname === "/music" ? "#ACCEBC" : "#D9D9D9"}
+        />
       </S.IconContainer>
       <S.IconContainer
         onClick={() => {
-          goWrite();
+          movePage("/createDiary");
         }}
       >
         <S.CenterCircle>
@@ -67,17 +40,25 @@ function Footer() {
       </S.IconContainer>
       <S.IconContainer
         onClick={() => {
-          goAlert();
+          // movePage("/alert");
+          console.log("알림 모음 페이지로 이동!!");
         }}
       >
-        <TbBell size={30} color={alert ? "#ACCEBC" : "#D9D9D9"} />
+        <TbBell
+          size={30}
+          color={location.pathname === "/alert" ? "#ACCEBC" : "#D9D9D9"}
+        />
       </S.IconContainer>
       <S.IconContainer
         onClick={() => {
-          goUser();
+          // movePage("/mypage");
+          console.log("마이페이지로 이동!!!");
         }}
       >
-        <TbUser size={30} color={user ? "#ACCEBC" : "#D9D9D9"} />
+        <TbUser
+          size={30}
+          color={location.pathname === "/mypage" ? "#ACCEBC" : "#D9D9D9"}
+        />
       </S.IconContainer>
     </S.Nav>
   );

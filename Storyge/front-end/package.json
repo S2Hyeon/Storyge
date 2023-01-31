@@ -24,6 +24,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-image-upload": "^2.0.1",
+    "react-live-clock": "^6.1.5",
     "react-router-dom": "^6.8.0",
     "react-scripts": "5.0.1",
     "react-social-login-buttons": "^3.6.1",

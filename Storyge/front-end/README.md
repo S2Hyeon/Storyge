@@ -1,4 +1,3 @@
-
 ## Install
 react-social-login-buttons
 `npm install --save react-social-login-buttons`
@@ -14,3 +13,6 @@ material React UI tools
 `npm install @mui/material @mui/styled-engine-sc styled-components`
 `npm install @fontsource/roboto`
 `npm install @mui/icons-material`
+
+react-icons
+`npm install react-icons --save`

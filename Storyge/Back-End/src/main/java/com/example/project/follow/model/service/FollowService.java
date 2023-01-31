@@ -1,6 +1,7 @@
 package com.example.project.follow.model.service;
 
 import com.example.project.follow.model.dto.FollowDto;
+import com.example.project.follow.model.dto.FollowInfoDto;
 import com.example.project.follow.model.dto.UserIdDto;
 import com.example.project.follow.model.entity.Follow;
 import com.example.project.follow.model.entity.FollowWait;
@@ -23,11 +24,13 @@ public interface FollowService {
     //팔로워 목록
     List<UserDto> selectAllFollower();
     //팔로우 대기 삭제
-    void deleteFollowWait(UserDto wait);
+    void deleteFollowWait(long followId);
     //팔로잉 삭제
-    void deleteFollowing(UserDto follow);
+    void deleteFollowing(long followId);
     //팔로우 삭제
-    void deleteFollower(UserDto follow);
+    void deleteFollower(long followId);
+
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.example.project.follow.model.service;
 
+import com.example.project.follow.model.dto.FollowInfoDto;
 import com.example.project.follow.model.dto.UserIdDto;
 import com.example.project.follow.model.entity.Follow;
 import com.example.project.follow.model.entity.FollowWait;
@@ -62,17 +63,32 @@ public class FollowServiceImpl implements FollowService {
 
         Long currentUserId = (long)0;
         List<FollowWait> followWaitList = followWaitRepository.findByFollowing(currentUserId);
-        List<UserDto> followWaitUserDtoList = new ArrayList<>();
+        List<UserDto> followWaitUserList = new ArrayList<>();
         for(FollowWait follow : followWaitList){
             User user = follow.getUserId();
-            followWaitUserDtoList.add(UserDto.builder()
+            followWaitUserList.add(UserDto.builder()
                     .userId(user.getUserId())
                     .profileImg(user.getProfileImg())
                     .nickname(user.getNickname())
                     .build());
         }
 
-        return followWaitUserDtoList;
+//        List<FollowInfoDto> followWaitUserList = new ArrayList<>();
+//        for(FollowWait follow : followWaitList){
+//            User user = follow.getUserId();
+//            UserDto userDto = UserDto.builder()
+//                            .userId(user.getUserId())
+//                            .nickname(user.getNickname())
+//                            .profileImg(user.getProfileImg())
+//                            .build();
+//
+//            followWaitUserList.add(FollowInfoDto.builder()
+//                    .followId(follow.getWaitingId())
+//                    .userDto(userDto)
+//                    .build());
+//        }
+
+        return followWaitUserList;
     }
 
     //내 팔로잉 목록
@@ -81,18 +97,34 @@ public class FollowServiceImpl implements FollowService {
         //내가 팔로워인 사람들 리스트 가져오기
         Long currentUserId = (long)0;
         List<Follow> followingList = followRepository.findByFollower(currentUserId);
-        List<UserDto> followingUserDtoList = new ArrayList<>();
+        List<UserDto> followerUserList = new ArrayList<>();
 
         for(Follow follow : followingList){
             User user = follow.getFollowing();
-            followingUserDtoList.add(UserDto.builder()
+            followerUserList.add(UserDto.builder()
                     .userId(user.getUserId())
                     .nickname(user.getNickname())
                     .profileImg(user.getProfileImg())
                     .build());
         }
 
-        return followingUserDtoList;
+//        List<FollowInfoDto> followerUserList = new ArrayList<>();
+//        for(Follow follow : followingList){
+//            User user = follow.getFollowing();
+//            UserDto userDto = UserDto.builder()
+//                    .userId(user.getUserId())
+//                    .nickname(user.getNickname())
+//                    .profileImg(user.getProfileImg())
+//                    .build();
+//
+//            followerUserList.add(FollowInfoDto.builder()
+//                    .followId(follow.getFollowId())
+//                    .userDto(userDto)
+//                    .build());
+//        }
+//
+//
+        return followerUserList;
     }
 
     //내 팔로워 목록
@@ -101,10 +133,10 @@ public class FollowServiceImpl implements FollowService {
         //내가 팔로잉에 있는 리스트
         Long currentUserId = (long)0;
         List<Follow> followingList = followRepository.findByFollowing(currentUserId);
-        List<UserDto> followerUserDtoList = new ArrayList<>();
+        List<UserDto> followingUserList = new ArrayList<>();
         for(Follow follow : followingList){
             User user = follow.getFollowing();
-            followerUserDtoList.add(UserDto.builder()
+            followingUserList.add(UserDto.builder()
                     .userId(user.getUserId())
                     .nickname(user.getNickname())
                     .profileImg(user.getProfileImg())
@@ -112,32 +144,47 @@ public class FollowServiceImpl implements FollowService {
         }
 
 
-        return followerUserDtoList;
+//        List<FollowInfoDto> followingUserList = new ArrayList<>();
+//        for(Follow follow : followingList){
+//            User user = follow.getFollower();
+//            UserDto userDto = UserDto.builder()
+//                    .userId(user.getUserId())
+//                    .nickname(user.getNickname())
+//                    .profileImg(user.getProfileImg())
+//                    .build();
+//
+//            followingUserList.add(FollowInfoDto.builder()
+//                    .followId(follow.getFollowId())
+//                    .userDto(userDto)
+//                    .build());
+//        }
+
+        return followingUserList;
     }
 
     //팔로우 거절(대기 상태 삭제)
     @Override
-    public void deleteFollowWait(UserDto wait) {
+    public void deleteFollowWait(long follower) {
         long currentUserId = (long)0; //나
-        long followingWaitUser = wait.getUserId(); //나에게 신청을 한사람
-        followWaitRepository.deleteByFollowingAndUserId(currentUserId, followingWaitUser);
+//        long followingWaitUser = wait.getUserId(); //나에게 신청을 한사람
+        followWaitRepository.deleteByFollowingAndUserId(currentUserId, follower);
     }
 
     @Override
-    public void deleteFollowing(UserDto follow) {
+    public void deleteFollowing(long following) {
         //언팔로우 하기
         //내가 follower 지우려는 상대가 following
         long currentUserId = (long)0; //나
-        long following = follow.getUserId();
+//        long following = follow.getUserId();
         followRepository.deleteByFollowingAndFollower(following, currentUserId);
     }
 
     @Override
-    public void deleteFollower(UserDto follow) {
+    public void deleteFollower(long follower) {
         //팔로워 삭제하기
         //내가 following 지우려는 상대가 follower
         long currentUserId = (long)0; //나
-        long follower = follow.getUserId();
+//        long follower = follow.getUserId();
         followRepository.deleteByFollowingAndFollower(follower, currentUserId);
 
     }

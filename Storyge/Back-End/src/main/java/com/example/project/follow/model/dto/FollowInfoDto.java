@@ -1,6 +1,7 @@
 package com.example.project.follow.model.dto;
 
 
+import com.example.project.user.model.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +14,6 @@ import lombok.NoArgsConstructor;
 public class FollowInfoDto {
 
     private Long followId;
-    private Long following;
-    private Long follower;
+    private UserDto userDto;
 
 }

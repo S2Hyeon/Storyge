@@ -5,7 +5,7 @@
   --color-kakao: #FFEB00;
 
   /* Size */
-  --size-border-radius: 15px;
+  --size-border-radius: 20px;
   --size-border-thickness: 1px;
 
   /* Font size */
@@ -24,11 +24,25 @@
   --animation-duration: 400ms;
 }
 
-button {
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+a {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   width: 250px;
   height: 40px;
+  text-decoration: none;
   border-radius: var(--size-border-radius);
-  border: var(--size-border-thickness);
+  border: var(--size-border-thickness) solid black;
+  margin: 5%;
+  font-size: var(--font-regular);
+  color: black;
 }
 
 button:hover {

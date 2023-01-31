@@ -7,27 +7,28 @@ export const All = styled.div`
 `;
 
 export const NewDiary = styled.div`
-  height: 62px;
-  width: 100vh;
-  border: 1px solid red;
-  display: flex;
-  justify-content: center;
-
   margin-top: 10px;
   margin-bottom: 10px;
+  padding: 0 20px;
 
-  overflow-x: scroll;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Profile = styled.div`
   height: 60px;
   width: 60px;
+  margin: 0 5px;
+  background-image: url(${(props) => props.profile});
+  background-size: cover;
   border-radius: 100px;
-  flex-direction: column;
-  // margin-left: 5px;
-  // margin-right: 5px;
   // flex: 0 0 auto;
-  background-color: black;
+
+  flex: 0 0 auto;
 `;
 
 export const Container = styled.div`

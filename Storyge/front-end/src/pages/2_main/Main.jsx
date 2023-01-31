@@ -12,11 +12,13 @@ function Main() {
   function switchDiary() {
     setDiary(true);
     setStatistic(false);
+    console.log("다이어리로 넘어가기");
   }
 
   function switchStatistic() {
     setDiary(false);
     setStatistic(true);
+    console.log("통계로 넘어가기");
   }
 
   return (
@@ -24,8 +26,8 @@ function Main() {
       <Header />
 
       <S.NewDiary>
-        {newDiaryData.map((diary, i) => {
-          return <S.Profile diary={diary} key={i} />;
+        {newDiaryData.map((diary) => {
+          return <S.Profile profile={diary.imgUrl} key={diary.id} />;
         })}
       </S.NewDiary>
       <S.Container>

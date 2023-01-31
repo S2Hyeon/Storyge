@@ -18,8 +18,4 @@ public class JpaConfig {
         return new UserServiceImpl(bCryptPasswordEncoder, userRepository);
     }
 
-    @Bean
-    public JwtUtil jwtUtil(){
-        return new JwtUtil();
-    }
 }

@@ -3,19 +3,18 @@ import styled from "styled-components";
 export const All = styled.div`
   height: 100vh;
   width: 100vw;
-  background-color: #eaf2ea;
+  background-color: var(--color-background);
 `;
 
 export const NewDiary = styled.div`
   height: 62px;
-  width: 100%;
+  width: 100vh;
   border: 1px solid red;
   display: flex;
   justify-content: center;
 
   margin-top: 10px;
   margin-bottom: 10px;
-  padding-left: 30px;
 
   overflow-x: auto;
   white-space: nowrap;
@@ -25,11 +24,11 @@ export const Profile = styled.div`
   height: 60px;
   width: 60px;
   border-radius: 100px;
-  border: 1px solid red;
   flex-direction: column;
   margin-left: 5px;
   margin-right: 5px;
   flex: 0 0 auto;
+  background-color: black;
 `;
 
 export const Container = styled.div`

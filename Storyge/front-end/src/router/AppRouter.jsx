@@ -11,7 +11,11 @@ import Music from "../pages/8_music/Music";
 import Creatediary from "../pages/3_myDiary/Creatediary";
 import MusicResult from "../pages/8_music/MusicResult";
 import ErrorPage from "../pages/9_errorPage/ErrorPage";
+
 import Diarylist from "../pages/3_myDiary/Diarylist";
+
+import MyPage from "./../pages/4_myPage/MyPage.jsx";
+import ModifyProfile from "./../pages/4_myPage/ModifyProfile.jsx";
 
 function AppRouter() {
   return (
@@ -28,6 +32,8 @@ function AppRouter() {
         <Route path="music" element={<Music />} />
         <Route path="createDiary" element={<Creatediary />} />
         <Route path="musicresult" element={<MusicResult />} />
+        <Route path="mypage" element={<MyPage />} />
+        <Route path="modify" element={<ModifyProfile />} />
 
         <Route path="/*" element={<ErrorPage />} />
       </Route>

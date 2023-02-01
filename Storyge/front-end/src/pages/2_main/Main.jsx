@@ -3,6 +3,7 @@ import * as S from "./MainStyle";
 import * as G from "../../styles";
 import newDiaryData from "./NewDiaryData";
 import { BsCircleFill } from "react-icons/bs";
+import CustomCalendar from "../../components/calender/Calendar";
 
 function Main() {
   let [diary, setDiary] = useState(true);
@@ -29,7 +30,9 @@ function Main() {
       </S.NewDiary>
       <G.BodyContainer>
         <S.CalendarContainer>
-          <S.CalendarBox></S.CalendarBox>
+          <S.CalendarBox>
+            <CustomCalendar />
+          </S.CalendarBox>
           <S.CalendarToggle>
             <S.ToggleOne onClick={() => switchDiary()}>
               <BsCircleFill

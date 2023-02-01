@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import Nav from "../../common/footer/Nav";
-import Header from "../../common/header/Header";
 import * as S from "./MainStyle";
 import newDiaryData from "./NewDiaryData";
 import { BsCircleFill } from "react-icons/bs";
@@ -23,8 +21,6 @@ function Main() {
 
   return (
     <S.All>
-      <Header />
-
       <S.NewDiary>
         {newDiaryData.map((diary) => {
           return <S.Profile profile={diary.imgUrl} key={diary.id} />;
@@ -77,8 +73,6 @@ function Main() {
           <S.WiseFrom>영화 &lt;월 플라워&gt; 중</S.WiseFrom>
         </S.WiseBox>
       </S.Container>
-
-      <Nav />
     </S.All>
   );
 }

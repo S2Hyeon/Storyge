@@ -1,16 +1,15 @@
-import React from "react";
-import ProfileImgBox from "./../../components/profileBox/ProfileImgBox";
-import "../1_login/LoginInfo.css";
+import React from 'react';
+import * as G from './../../styles/index';
+import ProfileBoxImg from './../../components/profileBox/ProfileImgBox';
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import RegisterBtn from "./../../components/button/RegisterBtn";
 
-export default function LoginInfo() {
+export default function ModifyProfile() {
   return (
-      <div className="addInfo">
-        <h2>Set your Nickname</h2>
-        <ProfileImgBox />
-        <Box
+    <G.BodyContainer>
+      <ProfileBoxImg />
+      <Box
           className="box"
           component="form"
           sx={{
@@ -22,6 +21,7 @@ export default function LoginInfo() {
           <TextField id="standard-basic" label="NickName" variant="standard" helperText="닉네임을 입력해주세요." autoFocus="true"/>
         </Box>
         <RegisterBtn />
-      </div>
+    </G.BodyContainer>
   );
 }
+

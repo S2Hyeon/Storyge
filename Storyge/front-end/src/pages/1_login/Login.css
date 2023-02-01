@@ -6,7 +6,7 @@
   --color-border-line: #222222;
 
   /* Size */
-  --size-border-radius: 100px;
+  --size-border-radius: 100;
   --size-border-thickness: 1px;
 
   /* Font size */
@@ -25,40 +25,29 @@
   --animation-duration: 400ms;
 }
 
-.center{
+.login {
   display: flex;
   justify-content: center;
-  align-items:center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   min-height: 100vh;
 }
 
-.login {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .login button {
-  margin: 15%;
-}
-
-button {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   width: 250px;
   height: 40px;
   text-decoration: none;
-  border-radius: var(--size-border-radius);
+  border-radius: 100px;
   border: var(--size-border-thickness) solid var(--color-border-line);
   margin: 13%;
   font-size: var(--font-regular);
-  color: black;
-  flex-grow: 1 2;
 }
 
-button:hover {
+.login button:hover {
   filter: brightness(0.8);
   transition: var(--animation-duration);
 }

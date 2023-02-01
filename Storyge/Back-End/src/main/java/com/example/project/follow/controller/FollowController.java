@@ -23,7 +23,7 @@ public class FollowController {
     //팔로우 신청하기
     @PostMapping("/follow-wait")
     public ResponseEntity insertFollowWait(@RequestBody UserIdDto following){
-
+        System.out.println("실행");
         followService.insertFollowWait(following);
         return new ResponseEntity(SUCCESS, HttpStatus.OK);
     }

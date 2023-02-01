@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Layout from "./Layout";
 
 import Intro from "../pages/0_intro/Intro";
@@ -11,6 +11,7 @@ import Music from "../pages/8_music/Music";
 import Creatediary from "../pages/3_myDiary/Creatediary";
 import MusicResult from "../pages/8_music/MusicResult";
 import ErrorPage from "../pages/9_errorPage/ErrorPage";
+import MyPage from './../pages/4_myPage/MyPage.jsx';
 
 function AppRouter() {
   return (
@@ -26,6 +27,7 @@ function AppRouter() {
         <Route path="music" element={<Music />} />
         <Route path="createDiary" element={<Creatediary />} />
         <Route path="musicresult" element={<MusicResult />} />
+        <Route path="mypage" element={<MyPage />} />
 
         <Route path="/*" element={<ErrorPage />} />
       </Route>

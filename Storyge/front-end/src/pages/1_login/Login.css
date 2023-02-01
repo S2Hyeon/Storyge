@@ -24,26 +24,12 @@
   /* Annimation */
   --animation-duration: 400ms;
 }
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.center{
-  display: flex;
-  justify-content: center;
-  align-items:center;
-  min-height: 100vh;
-}
 
 .login {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   min-height: 100vh;
 }
 

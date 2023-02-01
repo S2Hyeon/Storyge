@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
 export const All = styled.div`
-  height: 90vh;
-  width: 100%;
+  // height: 90vh;
+  // width: 100%;
   background-color: var(--color-background);
 `;
 
 export const NewDiary = styled.div`
+  margin: 60px 0 0 0;
   padding: 10px 20px;
-
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
@@ -61,7 +61,7 @@ export const CalendarToggle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 5px;
+  margin-top: 10px;
 `;
 
 export const ToggleOne = styled.div`

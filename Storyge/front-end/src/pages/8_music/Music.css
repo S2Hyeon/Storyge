@@ -1,6 +1,6 @@
 :root {
   /* Color */
-  --color-gray: #F7F7F7;
+  --color-gray: #f7f7f7;
 
   /* Size */
   --size-border-radius: 10px;
@@ -8,7 +8,7 @@
 
 .rectangle {
   /* Rectangle 129 */
-  margin: auto;
+  /* margin: auto; */
   margin-top: 40px;
   margin-bottom: 20px;
   width: 300px;
@@ -29,6 +29,10 @@
 
 textarea:focus {
   outline: none;
+}
+
+textarea::placeholder {
+  color: var(--color-primary);
 }
 
 .btn {

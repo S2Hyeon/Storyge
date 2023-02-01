@@ -49,6 +49,9 @@ export const CalendarBox = styled.div`
   background: var(--color-white);
   box-shadow: 0px 16px 40px -4px rgba(112, 144, 176, 0.2);
   border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-item: center;
 `;
 
 export const CalendarToggle = styled.div`

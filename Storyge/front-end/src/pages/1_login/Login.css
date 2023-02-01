@@ -24,6 +24,19 @@
   /* Annimation */
   --animation-duration: 400ms;
 }
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.center{
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  min-height: 100vh;
+}
 
 .center{
   display: flex;

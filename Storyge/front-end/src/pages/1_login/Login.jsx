@@ -10,10 +10,6 @@ export default function Login() {
             <div className='login'>
                 <h1>Login</h1>
 
-                <a href="#!" className='login__btn__google' onClick={() => alert("google")}>
-                    <FcGoogle className='icon'/>
-                    Google Login
-                </a>
                 <button href="#!" className='login__btn__google' onClick={() => alert("google")}>
                     <FcGoogle className='icon'/>
                     <div>Google Login</div>

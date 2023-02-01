@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import * as S from "./MainStyle";
+import * as G from "../../styles";
 import newDiaryData from "./NewDiaryData";
 import { BsCircleFill } from "react-icons/bs";
 
@@ -26,7 +27,7 @@ function Main() {
           return <S.Profile profile={diary.imgUrl} key={diary.id} />;
         })}
       </S.NewDiary>
-      <S.Container>
+      <G.BodyContainer>
         <S.CalendarContainer>
           <S.CalendarBox></S.CalendarBox>
           <S.CalendarToggle>
@@ -72,7 +73,7 @@ function Main() {
           </S.Wise>
           <S.WiseFrom>영화 &lt;월 플라워&gt; 중</S.WiseFrom>
         </S.WiseBox>
-      </S.Container>
+      </G.BodyContainer>
     </S.All>
   );
 }

@@ -1,15 +1,13 @@
 import styled from "styled-components";
 
 export const All = styled.div`
-  // height: 100vh;
+  height: 90vh;
   width: 100vw;
   background-color: var(--color-background);
 `;
 
 export const NewDiary = styled.div`
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding: 0 20px;
+  padding: 10px 20px;
 
   display: flex;
   flex-wrap: nowrap;
@@ -38,7 +36,7 @@ export const Container = styled.div`
 
 export const CalendarContainer = styled.div`
   width: 100%;
-  margin: 20px 0 20px 0;
+  padding: 20px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;

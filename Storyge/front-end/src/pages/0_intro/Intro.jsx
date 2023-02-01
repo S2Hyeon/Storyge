@@ -24,6 +24,9 @@ export default function Intro() {
   function goDiaryList() {
     movePage("/0201");
   }
+  function goDiaryDetail() {
+    movePage("/02011");
+  }
 
   return (
     <div>
@@ -33,6 +36,7 @@ export default function Intro() {
       <button onClick={goCreateDiary}>일기작성페이지로 이동</button>
       <button onClick={goMain}>메인페이지로 이동</button>
       <button onClick={goDiaryList}>일기 리스트로 이동</button>
+      <button onClick={goDiaryDetail}>일기 디테일로 이동</button>
     </div>
   );
 }

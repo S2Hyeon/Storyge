@@ -8,16 +8,17 @@ import LoginInfo from "../pages/1_login/LoginInfo";
 
 import Main from "../pages/2_main/Main";
 import Music from "../pages/8_music/Music";
-import Creatediary from "../pages/3_myDiary/Creatediary";
 import MusicResult from "../pages/8_music/MusicResult";
 import ErrorPage from "../pages/9_errorPage/ErrorPage";
 
+import Creatediary from "../pages/3_myDiary/Creatediary";
 import Diarylist from "../pages/3_myDiary/Diarylist";
+import Diarydetial from "../pages/3_myDiary/Diarydetail";
 
 import MyPage from "./../pages/4_myPage/MyPage.jsx";
 import ModifyProfile from "./../pages/4_myPage/ModifyProfile.jsx";
-import FollowerList from '../pages/5_follow/FollowerList.jsx';
-import FollowingList from './../pages/5_follow/FollowingList.jsx';
+import FollowerList from "../pages/5_follow/FollowerList.jsx";
+import FollowingList from "./../pages/5_follow/FollowingList.jsx";
 
 function AppRouter() {
   return (
@@ -29,10 +30,11 @@ function AppRouter() {
 
       {/* 헤더, 내브바 포함 O */}
       <Route path="/" element={<Layout />}>
-        <Route path="0201" element={<Diarylist />} />
         <Route index path="/" element={<Main />} />
         <Route path="music" element={<Music />} />
         <Route path="createDiary" element={<Creatediary />} />
+        <Route path="0201" element={<Diarylist />} />
+        <Route path="02011" element={<Diarydetial />} />
         <Route path="musicresult" element={<MusicResult />} />
         <Route path="mypage" element={<MyPage />} />
         <Route path="modify" element={<ModifyProfile />} />

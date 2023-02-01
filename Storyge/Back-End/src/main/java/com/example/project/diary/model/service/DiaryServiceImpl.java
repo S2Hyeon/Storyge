@@ -29,8 +29,8 @@ public class DiaryServiceImpl implements DiaryService{
         return Optional.ofNullable(toDto(diaryRepository.findById(diaryId).orElseThrow()));
     }
 
-    public List<DiaryDto> selectDailyDiaries(Long userId, Date date) {
-        return diaryRepository.findByIdAndCreatedAtContaining(userId, date);
+    public List<DiaryDto> selectDailyDiaries(String nickname, Date date) {
+        return diaryRepository.findByIdAndCreatedAtContaining(nickname, date);
     }
 
     /*

@@ -12,5 +12,5 @@ import java.util.List;
 @Repository
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    List<DiaryDto> findByIdAndCreatedAtContaining(Long userId, Date createdAt);
+    List<DiaryDto> findByIdAndCreatedAtContaining(String nickname, Date createdAt);
 }

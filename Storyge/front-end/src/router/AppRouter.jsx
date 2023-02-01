@@ -11,6 +11,7 @@ import Music from "../pages/8_music/Music";
 import Creatediary from "../pages/3_myDiary/Creatediary";
 import MusicResult from "../pages/8_music/MusicResult";
 import ErrorPage from "../pages/9_errorPage/ErrorPage";
+import Diarylist from "../pages/3_myDiary/Diarylist";
 
 function AppRouter() {
   return (
@@ -22,6 +23,7 @@ function AppRouter() {
 
       {/* 헤더, 내브바 포함 O */}
       <Route path="/" element={<Layout />}>
+        <Route path="0201" element={<Diarylist />} />
         <Route index path="/" element={<Main />} />
         <Route path="music" element={<Music />} />
         <Route path="createDiary" element={<Creatediary />} />

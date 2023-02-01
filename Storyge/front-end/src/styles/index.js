@@ -1,11 +1,10 @@
 import styled from "styled-components";
 
 export const BodyContainer = styled.div`
-  width: 100%;
-  padding: 0 20px;
+  margin: 0 20px;
 `;
 
-export const longBtnDefault = styled.btn`
+export const longBtnDefault = styled.button`
   background-color: var(--color-primary);
   border-radius: 100px;
   height: 48px;
@@ -14,7 +13,7 @@ export const longBtnDefault = styled.btn`
   border: hidden;
 `;
 
-export const longBtnDisabled = styled.btn`
+export const longBtnDisabled = styled.button`
   background-color: var(--color-darkgrey);
   color: var(--color-white);
   border-radius: 100px;
@@ -24,7 +23,7 @@ export const longBtnDisabled = styled.btn`
   border: hidden;
 `;
 
-export const longBtnBorder = styled.btn`
+export const longBtnBorder = styled.button`
   border: hidden;
   background-color: var(--color-white);
   border-radius: 100px;

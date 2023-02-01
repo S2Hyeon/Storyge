@@ -1,7 +1,6 @@
 package com.example.project.follow.controller;
 
-import com.example.project.follow.model.dto.FollowInfoDto;
-import com.example.project.follow.model.dto.UserIdDto;
+import com.example.project.follow.model.dto.UserNicknameDto;
 import com.example.project.follow.model.service.FollowService;
 import com.example.project.user.model.dto.UserDto;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,7 @@ public class FollowController {
     
     //팔로우 신청하기
     @PostMapping("/follow-wait")
-    public ResponseEntity insertFollowWait(@RequestBody UserIdDto following){
+    public ResponseEntity insertFollowWait(@RequestBody UserNicknameDto following){
         System.out.println("실행");
         followService.insertFollowWait(following);
         return new ResponseEntity(SUCCESS, HttpStatus.OK);
@@ -30,7 +29,7 @@ public class FollowController {
 
     //팔로우 수락
     @PostMapping("/follow")
-    public ResponseEntity insertFollower(@RequestBody UserIdDto follower){
+    public ResponseEntity insertFollower(@RequestBody UserNicknameDto follower){
 
         followService.insertFollower(follower);
 
@@ -60,21 +59,21 @@ public class FollowController {
     }
 
     //팔로우 대기 삭제
-    @DeleteMapping("/follow-wait/{userId}")
-    public ResponseEntity<String> deleteFollowWait(@PathVariable long followId){
-        followService.deleteFollowWait(followId);
+    @DeleteMapping("/follow-wait/{nickname}")
+    public ResponseEntity<String> deleteFollowWait(@PathVariable String follow){
+        followService.deleteFollowWait(follow);
         return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
     }
 
-    @DeleteMapping("/following/{userId}")
-    public ResponseEntity<String> deleteFollowing(@PathVariable long userId){
-        followService.deleteFollowing(userId);
+    @DeleteMapping("/following/{nickname}")
+    public ResponseEntity<String> deleteFollowing(@PathVariable String follow){
+        followService.deleteFollowing(follow);
         return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
     }
 
-    @DeleteMapping("/follower/{userId}")
-    public ResponseEntity<String> deleteFollower(@PathVariable long userId){
-        followService.deleteFollower(userId);
+    @DeleteMapping("/follower/{nickname}")
+    public ResponseEntity<String> deleteFollower(@PathVariable String follow){
+        followService.deleteFollower(follow);
         return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
     }
 

@@ -16,6 +16,8 @@ import Diarylist from "../pages/3_myDiary/Diarylist";
 
 import MyPage from "./../pages/4_myPage/MyPage.jsx";
 import ModifyProfile from "./../pages/4_myPage/ModifyProfile.jsx";
+import FollowerList from '../pages/5_follow/FollowerList.jsx';
+import FollowingList from './../pages/5_follow/FollowingList.jsx';
 
 function AppRouter() {
   return (
@@ -34,6 +36,8 @@ function AppRouter() {
         <Route path="musicresult" element={<MusicResult />} />
         <Route path="mypage" element={<MyPage />} />
         <Route path="modify" element={<ModifyProfile />} />
+        <Route path="follower" element={<FollowerList />} />
+        <Route path="following" element={<FollowingList />} />
 
         <Route path="/*" element={<ErrorPage />} />
       </Route>

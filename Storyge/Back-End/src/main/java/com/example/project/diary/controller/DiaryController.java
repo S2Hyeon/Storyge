@@ -30,9 +30,9 @@ public class DiaryController {
         return new ResponseEntity<>(diaryService.selectOneDiary(diaryId).orElseThrow(), HttpStatus.OK);
     }
 
-    @GetMapping("/diary/{user_id}/{date}")
-    public ResponseEntity<List<DiaryDto>> selectDailyDiaries(@PathVariable("user_id") Long user_id, @PathVariable Date date){
-        return new ResponseEntity<>(diaryService.selectDailyDiaries(user_id, date), HttpStatus.OK);
+    @GetMapping("/diary/{nickname}/{date}")
+    public ResponseEntity<List<DiaryDto>> selectDailyDiaries(@PathVariable("nickname") String nickname, @PathVariable Date date){
+        return new ResponseEntity<>(diaryService.selectDailyDiaries(nickname, date), HttpStatus.OK);
     }
 
     @PutMapping("/diary")

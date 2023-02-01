@@ -16,7 +16,7 @@ public interface DiaryService {
     //R
 
     Optional<DiaryDto> selectOneDiary(Long diaryId);
-    List<DiaryDto> selectDailyDiaries(Long userId, Date date);
+    List<DiaryDto> selectDailyDiaries(String nickname, Date date);
 
     //U
     void updateDiary (DiaryUpdateParam param);

@@ -64,3 +64,7 @@ export const CardFoot = styled.div`
   width: 100%;
   display: inline-block;
 `;
+
+export const AutoBtn = styled.button`
+  width: auto;
+`;

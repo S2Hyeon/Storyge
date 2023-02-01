@@ -2,9 +2,8 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Clock from "react-live-clock";
 import Modal from "./Modal";
-import Header from "../../common/header/Header";
-import Nav from "../../common/footer/Nav";
 import * as S from "./MyDiaryStyle";
+import * as A from "./../../styles/index";
 
 export default function Creatediary() {
   const navigate = useNavigate();
@@ -33,7 +32,6 @@ export default function Creatediary() {
 
   return (
     <>
-      <Header />
       <S.Mother>
         <h1>일기 작성 페이지</h1>
         <Clock format={"작성날짜 YYYY.MM.DD 작성시간 HH:mm"} ticking={true} />
@@ -52,14 +50,15 @@ export default function Creatediary() {
         </S.Card>
         <div>
           <div>
-            <S.BtnPositive onClick={isWritten}>감정분석하기 버튼</S.BtnPositive>
+            <A.longBtnDefault onClick={isWritten}>
+              감정분석하기 버튼
+            </A.longBtnDefault>
           </div>
           <S.BtnNegative onClick={() => navigate(-1)}>
             일단 뒤로가기 버튼
           </S.BtnNegative>
         </div>
       </S.Mother>
-      <Nav />
       {modalOpen && <Modal setModalOpen={setModalOpen} />}
     </>
   );

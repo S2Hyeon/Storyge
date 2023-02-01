@@ -44,14 +44,14 @@ export const CalendarContainer = styled.div`
 `;
 
 export const CalendarBox = styled.div`
-  width: 100%;
-  min-height: 390px;
+  min-height: 10px;
   background: var(--color-white);
   box-shadow: 0px 16px 40px -4px rgba(112, 144, 176, 0.2);
   border-radius: 12px;
   display: flex;
   justify-content: center;
   align-item: center;
+  padding: 20px;
 `;
 
 export const CalendarToggle = styled.div`

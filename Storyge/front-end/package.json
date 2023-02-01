@@ -30,6 +30,7 @@
     "react-image-upload": "^2.0.1",
     "react-live-clock": "^6.1.5",
     "react-player": "^2.11.0",
+    "react-query": "^3.39.3",
     "react-router-dom": "^6.8.0",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",

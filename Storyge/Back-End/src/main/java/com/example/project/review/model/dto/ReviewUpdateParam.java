@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReviewUpdateParam {
 
-    private Long diaryId;
+//    private Long diaryId;
     private Long reviewId;
     private String reviewContent;
 

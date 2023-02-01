@@ -1,5 +1,6 @@
 package com.example.project.review.model.entity;
 
+import com.example.project.diary.model.entity.Diary;
 import com.example.project.user.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,11 +24,11 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    User user;
+    User userId;
 
-//    @ManyToOne
-//    @JoinColumn(name="diary_id")
-//    Diary diary;
+    @ManyToOne
+    @JoinColumn(name="diary_id")
+    Diary diaryId;
 
     @Column(name = "review_content")
     String reviewContent;

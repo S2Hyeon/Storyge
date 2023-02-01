@@ -23,6 +23,7 @@ public class ReviewServiceImpl implements ReviewService{
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
 
+    // 댓글 입력
     @Override
     public void insertReview(ReviewRequsetDto reviewDto) {
         Optional<User> user =userRepository.findById(reviewDto.getUserId());
@@ -35,8 +36,9 @@ public class ReviewServiceImpl implements ReviewService{
 
     }
 
+    // 댓글 가져오기
     @Override
-    public List<ReviewResponseDto> selectAllReview(long diaryId) {
+    public List<ReviewResponseDto> selectAllReview(Long diaryId) {
 
         List<Review> reviewList = reviewRepository.findByDiary(diaryId);
         List<ReviewResponseDto> reviewResponseList = new ArrayList<>();
@@ -55,13 +57,28 @@ public class ReviewServiceImpl implements ReviewService{
         return reviewResponseList;
     }
 
+    // 댓글 수정
     @Override
-    public void updateReview(ReviewUpdateParam reviewUpdateParam) {
+    public void updateReview(ReviewUpdateParam reviewUpdateParam, Long userId) {
 
+        //작성자와 현재 수정하려는 사람이 일치하는지 확인해야 한다
+        Long reviewId = reviewUpdateParam.getReviewId(); //현재 작성한 댓글의 번호
+        Review review = reviewRepository.findById(reviewId).orElse(null); //댓글 정보 select
+        Long reviewUser = review.getUser().getUserId(); // 댓글 작성자 가져오기
+        if(reviewUser==userId){
+            review.updateReview(review.getReviewContent()); // 같다면 수정하기
+        }
     }
 
+    // 댓글 삭제
     @Override
-    public void deleteReview(long reviewId) {
+    public void deleteReview(Long reviewId, Long userId) {
+        //작성자와 현재 삭제하려는 사람이 일치하는지 확인해야 한다
+        Optional<Review> review = reviewRepository.findById(reviewId).ofNullable(null);
+        Long reviewUser = review.get().getUser().getUserId();
+        if(userId==reviewUser){
+            reviewRepository.deleteById(reviewId);
+        }
 
     }
 }

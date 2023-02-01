@@ -9,9 +9,9 @@ import java.util.List;
 public interface ReviewService {
 
     void insertReview(ReviewRequsetDto reviewDto);
-    List<ReviewResponseDto> selectAllReview(long diaryId);
-    void updateReview(ReviewUpdateParam reviewUpdateParam);
-    void deleteReview(long reviewId);
+    List<ReviewResponseDto> selectAllReview(Long diaryId);
+    void updateReview(ReviewUpdateParam reviewUpdateParam, Long userId);
+    void deleteReview(Long reviewId, Long userId);
 
 
 

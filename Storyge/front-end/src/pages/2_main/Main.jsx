@@ -28,7 +28,7 @@ function Main() {
           return <S.Profile profile={diary.imgUrl} key={diary.id} />;
         })}
       </S.NewDiary>
-      <G.BodyContainer>
+      <G.BodyContainer top="0" bottom="70px" color="true">
         <S.CalendarContainer>
           <S.CalendarBox>
             <CustomCalendar />

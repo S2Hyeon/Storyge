@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
 export const All = styled.div`
-  height: 90vh;
-  width: 100%;
+  // height: 90vh;
+  // width: 100%;
   background-color: var(--color-background);
 `;
 
 export const NewDiary = styled.div`
+  margin: 60px 0 0 0;
   padding: 10px 20px;
-
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
@@ -44,14 +44,14 @@ export const CalendarContainer = styled.div`
 `;
 
 export const CalendarBox = styled.div`
-  width: 100%;
-  min-height: 390px;
+  min-height: 10px;
   background: var(--color-white);
   box-shadow: 0px 16px 40px -4px rgba(112, 144, 176, 0.2);
   border-radius: 12px;
   display: flex;
   justify-content: center;
   align-item: center;
+  padding: 20px;
 `;
 
 export const CalendarToggle = styled.div`
@@ -61,7 +61,7 @@ export const CalendarToggle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 5px;
+  margin-top: 10px;
 `;
 
 export const ToggleOne = styled.div`

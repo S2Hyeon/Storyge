@@ -2,7 +2,9 @@ import styled from "styled-components";
 
 export const Header = styled.div`
   height: 60px;
-  // width: 100%;
+  position: fixed;
+  top: 0;
+  width: 100%;
   background-color: var(--color-background);
   padding-left: 20px;
   display: flex;

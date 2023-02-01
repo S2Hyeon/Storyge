@@ -1,6 +1,5 @@
 package com.example.project.follow.model.service;
 
-import com.example.project.follow.model.dto.FollowInfoDto;
 import com.example.project.follow.model.dto.UserIdDto;
 import com.example.project.follow.model.entity.Follow;
 import com.example.project.follow.model.entity.FollowWait;
@@ -29,11 +28,13 @@ public class FollowServiceImpl implements FollowService {
     // 팔로우 대기 신청
     @Override
     public void insertFollowWait(UserIdDto following) {
-        User currentUser = null;
+//        User currentUser = null;
+        Optional<User> currentUser = userRepository.findById((long)1);
+
         Optional<User> followingUser = userRepository.findById(following.getUserId());
 
         followWaitRepository.save(FollowWait.builder()
-                .userId(currentUser)
+                .userId(currentUser.get())
                 .following(followingUser.get())
                 .build());
     }
@@ -41,17 +42,17 @@ public class FollowServiceImpl implements FollowService {
     // 팔로우 수락
     @Override
     public void insertFollower(UserIdDto follower) {
-        User currentUser = null;
+        Optional<User> currentUser = userRepository.findById((long)1);
         Optional<User> followerUser = userRepository.findById(follower.getUserId());
 
         // 대기 상태에서 삭제
-        followWaitRepository.deleteByFollowingAndUserId(currentUser.getUserId(), followerUser.get().getUserId());
+        followWaitRepository.deleteByFollowingAndUserId(currentUser.get(), followerUser.get());
 
 //        User following = userRepository.getOne(userDto.getUserId());
 
         // follow table에 insert (팔로우 수락)
         followRepository.save(Follow.builder()
-                .following(currentUser)
+                .following(currentUser.get())
                 .follower(followerUser.get())
                 .build());
 
@@ -61,8 +62,10 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public List<UserDto> selectAllFollowWait() {
 
-        Long currentUserId = (long)0;
-        List<FollowWait> followWaitList = followWaitRepository.findByFollowing(currentUserId);
+//        Long currentUserId = (long)1;
+        Optional<User> currentUser = userRepository.findById((long)1);
+
+        List<FollowWait> followWaitList = followWaitRepository.findByFollowing(currentUser.get());
         List<UserDto> followWaitUserList = new ArrayList<>();
         for(FollowWait follow : followWaitList){
             User user = follow.getUserId();
@@ -95,8 +98,10 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public List<UserDto> selectAllFollowing() {
         //내가 팔로워인 사람들 리스트 가져오기
-        Long currentUserId = (long)0;
-        List<Follow> followingList = followRepository.findByFollower(currentUserId);
+//        Long currentUserId = (long)1;
+        Optional<User> currentUser = userRepository.findById((long)1);
+
+        List<Follow> followingList = followRepository.findByFollower(currentUser.get());
         List<UserDto> followerUserList = new ArrayList<>();
 
         for(Follow follow : followingList){
@@ -131,8 +136,10 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public List<UserDto> selectAllFollower() {
         //내가 팔로잉에 있는 리스트
-        Long currentUserId = (long)0;
-        List<Follow> followingList = followRepository.findByFollowing(currentUserId);
+//        Long currentUserId = (long)1;
+        Optional<User> currentUser = userRepository.findById((long)1);
+
+        List<Follow> followingList = followRepository.findByFollowing(currentUser.get());
         List<UserDto> followingUserList = new ArrayList<>();
         for(Follow follow : followingList){
             User user = follow.getFollowing();
@@ -165,27 +172,34 @@ public class FollowServiceImpl implements FollowService {
     //팔로우 거절(대기 상태 삭제)
     @Override
     public void deleteFollowWait(long follower) {
-        long currentUserId = (long)0; //나
+//        long currentUserId = (long)1; //나
+        Optional<User> currentUser = userRepository.findById((long)1);
+        Optional<User> selectFollower = userRepository.findById(follower);
 //        long followingWaitUser = wait.getUserId(); //나에게 신청을 한사람
-        followWaitRepository.deleteByFollowingAndUserId(currentUserId, follower);
+        followWaitRepository.deleteByFollowingAndUserId(currentUser.get(), selectFollower.get());
     }
 
     @Override
     public void deleteFollowing(long following) {
         //언팔로우 하기
         //내가 follower 지우려는 상대가 following
-        long currentUserId = (long)0; //나
+//        long currentUserId = (long)1; //나
+        Optional<User> currentUser = userRepository.findById((long)1);
+        Optional<User> selectFollower = userRepository.findById(following);
 //        long following = follow.getUserId();
-        followRepository.deleteByFollowingAndFollower(following, currentUserId);
+        followRepository.deleteByFollowingAndFollower(selectFollower.get(), currentUser.get());
     }
 
     @Override
     public void deleteFollower(long follower) {
         //팔로워 삭제하기
         //내가 following 지우려는 상대가 follower
-        long currentUserId = (long)0; //나
+//        long currentUserId = (long)1; //나
 //        long follower = follow.getUserId();
-        followRepository.deleteByFollowingAndFollower(follower, currentUserId);
+
+        Optional<User> currentUser = userRepository.findById((long)1);
+        Optional<User> selectFollower = userRepository.findById(follower);
+        followRepository.deleteByFollowingAndFollower(selectFollower.get(), currentUser.get());
 
     }
 }

@@ -13,6 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Getter
+@Table(name="follow_waiting")
 public class FollowWait {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +21,7 @@ public class FollowWait {
     private Long waitingId;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="following")
     private User following;
 
     @ManyToOne

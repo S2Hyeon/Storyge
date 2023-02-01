@@ -9,6 +9,7 @@ export const Box = styled.div`
   border-radius: 8px;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
 `;
 
 export const Icon = styled.div`
@@ -24,4 +25,11 @@ export const Text = styled.input`
   &:hover{  
     outline: none;
   }
+
+  ::placeholder {
+    font-family: "S-CoreDream-4regular";
+    font-size: 14px;
+    color: #C0C0C0;
+  }
+
 `;

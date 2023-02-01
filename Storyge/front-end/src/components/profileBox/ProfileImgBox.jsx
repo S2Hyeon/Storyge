@@ -2,7 +2,7 @@ import React from 'react';
 import ImageUploader from 'react-image-upload'
 import 'react-image-upload/dist/index.css'
 
-export default function ProfileBox() {
+export default function ProfileBoxImg() {
     function getImageFileObject(imageFile) {
         console.log({ imageFile })
       }

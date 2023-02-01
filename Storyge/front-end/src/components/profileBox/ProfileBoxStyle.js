@@ -12,6 +12,7 @@ export const Box = styled.div`
   background-color: #D2D9D2;
   justify-content: space-around;
   border-radius: 10px;
+  margin-top: 20px;
 `;
 
 export const Img = styled.img`

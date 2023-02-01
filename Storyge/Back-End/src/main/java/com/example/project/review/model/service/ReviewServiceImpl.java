@@ -1,5 +1,7 @@
 package com.example.project.review.model.service;
 
+import com.example.project.diary.model.entity.Diary;
+import com.example.project.diary.model.repository.DiaryRepository;
 import com.example.project.review.model.dto.ReviewRequsetDto;
 import com.example.project.review.model.dto.ReviewResponseDto;
 import com.example.project.review.model.dto.ReviewUpdateParam;
@@ -22,15 +24,18 @@ public class ReviewServiceImpl implements ReviewService{
 
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
+    private final DiaryRepository diaryRepository;
 
     // 댓글 입력
     @Override
     public void insertReview(ReviewRequsetDto reviewDto) {
         Optional<User> user =userRepository.findById(reviewDto.getUserId());
+        Diary diary = diaryRepository.findById(reviewDto.getDiaryId()).orElse(null);
+
         Review review = Review.builder()
                 .reviewContent(reviewDto.getReviewContent())
-//                .diaryId(reviewDto.getDiaryId())
-                .user(user.get())
+                .diaryId(diary)
+                .userId(user.get())
                 .build();
         reviewRepository.save(review);
 
@@ -39,11 +44,11 @@ public class ReviewServiceImpl implements ReviewService{
     // 댓글 가져오기
     @Override
     public List<ReviewResponseDto> selectAllReview(Long diaryId) {
-
-        List<Review> reviewList = reviewRepository.findByDiary(diaryId);
+        Diary diary = diaryRepository.findById(diaryId).orElse(null);
+        List<Review> reviewList = reviewRepository.findByDiaryId(diary);
         List<ReviewResponseDto> reviewResponseList = new ArrayList<>();
         for(Review review: reviewList){
-            User user = review.getUser();
+            User user = review.getUserId();
             reviewResponseList.add(ReviewResponseDto.builder()
                     .reviewId(review.getReviewId())
                     .reviewContent(review.getReviewContent())
@@ -59,12 +64,13 @@ public class ReviewServiceImpl implements ReviewService{
 
     // 댓글 수정
     @Override
-    public void updateReview(ReviewUpdateParam reviewUpdateParam, Long userId) {
+    public void updateReview(ReviewUpdateParam reviewUpdateParam) {
 
         //작성자와 현재 수정하려는 사람이 일치하는지 확인해야 한다
         Long reviewId = reviewUpdateParam.getReviewId(); //현재 작성한 댓글의 번호
         Review review = reviewRepository.findById(reviewId).orElse(null); //댓글 정보 select
-        Long reviewUser = review.getUser().getUserId(); // 댓글 작성자 가져오기
+        Long reviewUser = review.getUserId().getUserId(); // 댓글 작성자 가져오기
+        Long userId = null;
         if(reviewUser==userId){
             review.updateReview(review.getReviewContent()); // 같다면 수정하기
         }
@@ -72,10 +78,11 @@ public class ReviewServiceImpl implements ReviewService{
 
     // 댓글 삭제
     @Override
-    public void deleteReview(Long reviewId, Long userId) {
+    public void deleteReview(Long reviewId) {
         //작성자와 현재 삭제하려는 사람이 일치하는지 확인해야 한다
         Optional<Review> review = reviewRepository.findById(reviewId).ofNullable(null);
-        Long reviewUser = review.get().getUser().getUserId();
+        Long reviewUser = review.get().getUserId().getUserId();
+        Long userId = null;
         if(userId==reviewUser){
             reviewRepository.deleteById(reviewId);
         }

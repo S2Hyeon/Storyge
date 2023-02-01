@@ -20,7 +20,7 @@ public class DiaryController {
     private static final String SUCCESS = "Success";
     private static final String FAIL = "Fail";
     @PostMapping("/diary")
-    public ResponseEntity<String> insertArticle(DiaryDto diaryDto){
+    public ResponseEntity<String> insertDiary(DiaryDto diaryDto){
         diaryService.insertDiary(diaryDto);
         return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
     }

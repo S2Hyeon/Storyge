@@ -44,13 +44,15 @@ public class ReviewServiceImpl implements ReviewService{
         reviewRepository.save(review);
 
         User diaryUser = userRepository.findById(diary.getUserId()).orElse(null);
-       
-        // 알림 센터에 추가
-        notificationService.insertReviewNotificatino(NotificationReviewDto.builder()
-                .userId(diaryUser.getUserId())
-                .follow(user.getUserId())
-                .diaryId(diary.getDiaryId())
-                .build());
+
+        if(diaryUser.getUserId()!=user.getUserId()) {
+            // 알림 센터에 추가
+            notificationService.insertReviewNotificatino(NotificationReviewDto.builder()
+                    .userId(diaryUser.getUserId())
+                    .follow(user.getUserId())
+                    .diaryId(diary.getDiaryId())
+                    .build());
+        }
 
     }
 

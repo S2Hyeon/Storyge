@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import "./../../../src/App.css";
 
+export const Container = styled.div`
+  width: 100%;
+`;
+
 export const Box = styled.div`
   display: flex;
   width: 100%;
@@ -68,7 +72,7 @@ export const Text = styled.div`
 export const FollowBtn = styled.button`
   border-radius: 20px;
   background-color: var(--color-white);
-  border:  ${(props) => props.borderColor} 1px solid;
+  border: ${(props) => props.borderColor} 1px solid;
   color: ${(props) => props.color};
   box-shadow: none;
   margin: 2px;

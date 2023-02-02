@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import * as S from "./MainStyle";
 import * as G from "../../styles";
 import newDiaryData from "./NewDiaryData";
+import pieChartData from "./PieChartData";
 import { BsCircleFill } from "react-icons/bs";
 import CustomCalendar from "../../components/calender/Calendar";
+import PieChart from "../../components/chart/PieChart";
 
 function Main() {
   let [diary, setDiary] = useState(true);
   let [statistic, setStatistic] = useState(false);
+  let [chartData, setChartData] = useState(pieChartData);
 
   function switchDiary() {
     setDiary(true);
@@ -32,6 +35,7 @@ function Main() {
         <S.CalendarContainer>
           <S.CalendarBox>
             <CustomCalendar />
+            {/* <PieChart data={chartData} /> */}
           </S.CalendarBox>
           <S.CalendarToggle>
             <S.ToggleOne onClick={() => switchDiary()}>

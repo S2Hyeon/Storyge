@@ -34,8 +34,9 @@ function Main() {
       <G.BodyContainer top="0" bottom="70px" color="true">
         <S.CalendarContainer>
           <S.CalendarBox>
-            <CustomCalendar />
+            {/* <CustomCalendar /> */}
             {/* <PieChart data={chartData} /> */}
+            <PieChart />
           </S.CalendarBox>
           <S.CalendarToggle>
             <S.ToggleOne onClick={() => switchDiary()}>

@@ -45,13 +45,15 @@ export const CalendarContainer = styled.div`
 
 export const CalendarBox = styled.div`
   min-height: 10px;
+  width: 100%;
   background: var(--color-white);
   box-shadow: 0px 16px 40px -4px rgba(112, 144, 176, 0.2);
   border-radius: 12px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-item: center;
-  padding: 20px;
+  padding: 20px 0;
 `;
 
 export const CalendarToggle = styled.div`
@@ -77,6 +79,7 @@ export const WiseBox = styled.div`
   margin: 10px 0;
   font-family: "SeoulHangangM";
   font-size: 12px;
+  text-align: center;
 `;
 
 export const Wise = styled.div`

@@ -39,6 +39,5 @@ export default function FollowerList() {
         })}
       </S.List>
     </G.BodyContainer>
-      
   );
 }

@@ -63,7 +63,7 @@
 }
 
 .App {
-  text-align: center;
+  text-align: left;
   overflow-x: hidden;
   color: var(--color-black);
   font-family: "S-CoreDream-3Light";

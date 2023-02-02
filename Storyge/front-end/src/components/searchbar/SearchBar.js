@@ -2,14 +2,15 @@ import styled from "styled-components";
 
 export const Box = styled.div`
   display: flex;
-  width: 350px;
-  height: 36px;
+  width: 100%;
+  height: 10%;
   padding: 2px;
   background-color: #E8E8E8;
   border-radius: 8px;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+  margin-bottom: 20px;
 `;
 
 export const Icon = styled.div`

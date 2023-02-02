@@ -1,27 +1,29 @@
 import React from "react";
-import * as S from "./FollowerList.js";
-import * as G from "../../styles";
-
-import SearchBar from "./../../components/searchbar/SearchBar.jsx";
-import FollowBtn from "./../../components/toggleBtn/FollowBtn.jsx";
+import * as S from "./Follow.js";
 import newProfileData from "./../2_main/NewDiaryData";
 
 export default function FollowerList() {
   return (
-    <G.BodyContainer>
-      <S.Box>
-        <SearchBar />
-      </S.Box>
-
-      <FollowBtn />
-
+    <S.Container>
       <S.LineText>New</S.LineText>
       <S.List>
         {newProfileData.map((profile) => {
           return (
-            <S.Profile>
-              <S.Img profile={profile.imgUrl} key={profile.id}></S.Img>
+            <S.Profile key={profile.id}>
+              <S.Img profile={profile.imgUrl}></S.Img>
               <S.Text>{profile.name}</S.Text>
+              <S.FollowBtn
+                borderColor="var(--color-primary)"
+                color="var(--color-primary)"
+              >
+                확인
+              </S.FollowBtn>
+              <S.FollowBtn
+                borderColor="var(--color-warning)"
+                color="var(--color-warning)"
+              >
+                삭제
+              </S.FollowBtn>
             </S.Profile>
           );
         })}
@@ -31,13 +33,19 @@ export default function FollowerList() {
       <S.List>
         {newProfileData.map((profile) => {
           return (
-            <S.Profile>
-              <S.Img profile={profile.imgUrl} key={profile.id}></S.Img>
+            <S.Profile key={profile.id}>
+              <S.Img profile={profile.imgUrl}></S.Img>
               <S.Text>{profile.name}</S.Text>
+              <S.FollowBtn
+                borderColor="var(--color-primary)"
+                color="var(--color-primary)"
+              >
+                확인
+              </S.FollowBtn>
             </S.Profile>
           );
         })}
       </S.List>
-    </G.BodyContainer>
+    </S.Container>
   );
 }

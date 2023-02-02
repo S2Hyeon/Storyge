@@ -1,31 +1,34 @@
 import React, { useState } from "react";
 import * as S from "./MyDiaryStyle";
 import * as A from "./../../styles/index";
-import { BsFillCaretLeftFill, BsFillCaretRightFill } from "react-icons/bs";
+import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
 export default function Diarylist() {
-  const [dateInfo, setDateInfo] = useState(new Date());
-  const headDate = `${dateInfo.getFullYear()}.${
-    dateInfo.getMonth() + 1
-  }.${dateInfo.getDate()}`;
-
-  const decreaseDate = () => {
-    setDateInfo(
-      new Date(
-        dateInfo.getFullYear(),
-        dateInfo.getMonth(),
-        dateInfo.getDate() - 1
-      )
-    );
-  };
-  const increaseDate = () => {
-    setDateInfo(
-      new Date(
-        dateInfo.getFullYear(),
-        dateInfo.getMonth(),
-        dateInfo.getDate() + 1
-      )
-    );
-  };
-  return <A.BodyContainer></A.BodyContainer>;
+  const [isChecked, setIsChecked] = useState(false);
+  return (
+    <A.BodyContainer>
+      <S.Col>
+        <S.Card2 backgroundColor="#EFFCEF"></S.Card2>
+        <S.CardFoot2
+          height={isChecked ? "30px" : "120px"}
+          backgroundColor="var(--color-primary)"
+        >
+          <S.Col>
+            <S.Toggle fontSize="14px" onClick={() => setIsChecked((e) => !e)}>
+              {isChecked ? (
+                <div>
+                  이 일기의 분석 결과 보기 <BsFillCaretDownFill />
+                </div>
+              ) : (
+                <div>
+                  이 일기의 분석 결과 닫기 <BsFillCaretUpFill />
+                </div>
+              )}
+            </S.Toggle>
+            {isChecked ? null : <div>{S.data[1].content}</div>}
+          </S.Col>
+        </S.CardFoot2>
+      </S.Col>
+    </A.BodyContainer>
+  );
 }

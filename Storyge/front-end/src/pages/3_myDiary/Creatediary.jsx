@@ -36,14 +36,14 @@ export default function Creatediary() {
         <h1>일기 작성 페이지</h1>
         <Clock format={"작성날짜 YYYY.MM.DD 작성시간 HH:mm"} ticking={true} />
         <hr />
-        <S.Card>
+        <S.Card backgroundColor="var(--color-white)">
           <S.TextBox
             placeholder="대충 멋진 문구로 글쓰기를 자극하라"
             ref={contentRef}
             value={content}
             onChange={onChange}
           />
-          <S.CardFoot>
+          <S.CardFoot height="30px" backgroundColor="var(--color-white)">
             <div>{content.length} / 100</div>
             <button>버튼</button>
           </S.CardFoot>

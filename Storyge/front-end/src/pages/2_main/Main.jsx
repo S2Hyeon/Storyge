@@ -9,19 +9,10 @@ import PieChart from "../../components/chart/PieChart";
 
 function Main() {
   let [diary, setDiary] = useState(true);
-  let [statistic, setStatistic] = useState(false);
   let [chartData, setChartData] = useState(pieChartData);
 
-  function switchDiary() {
-    setDiary(true);
-    setStatistic(false);
-    console.log("다이어리로 넘어가기");
-  }
-
-  function switchStatistic() {
-    setDiary(false);
-    setStatistic(true);
-    console.log("통계로 넘어가기");
+  function switchBox() {
+    setDiary(!diary);
   }
 
   return (
@@ -34,11 +25,10 @@ function Main() {
       <G.BodyContainer top="0" bottom="70px" color="true">
         <S.CalendarContainer>
           <S.CalendarBox>
-            {/* <CustomCalendar /> */}
-            <PieChart />
+            {diary ? <CustomCalendar /> : <PieChart />}
           </S.CalendarBox>
-          <S.CalendarToggle>
-            <S.ToggleOne onClick={() => switchDiary()}>
+          <S.CalendarToggle onClick={() => switchBox()}>
+            <S.ToggleOne>
               <BsCircleFill
                 size={7}
                 color={diary ? "var(--color-primary)" : "var(--color-darkgrey)"}
@@ -52,16 +42,16 @@ function Main() {
                 다이어리
               </span>
             </S.ToggleOne>
-            <S.ToggleOne onClick={() => switchStatistic()}>
+            <S.ToggleOne>
               <BsCircleFill
                 size={7}
                 color={
-                  statistic ? "var(--color-primary)" : "var(--color-darkgrey)"
+                  !diary ? "var(--color-primary)" : "var(--color-darkgrey)"
                 }
               />
               <span
                 style={{
-                  color: statistic
+                  color: !diary
                     ? "var(--color-black)"
                     : "var(--color-darkgrey)",
                 }}

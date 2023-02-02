@@ -2,6 +2,7 @@ import React from "react";
 import "./../8_music/Music.css";
 import { useNavigate } from "react-router-dom";
 import * as G from "../../styles";
+import * as S from './Music.js'
 
 export default function Music() {
   const movePage = useNavigate();
@@ -11,19 +12,8 @@ export default function Music() {
   }
   return (
     <G.BodyContainer>
-      <div className="rectangle">
-        <textarea
-          className="text"
-          placeholder="노래를 추천받을&#13;&#10;오늘 하루의 글을 작성해주세요."
-          maxLength={200}
-          rows="10"
-          required
-        ></textarea>
-      </div>
-      <button className="registeBtn" onClick={gomusicresult}>
-        버튼
-      </button>
-      <h3>애니메이션 추가</h3>
+      <S.Rectangle placeholder="음악 추천을 받고 싶은 사연을 작성해주세요."/>
+      <G.longBtnDefault onClick={gomusicresult} style={{marginBottom: '20px'}}><S.Text>분석하기</S.Text></G.longBtnDefault>
     </G.BodyContainer>
   );
 }

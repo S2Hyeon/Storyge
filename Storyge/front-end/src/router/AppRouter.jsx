@@ -7,8 +7,8 @@ import Login from "../pages/1_login/Login";
 import LoginInfo from "../pages/1_login/LoginInfo";
 
 import Main from "../pages/2_main/Main";
-import Music from "../pages/8_music/Music";
-import MusicResult from "../pages/8_music/MusicResult";
+import Music from "../pages/8_music/Music.jsx";
+import MusicResult from "../pages/8_music/MusicResult.jsx";
 import ErrorPage from "../pages/9_errorPage/ErrorPage";
 
 import Creatediary from "../pages/3_myDiary/Creatediary";

@@ -1,13 +1,14 @@
 import React from "react";
-import * as G from "../../styles/index.js";
 import * as S from "./FollowerList.js";
+import * as G from "../../styles";
+
 import SearchBar from "./../../components/searchbar/SearchBar.jsx";
 import FollowBtn from "./../../components/toggleBtn/FollowBtn.jsx";
 import newProfileData from "./../2_main/NewDiaryData";
 
 export default function FollowerList() {
   return (
-    <S.Container >
+    <G.BodyContainer>
       <S.Box>
         <SearchBar />
       </S.Box>
@@ -37,6 +38,7 @@ export default function FollowerList() {
           );
         })}
       </S.List>
-    </S.Container>
+    </G.BodyContainer>
+      
   );
 }

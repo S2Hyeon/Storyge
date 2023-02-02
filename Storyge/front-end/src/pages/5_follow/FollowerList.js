@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import './../../../src/App.css'
-import * as G from "./../../styles/index.js";
 
-export const Container = styled.G.BodyContainer`
-  display: flex;
-`;
+// export const Container = styled.G.BodyContainer`
+//   display: flex;
+// `;
 
 export const Box = styled.div`
   display: flex;
@@ -41,6 +40,7 @@ export const LineText = styled.div`
 `;
 
 export const List = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;

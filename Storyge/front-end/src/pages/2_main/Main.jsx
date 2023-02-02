@@ -35,7 +35,6 @@ function Main() {
         <S.CalendarContainer>
           <S.CalendarBox>
             {/* <CustomCalendar /> */}
-            {/* <PieChart data={chartData} /> */}
             <PieChart />
           </S.CalendarBox>
           <S.CalendarToggle>

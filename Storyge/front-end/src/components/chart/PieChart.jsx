@@ -1,4 +1,5 @@
 import React from "react";
+import * as S from "./PieChartStyle";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -48,7 +49,12 @@ const options = {
 };
 
 function PieChart() {
-  return <Doughnut data={data} options={options} />;
+  return (
+    <>
+      <S.Title>감정 통계 그래프</S.Title>
+      <Doughnut data={data} options={options} />
+    </>
+  );
 }
 
 export default PieChart;

@@ -12,18 +12,20 @@ export default function FollowerList() {
             <S.Profile key={profile.id}>
               <S.Img profile={profile.imgUrl}></S.Img>
               <S.Text>{profile.name}</S.Text>
-              <S.FollowBtn
-                borderColor="var(--color-primary)"
-                color="var(--color-primary)"
-              >
-                확인
-              </S.FollowBtn>
-              <S.FollowBtn
-                borderColor="var(--color-warning)"
-                color="var(--color-warning)"
-              >
-                삭제
-              </S.FollowBtn>
+              <S.BtnBox>
+                <S.FollowBtn
+                  borderColor="var(--color-primary)"
+                  color="var(--color-primary)"
+                >
+                  확인
+                </S.FollowBtn>
+                <S.FollowBtn
+                  borderColor="var(--color-warning)"
+                  color="var(--color-warning)"
+                >
+                  삭제
+                </S.FollowBtn>
+              </S.BtnBox>
             </S.Profile>
           );
         })}
@@ -36,12 +38,14 @@ export default function FollowerList() {
             <S.Profile key={profile.id}>
               <S.Img profile={profile.imgUrl}></S.Img>
               <S.Text>{profile.name}</S.Text>
-              <S.FollowBtn
-                borderColor="var(--color-primary)"
-                color="var(--color-primary)"
-              >
-                확인
-              </S.FollowBtn>
+              <S.BtnBox>
+                <S.FollowBtn
+                  borderColor="var(--color-warning)"
+                  color="var(--color-warning)"
+                >
+                삭제
+                </S.FollowBtn>
+              </S.BtnBox>
             </S.Profile>
           );
         })}

@@ -6,6 +6,7 @@ import * as G from "../../styles";
 import SearchBar from "./../../components/searchbar/SearchBar.jsx";
 import FollowerList from "./FollowerList.jsx";
 import FollowingList from "./FollowingList.jsx";
+import Toggle from './../3_myDiary/Toggle.jsx';
 
 export default function Follow() {
   const [followAlarm, setFollowAlarm] = useState(true);
@@ -34,8 +35,8 @@ export default function Follow() {
         </B.Following>
       </S.Box>
 
-      {/* {followAlarm ? <FollowerList /> : <FollowingList />} */}
-      <FollowerList />
+      {followAlarm ? <FollowerList /> : <FollowingList />}
+        <Toggle />
     </G.BodyContainer>
   );
 }

@@ -65,12 +65,14 @@ public class FollowController {
         return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
     }
 
+    // 팔로잉 삭제
     @DeleteMapping("/following/{nickname}")
     public ResponseEntity<String> deleteFollowing(@PathVariable String follow){
         followService.deleteFollowing(follow);
         return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
     }
 
+    // 팔로워 삭제
     @DeleteMapping("/follower/{nickname}")
     public ResponseEntity<String> deleteFollower(@PathVariable String follow){
         followService.deleteFollower(follow);

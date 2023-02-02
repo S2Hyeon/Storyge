@@ -21,22 +21,22 @@ function CustomCalendar() {
   function displayEmotion(props) {
     if (props != null) {
       if (props.emotion === "angry") {
-        return <img src={angry} width="100%" />;
+        return <img src={angry} width="80%" />;
       } else if (props.emotion === "aversion") {
-        return <img src={aversion} width="100%" />;
+        return <img src={aversion} width="80%" />;
       } else if (props.emotion === "happy") {
-        return <img src={happy} width="100%" />;
+        return <img src={happy} width="80%" />;
       } else if (props.emotion === "sad") {
-        return <img src={sad} width="100%" />;
+        return <img src={sad} width="80%" />;
       } else if (props.emotion === "scared") {
-        return <img src={scared} width="100%" />;
+        return <img src={scared} width="80%" />;
       } else if (props.emotion === "soso") {
-        return <img src={soso} width="100%" />;
+        return <img src={soso} width="80%" />;
       } else if (props.emotion === "surprised") {
-        return <img src={surprised} width="100%" />;
+        return <img src={surprised} width="80%" />;
       }
     } else {
-      return <img src={noEmotion} width="100%" />;
+      return <img src={noEmotion} width="80%" />;
     }
   }
 

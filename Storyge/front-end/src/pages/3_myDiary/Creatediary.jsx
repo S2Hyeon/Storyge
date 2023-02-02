@@ -55,9 +55,9 @@ export default function Creatediary() {
               감정분석하기 버튼
             </A.longBtnDefault>
           </div>
-          <S.BtnNegative onClick={() => navigate(-1)}>
+          <A.longBtnBorder onClick={() => navigate(-1)}>
             일단 뒤로가기 버튼
-          </S.BtnNegative>
+          </A.longBtnBorder>
         </div>
       </S.Mother>
       {modalOpen && <Modal setModalOpen={setModalOpen} />}

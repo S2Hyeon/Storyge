@@ -2,6 +2,8 @@ package com.example.project.review.model.service;
 
 import com.example.project.diary.model.entity.Diary;
 import com.example.project.diary.model.repository.DiaryRepository;
+import com.example.project.notification.model.dto.NotificationReviewDto;
+import com.example.project.notification.model.service.NotificationService;
 import com.example.project.review.model.dto.ReviewRequsetDto;
 import com.example.project.review.model.dto.ReviewResponseDto;
 import com.example.project.review.model.dto.ReviewUpdateParam;
@@ -26,18 +28,29 @@ public class ReviewServiceImpl implements ReviewService{
     private final UserRepository userRepository;
     private final DiaryRepository diaryRepository;
 
+    private final NotificationService notificationService;
+
     // 댓글 입력
     @Override
     public void insertReview(ReviewRequsetDto reviewDto) {
-        Optional<User> user =userRepository.findById(reviewDto.getUserId());
+        User user =userRepository.findById(reviewDto.getUserId()).orElse(null);
         Diary diary = diaryRepository.findById(reviewDto.getDiaryId()).orElse(null);
 
         Review review = Review.builder()
                 .reviewContent(reviewDto.getReviewContent())
                 .diaryId(diary)
-                .userId(user.get())
+                .userId(user)
                 .build();
         reviewRepository.save(review);
+
+        User diaryUser = userRepository.findById(diary.getUserId()).orElse(null);
+       
+        // 알림 센터에 추가
+        notificationService.insertReviewNotificatino(NotificationReviewDto.builder()
+                .userId(diaryUser.getUserId())
+                .follow(user.getUserId())
+                .diaryId(diary.getDiaryId())
+                .build());
 
     }
 

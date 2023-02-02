@@ -2,8 +2,10 @@ import styled from "styled-components";
 
 export const Header = styled.div`
   height: 60px;
+  position: fixed;
+  top: 0;
   width: 100%;
-  background-color: #eaf2ea;
+  background-color: var(--color-background);
   padding-left: 20px;
   display: flex;
   justify-contents: center;

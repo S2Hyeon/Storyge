@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import * as S from "./MainStyle";
+import * as G from "../../styles";
 import newDiaryData from "./NewDiaryData";
+import pieChartData from "./PieChartData";
 import { BsCircleFill } from "react-icons/bs";
+import CustomCalendar from "../../components/calender/Calendar";
+import PieChart from "../../components/chart/PieChart";
 
 function Main() {
   let [diary, setDiary] = useState(true);
   let [statistic, setStatistic] = useState(false);
+  let [chartData, setChartData] = useState(pieChartData);
 
   function switchDiary() {
     setDiary(true);
@@ -26,9 +31,12 @@ function Main() {
           return <S.Profile profile={diary.imgUrl} key={diary.id} />;
         })}
       </S.NewDiary>
-      <S.Container>
+      <G.BodyContainer top="0" bottom="70px" color="true">
         <S.CalendarContainer>
-          <S.CalendarBox></S.CalendarBox>
+          <S.CalendarBox>
+            <CustomCalendar />
+            {/* <PieChart data={chartData} /> */}
+          </S.CalendarBox>
           <S.CalendarToggle>
             <S.ToggleOne onClick={() => switchDiary()}>
               <BsCircleFill
@@ -72,7 +80,7 @@ function Main() {
           </S.Wise>
           <S.WiseFrom>영화 &lt;월 플라워&gt; 중</S.WiseFrom>
         </S.WiseBox>
-      </S.Container>
+      </G.BodyContainer>
     </S.All>
   );
 }

@@ -77,3 +77,10 @@ export const FollowBtn = styled.button`
   box-shadow: none;
   margin: 2px;
 `;
+
+export const BtnBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+`;

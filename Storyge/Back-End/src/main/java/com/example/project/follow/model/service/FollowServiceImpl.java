@@ -5,6 +5,8 @@ import com.example.project.follow.model.entity.Follow;
 import com.example.project.follow.model.entity.FollowWait;
 import com.example.project.follow.model.repository.FollowRepository;
 import com.example.project.follow.model.repository.FollowWaitRepository;
+import com.example.project.notification.model.dto.NotificationFollowDto;
+import com.example.project.notification.model.service.NotificationService;
 import com.example.project.user.model.dto.UserDto;
 import com.example.project.user.model.entity.User;
 import com.example.project.user.model.repository.UserRepository;
@@ -25,39 +27,51 @@ public class FollowServiceImpl implements FollowService {
     private final FollowWaitRepository followWaitRepository;
     private final UserRepository userRepository;
 
+    private final NotificationService notificationService;
+
     // 팔로우 대기 신청
     @Override
     public void insertFollowWait(UserNicknameDto following) {
 //        User currentUser = null;
-        Optional<User> currentUser = userRepository.findById((long)1);
+        User currentUser = userRepository.findById((long)1).orElse(null);
 
 //        Optional<User> followingUser = userRepository.findById(following.getUserId());
-        Optional<User> followingUser = userRepository.findByNickname(following.getNickname());
+        User followingUser = userRepository.findByNickname(following.getNickname()).orElse(null);
 
         followWaitRepository.save(FollowWait.builder()
-                .userId(currentUser.get())
-                .following(followingUser.get())
+                .userId(currentUser)
+                .following(followingUser)
+                .build());
+
+        notificationService.insertFollowWaitNotification(NotificationFollowDto.builder()
+                .userId(followingUser.getUserId())
+                .follow(currentUser.getUserId())
                 .build());
     }
 
     // 팔로우 수락
     @Override
     public void insertFollower(UserNicknameDto follower) {
-        Optional<User> currentUser = userRepository.findById((long)1);
+        User currentUser = userRepository.findById((long)1).orElse(null);
 //        Optional<User> followerUser = userRepository.findById(follower.getUserId());
-        Optional<User> followerUser = userRepository.findByNickname(follower.getNickname());
+        User followerUser = userRepository.findByNickname(follower.getNickname()).orElse(null);
 
         // 대기 상태에서 삭제
-        followWaitRepository.deleteByFollowingAndUserId(currentUser.get(), followerUser.get());
+        followWaitRepository.deleteByFollowingAndUserId(currentUser, followerUser);
 
 //        User following = userRepository.getOne(userDto.getUserId());
 
         // follow table에 insert (팔로우 수락)
         followRepository.save(Follow.builder()
-                .following(currentUser.get())
-                .follower(followerUser.get())
+                .following(currentUser)
+                .follower(followerUser)
                 .build());
 
+
+        notificationService.insertFollowNotification(NotificationFollowDto.builder()
+                .userId(followerUser.getUserId())
+                .follow(currentUser.getUserId())
+                .build());
     }
 
     // 팔로우 대기 목록
@@ -65,7 +79,7 @@ public class FollowServiceImpl implements FollowService {
     public List<UserDto> selectAllFollowWait() {
 
 //        Long currentUserId = (long)1;
-        Optional<User> currentUser = userRepository.findById((long)3);
+        Optional<User> currentUser = userRepository.findById((long)1);
 
         List<FollowWait> followWaitList = followWaitRepository.findByFollowing(currentUser.get());
         List<UserDto> followWaitUserList = new ArrayList<>();

@@ -28,7 +28,7 @@ function Modal({ setModalOpen }) {
           <p>그럼 니가 골라보던가 흥 😍</p>
           <S.Row>
             {emotionList.map((emotion) => {
-              return <S.EmotionBtn emotion={emotion} />;
+              return <S.EmotionBtn emotion={emotion} key={emotion} />;
             })}
           </S.Row>
           <S.ModalBtnDiv>

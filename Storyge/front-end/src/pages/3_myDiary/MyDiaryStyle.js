@@ -34,15 +34,17 @@ export const Modal = styled.div`
   margin: 20px 0 20px 0;
 `;
 
-export const TextBox = styled.textarea`
+export const TextBox = styled.input`
+  &::placeholder {
+    text-align: top;
+  }
   box-sizing: border-box;
   width: 100%;
-  height: 120px;
-  resize: vertical;
+  height: 80%;
   border: 3px solid #accebc;
   padding: auto;
   border: none;
-  margin: 20px 0 20px 0;
+  border-radius: 20px 20px 0 0;
   padding: 0 20px 0 20px;
   font-size: 15px;
   background-color: ${(props) => props.backgroundColor};
@@ -53,19 +55,34 @@ export const Mother = styled.div`
 `;
 
 export const Card = styled.div`
+  diplay: flex;
   border-radius: 20px;
   border: 3px solid #accebc;
   background-color: ${(props) => props.backgroundColor};
   margin: 20px 0 20px 0;
   height: 230px;
+  vertical-align: space-between;
 `;
 
 export const CardFoot = styled.div`
+  height: 10%;
   width: 100%;
   display: flex;
   background-color: ${(props) => props.backgroundColor};
   height: ${(props) => props.height};
   border-radius: 0 0 20px 20px;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const CountDiary = styled.div`
+  margin: 0 0 0 10px;
+`;
+
+export const LockToggle = styled.button`
+  background-color: var(--color-primary);
+  border: hidden;
+  margin: 0 10px 0 0;
 `;
 
 export const BtnPositive = styled.button`
@@ -141,8 +158,8 @@ export const Col = styled.div`
 
 export const Row = styled.div`
   display: flex;
-  display: inline-block;
-  text-align: left;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Time = styled.div`
@@ -185,3 +202,48 @@ export const CardFoot2 = styled.div`
 export const Analysis = styled.div`
   heignt: 30px;
 `;
+
+export const CommentWriteBox = styled.div`
+  background-color: var(--color-grey);
+  border-radius: 100px;
+  height: 35px;
+  width: 100%;
+  border: hidden;
+  margin: 10px 0 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const CommentWrite = styled.input`
+  background-color: var(--color-grey);
+  border-radius: 100px;
+  border: hidden;
+  font-size: 16px;
+  width: 260px;
+  height: 33px;
+  margin: 0 0 0 10px;
+`;
+
+export const submitBtn = styled.button`
+  background-color: var(--color-primary);
+  border-radius: 100px;
+  border: hidden;
+  width: 80px;
+  height: 35px;
+  font-size: 16px;
+`;
+
+// export const TextBox = styled.textarea`
+//   box-sizing: border-box;
+//   width: 100%;
+//   height: 120px;
+//   resize: vertical;
+//   border: 3px solid #accebc;
+//   padding: auto;
+//   border: none;
+//   margin: 20px 0 20px 0;
+//   padding: 0 20px 0 20px;
+//   font-size: 15px;
+//   background-color: ${(props) => props.backgroundColor};
+// `;

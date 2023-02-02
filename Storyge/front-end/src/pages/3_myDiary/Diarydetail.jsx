@@ -4,7 +4,7 @@ import * as A from "./../../styles/index";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
 export default function Diarylist() {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
   return (
     <A.BodyContainer>
       <S.Card2 backgroundColor="#EFFCEF">
@@ -27,12 +27,17 @@ export default function Diarylist() {
         </S.Toggle>
         {isChecked ? null : <div>{S.data[1].content}</div>}
       </S.CardFoot2>
+      <S.CommentWriteBox>
+        <S.CommentWrite placeholder="댓글 쓰기" />
+        <S.submitBtn>작성</S.submitBtn>
+      </S.CommentWriteBox>
       {S.data.map((diary) => {
         return (
           <S.DiaryBox key={diary.id}>
             <S.Emotion emotion={diary.img} />
             <S.Col>
               <div>갱월쥐</div>
+              <div>2023.02.02</div>
               <S.Content>{diary.content}</S.Content>
             </S.Col>
           </S.DiaryBox>

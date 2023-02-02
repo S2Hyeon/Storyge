@@ -1,7 +1,13 @@
 import styled from "styled-components";
 
 export const BodyContainer = styled.div`
-  margin: 0 20px;
+  margin: ${(props) => (props.top ? props.top : "60px")} 20px 70px 20px;
+  padding: 0 0 ${(props) => (props.bottom ? props.bottom : "0")} 0;
+  // border: 1px solid red;
+  // max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const longBtnDefault = styled.button`

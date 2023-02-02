@@ -67,4 +67,64 @@ export const CardFoot = styled.div`
 
 export const AutoBtn = styled.button`
   width: auto;
+  height: auto;
+  background-color: var(--color-white);
+  border: hidden;
+  padding: 3px 0 0 0;
+`;
+
+export const DiaryHeader = styled.div`
+  display: flex;
+  font-size: 18px;
+  // position: absolute;
+  // left: 50%;
+  // top: 80px;
+  // transform: translate(-50%, 0);
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  border-color: white white var(--color-primary);
+  border-style: solid;
+  border-width: 1px;
+`;
+
+export const DateInfo = styled.div`
+  width: 100px;
+`;
+
+export const DiaryBox = styled.div`
+  border-color: white white var(--color-primary);
+  border-style: solid;
+  border-width: 1px;
+  height: 80px;
+  top: 50%;
+`;
+
+export const Emotion = styled.div`
+  height: 60px;
+  width: 60px;
+  margin: 0 5px;
+  background-image: url(${(props) => props.emotion});
+  background-size: cover;
+  border-radius: 100px;
+
+  flex: 0 0 auto;
+`;
+
+export const Col = styled.div`
+  display: flex;
+  margin: 10px 0 10px 0;
+`;
+
+export const Row = styled.div`
+  display: inline-block;
+  text-align: left;
+`;
+
+export const Time = styled.div`
+  font-size: 14px;
+`;
+
+export const Content = styled.div`
+  font-size: 12px;
 `;

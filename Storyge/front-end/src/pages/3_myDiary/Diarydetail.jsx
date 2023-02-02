@@ -33,7 +33,7 @@ export default function Diarylist() {
             )}
           </S.ToggleBtnBox>
         </S.Toggle>
-        {isChecked ? null : <div>{S.data[1].content}</div>}
+        {isChecked ? null : <S.Mother>{S.data[1].content}</S.Mother>}
       </S.CardFoot2>
       <S.CommentWriteBox>
         <S.CommentWrite placeholder="댓글 쓰기" />

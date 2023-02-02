@@ -31,7 +31,33 @@ export const Modal = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
-  margin: 20px 0 20px 0;
+  width: 330px;
+  height: 200px;
+  align-items: center;
+`;
+
+export const ModalItems = styled.div`
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+export const ModalBtnDiv = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin: 20px;
+`;
+
+export const EmotionBtn = styled.div`
+  height: 30px;
+  width: 30px;
+  background-image: url(${(props) => props.emotion});
+  background-size: cover;
+  border-radius: 100px;
+  flex: 0 0 auto;
+  margin: 0 10px 0 0;
 `;
 
 export const TextBox = styled.textarea`

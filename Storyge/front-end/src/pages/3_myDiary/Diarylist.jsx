@@ -4,7 +4,6 @@ import * as A from "./../../styles/index";
 import { BsFillCaretLeftFill, BsFillCaretRightFill } from "react-icons/bs";
 
 export default function Diarylist() {
-
   const [dateInfo, setDateInfo] = useState(new Date());
   const headDate = `${dateInfo.getFullYear()}.${
     dateInfo.getMonth() + 1
@@ -42,12 +41,10 @@ export default function Diarylist() {
       {S.data.map((diary) => {
         return (
           <S.DiaryBox key={diary.id}>
+            <S.Emotion emotion={diary.img} />
             <S.Col>
-              <S.Emotion emotion={diary.img} />
-              <S.Row>
-                <div>{diary.time}</div>
-                <S.Content>{diary.content}</S.Content>
-              </S.Row>
+              <div>{diary.time}</div>
+              <S.Content>{diary.content}</S.Content>
             </S.Col>
           </S.DiaryBox>
         );

@@ -4,6 +4,7 @@ import Clock from "react-live-clock";
 import Modal from "./Modal";
 import * as S from "./MyDiaryStyle";
 import * as A from "./../../styles/index";
+import Toggle from "./Toggle";
 
 export default function Creatediary() {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ export default function Creatediary() {
           />
           <S.CardFoot height="30px" backgroundColor="var(--color-white)">
             <S.CountDiary>{content.length} / 100</S.CountDiary>
-            <S.LockToggle>버튼</S.LockToggle>
+            <Toggle />
           </S.CardFoot>
         </S.Card>
         <div>

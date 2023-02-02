@@ -8,24 +8,32 @@ export default function Diarylist() {
   return (
     <A.BodyContainer>
       <S.Card2 backgroundColor="#EFFCEF">
-        <div>{S.data[0].content}</div>
+        <S.MainContent>
+          <S.Emotion emotion={S.data[1].img} />
+          <S.Col>
+            <div>{S.data[1].time}</div>
+            <S.Content>{S.data[1].content}</S.Content>
+          </S.Col>
+        </S.MainContent>
       </S.Card2>
       <S.CardFoot2
         height={isChecked ? "30px" : "120px"}
         backgroundColor="var(--color-primary)"
       >
         <S.Toggle fontSize="14px" onClick={() => setIsChecked((e) => !e)}>
-          {isChecked ? (
-            <S.Analysis>
-              이 일기의 분석 결과 보기 <BsFillCaretDownFill />
-            </S.Analysis>
-          ) : (
-            <div>
-              이 일기의 분석 결과 닫기 <BsFillCaretUpFill />
-            </div>
-          )}
+          <S.ToggleBtnBox>
+            {isChecked ? (
+              <div>
+                이 일기의 분석 결과 보기 <BsFillCaretDownFill />
+              </div>
+            ) : (
+              <div>
+                이 일기의 분석 결과 닫기 <BsFillCaretUpFill />
+              </div>
+            )}
+          </S.ToggleBtnBox>
         </S.Toggle>
-        {isChecked ? null : <div>{S.data[1].content}</div>}
+        {isChecked ? null : <S.Mother>{S.data[1].content}</S.Mother>}
       </S.CardFoot2>
       <S.CommentWriteBox>
         <S.CommentWrite placeholder="댓글 쓰기" />

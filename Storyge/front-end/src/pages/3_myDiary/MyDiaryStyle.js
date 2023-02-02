@@ -119,26 +119,28 @@ export const DiaryBox = styled.div`
   border-width: 1px;
   height: 80px;
   top: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Emotion = styled.div`
   height: 60px;
   width: 60px;
-  margin: 0 5px;
   background-image: url(${(props) => props.emotion});
   background-size: cover;
   border-radius: 100px;
-
   flex: 0 0 auto;
+  margin: 0 10px 0 0;
 `;
 
 export const Col = styled.div`
-  display: flex;
   margin: 10px 0 10px 0;
   flex-direction: column;
 `;
 
 export const Row = styled.div`
+  display: flex;
   display: inline-block;
   text-align: left;
 `;
@@ -166,13 +168,20 @@ export const Card2 = styled.div`
   background-color: ${(props) => props.backgroundColor};
   margin: 20px 0 0 0;
   height: 200px;
+  width: 100%;
+  // box-sizing: border-box;
 `;
 
 export const CardFoot2 = styled.div`
   width: 100%;
   display: flex;
+  border: 3px solid #accebc;
   background-color: ${(props) => props.backgroundColor};
   height: ${(props) => props.height};
   border-radius: 0 0 20px 20px;
   justify-content: right;
+`;
+
+export const Analysis = styled.div`
+  heignt: 30px;
 `;

@@ -1,5 +1,10 @@
 import styled from "styled-components";
 import './../../../src/App.css'
+import * as G from "./../../styles/index.js";
+
+export const Container = styled.G.BodyContainer`
+  display: flex;
+`;
 
 export const Box = styled.div`
   display: flex;

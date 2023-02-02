@@ -34,10 +34,8 @@ export const Modal = styled.div`
   margin: 20px 0 20px 0;
 `;
 
-export const TextBox = styled.input`
-  &::placeholder {
-    text-align: top;
-  }
+export const TextBox = styled.textarea`
+  text-align: top;
   box-sizing: border-box;
   width: 100%;
   height: 80%;
@@ -45,7 +43,7 @@ export const TextBox = styled.input`
   padding: auto;
   border: none;
   border-radius: 20px 20px 0 0;
-  padding: 0 20px 0 20px;
+  padding: 10px 20px 0 20px;
   font-size: 15px;
   background-color: ${(props) => props.backgroundColor};
 `;
@@ -55,13 +53,12 @@ export const Mother = styled.div`
 `;
 
 export const Card = styled.div`
-  diplay: flex;
   border-radius: 20px;
   border: 3px solid #accebc;
   background-color: ${(props) => props.backgroundColor};
   margin: 20px 0 20px 0;
+  width: 100%;
   height: 230px;
-  vertical-align: space-between;
 `;
 
 export const CardFoot = styled.div`

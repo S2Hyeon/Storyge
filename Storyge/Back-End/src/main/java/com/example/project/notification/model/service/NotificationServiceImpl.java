@@ -77,8 +77,13 @@ public class NotificationServiceImpl implements NotificationService {
         List<Notification> notifications = notificationRepository.findByUserIdOrderByCreatedAtDesc(currentUser);
         List<NotificationReponseDto> notificationList = new ArrayList<>();
         for(Notification noti:notifications){
+
+            User user = userRepository.findById(noti.getUserId().getUserId()).orElse(null);
+
             notificationList.add(NotificationReponseDto.builder()
                     .follow(noti.getFollow().getUserId())
+                    .nickname(user.getNickname())
+                    .profileImg(user.getProfileImg())
                     .notiType(noti.getNotiType())
                     .diaryId(noti.getDiaryId().getDiaryId())
                     .build());
@@ -86,4 +91,5 @@ public class NotificationServiceImpl implements NotificationService {
 
         return notificationList;
     }
+
 }

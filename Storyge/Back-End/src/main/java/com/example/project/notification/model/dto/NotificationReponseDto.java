@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 public class NotificationReponseDto {
 
     private Long follow;
+    private String nickname;
+    private String profileImg;
     private String notiType;
     private Long diaryId;
 

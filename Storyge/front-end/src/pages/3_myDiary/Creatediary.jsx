@@ -45,7 +45,6 @@ export default function Creatediary() {
           />
           <S.CardFoot height="30px" backgroundColor="var(--color-white)">
             <S.CountDiary>{content.length} / 100</S.CountDiary>
-            <S.LockToggle>버튼</S.LockToggle>
           </S.CardFoot>
         </S.Card>
         <div>

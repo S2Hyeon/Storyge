@@ -111,10 +111,7 @@ export const AutoBtn = styled.button`
 export const DiaryHeader = styled.div`
   display: flex;
   font-size: 18px;
-  // position: absolute;
-  // left: 50%;
-  // top: 80px;
-  // transform: translate(-50%, 0);
+  width: 100%;
   justify-content: center;
   align-items: center;
   height: 60px;
@@ -125,6 +122,7 @@ export const DiaryHeader = styled.div`
 
 export const DateInfo = styled.div`
   width: 100px;
+  text-align: center;
 `;
 
 export const DiaryBox = styled.div`
@@ -189,15 +187,17 @@ export const Card2 = styled.div`
 export const CardFoot2 = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
   border: 3px solid #accebc;
   background-color: ${(props) => props.backgroundColor};
   height: ${(props) => props.height};
   border-radius: 0 0 20px 20px;
-  justify-content: right;
 `;
 
-export const Analysis = styled.div`
-  heignt: 30px;
+export const ToggleBtnBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: right;
 `;
 
 export const CommentWriteBox = styled.div`
@@ -231,16 +231,8 @@ export const submitBtn = styled.button`
   font-size: 16px;
 `;
 
-// export const TextBox = styled.textarea`
-//   box-sizing: border-box;
-//   width: 100%;
-//   height: 120px;
-//   resize: vertical;
-//   border: 3px solid #accebc;
-//   padding: auto;
-//   border: none;
-//   margin: 20px 0 20px 0;
-//   padding: 0 20px 0 20px;
-//   font-size: 15px;
-//   background-color: ${(props) => props.backgroundColor};
-// `;
+export const MainContent = styled.div`
+  margin: 10px;
+  display: flex;
+  align-items: center;
+`;

@@ -18,7 +18,8 @@ import Diarydetial from "../pages/3_myDiary/Diarydetail";
 import MyPage from "./../pages/4_myPage/MyPage.jsx";
 import ModifyProfile from "./../pages/4_myPage/ModifyProfile.jsx";
 import Alarm from "./../pages/10_alarm/Alarm.jsx";
-import Follow from '../pages/5_follow/Follow.jsx';
+import Follow from "../pages/5_follow/Follow.jsx";
+import OAuth2RedirectHandler from "./../pages/1_login/OAuth2RedirectHandler.jsx";
 
 function AppRouter() {
   return (
@@ -27,6 +28,10 @@ function AppRouter() {
       <Route path="intro" element={<Intro />} />
       <Route path="login" element={<Login />} />
       <Route path="logininfo" element={<LoginInfo />} />
+      <Route
+        path="/oauth/callback/kakao"
+        element={<OAuth2RedirectHandler />}
+      ></Route>
 
       {/* 헤더, 내브바 포함 O */}
       <Route path="/" element={<Layout />}>

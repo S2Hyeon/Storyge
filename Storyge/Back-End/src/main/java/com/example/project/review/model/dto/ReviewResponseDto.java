@@ -1,5 +1,6 @@
 package com.example.project.review.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +18,6 @@ public class ReviewResponseDto {
     String nickname;
     String profileImg;
     String reviewContent;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm", timezone = "Asia/Seoul")
     LocalDateTime createdAt;
 }

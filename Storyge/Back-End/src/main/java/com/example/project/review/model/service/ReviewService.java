@@ -10,8 +10,8 @@ public interface ReviewService {
 
     void insertReview(ReviewRequsetDto reviewDto);
     List<ReviewResponseDto> selectAllReview(Long diaryId);
-    void updateReview(ReviewUpdateParam reviewUpdateParam);
-    void deleteReview(Long reviewId);
+    Boolean updateReview(ReviewUpdateParam reviewUpdateParam);
+    Boolean deleteReview(Long reviewId);
 
 
 

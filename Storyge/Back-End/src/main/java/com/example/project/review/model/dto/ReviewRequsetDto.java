@@ -14,6 +14,5 @@ public class ReviewRequsetDto {
     Long userId;
     Long diaryId;
     String reviewContent;
-//    LocalDateTime createdAt;
 
 }

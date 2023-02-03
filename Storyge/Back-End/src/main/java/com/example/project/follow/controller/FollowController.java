@@ -29,9 +29,15 @@ public class FollowController {
                     dataType = "String")
     @PostMapping("/follow-wait")
     public ResponseEntity insertFollowWait(@RequestBody UserNicknameDto userNicknameDto){
-        System.out.println("실행");
-        followService.insertFollowWait(userNicknameDto);
-        return new ResponseEntity(SUCCESS, HttpStatus.OK);
+
+        if(followService.insertFollowWait(userNicknameDto)){ // 신청 성공
+            return new ResponseEntity(SUCCESS, HttpStatus.OK);
+        }
+        else{
+            // 신청 실패
+            // -> 신청하려는 상대가 존재하지 않거나 이미 팔로우 신청 중이거나 팔로우 중
+            return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
+        }
     }
 
     //팔로우 수락
@@ -40,9 +46,13 @@ public class FollowController {
     @PostMapping("/follow")
     public ResponseEntity insertFollower(@RequestBody UserNicknameDto userNicknameDto){
 
-        followService.insertFollower(userNicknameDto);
+        if(followService.insertFollower(userNicknameDto)){
+            return new ResponseEntity(SUCCESS, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
+        }
 
-        return new ResponseEntity(SUCCESS, HttpStatus.OK);
     }
 
     //팔로우 수락 대기 목록
@@ -79,8 +89,12 @@ public class FollowController {
     @ApiImplicitParam(name="nickname", value = "거절할 사용자의 nickname")
     @DeleteMapping("/follow-wait/{nickname}")
     public ResponseEntity<String> deleteFollowWait(@PathVariable String nickname){
-        followService.deleteFollowWait(nickname);
-        return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
+        if(followService.deleteFollowWait(nickname)){
+            return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+        }
     }
 
     // 팔로잉 삭제
@@ -89,8 +103,11 @@ public class FollowController {
     @ApiImplicitParam(name="nickname", value = "거절할 사용자의 nickname")
     @DeleteMapping("/following/{nickname}")
     public ResponseEntity<String> deleteFollowing(@PathVariable String nickname){
-        followService.deleteFollowing(nickname);
-        return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
+        if(followService.deleteFollowing(nickname)){
+            return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(FAIL,HttpStatus.NO_CONTENT);
+        }
     }
 
     // 팔로워 삭제
@@ -99,8 +116,12 @@ public class FollowController {
     @ApiImplicitParam(name="nickname", value = "삭제할 사용자의 nickname")
     @DeleteMapping("/follower/{nickname}")
     public ResponseEntity<String> deleteFollower(@PathVariable String nickname){
-        followService.deleteFollower(nickname);
-        return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
+        if(followService.deleteFollower(nickname)){
+            return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(FAIL,HttpStatus.NO_CONTENT);
+        }
     }
 
 

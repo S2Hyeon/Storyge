@@ -16,6 +16,7 @@ public class KakaoUserInfo implements OAuth2UserInfo {
 
     @Override
     public String getProviderId() {
+        System.out.println("여기 오나???");
         return attributes.get("id").toString();
     }
 

@@ -7,31 +7,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class DailyEmotionServiceImpl implements DailyEmotionService {
 
-    /*
-    일기를 작성, 수정, 삭제하면
-유저의 해당 날짜의 일기들이 있다면
-	diary에서 해당 날짜 일기 불러와서 통계를 내고(가장 많은거, 동률이면 최근거)
-	해당 날짜의 통계결과를 statistic 테이블에 갱신한다.
-일기 작성 시 유저의 해당 날짜의 일기들이 없다면
-	현재 일기 정보를 그대로 statistic 테이블에 insert한다.
-
-statistic 테이블은 어떤 유저의 각 날짜별 감정통계가 들어있다.
-
-달력을 조회 할 때는 statistic 테이블의 날짜별 감정통계를 이용해 표시한다
-
-통계 페이지에서는 어떤 유저의 년, 월별로 일기의 감정을 모두 가져와서 수치를 제공한다.
-     */
     private final DailyEmotionRepository dailyEmotionRepository;
 
     @Override
@@ -39,21 +23,33 @@ statistic 테이블은 어떤 유저의 각 날짜별 감정통계가 들어있�
         dailyEmotionRepository.save(toEntity(dailyEmotionDto));
     }
 
+    /*
+    해당 날짜 일기가 있는지 확인하기 위한 조회
+     */
     @Override
-    public Optional<DailyEmotion> selectOneDailyEmotion(Long userId, Date date) {
-        return Optional.ofNullable(toDto(dailyEmotionRepository.findByIdAndCreatedAt(userId, date).orElseThrow()));
-        return dailyEmotionRepository.findByIdAndCreatedAt(userId, date);
+    public Long selectOneDailyEmotion(String nickname, String stringDate) {
+        return dailyEmotionRepository.countByUser_UserIdAndCreatedAt(userId, date);
+    }
+
+    /*
+    캘린더 조회할 때 일별 감정통계 조회
+     */
+    @Override
+    public Map<Integer, String> selectDailyEmotions(String nickname, String stringDate) {
+        Map<Integer, String> map = new HashMap<>();
+        List<DailyEmotionDto> dailyEmotions = dailyEmotionRepository.findByUser_UserIdAndCreatedAt(userId, date);
+        for(DailyEmotionDto dailyEmotionDto : dailyEmotions) {
+            int day = dailyEmotionDto.getCreatedAt().getDayOfMonth();
+            String emoticonName = dailyEmotionDto.getEmoticonName();
+            map.put(day, emoticonName);
+        }
+        return map;
     }
 
     @Override
-    public Map<Integer, File> selectDailyEmotions(String nickname, Date date) {
-
-        return null;
-    }
-
-    @Override
-    public void updateDailyEmotion(String nickname, DailyEmotionDto dailyEmotionDto) {
-        DailyEmotion dailyEmotion;
+    public void updateDailyEmotion(Long userId, String emoticonName) {
+        DailyEmotion dailyEmotion = dailyEmotionRepository.findById(userId).orElseThrow();
+        dailyEmotion.updateDailyEmotion(emoticonName);
     }
 
     @Override

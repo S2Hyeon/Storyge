@@ -3,11 +3,7 @@ package com.example.project.daily_emotion.model.service;
 import com.example.project.daily_emotion.model.dto.DailyEmotionDto;
 import com.example.project.daily_emotion.model.entity.DailyEmotion;
 
-import java.io.File;
-import java.sql.Date;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public interface DailyEmotionService {
 
@@ -15,12 +11,12 @@ public interface DailyEmotionService {
     void insertDailyEmotion(DailyEmotionDto dailyEmotionDto);
 
     //R
-    DailyEmotionDto selectOneDailyEmotion(Long userId, Date date);
+    Long selectOneDailyEmotion(String nickname, String stringDate);
 
-    Map<Integer, File> selectDailyEmotions(String nickname, Date date);
+    Map<Integer, String> selectDailyEmotions(String nickname, String stringDate);
 
     //U
-    void updateDailyEmotion (String nickname, DailyEmotionDto dailyEmotionDto);
+    void updateDailyEmotion (Long userId, String emoticonName);
 
     //D
 
@@ -30,8 +26,7 @@ public interface DailyEmotionService {
     default DailyEmotionDto toDto(DailyEmotion dailyEmotion){
         return new DailyEmotionDto().builder()
                 .dailyId(dailyEmotion.getDailyId())
-                .userId(dailyEmotion.getUserId())
-                .emotResult(dailyEmotion.getEmotResult())
+                .emoticonName(dailyEmotion.getEmoticonName())
                 .createdAt(dailyEmotion.getCreatedAt())
                 .build();
     }
@@ -40,8 +35,7 @@ public interface DailyEmotionService {
     default DailyEmotion toEntity(DailyEmotionDto dailyEmotionDto){
         return new DailyEmotion().builder()
                 .dailyId(dailyEmotionDto.getDailyId())
-                .userId(dailyEmotionDto.getUserId())
-                .emotResult(dailyEmotionDto.getEmotResult())
+                .emoticonName(dailyEmotionDto.getEmoticonName())
                 .createdAt(dailyEmotionDto.getCreatedAt())
                 .build();
     }

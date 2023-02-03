@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class DiaryUpdateParam {
 
     private Long diaryId;
-    private Long emoticonId;
+    private String emoticonName;
 
     private String diaryContent;
     private int scope;

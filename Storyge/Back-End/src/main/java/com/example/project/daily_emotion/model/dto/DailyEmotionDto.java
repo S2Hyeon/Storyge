@@ -1,22 +1,31 @@
 package com.example.project.daily_emotion.model.dto;
 
-import lombok.AllArgsConstructor;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class DailyEmotionDto {
     private Long dailyId;
 
     private Long userId;
 
-    private Long emotResult;
+    private String emoticonName;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
+
+    @QueryProjection
+    public DailyEmotionDto(Long dailyId, Long userId, String emoticonName, LocalDateTime createdAt) {
+        this.dailyId = dailyId;
+        this.userId = userId;
+        this.emoticonName = emoticonName;
+        this.createdAt = createdAt;
+    }
 }

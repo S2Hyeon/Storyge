@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -31,8 +30,8 @@ public class DiaryController {
     }
 
     @GetMapping("/diary/{nickname}/{date}")
-    public ResponseEntity<List<DiaryDto>> selectDailyDiaries(@PathVariable("nickname") String nickname, @PathVariable Date date){
-        return new ResponseEntity<>(diaryService.selectDailyDiaries(nickname, date), HttpStatus.OK);
+    public ResponseEntity<List<DiaryDto>> selectDailyDiaries(@PathVariable("nickname") String nickname, @PathVariable String stringDate){
+        return new ResponseEntity<>(diaryService.selectDailyDiaries(nickname, stringDate), HttpStatus.OK);
     }
 
     @PutMapping("/diary")

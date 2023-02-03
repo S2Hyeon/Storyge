@@ -11,9 +11,10 @@ import Music from "../pages/8_music/Music.jsx";
 import MusicResult from "../pages/8_music/MusicResult.jsx";
 import ErrorPage from "../pages/9_errorPage/ErrorPage";
 
-import Creatediary from "../pages/3_myDiary/Creatediary";
-import Diarylist from "../pages/3_myDiary/Diarylist";
-import Diarydetial from "../pages/3_myDiary/Diarydetail";
+import Creatediary from "pages/3_myDiary/create/DiaryCreate";
+// import Diarylist from "../pages/3_myDiary/Diarylist";
+import Diarylist from "pages/3_myDiary/list/DiaryList";
+import Diarydetial from "pages/3_myDiary/detail/DiaryDetail";
 
 import MyPage from "./../pages/4_myPage/MyPage.jsx";
 import ModifyProfile from "./../pages/4_myPage/ModifyProfile.jsx";

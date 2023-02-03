@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import * as S from "./MyDiaryStyle";
-import * as A from "./../../styles/index";
+import data from "./DiaryListData";
+import * as S from "../MyDiaryStyle";
+import * as A from "../../../styles/index";
 import { BsFillCaretLeftFill, BsFillCaretRightFill } from "react-icons/bs";
 
 export default function Diarylist() {
@@ -38,13 +39,13 @@ export default function Diarylist() {
           <BsFillCaretRightFill />
         </S.AutoBtn>
       </S.DiaryHeader>
-      {S.data.map((diary) => {
+      {data.map((data) => {
         return (
-          <S.DiaryBox key={diary.id}>
-            <S.Emotion emotion={diary.img} />
+          <S.DiaryBox key={data.id}>
+            <S.Emotion emotion={data.img} />
             <S.Col>
-              <div>{diary.time}</div>
-              <S.Content>{diary.content}</S.Content>
+              <div>{data.time}</div>
+              <S.Content>{data.content}</S.Content>
             </S.Col>
           </S.DiaryBox>
         );

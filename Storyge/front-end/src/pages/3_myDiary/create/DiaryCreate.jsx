@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Clock from "react-live-clock";
-import Modal from "./Modal";
-import * as S from "./MyDiaryStyle";
-import * as A from "./../../styles/index";
-import Toggle from "./Toggle";
+import Modal from "../Modal";
+import * as S from "../MyDiaryStyle";
+import * as A from "../../../styles/index";
+import Toggle from "../Toggle";
 
 export default function Creatediary() {
   const navigate = useNavigate();

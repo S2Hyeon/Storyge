@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+//없어져야함
 export const data = [
   {
     id: 1,

@@ -1,21 +1,29 @@
 import React, { useState } from "react";
 import * as S from "../MyDiaryStyle";
-import * as A from "styles/index";
+import * as OwnS from "./DiaryDetailStyle";
+import * as G from "styles/index";
+import commentData from "./CommentData";
+import diaryData from "./DiaryData";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
 export default function Diarylist() {
   const [isChecked, setIsChecked] = useState(true);
   return (
-    <A.BodyContainer>
-      <S.Card2 backgroundColor="#EFFCEF">
-        <S.MainContent>
-          <S.Emotion emotion={S.data[1].img} />
-          <S.Col>
-            <div>{S.data[1].time}</div>
-            <S.Content>{S.data[1].content}</S.Content>
-          </S.Col>
-        </S.MainContent>
-      </S.Card2>
+    <G.BodyContainer>
+      <OwnS.DiaryContainer>
+        <OwnS.Diary>
+          <OwnS.EmotionContainer>
+            <OwnS.Emotion />
+          </OwnS.EmotionContainer>
+          <OwnS.ContentContiner>
+            <OwnS.TimeContainer>
+              {/* 맨 오른쪽에 시간, 맨 왼쪽에 수정, 삭제, 공개비공개 */}
+              {diaryData.date} {diaryData.time}
+            </OwnS.TimeContainer>
+            <OwnS.Content>{diaryData.content}</OwnS.Content>
+          </OwnS.ContentContiner>
+        </OwnS.Diary>
+      </OwnS.DiaryContainer>
       <S.CardFoot2
         height={isChecked ? "30px" : "120px"}
         backgroundColor="var(--color-primary)"
@@ -35,22 +43,23 @@ export default function Diarylist() {
         </S.Toggle>
         {isChecked ? null : <S.Mother>{S.data[1].content}</S.Mother>}
       </S.CardFoot2>
-      <S.CommentWriteBox>
-        <S.CommentWrite placeholder="댓글 쓰기" />
-        <S.submitBtn>작성</S.submitBtn>
-      </S.CommentWriteBox>
-      {S.data.map((diary) => {
+      <OwnS.CommentWriteBox>
+        <OwnS.CommentWrite placeholder="댓글 쓰기" />
+        <OwnS.submitBtn>작성</OwnS.submitBtn>
+      </OwnS.CommentWriteBox>
+      {commentData.map((comment) => {
         return (
-          <S.DiaryBox key={diary.id}>
-            <S.Emotion emotion={diary.img} />
+          <OwnS.ListBox key={comment.id}>
+            <OwnS.ProfileImg emotion={comment.img} />
             <S.Col>
-              <div>갱월쥐</div>
-              <div>2023.02.02</div>
-              <S.Content>{diary.content}</S.Content>
+              <div>{comment.userName}</div>
+              <div>{comment.time}</div>
+
+              <S.Content>{comment.content}</S.Content>
             </S.Col>
-          </S.DiaryBox>
+          </OwnS.ListBox>
         );
       })}
-    </A.BodyContainer>
+    </G.BodyContainer>
   );
 }

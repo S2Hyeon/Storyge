@@ -13,7 +13,7 @@ export const kakaoLogin = (code) => {
 
         localStorage.setItem("token", ACCESS_TOKEN); //예시로 로컬에 저장함
 
-        history.replace("/intro"); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+        history.replace("/main"); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
       })
       .catch((err) => {
         console.log("소셜로그인 에러", err);

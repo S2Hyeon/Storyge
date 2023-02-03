@@ -29,7 +29,7 @@ function AppRouter() {
       <Route path="login" element={<Login />} />
       <Route path="logininfo" element={<LoginInfo />} />
       <Route
-        path="/oauth/callback/kakao"
+        path="oauth/callback/kakao"
         element={<OAuth2RedirectHandler />}
       ></Route>
 

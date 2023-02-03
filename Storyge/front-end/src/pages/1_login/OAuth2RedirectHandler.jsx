@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // 리다이렉트될 화면
 // OAuth2RedirectHandeler.js
 
@@ -8,6 +9,8 @@ import Spinner from "./Spinner.jsx";
 
 const OAuth2RedirectHandler = (props) => {
   const dispatch = useDispatch();
+
+  alert("redirect");
 
   // 인가코드
   let code = new URL(window.location.href).searchParams.get("code");

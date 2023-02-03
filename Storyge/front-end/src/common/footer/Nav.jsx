@@ -40,7 +40,7 @@ function Footer() {
       </S.IconContainer>
       <S.IconContainer
         onClick={() => {
-          // movePage("/alert");
+          movePage("/alarm");
           console.log("알림 모음 페이지로 이동!!");
         }}
       >

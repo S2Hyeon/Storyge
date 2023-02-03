@@ -1,5 +1,4 @@
 import React from "react";
-import "./../8_music/Music.css";
 import { useNavigate } from "react-router-dom";
 import * as G from "../../styles";
 import * as S from './Music.js'

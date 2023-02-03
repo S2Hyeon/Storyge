@@ -1,18 +1,22 @@
 import styled from "styled-components";
 
 export const Box = styled.div`
-  width: 347px;
+  // border: 1px solid blue;
+
+  width: 100%;
   height: 98px;
   top: 121px;
   left: 22px;
 
+  padding: 0px 10px;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #D2D9D2;
+  background-color: #d2d9d2;
   justify-content: space-around;
   border-radius: 10px;
-  margin-top: 20px;
+  margin: 20px 0 10px 0;
 `;
 
 export const Img = styled.img`
@@ -32,6 +36,7 @@ export const FollowBox = styled.div`
   & > div {
     margin: 10px;
   }
+  text-align: center;
 `;
 
 export const FollowText = styled.div`

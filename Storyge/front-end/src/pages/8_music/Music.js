@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import './../../styles/index';
+import "./../../styles/index";
 
 export const Rectangle = styled.textarea`
-  width: 85%;
+  width: 100%;
   height: 300px;
   margin-top: 20px;
   margin-bottom: 20px;

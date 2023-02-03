@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Clock from "react-live-clock";
-import Modal from "./Modal";
-import * as S from "./MyDiaryStyle";
-import * as A from "./../../styles/index";
-import Toggle from "./Toggle";
+import Modal from "../Modal";
+import * as S from "../MyDiaryStyle";
+import * as A from "../../../styles/index";
+import Toggle from "../Toggle";
 
 export default function Creatediary() {
   const navigate = useNavigate();
@@ -55,9 +55,9 @@ export default function Creatediary() {
               감정분석하기 버튼
             </A.longBtnDefault>
           </div>
-          <S.BtnNegative onClick={() => navigate(-1)}>
+          <A.longBtnBorder onClick={() => navigate(-1)}>
             일단 뒤로가기 버튼
-          </S.BtnNegative>
+          </A.longBtnBorder>
         </div>
       </S.Mother>
       {modalOpen && <Modal setModalOpen={setModalOpen} />}

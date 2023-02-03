@@ -1,7 +1,16 @@
+// QueryDSL 추가
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '2.7.6'
-	id 'io.spring.dependency-management' version'1.0.15.RELEASE'
+    id 'java'
+    id 'org.springframework.boot' version '2.7.6'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    //querydsl 추가
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'com.example'
@@ -9,44 +18,74 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	//jpa
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    //jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-	//swagger
-	implementation 'io.springfox:springfox-boot-starter:3.0.0'
-	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    //swagger
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 
-	//jwt
-	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    //jwt
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    implementation('com.auth0:java-jwt:4.2.1')
+    //aws
+//    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
-	//aws
-//	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+    //security & oauth2
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
-	//security & oauth2
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+    //websocket
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+    //querydsl 추가
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+//    // QueryDSL
+//    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+//    implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+//    implementation "com.querydsl:querydsl-core:${queryDslVersion}"  // 한개 더 추가!
 
 
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 
+//querydsl 추가 시작
+def querydslDir = "$buildDir/generated/querydsl"
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+sourceSets {
+    main.java.srcDir querydslDir
+}
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+//querydsl 추가 끝
+
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import * as S from "./MyDiaryStyle";
-import * as A from "./../../styles/index";
+import * as S from "../MyDiaryStyle";
+import * as A from "styles/index";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
 export default function Diarylist() {

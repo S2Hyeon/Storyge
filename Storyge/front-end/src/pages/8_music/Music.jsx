@@ -1,8 +1,7 @@
 import React from "react";
-import "./../8_music/Music.css";
 import { useNavigate } from "react-router-dom";
 import * as G from "../../styles";
-import * as S from './Music.js'
+import * as S from "./Music.js";
 
 export default function Music() {
   const movePage = useNavigate();
@@ -12,8 +11,13 @@ export default function Music() {
   }
   return (
     <G.BodyContainer>
-      <S.Rectangle placeholder="음악 추천을 받고 싶은 사연을 작성해주세요."/>
-      <G.longBtnDefault onClick={gomusicresult} style={{marginBottom: '20px'}}><S.Text>분석하기</S.Text></G.longBtnDefault>
+      <S.Rectangle placeholder="음악 추천을 받고 싶은 사연을 작성해주세요." />
+      <G.longBtnDefault
+        onClick={gomusicresult}
+        style={{ marginBottom: "20px" }}
+      >
+        <S.Text>분석하기</S.Text>
+      </G.longBtnDefault>
     </G.BodyContainer>
   );
 }

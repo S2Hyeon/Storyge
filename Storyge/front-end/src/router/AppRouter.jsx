@@ -11,13 +11,16 @@ import Music from "../pages/8_music/Music.jsx";
 import MusicResult from "../pages/8_music/MusicResult.jsx";
 import ErrorPage from "../pages/9_errorPage/ErrorPage";
 
-import Creatediary from "../pages/3_myDiary/Creatediary";
-import Diarylist from "../pages/3_myDiary/Diarylist";
-import Diarydetial from "../pages/3_myDiary/Diarydetail";
+import Creatediary from "pages/3_myDiary/create/DiaryCreate";
+// import Diarylist from "../pages/3_myDiary/Diarylist";
+import Diarylist from "pages/3_myDiary/list/DiaryList";
+import Diarydetial from "pages/3_myDiary/detail/DiaryDetail";
 
 import MyPage from "./../pages/4_myPage/MyPage.jsx";
 import ModifyProfile from "./../pages/4_myPage/ModifyProfile.jsx";
-import Follow from '../pages/5_follow/Follow.jsx';
+import Alarm from "./../pages/10_alarm/Alarm.jsx";
+import Follow from "../pages/5_follow/Follow.jsx";
+import OtherPage from "../pages/6_otherPage/OtherProfile";
 
 function AppRouter() {
   return (
@@ -39,6 +42,8 @@ function AppRouter() {
         <Route path="modify" element={<ModifyProfile />} />
         <Route path="follower" element={<Follow />} />
         <Route path="following" element={<Follow />} />
+        <Route path="alarm" element={<Alarm />} />
+        <Route path="otherpage" element={<OtherPage />} />
 
         <Route path="/*" element={<ErrorPage />} />
       </Route>

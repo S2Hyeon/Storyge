@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const All = styled.div`
-  // height: 90vh;
+  height: 90vh;
   // width: 100%;
   background-color: var(--color-background);
 `;

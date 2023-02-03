@@ -16,7 +16,13 @@ public class OAuth2FailureHandler extends SimpleUrlAuthenticationFailureHandler 
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-
+        System.out.println("request getContextPath= " + request.getContextPath());
+        System.out.println("request getAuthType= " + request.getAuthType());
+        System.out.println("request authenticate= " + request.authenticate(response));
+        System.out.println("request getRequestURI= " + request.getRequestURI());
+        System.out.println("response = " + response.toString());
+        System.out.println("exception = " + exception);
+        System.out.println("request changeSessionId= " + request.changeSessionId());
         System.out.println("실패");
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }

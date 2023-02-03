@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -33,11 +34,22 @@ public class Review {
     @Column(name = "review_content")
     String reviewContent;
 
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm", timezone = "Asia/Seoul")
+//    @DateTimeFormat(pattern ="yyyy.MM.dd HH:mm" )
+    @CreatedDate
     @Column(name = "created_at")
     LocalDateTime createdAt;
 
-    public void updateReview(String reviewContent){
-        reviewContent = this.reviewContent;
+    @PrePersist
+    private void createdAt(){
+        createdAt = LocalDateTime.now();
     }
+
+    public void updateReview(String reviewContent){
+        this.reviewContent = reviewContent;
+    }
+
+
+
 
 }

@@ -12,9 +12,12 @@ import com.example.project.user.model.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.project.notification.controller.SseController.sseEmitters;
 
 @Service
 @Transactional
@@ -40,6 +43,15 @@ public class NotificationServiceImpl implements NotificationService {
                 .follow(follow)
                 .notiType(WAIT)
                 .build());
+        Long userId = (long)1; // user.getuserID();알림 받을 사람 id
+        if(sseEmitters.containsKey(userId)){
+            SseEmitter sseEmitter = sseEmitters.get(userId);
+            try {
+                sseEmitter.send(SseEmitter.event().name("notification").data("팔로우 신청"));
+            }catch (Exception e){
+                sseEmitters.remove(userId);
+            }
+        }
     }
 
     @Override
@@ -53,6 +65,16 @@ public class NotificationServiceImpl implements NotificationService {
                 .follow(follow)
                 .notiType(FOLLOW)
                 .build());
+
+        Long userId = (long)1; // user.getuserID();알림 받을 사람 id
+        if(sseEmitters.containsKey(userId)){
+            SseEmitter sseEmitter = sseEmitters.get(userId);
+            try {
+                sseEmitter.send(SseEmitter.event().name("notification").data("팔로우 수락"));
+            }catch (Exception e){
+                sseEmitters.remove(userId);
+            }
+        }
     }
 
     @Override
@@ -67,6 +89,16 @@ public class NotificationServiceImpl implements NotificationService {
                 .notiType(REVIEW)
                 .diaryId(diary)
                 .build());
+
+        Long userId = (long)1; // user.getuserID();알림 받을 사람 id
+        if(sseEmitters.containsKey(userId)){
+            SseEmitter sseEmitter = sseEmitters.get(userId);
+            try {
+                sseEmitter.send(SseEmitter.event().name("notification").data("댓글 달림"));
+            }catch (Exception e){
+                sseEmitters.remove(userId);
+            }
+        }
     }
 
     @Override

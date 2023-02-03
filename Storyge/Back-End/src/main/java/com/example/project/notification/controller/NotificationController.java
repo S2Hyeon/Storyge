@@ -27,4 +27,8 @@ public class NotificationController {
         List<NotificationReponseDto> notificationList = notificationService.selectAllNotification();
         return new ResponseEntity<>(notificationList, HttpStatus.OK);
     }
+
+
+
+
 }

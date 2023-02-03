@@ -104,21 +104,33 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public List<NotificationReponseDto> selectAllNotification() {
 
-        User currentUser = null; // 현재 user 가져오기
+        User currentUser = userRepository.findById(2L).orElse(null); // 현재 user 가져오기
 
         List<Notification> notifications = notificationRepository.findByUserIdOrderByCreatedAtDesc(currentUser);
         List<NotificationReponseDto> notificationList = new ArrayList<>();
         for(Notification noti:notifications){
 
             User user = userRepository.findById(noti.getUserId().getUserId()).orElse(null);
+            String type = noti.getNotiType();
+            if(type.equals("REVIEW")){
+                notificationList.add(NotificationReponseDto.builder()
+                        .follow(noti.getFollow().getUserId())
+                        .nickname(user.getNickname())
+                        .profileImg(user.getProfileImg())
+                        .notiType(noti.getNotiType())
+                        .diaryId(noti.getDiaryId().getDiaryId())
+                        .build());
+            }
+            else{
+                notificationList.add(NotificationReponseDto.builder()
+                        .follow(noti.getFollow().getUserId())
+                        .nickname(user.getNickname())
+                        .profileImg(user.getProfileImg())
+                        .notiType(noti.getNotiType())
+                        .build());
+            }
 
-            notificationList.add(NotificationReponseDto.builder()
-                    .follow(noti.getFollow().getUserId())
-                    .nickname(user.getNickname())
-                    .profileImg(user.getProfileImg())
-                    .notiType(noti.getNotiType())
-                    .diaryId(noti.getDiaryId().getDiaryId())
-                    .build());
+
         }
 
         return notificationList;

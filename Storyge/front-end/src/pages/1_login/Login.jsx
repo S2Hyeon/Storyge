@@ -1,44 +1,19 @@
 import React from "react";
-import "../1_login/Login.css";
-import { AiFillFacebook } from "react-icons/ai";
-import { FcGoogle } from "react-icons/fc";
-import { RiKakaoTalkFill } from "react-icons/ri";
+import * as S from "./Loginstyle.js";
 
 import { KAKAO_AUTH_URL } from "../1_login/OAuth.jsx";
 
 export default function Login() {
   return (
-    <div className="login">
+    <S.Login>
       <h1>Login</h1>
 
-      <a
-        href="#!"
-        className="login__btn__google"
-        onClick={() => alert("google")}
-      >
-        <FcGoogle className="icon" />
-        <div>Google Login</div>
-      </a>
-
-      <a
+      <S.GoogleBtn onClick={() => alert("google")}></S.GoogleBtn>
+      <S.NaverBtn onClick={() => alert("naver")}></S.NaverBtn>
+      <S.KakaoBtn
         href={KAKAO_AUTH_URL}
-        className="login__btn__kakao"
-        type="button"
         onClick={() => alert("kakao")}
-      >
-        <RiKakaoTalkFill className="icon" />
-        <div>Kakao Login</div>
-      </a>
-
-      <a
-        href="#!"
-        className="login__btn__facebook"
-        type="button"
-        onClick={() => alert("facebook")}
-      >
-        <AiFillFacebook className="icon" />
-        <div>Facebook Login</div>
-      </a>
-    </div>
+      ></S.KakaoBtn>
+    </S.Login>
   );
 }

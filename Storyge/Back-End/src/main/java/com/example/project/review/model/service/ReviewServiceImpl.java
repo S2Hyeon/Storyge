@@ -2,6 +2,8 @@ package com.example.project.review.model.service;
 
 import com.example.project.diary.model.entity.Diary;
 import com.example.project.diary.model.repository.DiaryRepository;
+import com.example.project.notification.model.dto.NotificationReviewDto;
+import com.example.project.notification.model.service.NotificationService;
 import com.example.project.review.model.dto.ReviewRequsetDto;
 import com.example.project.review.model.dto.ReviewResponseDto;
 import com.example.project.review.model.dto.ReviewUpdateParam;

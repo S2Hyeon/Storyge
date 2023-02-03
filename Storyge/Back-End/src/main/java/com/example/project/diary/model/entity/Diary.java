@@ -1,6 +1,5 @@
 package com.example.project.diary.model.entity;
 
-import com.example.project.emoticon.model.entity.Emoticon;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,19 +17,11 @@ public class Diary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long diaryId;
 
-    @Column(name = "user_id")
-    private Long userId;
-
-    @Column(name = "emoticon_id")
-    private Long emoticonId;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
-    @JoinColumn(name = "emoticon_id")
-    private Emoticon emoticon;
+    private String emoticonName;
 
     private String diaryContent;
     private int scope;
@@ -39,12 +30,12 @@ public class Diary {
 
     private LocalDateTime createdAt;
 
-    public void updateDiary(Long emoticonId, int scope) {
-        this.emoticonId = emoticonId;
+    public void updateDiary(String emoticonName, int scope) {
+        this.emoticonName = emoticonName;
         this.scope = scope;
     }
-    public void updateDiaryContent (Long emoticonId, String diaryContent, int scope, String analizedResult){
-        this.emoticonId = emoticonId;
+    public void updateDiaryContent (String emoticonName, String diaryContent, int scope, String analizedResult){
+        this.emoticonName = emoticonName;
         this.diaryContent = diaryContent;
         this.scope = scope;
         this.update_cnt = 1;    // 일기 내용이 변경되면 수정 횟수가 1이되어야 한다.

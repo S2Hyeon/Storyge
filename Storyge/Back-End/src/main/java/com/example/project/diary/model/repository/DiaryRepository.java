@@ -6,11 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    List<DiaryDto> findByIdAndCreatedAtContaining(String nickname, Date createdAt);
+    List<DiaryDto> findByUser_UserIdAndCreatedAtContaining(Long userId, LocalDateTime createdAt);
 }

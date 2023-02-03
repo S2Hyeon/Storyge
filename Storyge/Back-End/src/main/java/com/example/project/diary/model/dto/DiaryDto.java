@@ -16,7 +16,7 @@ public class DiaryDto {
 
     private Long userId;
 
-    private Long emoticonId;
+    private String emoticonName;
 
     private String diaryContent;
     private int scope;

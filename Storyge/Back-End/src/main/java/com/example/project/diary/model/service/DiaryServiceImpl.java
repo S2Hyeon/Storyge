@@ -1,14 +1,15 @@
 package com.example.project.diary.model.service;
 
+import com.example.project.daily_emotion.model.service.DailyEmotionService;
 import com.example.project.diary.model.dto.DiaryDto;
 import com.example.project.diary.model.dto.DiaryUpdateParam;
 import com.example.project.diary.model.entity.Diary;
+import com.example.project.diary.model.repository.DiaryCustomRepository;
 import com.example.project.diary.model.repository.DiaryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,9 +19,18 @@ import java.util.Optional;
 public class DiaryServiceImpl implements DiaryService{
 
     private final DiaryRepository diaryRepository;
+    private final DiaryCustomRepository diaryCustomRepository;
+    private final DailyEmotionService dailyEmotionService;
     @Override
     public void insertDiary(DiaryDto diaryDto) {
         diaryRepository.save(toEntity(diaryDto));
+        Long diaryAmount = dailyEmotionService.selectOneDailyEmotion(diaryDto.getUserId(), diaryDto.getCreatedAt());
+        if(diaryAmount == 0) {
+            dailyEmotionService.insertDailyEmotion(toDailyEmotionDto(diaryDto));
+        }
+        else {
+            diaryCustomRepository.dailyEmotionStatistic(diaryDto.getUserId(), diaryDto.getCreatedAt());
+        }
     }
 
 
@@ -29,8 +39,8 @@ public class DiaryServiceImpl implements DiaryService{
         return Optional.ofNullable(toDto(diaryRepository.findById(diaryId).orElseThrow()));
     }
 
-    public List<DiaryDto> selectDailyDiaries(String nickname, Date date) {
-        return diaryRepository.findByIdAndCreatedAtContaining(nickname, date);
+    public List<DiaryDto> selectDailyDiaries(String nickname, String stringDate) {
+        return diaryRepository.findByUser_UserIdAndCreatedAtContaining(userId, date);
     }
 
     /*
@@ -42,11 +52,11 @@ public class DiaryServiceImpl implements DiaryService{
     public void updateDiary(DiaryUpdateParam param) {
         Diary diary = diaryRepository.findById(param.getDiaryId()).orElseThrow();
         if(diary.getDiaryContent().equals(param.getDiaryContent())) {
-            diary.updateDiary(param.getEmoticonId(),
+            diary.updateDiary(param.getEmoticonName(),
                                 param.getScope());
         }
         else {
-            diary.updateDiaryContent(param.getEmoticonId(),
+            diary.updateDiaryContent(param.getEmoticonName(),
                                         param.getDiaryContent(),
                                         param.getScope(),
                                         param.getAnalizedResult());

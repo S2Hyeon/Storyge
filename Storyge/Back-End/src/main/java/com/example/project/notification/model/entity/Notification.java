@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -37,7 +38,13 @@ public class Notification {
     @JoinColumn(name="diary_id")
     private Diary diaryId;
 
+    @CreatedDate
     @Column(name="created_at")
     private LocalDateTime createdAt;
+
+    @PrePersist
+    private void createdAt(){
+        createdAt = LocalDateTime.now();
+    }
 
 }

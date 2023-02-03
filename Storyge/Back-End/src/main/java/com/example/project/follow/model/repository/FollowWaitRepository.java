@@ -13,10 +13,8 @@ public interface FollowWaitRepository extends JpaRepository<FollowWait, Long> {
 //    List<FollowWait> findByFollowing(long following);
 
     List<FollowWait> findByFollowing(User following); //나의 팔로우 수락을 대기하는 사람들 리스트
-//    FollowWait findByFollowingAndUserId(long following, long userId);
-
+    FollowWait findByFollowingAndAndUserId(User following, User userId); // 이미 신청이 존재하는지 확인
     //대기 상태 삭제
-//    void deleteByFollowingAndUserId(long following, long userId);
     void deleteByFollowingAndUserId(User following, User userId);
 
 

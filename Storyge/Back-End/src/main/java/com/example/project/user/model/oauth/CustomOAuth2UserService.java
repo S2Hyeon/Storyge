@@ -45,14 +45,17 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             userInfo = new NaverUserInfo(oAuth2User.getAttributes());
         }
 
-        String email = userInfo.getProvider() + '_' + userInfo.getProviderId() + "@strogy.com";
-        Optional<User> userOptional = userRepository.findByEmail(email);
+        String name = userInfo.getProvider() + '_' + userInfo.getProviderId();
+        System.out.println("");
+        Optional<User> userOptional = userRepository.findByName(name);
+//        String email = userInfo.getProvider() + '_' + userInfo.getProviderId() + "@strogy.com";
+//        Optional<User> userOptional = userRepository.findByEmail(email);
 
         User user;
         if (userOptional.isEmpty()) {
             user = User.builder()
-                    .email(email)
-                    .password(bCryptPasswordEncoder.encode("칠면조"))
+                    .email(userInfo.getEmail())
+                    .name(name)
                     .role("ROLE_USER")
                     .nickname(userInfo.getName())
                     .profileImg(userInfo.getProfileImg())

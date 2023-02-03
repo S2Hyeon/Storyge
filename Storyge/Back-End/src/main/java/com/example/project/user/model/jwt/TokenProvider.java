@@ -44,8 +44,8 @@
 //        Date accessTokenExpiresIn = new Date(now + JwtProperties.ACCESS_TOKEN_TIME);
 //        String accessToken = Jwts.builder()
 //                .setSubject(authentication.getName())
-//                .claim("id", user.getId())
-//                .claim("name", user.getName())
+//                .claim("id", user.getUserId())
+//                .claim("name", user.getNickname())
 //                .claim(JwtProperties.AUTHORITIES_KEY, authorities)
 //                .setExpiration(accessTokenExpiresIn)
 //                .signWith(key, SignatureAlgorithm.HS256)
@@ -58,7 +58,7 @@
 //                .compact();
 //
 //        return TokenInfo.builder()
-//                .grantType(JwtProperties.BEARER_TYPE)
+//                .grantType(JwtProperties.TOKEN_PREFIX)
 //                .accessToken(accessToken)
 //                .refreshToken(refreshToken)
 //                .refreshTokenExpirationTime(JwtProperties.REFRESH_TOKEN_TIME)

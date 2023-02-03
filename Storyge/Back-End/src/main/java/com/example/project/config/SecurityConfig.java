@@ -39,6 +39,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager, CustomOAuth2UserService customOAuth2UserService) throws Exception {
+        System.out.println("securityConfig");
         http
                 .addFilter(corsConfig.corsFilter()) // cors 설정. 일단 전부 풀어놓음
 //                .cors().disable()
@@ -50,7 +51,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/swagger-ui/**", "/swagger-resources/", "/**").permitAll()
-                .antMatchers("/users/login", "/users", "/users/duplicate", "/users/sign-up", "/rooms").permitAll()
+                .antMatchers("/users/login", "/users", "/users/duplicate", "/users/sign-up").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2Login()
@@ -61,7 +62,7 @@ public class SecurityConfig {
                 .userInfoEndpoint(userInfo -> {
                     userInfo.userService(customOAuth2UserService);
                 })
-                .loginProcessingUrl("/auth/login/*")
+                .loginProcessingUrl("/oauth/callback/*")
                 .successHandler(oAuth2SuccessHandler)
                 .failureHandler(oAuth2FailureHandler);
 //                .and()

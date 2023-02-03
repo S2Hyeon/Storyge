@@ -18,7 +18,8 @@ import Diarydetial from "../pages/3_myDiary/Diarydetail";
 import MyPage from "./../pages/4_myPage/MyPage.jsx";
 import ModifyProfile from "./../pages/4_myPage/ModifyProfile.jsx";
 import Alarm from "./../pages/10_alarm/Alarm.jsx";
-import Follow from '../pages/5_follow/Follow.jsx';
+import Follow from "../pages/5_follow/Follow.jsx";
+import OtherPage from "../pages/6_otherPage/OtherProfile";
 
 function AppRouter() {
   return (
@@ -41,6 +42,7 @@ function AppRouter() {
         <Route path="follower" element={<Follow />} />
         <Route path="following" element={<Follow />} />
         <Route path="alarm" element={<Alarm />} />
+        <Route path="otherpage" element={<OtherPage />} />
 
         <Route path="/*" element={<ErrorPage />} />
       </Route>

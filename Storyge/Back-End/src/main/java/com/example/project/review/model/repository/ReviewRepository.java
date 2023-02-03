@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    List<Review> findByDiaryId(Diary diaryId);
+    List<Review> findByDiaryIdOrderByCreatedAt(Diary diaryId);
 
 }

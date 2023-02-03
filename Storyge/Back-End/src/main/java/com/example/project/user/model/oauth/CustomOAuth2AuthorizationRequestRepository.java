@@ -25,6 +25,7 @@ public class CustomOAuth2AuthorizationRequestRepository<T extends OAuth2Authoriz
     }
 
     private static String expandRedirectUri(HttpServletRequest request, ClientRegistration clientRegistration) {
+        System.out.println("11111111111111");
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("registrationId", clientRegistration.getRegistrationId());
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(
@@ -57,16 +58,18 @@ public class CustomOAuth2AuthorizationRequestRepository<T extends OAuth2Authoriz
 
     @Override
     public OAuth2AuthorizationRequest loadAuthorizationRequest(HttpServletRequest request) {
+        System.out.println("2222222222222222");
         return null;
     }
 
     @Override
     public void saveAuthorizationRequest(OAuth2AuthorizationRequest authorizationRequest, HttpServletRequest request, HttpServletResponse response) {
-
+        System.out.println("33333333333333333333333");
     }
 
     @Override
     public OAuth2AuthorizationRequest removeAuthorizationRequest(HttpServletRequest request) {
+        System.out.println("44444444444444444444444");
         String registrationId = request.getParameter("state");
         ClientRegistration clientRegistration = clientRegistrationRepository.findByRegistrationId(registrationId);
         OAuth2AuthorizationRequest.Builder builder = OAuth2AuthorizationRequest.authorizationCode()

@@ -24,7 +24,7 @@ public class User extends BaseTime {
     private String email;
 
     //디비에 추가해야함
-    private String password;
+    private String name;
     private String nickname;
     private String profileImg;
     private String refreshToken;

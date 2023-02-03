@@ -1,4 +1,0 @@
-package com.example.project.config.properties;
-
-public class AppProperties {
-}

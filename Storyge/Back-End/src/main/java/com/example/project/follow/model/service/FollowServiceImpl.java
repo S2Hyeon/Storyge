@@ -5,6 +5,8 @@ import com.example.project.follow.model.entity.Follow;
 import com.example.project.follow.model.entity.FollowWait;
 import com.example.project.follow.model.repository.FollowRepository;
 import com.example.project.follow.model.repository.FollowWaitRepository;
+import com.example.project.notification.model.dto.NotificationFollowDto;
+import com.example.project.notification.model.service.NotificationService;
 import com.example.project.user.model.dto.UserDto;
 import com.example.project.user.model.entity.User;
 import com.example.project.user.model.repository.UserRepository;
@@ -52,8 +54,7 @@ public class FollowServiceImpl implements FollowService {
                         .following(followingUser)
                         .build());
 
-                // 알림 table에 insert
-
+        // 알림 table에 insert
         notificationService.insertFollowWaitNotification(NotificationFollowDto.builder()
                 .userId(followingUser.getUserId())
                 .follow(currentUser.getUserId())
@@ -89,6 +90,7 @@ public class FollowServiceImpl implements FollowService {
                 .following(currentUser)
                 .follower(followerUser)
                 .build());
+
         // 팔로우 수락 알림 -> 알림 table에 insert
         notificationService.insertFollowNotification(NotificationFollowDto.builder()
                 .userId(followerUser.getUserId())

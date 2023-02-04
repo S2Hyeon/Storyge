@@ -8,7 +8,7 @@ function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   let [title, setTitle] = useState("");
-
+  
   const setHeaderContent = () => {
     // 1. 메인이 아니라면 해당 페이지에 맞는 화면 제목 띄우기
     if (location.pathname === "/music") {
@@ -80,3 +80,4 @@ function Header() {
 }
 
 export default Header;
+//

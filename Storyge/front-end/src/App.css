@@ -33,6 +33,20 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: "Roboto-400Regular";
+  src: url('https://fonts.googleapis.com/css2?family=Roboto&display=swap')
+  format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Roboto-500Medium";
+  src: url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap')
+  format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 
 :root {
   /* 색상 */

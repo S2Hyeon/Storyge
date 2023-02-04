@@ -77,6 +77,7 @@ export const TextBox = styled.textarea`
 
 export const Mother = styled.div`
   margin: 0 20px 0 20px;
+  border: 1px solid red;
 `;
 
 export const Card = styled.div`

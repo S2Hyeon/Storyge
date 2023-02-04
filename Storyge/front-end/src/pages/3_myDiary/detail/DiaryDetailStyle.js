@@ -1,29 +1,6 @@
 import styled from "styled-components";
 import Happy from "assets/emotionIcons/happy.png";
 
-export const CommentWriteBox = styled.div`
-  // border: 1px solid red;
-  border: hidden;
-  background-color: var(--color-grey);
-  border-radius: 100px;
-  height: 35px;
-  width: 100%;
-  margin: 10px 0 10px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const CommentWrite = styled.input`
-  background-color: var(--color-grey);
-  border-radius: 100px;
-  border: hidden;
-  font-size: 16px;
-  width: 260px;
-  height: 33px;
-  margin: 0 0 0 10px;
-`;
-
 export const submitBtn = styled.button`
   background-color: var(--color-primary);
   border-radius: 100px;
@@ -31,18 +8,6 @@ export const submitBtn = styled.button`
   width: 80px;
   height: 35px;
   font-size: 16px;
-`;
-
-export const ListBox = styled.div`
-  border-color: white white var(--color-primary);
-  border-style: solid;
-  border-width: 1px;
-  height: 80px;
-  top: 50%;
-  display: flex;
-  // justify-content: center;
-  align-items: center;
-  width: 100%;
 `;
 
 export const DiaryContainer = styled.div`
@@ -120,8 +85,92 @@ export const AnalyzedContainer = styled.div`
   flex-direction: column;
   border: 3px solid #accebc;
   background-color: var(--color-primary);
-  height: ${(props) => props.height};
+  min-height: ${(props) => props.height};
   border-radius: 0 0 20px 20px;
 `;
 
-export const Toggle = styled.div``;
+export const Toggle = styled.div`
+  border: hidden;
+  font-size: ${(props) => props.fontSize};
+  border-radius: 100px;
+  height: 30px;
+  margin: 0 10px;
+`;
+
+export const ToggleBtnBox = styled.div`
+  // border: 1px solid red;
+  width: 100%;
+  display: flex;
+  justify-content: right;
+`;
+
+export const Analyzed = styled.div`
+  // border: 1px solid blue;
+  margin: 0 10px 10px 10px;
+`;
+
+// 댓글 관련 요소
+export const CommentWriteBox = styled.div`
+  // border: 1px solid red;
+  border: hidden;
+  background-color: var(--color-grey);
+  border-radius: 100px;
+  height: 35px;
+  width: 100%;
+  margin: 10px 0 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const CommentWrite = styled.input`
+  background-color: var(--color-grey);
+  border-radius: 100px;
+  border: hidden;
+  font-size: 16px;
+  width: 260px;
+  height: 33px;
+  margin: 0 0 0 10px;
+`;
+
+export const CommentBox = styled.div`
+  border-color: white white var(--color-primary);
+  border-style: solid;
+  border-width: 1px;
+  min-height: 80px;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  text-align: left;
+`;
+
+export const CommentInfo = styled.div`
+  // border: 1px solid red;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+`;
+
+export const CommentNameTime = styled.div`
+  // border: 1px solid blue;
+  font-size: 14px;
+`;
+
+export const CommentName = styled.div`
+  // border: 1px solid green;
+  font-family: "S-CoreDream-5Medium";
+`;
+
+export const CommentTime = styled.div`
+  // border: 1px solid red;
+  font-family: "S-CoreDream-3Light";
+  color: #afafaf;
+`;
+
+export const CommentContent = styled.div`
+  // border: 1px solid purple;
+  margin: 0 0 5px 0;
+`;

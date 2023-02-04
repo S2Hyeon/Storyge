@@ -113,3 +113,15 @@ export const Content = styled.div`
   font-size: 15px;
   overflow: auto;
 `;
+
+export const AnalyzedContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 3px solid #accebc;
+  background-color: var(--color-primary);
+  height: ${(props) => props.height};
+  border-radius: 0 0 20px 20px;
+`;
+
+export const Toggle = styled.div``;

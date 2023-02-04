@@ -24,10 +24,7 @@ export default function Diarylist() {
           </OwnS.ContentContiner>
         </OwnS.Diary>
       </OwnS.DiaryContainer>
-      <S.CardFoot2
-        height={isChecked ? "30px" : "120px"}
-        backgroundColor="var(--color-primary)"
-      >
+      <OwnS.AnalyzedContainer height={isChecked ? "30px" : "120px"}>
         <S.Toggle fontSize="14px" onClick={() => setIsChecked((e) => !e)}>
           <S.ToggleBtnBox>
             {isChecked ? (
@@ -42,7 +39,7 @@ export default function Diarylist() {
           </S.ToggleBtnBox>
         </S.Toggle>
         {isChecked ? null : <S.Mother>{S.data[1].content}</S.Mother>}
-      </S.CardFoot2>
+      </OwnS.AnalyzedContainer>
       <OwnS.CommentWriteBox>
         <OwnS.CommentWrite placeholder="댓글 쓰기" />
         <OwnS.submitBtn>작성</OwnS.submitBtn>

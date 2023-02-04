@@ -211,6 +211,7 @@ export const CardFoot2 = styled.div`
 `;
 
 export const ToggleBtnBox = styled.div`
+  border: 1px solid red;
   width: 100%;
   display: flex;
   justify-content: right;

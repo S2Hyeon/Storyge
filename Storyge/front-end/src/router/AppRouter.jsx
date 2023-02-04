@@ -40,8 +40,8 @@ function AppRouter() {
         <Route index path="/" element={<Main />} />
         <Route path="music" element={<Music />} />
         <Route path="createDiary" element={<Creatediary />} />
-        <Route path="0201" element={<Diarylist />} />
-        <Route path="02011" element={<Diarydetial />} />
+        <Route path="diarylist" element={<Diarylist />} />
+        <Route path="diary" element={<Diarydetial />} />
         <Route path="musicresult" element={<MusicResult />} />
         <Route path="mypage" element={<MyPage />} />
         <Route path="modify" element={<ModifyProfile />} />

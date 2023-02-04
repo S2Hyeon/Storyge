@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../common/header/Header";
-import Nav from "../common/footer/Nav";
+import Footer from "../common/footer/Nav";
 
 function Layout() {
   return (
     <div>
       <Header />
       <Outlet />
-      <Nav />
+      <Footer />
     </div>
   );
 }

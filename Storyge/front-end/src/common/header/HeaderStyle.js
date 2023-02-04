@@ -8,14 +8,14 @@ export const Header = styled.div`
   background-color: var(--color-background);
   padding-left: 20px;
   display: flex;
-  justify-contents: center;
+  flex-direction: row;
   align-items: center;
+
+  font-size: 18px;
+  font-family: "S-CoreDream-4Regular";
+  // font-family: "S-CoreDream-5Medium";
 `;
 
 export const Img = styled.img`
   height: 60%;
 `;
-
-export const Back = styled.div`
-  
-`

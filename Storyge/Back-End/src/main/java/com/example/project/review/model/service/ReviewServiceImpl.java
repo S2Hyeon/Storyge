@@ -42,7 +42,7 @@ public class ReviewServiceImpl implements ReviewService{
                 .build();
         reviewRepository.save(review);
 
-        User diaryUser = userRepository.findById(diary.getUserId()).orElse(null);
+        User diaryUser = userRepository.findById(diary.getUser().getUserId()).orElse(null);
 
         // 댓글 입력한 사람이 나라면 알림 안감
         if(diaryUser.getUserId()!=user.getUserId()) {
@@ -59,7 +59,7 @@ public class ReviewServiceImpl implements ReviewService{
     // 댓글 가져오기
     @Override
     public List<ReviewResponseDto> selectAllReview(Long diaryId) {
-        
+
         Diary diary = diaryRepository.findById(diaryId).orElse(null);
         // 해당 다이어리에 해당하는 댓글 목록 받아옴
         // 시간 순으로 오름차순 정렬
@@ -68,7 +68,7 @@ public class ReviewServiceImpl implements ReviewService{
         for(Review review: reviewList){
 
             User user = review.getUserId();
-            
+
             reviewResponseList.add(ReviewResponseDto.builder()
                     .reviewId(review.getReviewId()) // 댓글 id
                     .reviewContent(review.getReviewContent()) // 댓글 내용
@@ -107,7 +107,7 @@ public class ReviewServiceImpl implements ReviewService{
         Review review = reviewRepository.findById(reviewId).orElse(null);
         Long reviewUser = review.getUserId().getUserId(); // 댓글 작성한 사람 아이디
         Long userId = 3L; // 현재 로그인한 사람
-        
+
         if(userId==reviewUser){ // 같다면 삭제
             reviewRepository.deleteById(reviewId);
             return true;

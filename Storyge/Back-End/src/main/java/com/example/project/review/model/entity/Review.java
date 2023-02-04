@@ -21,24 +21,22 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
-    Long reviewId;
+    private Long reviewId;
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    User userId;
+    private User userId;
 
     @ManyToOne
     @JoinColumn(name="diary_id")
-    Diary diaryId;
+    private Diary diaryId;
 
     @Column(name = "review_content")
-    String reviewContent;
+    private String reviewContent;
 
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm", timezone = "Asia/Seoul")
-//    @DateTimeFormat(pattern ="yyyy.MM.dd HH:mm" )
     @CreatedDate
     @Column(name = "created_at")
-    LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
     @PrePersist
     private void createdAt(){

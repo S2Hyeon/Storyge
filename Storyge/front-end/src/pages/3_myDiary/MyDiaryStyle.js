@@ -152,17 +152,6 @@ export const DateInfo = styled.div`
   text-align: center;
 `;
 
-export const DiaryBox = styled.div`
-  border-color: white white var(--color-primary);
-  border-style: solid;
-  border-width: 1px;
-  height: 80px;
-  top: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const Emotion = styled.div`
   height: 60px;
   width: 60px;
@@ -222,40 +211,10 @@ export const CardFoot2 = styled.div`
 `;
 
 export const ToggleBtnBox = styled.div`
+  border: 1px solid red;
   width: 100%;
   display: flex;
   justify-content: right;
-`;
-
-export const CommentWriteBox = styled.div`
-  background-color: var(--color-grey);
-  border-radius: 100px;
-  height: 35px;
-  width: 100%;
-  border: hidden;
-  margin: 10px 0 10px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const CommentWrite = styled.input`
-  background-color: var(--color-grey);
-  border-radius: 100px;
-  border: hidden;
-  font-size: 16px;
-  width: 260px;
-  height: 33px;
-  margin: 0 0 0 10px;
-`;
-
-export const submitBtn = styled.button`
-  background-color: var(--color-primary);
-  border-radius: 100px;
-  border: hidden;
-  width: 80px;
-  height: 35px;
-  font-size: 16px;
 `;
 
 export const MainContent = styled.div`
@@ -263,3 +222,5 @@ export const MainContent = styled.div`
   display: flex;
   align-items: center;
 `;
+
+// 공통

@@ -1,20 +1,19 @@
-import React from 'react';
-import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
-import KakaologinBtn from '../../components/button/KakaologinBtn';
+import React from "react";
+import * as S from "./Loginstyle.js";
+
+import { KAKAO_AUTH_URL } from "../1_login/OAuth.jsx";
 
 export default function Login() {
-    return (
-        <div className='login'>
-            <h1>Login</h1>
-            <FacebookLoginButton onClick={() => alert("Hello")}>
-                <span>Facebook Login</span>
-            </FacebookLoginButton>
-            <GoogleLoginButton onClick={() => alert("Hello")}>
-                <span>Google Login</span>
-            </GoogleLoginButton>
-            <KakaologinBtn onClick={() => alert("Hello")}>
-            </KakaologinBtn>
-        </div>
-    );
-}
+  return (
+    <S.Login>
+      <h1>Login</h1>
 
+      <S.GoogleBtn onClick={() => alert("google")}></S.GoogleBtn>
+      <S.NaverBtn onClick={() => alert("naver")}></S.NaverBtn>
+      <S.KakaoBtn
+        href={KAKAO_AUTH_URL}
+        onClick={() => alert("kakao")}
+      ></S.KakaoBtn>
+    </S.Login>
+  );
+}

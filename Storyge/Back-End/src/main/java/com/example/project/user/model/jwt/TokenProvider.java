@@ -1,4 +1,4 @@
-//package com.example.project.user.model.jwt;
+package com.example.project.user.model.jwt;//package com.example.project.user.model.jwt;
 //
 //import com.example.project.user.model.entity.User;
 //import com.example.project.user.model.oauth.UserDetailCustom;
@@ -32,7 +32,6 @@
 //    }
 //
 //    public TokenInfo generateToken(Authentication authentication) {
-//        // 권한 가져오기
 //        String authorities = authentication.getAuthorities().stream()
 //                .map(GrantedAuthority::getAuthority)
 //                .collect(Collectors.joining(","));
@@ -40,7 +39,6 @@
 //        User user = userRepository.findByEmail(authentication.getName()).orElseThrow();
 //        long now = (new Date()).getTime();
 //
-//        // Access Token 생성
 //        Date accessTokenExpiresIn = new Date(now + JwtProperties.ACCESS_TOKEN_TIME);
 //        String accessToken = Jwts.builder()
 //                .setSubject(authentication.getName())
@@ -65,28 +63,23 @@
 //                .build();
 //    }
 //
-//    // JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
 //    public Authentication getAuthentication(String accessToken) {
-//        // 토큰 복호화
 //        Claims claims = parseClaims(accessToken);
 //
 //        if (claims.get(JwtProperties.AUTHORITIES_KEY) == null) {
-//            throw new RuntimeException("권한 정보가 없는 토큰입니다.");
+//            throw new RuntimeException("XX");
 //        }
 //
-//        // 클레임에서 권한 정보 가져오기
 //        Collection<? extends GrantedAuthority> authorities =
 //                Arrays.stream(claims.get("auth").toString().split(","))
 //                        .map(SimpleGrantedAuthority::new)
 //                        .collect(Collectors.toList());
 //
-//        // UserDetails 객체를 만들어서 Authentication 리턴
 //        User user = userRepository.findById(Long.parseLong(claims.get("id").toString())).orElseThrow();
 //        UserDetailCustom principal = new UserDetailCustom(user);
 //        return new UsernamePasswordAuthenticationToken(principal, "", authorities);
 //    }
 //
-//    // 토큰 정보를 검증하는 메서드
 //    public boolean validateToken(String token) {
 //        try {
 //            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -112,9 +105,7 @@
 //    }
 //
 //    public Long getExpiration(String accessToken) {
-//        // accessToken 남은유효시간
 //        Date expiration = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody().getExpiration();
-//        // 현재 시간
 //        Long now = new Date().getTime();
 //        return (expiration.getTime() - now);
 //    }

@@ -17,7 +17,7 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
     //    private final JwtTokenProvider jwtTokenProvider;
@@ -38,8 +38,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager, CustomOAuth2UserService customOAuth2UserService) throws Exception {
-        System.out.println("securityConfig");
+    public SecurityFilterChain filterChain(HttpSecurity http, CustomOAuth2UserService customOAuth2UserService) throws Exception {
         http
                 .addFilter(corsConfig.corsFilter()) // cors 설정. 일단 전부 풀어놓음
 //                .cors().disable()
@@ -49,20 +48,22 @@ public class SecurityConfig {
                 .csrf().disable()   // csrf 보안 비활성화
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt사용으로 session 비활성화
                 .and()
-                .authorizeRequests()
-                .antMatchers("/swagger-ui/**", "/swagger-resources/", "/**").permitAll()
-                .antMatchers("/users/login", "/users", "/users/duplicate", "/users/sign-up").permitAll()
-                .anyRequest().authenticated()
-                .and()
+//                .authorizeRequests()
+//                .antMatchers("/swagger-ui/**", "/swagger-resources/", "/**").permitAll()
+//                .antMatchers("/users/login", "/user", "/users/duplicate", "/users/sign-up").permitAll()
+//                .anyRequest().authenticated() // 이외 나머지 주소는 인증을 요구
+//                .and()
+                .authorizeRequests(authorize -> authorize.anyRequest().authenticated())
                 .oauth2Login()
+                .loginProcessingUrl("/oauth/callback/*") // 폼 로그인을 처리할 URL 입력
+//                .loginProcessingUrl("/login/oauth2/code/*") // 폼 로그인을 처리할 URL 입력
                 .authorizationEndpoint(authorize -> {
                     authorize.authorizationRequestRepository(
                             customOAuth2AuthorizationRequestRepository);
-                })
+                }) // 사용자가 호출하는 클라이언트의 이증시작 API에 대한 설정
                 .userInfoEndpoint(userInfo -> {
                     userInfo.userService(customOAuth2UserService);
                 })
-                .loginProcessingUrl("/oauth/callback/*")
                 .successHandler(oAuth2SuccessHandler)
                 .failureHandler(oAuth2FailureHandler);
 //                .and()

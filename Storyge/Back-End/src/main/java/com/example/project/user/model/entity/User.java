@@ -39,4 +39,16 @@ public class User extends BaseTime {
         this.profileImg = profileImg;
     }
 
+    @Builder
+    public User(Long userId, String email, String name, String nickname, String profileImg, String refreshToken, String role, String provider, String providerId) {
+        this.userId = userId;
+        this.email = email;
+        this.name = name;
+        this.nickname = nickname;
+        this.profileImg = profileImg;
+        this.refreshToken = refreshToken;
+        this.role = role;
+        this.provider = provider;
+        this.providerId = providerId;
+    }
 }

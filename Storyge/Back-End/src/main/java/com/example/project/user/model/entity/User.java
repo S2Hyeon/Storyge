@@ -11,9 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Getter
 public class User extends BaseTime {
 
@@ -28,7 +26,7 @@ public class User extends BaseTime {
     private String nickname;
     private String profileImg;
     private String refreshToken;
-    private String role = "ROLE_USER";
+    private String role;
 
     private String provider;
     private String providerId;

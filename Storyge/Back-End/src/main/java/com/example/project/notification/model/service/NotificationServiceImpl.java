@@ -43,11 +43,11 @@ public class NotificationServiceImpl implements NotificationService {
                 .follow(follow)
                 .notiType(WAIT)
                 .build());
-        Long userId = (long)1; // user.getuserID();알림 받을 사람 id
+        Long userId = user.getUserId(); //알림 받을 사람 id
         if(sseEmitters.containsKey(userId)){
             SseEmitter sseEmitter = sseEmitters.get(userId);
             try {
-                sseEmitter.send(SseEmitter.event().name("notification").data("팔로우 신청"));
+                sseEmitter.send(SseEmitter.event().name("notification").data("follow wait"));
             }catch (Exception e){
                 sseEmitters.remove(userId);
             }
@@ -66,11 +66,11 @@ public class NotificationServiceImpl implements NotificationService {
                 .notiType(FOLLOW)
                 .build());
 
-        Long userId = (long)1; // user.getuserID();알림 받을 사람 id
+        Long userId = user.getUserId(); //알림 받을 사람 id
         if(sseEmitters.containsKey(userId)){
             SseEmitter sseEmitter = sseEmitters.get(userId);
             try {
-                sseEmitter.send(SseEmitter.event().name("notification").data("팔로우 수락"));
+                sseEmitter.send(SseEmitter.event().name("notification").data("follow accept"));
             }catch (Exception e){
                 sseEmitters.remove(userId);
             }
@@ -90,11 +90,11 @@ public class NotificationServiceImpl implements NotificationService {
                 .diaryId(diary)
                 .build());
 
-        Long userId = (long)1; // user.getuserID();알림 받을 사람 id
+        Long userId = user.getUserId(); //알림 받을 사람 id
         if(sseEmitters.containsKey(userId)){
             SseEmitter sseEmitter = sseEmitters.get(userId);
             try {
-                sseEmitter.send(SseEmitter.event().name("notification").data("댓글 달림"));
+                sseEmitter.send(SseEmitter.event().name("notification").data("review"));
             }catch (Exception e){
                 sseEmitters.remove(userId);
             }
@@ -106,7 +106,7 @@ public class NotificationServiceImpl implements NotificationService {
 
         User currentUser = userRepository.findById(2L).orElse(null); // 현재 user 가져오기
 
-        List<Notification> notifications = notificationRepository.findByUserIdOrderByCreatedAtDesc(currentUser);
+        List<Notification> notifications = notificationRepository.findTop30ByUserIdOrderByCreatedAtDesc(currentUser);
         List<NotificationReponseDto> notificationList = new ArrayList<>();
         for(Notification noti:notifications){
 

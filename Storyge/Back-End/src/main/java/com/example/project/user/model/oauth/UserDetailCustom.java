@@ -3,10 +3,12 @@ package com.example.project.user.model.oauth;
 import com.example.project.user.model.entity.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -28,6 +30,7 @@ public class UserDetailCustom implements OAuth2User {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        System.out.println("getAuthorities");
         Collection<GrantedAuthority> collection = new ArrayList<>();
         collection.add(user::getRole);
         return collection;

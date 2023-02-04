@@ -25,7 +25,6 @@ public class CustomOAuth2AuthorizationRequestRepository<T extends OAuth2Authoriz
     }
 
     private static String expandRedirectUri(HttpServletRequest request, ClientRegistration clientRegistration) {
-        System.out.println("11111111111111");
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("registrationId", clientRegistration.getRegistrationId());
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(
@@ -69,24 +68,22 @@ public class CustomOAuth2AuthorizationRequestRepository<T extends OAuth2Authoriz
 
     @Override
     public OAuth2AuthorizationRequest removeAuthorizationRequest(HttpServletRequest request) {
-        System.out.println("44444444444444444444444");
+        System.out.println("remove");
+        System.out.println(request.getParameter("code"));
+        System.out.println(request.getParameter("state"));
         String registrationId = request.getParameter("state");
         ClientRegistration clientRegistration = clientRegistrationRepository.findByRegistrationId(registrationId);
         OAuth2AuthorizationRequest.Builder builder = OAuth2AuthorizationRequest.authorizationCode()
-                .attributes((attrs) -> attrs.put(OAuth2ParameterNames.REGISTRATION_ID, registrationId));
-
+                .attributes((attrs) -> attrs.put(OAuth2ParameterNames.REGISTRATION_ID, clientRegistration.getRegistrationId()));
+        System.out.println();
+//        String redirectUri = "http://localhost:3000/oauth/callback/"+registrationId;
         String redirectUri = expandRedirectUri(request, clientRegistration);
-
-        builder.clientId(clientRegistration.getClientId())
-                .authorizationUri(clientRegistration.getProviderDetails().getAuthorizationUri())
-                .redirectUri(redirectUri)
-                .scopes(clientRegistration.getScopes())
-                .state(registrationId);
-
-        return builder.clientId(clientRegistration.getClientId())
+        OAuth2AuthorizationRequest build = builder.clientId(clientRegistration.getClientId())
                 .authorizationUri(clientRegistration.getProviderDetails().getAuthorizationUri())
                 .redirectUri(redirectUri)
                 .scopes(clientRegistration.getScopes())
                 .state(registrationId).build();
+
+        return build;
     }
 }

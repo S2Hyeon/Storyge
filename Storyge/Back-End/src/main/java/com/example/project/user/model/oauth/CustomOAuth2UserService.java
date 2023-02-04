@@ -30,6 +30,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        System.out.println("서비스 옴?");
         OAuth2User oAuth2User = super.loadUser(userRequest);
         return process(userRequest, oAuth2User);
     }
@@ -46,7 +47,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
 
         String name = userInfo.getProvider() + '_' + userInfo.getProviderId();
-        System.out.println("");
+        System.out.println(name);
         Optional<User> userOptional = userRepository.findByName(name);
 //        String email = userInfo.getProvider() + '_' + userInfo.getProviderId() + "@strogy.com";
 //        Optional<User> userOptional = userRepository.findByEmail(email);

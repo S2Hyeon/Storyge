@@ -3,19 +3,21 @@ import { useLocation, useNavigate } from "react-router-dom";
 import HeaderBackIcon from "./HeaderBackIcon";
 import * as S from "./HeaderStyle";
 import Logo from "../../assets/logo1.png";
+import { TbMusic, TbBell, TbWriting, TbUser } from "react-icons/tb";
 
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   let [title, setTitle] = useState("");
-  
+
   const setHeaderContent = () => {
     // 1. 메인이 아니라면 해당 페이지에 맞는 화면 제목 띄우기
     if (location.pathname === "/music") {
       return (
         <>
-          <HeaderBackIcon />
-          <div>음악 추천</div>
+          {/* <HeaderBackIcon /> */}
+          <TbMusic />
+          <S.TitleContainer>음악 추천</S.TitleContainer>
         </>
       );
     }
@@ -23,8 +25,9 @@ function Header() {
     else if (location.pathname === "/alarm") {
       return (
         <>
-          <HeaderBackIcon />
-          <div>알림</div>
+          {/* <HeaderBackIcon /> */}
+          <TbBell />
+          <S.TitleContainer>알림</S.TitleContainer>
         </>
       );
     }
@@ -32,8 +35,9 @@ function Header() {
     else if (location.pathname === "/mypage") {
       return (
         <>
-          <HeaderBackIcon />
-          <div>마이페이지</div>
+          {/* <HeaderBackIcon /> */}
+          <TbUser />
+          <S.TitleContainer>마이페이지</S.TitleContainer>
         </>
       );
     }
@@ -41,8 +45,9 @@ function Header() {
     else if (location.pathname === "/createDiary") {
       return (
         <>
-          <HeaderBackIcon />
-          <div>일기 작성</div>
+          {/* <HeaderBackIcon /> */}
+          <TbWriting />
+          <S.TitleContainer>일기 작성</S.TitleContainer>
         </>
       );
     }
@@ -51,7 +56,7 @@ function Header() {
       return (
         <>
           <HeaderBackIcon />
-          <div>일기 목록</div>
+          <S.TitleContainer>일기 목록</S.TitleContainer>
         </>
       );
     }
@@ -60,7 +65,7 @@ function Header() {
       return (
         <>
           <HeaderBackIcon />
-          <div>나의 일기</div>
+          <S.TitleContainer>나의 일기</S.TitleContainer>
         </>
       );
     }

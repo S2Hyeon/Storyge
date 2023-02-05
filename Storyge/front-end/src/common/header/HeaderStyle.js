@@ -19,4 +19,16 @@ export const Header = styled.div`
 export const Img = styled.img`
   height: 60%;
 `;
-//
+
+export const BtnContainer = styled.div`
+  width: 30px;
+  height: 80%;
+  display: flex;
+  justifycontent: center;
+  alignitems: center;
+  // margin: 0 5px 0 0;
+`;
+
+export const TitleContainer = styled.div`
+  margin: 0 0 0 5px;
+`;

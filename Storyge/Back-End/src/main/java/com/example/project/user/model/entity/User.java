@@ -1,9 +1,6 @@
 package com.example.project.user.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +10,7 @@ import javax.persistence.Id;
 @Entity
 @NoArgsConstructor
 @Getter
+@ToString
 public class User extends BaseTime {
 
     @Id
@@ -25,7 +23,6 @@ public class User extends BaseTime {
     private String name;
     private String nickname;
     private String profileImg;
-    private String refreshToken;
     private String role;
 
     private String provider;
@@ -38,13 +35,12 @@ public class User extends BaseTime {
     }
 
     @Builder
-    public User(Long userId, String email, String name, String nickname, String profileImg, String refreshToken, String role, String provider, String providerId) {
+    public User(Long userId, String email, String name, String nickname, String profileImg, String role, String provider, String providerId) {
         this.userId = userId;
         this.email = email;
         this.name = name;
         this.nickname = nickname;
         this.profileImg = profileImg;
-        this.refreshToken = refreshToken;
         this.role = role;
         this.provider = provider;
         this.providerId = providerId;

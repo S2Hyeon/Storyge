@@ -30,7 +30,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        System.out.println("서비스 옴?");
+        System.out.println("CustomOAuth2UserService 의 loadUser");
         OAuth2User oAuth2User = super.loadUser(userRequest);
         return process(userRequest, oAuth2User);
     }

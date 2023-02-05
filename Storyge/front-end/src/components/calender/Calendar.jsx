@@ -1,10 +1,9 @@
 import dayjs from "dayjs";
 import React, { useState } from "react";
 import Calendar from "react-calendar";
-import { useQuery } from "react-query";
 import "./Calendar.css"; // css import
 import datas from "./CalendarData";
-// import { EmotionImg } from "./EmotionIcon";
+import Emoji from "components/emoji/Emoji";
 
 import angry from "../../assets/emotionIcons/angry.png";
 import aversion from "../../assets/emotionIcons/aversion.png";
@@ -49,7 +48,9 @@ function CustomCalendar() {
         let chosenData = emotionData.find(
           ({ feelDate }) => feelDate === dayjs(date).format("YYYY-MM-DD")
         );
-        return displayEmotion(chosenData);
+        console.log(chosenData);
+        return <Emoji emotion={chosenData.emotion} />;
+        // return displayEmotion(chosenData);
       }}
     />
   );

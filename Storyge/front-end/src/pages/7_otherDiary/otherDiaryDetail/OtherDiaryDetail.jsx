@@ -1,13 +1,19 @@
 import React, { useState } from "react";
-import * as S from "./DiaryDetailStyle";
+import * as S from "./OtherDiaryDetailStyle";
 import * as G from "styles/index";
 import commentData from "./CommentData";
 import diaryData from "./DiaryData";
-import analyzedData from "./AnalyzedData";
+import { useLocation } from "react-router-dom";
+// import analyzedData from "./AnalyzedData";
 
-import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
+// import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
-export default function DiaryDetail() {
+export default function OtherDiarylist() {
+  const location = useLocation();
+  const id = location.state.id; //글번호
+  const userId = location.state.userId; //글 작성자
+  console.log("글작성자ID:", id, " / 글번호: ", userId);
+
   const [isChecked, setIsChecked] = useState(true);
   return (
     <G.BodyContainer>
@@ -18,14 +24,13 @@ export default function DiaryDetail() {
           </S.EmotionContainer>
           <S.ContentContiner>
             <S.TimeContainer>
-              {/* 맨 오른쪽에 시간, 맨 왼쪽에 수정, 삭제, 공개비공개 */}
               {diaryData.date} {diaryData.time}
             </S.TimeContainer>
             <S.Content>{diaryData.content}</S.Content>
           </S.ContentContiner>
         </S.Diary>
       </S.DiaryContainer>
-      <S.AnalyzedContainer minHeight={isChecked ? "30px" : "120px"}>
+      {/* <S.AnalyzedContainer minHeight={isChecked ? "30px" : "120px"}>
         <S.Toggle fontSize="14px" onClick={() => setIsChecked((e) => !e)}>
           <S.ToggleBtnBox>
             {isChecked ? (
@@ -40,7 +45,7 @@ export default function DiaryDetail() {
           </S.ToggleBtnBox>
         </S.Toggle>
         {isChecked ? null : <S.Analyzed>{analyzedData.content}</S.Analyzed>}
-      </S.AnalyzedContainer>
+      </S.AnalyzedContainer> */}
       <S.CommentWriteBox>
         <S.CommentWrite placeholder="댓글 쓰기" />
         <S.submitBtn>작성</S.submitBtn>

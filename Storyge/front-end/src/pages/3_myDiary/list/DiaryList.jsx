@@ -4,7 +4,7 @@ import * as G from "../../../styles/index";
 import * as S from "./DiaryListStyle";
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
 
-export default function Diarylist() {
+export default function DiaryList() {
   const [dateInfo, setDateInfo] = useState(new Date());
   const headDate = `${dateInfo.getFullYear()}.${
     dateInfo.getMonth() + 1

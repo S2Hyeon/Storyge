@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
@@ -29,7 +30,12 @@ public class RecentDiary {
     @Column(name="diary_id")
     private Diary diaryId;
 
+    @Column(name="created_at")
+    private LocalDateTime createdAt;
 
-
+    @PrePersist
+    private void createdAt(){
+        createdAt = LocalDateTime.now();
+    }
 
 }

@@ -39,6 +39,6 @@ public class KakaoUserInfo implements OAuth2UserInfo {
     @Override
     public String getProfileImg() {
         //다시 생각해봐야할 수 있음
-        return properties.get("image");
+        return properties.get("profile_image");
     }
 }

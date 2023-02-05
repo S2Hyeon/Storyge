@@ -1,5 +1,9 @@
 package com.example.project.config;
 
+import com.example.project.user.model.jwt.JwtAuthenticationFilter;
+import com.example.project.user.model.jwt.JwtExceptionFilter;
+import com.example.project.user.model.jwt.JwtLoginFilter;
+import com.example.project.user.model.jwt.TokenProvider;
 import com.example.project.user.model.oauth.CustomOAuth2AuthorizationRequestRepository;
 import com.example.project.user.model.oauth.CustomOAuth2UserService;
 import com.example.project.user.model.oauth.Handler.OAuth2FailureHandler;
@@ -15,12 +19,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    //    private final JwtTokenProvider jwtTokenProvider;
+    private final TokenProvider tokenProvider;
     private final CorsConfig corsConfig;
     private final CustomOAuth2AuthorizationRequestRepository<OAuth2AuthorizationRequest> customOAuth2AuthorizationRequestRepository;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
@@ -56,7 +61,6 @@ public class SecurityConfig {
                 .authorizeRequests(authorize -> authorize.anyRequest().authenticated())
                 .oauth2Login()
                 .loginProcessingUrl("/oauth/callback/*") // 폼 로그인을 처리할 URL 입력
-//                .loginProcessingUrl("/login/oauth2/code/*") // 폼 로그인을 처리할 URL 입력
                 .authorizationEndpoint(authorize -> {
                     authorize.authorizationRequestRepository(
                             customOAuth2AuthorizationRequestRepository);
@@ -65,11 +69,12 @@ public class SecurityConfig {
                     userInfo.userService(customOAuth2UserService);
                 })
                 .successHandler(oAuth2SuccessHandler)
-                .failureHandler(oAuth2FailureHandler);
-//                .and()
-//                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .failureHandler(oAuth2FailureHandler)
+                .and()
+
+                .addFilterBefore(new JwtAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
 //                .addFilter(new JwtLoginFilter(authenticationManager, jwtTokenProvider))
-//                .addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class);
+                .addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class);
         return http.build();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.project.quote.controller;
 
 import com.example.project.quote.model.dto.QuoteDto;
+import com.example.project.quote.model.scheduler.QuoteScheduler;
 import com.example.project.quote.model.service.QuoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,14 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class QuoteController {
     private final QuoteService quoteService;
+    private final QuoteScheduler quoteScheduler = new QuoteScheduler();
+    private long quoteId = quoteScheduler.selectQuoteId();
 
     //글귀 1개 가져오기
     @GetMapping("/quote")
     public ResponseEntity<QuoteDto> selectOneQuote(){
-//        LocalDate localDate= LocalDate.now();
-//        long quoteId = localDate.getDayOfYear();
-        long quoteId = 1; //db에 넣고 결정할 것
-        
+
+//        long quoteId = (long)(Math.random()*35);
+//        long quoteId = 21; //db에 넣고 결정할 것
+
         QuoteDto quoteDto = quoteService.selectOneQuote(quoteId).orElseThrow();
         return new ResponseEntity<>(quoteDto, HttpStatus.OK);
     }

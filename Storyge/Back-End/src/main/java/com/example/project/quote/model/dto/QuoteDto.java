@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuoteDto {
-    private Long quoteId;
+//    private Long quoteId;
     private String quoteContent;
     private String quoteSource;
 

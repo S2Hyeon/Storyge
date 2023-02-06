@@ -30,11 +30,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        System.out.println("CustomOAuth2UserService 의 loadUser");
+        System.out.println("======================================================================");
         OAuth2User oAuth2User = super.loadUser(userRequest);
         return process(userRequest, oAuth2User);
     }
 
     private OAuth2User process(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
+        System.out.println("CustomOAuth2UserService 의 process");
+        System.out.println("======================================================================");
         OAuth2UserInfo userInfo = null;
 
         if (Objects.equals(userRequest.getClientRegistration().getRegistrationId(), "google")) {
@@ -46,13 +50,12 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
 
         String name = userInfo.getProvider() + '_' + userInfo.getProviderId();
-        System.out.println("");
+        System.out.println("CustomOAuth2UserService process name : " + name);
         Optional<User> userOptional = userRepository.findByName(name);
-//        String email = userInfo.getProvider() + '_' + userInfo.getProviderId() + "@strogy.com";
-//        Optional<User> userOptional = userRepository.findByEmail(email);
 
         User user;
         if (userOptional.isEmpty()) {
+            System.out.println("유저가 없으니까 저장하자");
             user = User.builder()
                     .email(userInfo.getEmail())
                     .name(name)
@@ -65,6 +68,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             userRepository.save(user);
         } else {
+            System.out.println("유저가 있으니까 있는 애로 바꿔주자");
             user = userOptional.get();
         }
 

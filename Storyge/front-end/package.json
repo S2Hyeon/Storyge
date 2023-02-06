@@ -35,6 +35,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-image-upload": "^2.0.1",
+    "react-kakao-login": "^2.1.1",
     "react-live-clock": "^6.1.5",
     "react-naver-login": "^0.1.4",
     "react-player": "^2.11.0",

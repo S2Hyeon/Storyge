@@ -1,20 +1,19 @@
 import React from "react";
 import NaverLogin from "react-naver-login";
-import { NAVER_CLIENT_ID } from "../1_login/OAuth.js";
-import { NAVER_CALLBACK_URI } from "../1_login/OAuth.js";
+import { NAVER_CLIENT_ID } from "./OAuth.js";
+import { NAVER_CALLBACK_URI } from "./OAuth.js";
+import * as S from "./Loginstyle.js";
 
-const NaverLoginBtn = () => {
+export default function NaverLoginBtn() {
   const result = "네이버 로그인 Error!!!!";
 
   return (
     <NaverLogin
       clientId={NAVER_CLIENT_ID}
       callbackUrl={NAVER_CALLBACK_URI}
-      render={(props) => <div onClick={props.onClick}>Naver Login</div>}
+      render={(props) => <S.Naver onClick={props.onClick}></S.Naver>}
       onSuccess={(naverUser) => console.log(naverUser)}
       onFailure={() => console.error(result)}
     />
   );
-};
-
-export default NaverLoginBtn;
+}

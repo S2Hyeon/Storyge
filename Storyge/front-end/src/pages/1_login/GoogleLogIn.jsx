@@ -1,25 +1,16 @@
 import React from "react";
-import { GoogleLogin } from "@react-oauth/google";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import { GOOGLE_CLIENT_ID } from "../1_login/OAuth.js";
-// import { GOOGLE_AUTH_URL } from "../1_login/OAuth.jsx";
+import { useGoogleLogin } from "@react-oauth/google";
+import * as S from "./Loginstyle.js";
 
-const GoogleLogInBtn = () => {
+export default function GoogleLogInBtn() {
+  const googleSocialLogin = useGoogleLogin({
+    onSuccess: (codeResponse) => console.log(codeResponse),
+    flow: "auth-code",
+  });
   return (
-    <>
-      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-        <GoogleLogin
-          buttonText="google login"
-          onSuccess={(credentialResponse) => {
-            console.log(credentialResponse);
-          }}
-          onError={() => {
-            console.log("Login Failed");
-          }}
-        />
-      </GoogleOAuthProvider>
-    </>
+    <S.Google
+      className="social_login_box google"
+      onClick={() => googleSocialLogin()}
+    ></S.Google>
   );
-};
-
-export default GoogleLogInBtn;
+}

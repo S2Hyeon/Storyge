@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import "./../../styles/index";
+import "../../styles/index";
 
 export const Login = styled.div`
   display: flex;
@@ -7,44 +7,37 @@ export const Login = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+  margin: 20px;
 
-  &:a {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 80%;
-    height: 40px;
-    text-decoration: none;
-    border-radius: 100px;
-    border: var(--size-border-thickness) solid var(--color-border-line);
-    margin: 13%;
-    font-size: var(--font-regular);
-  }
-  &:a:hover {
-    filter: brightness(0.8);
-    transition: var(--animation-duration);
+  & * {
+    margin: 40px;
   }
 `;
 
-export const GoogleBtn = styled.a`
-  background-image: url(./../../assets/login/btn_google_signin_light_normal_web@2x.png);
-  background-color: transparent;
-  background-size: cover;
-  background-position: center;
+export const LoginInfoText = styled.h2`
+  margin-bottom: 40px;
+`;
+
+export const Naver = styled.div`
+  width: 80%;
+  height: 60px;
+  background-size: contain;
   background-repeat: no-repeat;
-  background-size: 90%;
+  background-image: url("https://t1.daumcdn.net/cfile/tistory/99580C465C3D7D130C?original");
 `;
-export const NaverBtn = styled.a`
-  background-image: url(./../../assets/login/btnW_official.png);
-  background-color: transparent;
-  background-size: cover;
-  background-position: center;
-  background-size: 100%;
+
+export const Kakao = styled.div`
+  width: 80%;
+  height: 60px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url("https://t1.daumcdn.net/cfile/tistory/99BEE8465C3D7D1214?original");
 `;
-export const KakaoBtn = styled.a`
-  background-image: url(./../../assets/login/kakao_login_large_narrow.png);
-  background-color: transparent;
-  background-size: cover;
-  background-position: center;
-  background-size: 93%;
+
+export const Google = styled.div`
+  width: 80%;
+  height: 60px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url("https://t1.daumcdn.net/cfile/tistory/998689465C3D7D1217?original");
 `;

@@ -9,4 +9,5 @@ export const NAVER_CALLBACK_URI = "http://localhost:3000/oauth/callback/naver";
 
 export const GOOGLE_CLIENT_ID =
   "632690347836-0tk1p98e4eccl0roh47mmqrbr770q43s.apps.googleusercontent.com";
-// const GOOGLE_REDIRECT_URI = "http://localhost:3000/oauth/callback/google";
+export const GOOGLE_REDIRECT_URI =
+  "http://localhost:3000/oauth/callback/google";

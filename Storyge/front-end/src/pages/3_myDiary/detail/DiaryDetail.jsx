@@ -6,9 +6,15 @@ import diaryData from "./DiaryData";
 import analyzedData from "./AnalyzedData";
 
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
+import { useLocation } from "react-router";
 
 export default function DiaryDetail() {
+  const location = useLocation();
+
   const [isChecked, setIsChecked] = useState(true);
+  const [id] = useState(location.state.id); //글 번호
+  console.log("현재 글번호: ", id);
+
   return (
     <G.BodyContainer>
       <S.DiaryContainer>

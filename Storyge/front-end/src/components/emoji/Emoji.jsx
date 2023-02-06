@@ -10,73 +10,28 @@ import soso from "assets/emotionIcons/soso.png";
 import surprised from "assets/emotionIcons/surprised.png";
 import noEmotion from "assets/emotionIcons/noEmotion.png";
 
+//<Emoji emotion="happy" thisWidth=""} /> 로 선언하기!
 function Emoji(props) {
-  if (props != null) {
-    if (props.emotion === "angry") {
-      return (
-        <img
-          src={angry}
-          alt="angry"
-          width={(props) => (props.width ? props.width : "100%")}
-        />
-      );
-    } else if (props.emotion === "aversion") {
-      return (
-        <img
-          src={aversion}
-          alt="aversion"
-          width={(props) => (props.width ? props.width : "100%")}
-        />
-      );
-    } else if (props.emotion === "happy") {
-      return (
-        <img
-          src={happy}
-          alt="happy"
-          width={(props) => (props.width ? props.width : "100%")}
-        />
-      );
-    } else if (props.emotion === "sad") {
-      return (
-        <img
-          src={sad}
-          alt="sad"
-          width={(props) => (props.width ? props.width : "100%")}
-        />
-      );
-    } else if (props.emotion === "scared") {
-      return (
-        <img
-          src={scared}
-          alt="scared"
-          width={(props) => (props.width ? props.width : "100%")}
-        />
-      );
-    } else if (props.emotion === "soso") {
-      return (
-        <img
-          src={soso}
-          alt="soso"
-          width={(props) => (props.width ? props.width : "100%")}
-        />
-      );
-    } else if (props.emotion === "surprised") {
-      return (
-        <img
-          src={surprised}
-          alt="surprised"
-          width={(props) => (props.width ? props.width : "100%")}
-        />
-      );
-    }
+  let thisWidth = props.thisWidth; //props로 받은 너비값
+
+  if (props.emotion === "noemotion") {
+    return <img src={noEmotion} alt="noemotion" width={thisWidth} />;
   } else {
-    return (
-      <img
-        src={noEmotion}
-        alt="noemotion"
-        width={(props) => (props.width ? props.width : "100%")}
-      />
-    );
+    if (props.emotion === "angry") {
+      return <img src={angry} alt="angry" width={thisWidth} />;
+    } else if (props.emotion === "aversion") {
+      return <img src={aversion} alt="aversion" width={thisWidth} />;
+    } else if (props.emotion === "happy") {
+      return <img src={happy} alt="happy" width={thisWidth} />;
+    } else if (props.emotion === "sad") {
+      return <img src={sad} alt="sad" width={thisWidth} />;
+    } else if (props.emotion === "scared") {
+      return <img src={scared} alt="scared" width={thisWidth} />;
+    } else if (props.emotion === "soso") {
+      return <img src={soso} alt="soso" width={thisWidth} />;
+    } else if (props.emotion === "surprised") {
+      return <img src={surprised} alt="surprised" width={thisWidth} />;
+    }
   }
 }
 

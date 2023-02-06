@@ -25,7 +25,7 @@ import OtherDiaryList from "pages/7_otherDiary/otherDiaryList/OtherDiaryList";
 import OtherDiaryDetail from "pages/7_otherDiary/otherDiaryDetail/OtherDiaryDetail";
 
 import OAuth2RedirectHandler from "./../pages/1_login/OAuth2RedirectHandler.jsx";
-import { Pages } from "@mui/icons-material";
+// import { Pages } from "@mui/icons-material";
 
 function AppRouter() {
   return (

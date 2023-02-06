@@ -3,9 +3,13 @@ import data from "./DiaryListData";
 import * as G from "../../../styles/index";
 import * as S from "./DiaryListStyle";
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
+import { useLocation } from "react-router";
 
 export default function DiaryList() {
-  const [dateInfo, setDateInfo] = useState(new Date());
+  const location = useLocation();
+
+  const [dateInfo, setDateInfo] = useState(location.state.date);
+
   const headDate = `${dateInfo.getFullYear()}.${
     dateInfo.getMonth() + 1
   }.${dateInfo.getDate()}`;

@@ -2,7 +2,6 @@ package com.example.project.config;
 
 import com.example.project.user.model.jwt.JwtAuthenticationFilter;
 import com.example.project.user.model.jwt.JwtExceptionFilter;
-import com.example.project.user.model.jwt.JwtLoginFilter;
 import com.example.project.user.model.jwt.TokenProvider;
 import com.example.project.user.model.oauth.CustomOAuth2AuthorizationRequestRepository;
 import com.example.project.user.model.oauth.CustomOAuth2UserService;
@@ -53,12 +52,12 @@ public class SecurityConfig {
                 .csrf().disable()   // csrf 보안 비활성화
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt사용으로 session 비활성화
                 .and()
-//                .authorizeRequests()
-//                .antMatchers("/swagger-ui/**", "/swagger-resources/", "/**").permitAll()
-//                .antMatchers("/users/login", "/user", "/users/duplicate", "/users/sign-up").permitAll()
-//                .anyRequest().authenticated() // 이외 나머지 주소는 인증을 요구
-//                .and()
-                .authorizeRequests(authorize -> authorize.anyRequest().authenticated())
+                .authorizeRequests()
+                .antMatchers("/swagger-ui/**", "/swagger-resources/", "/**", "/favicon.ico").permitAll()
+                .antMatchers("/users/login", "/user", "/users/duplicate", "/users/sign-up").permitAll()
+                .anyRequest().authenticated()
+                .and()
+//                .authorizeRequests(authorize -> authorize.anyRequest().authenticated())
                 .oauth2Login()
                 .loginProcessingUrl("/oauth/callback/*") // 폼 로그인을 처리할 URL 입력
                 .authorizationEndpoint(authorize -> {

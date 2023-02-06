@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as S from "./MainStyle";
 import * as G from "../../styles";
 import newDiaryData from "./NewDiaryData";
@@ -8,9 +9,18 @@ import CustomCalendar from "../../components/calender/Calendar";
 import PieChart from "../../components/chart/PieChart";
 
 function Main() {
+  const movePage = useNavigate();
+
   let [diary, setDiary] = useState(true);
   let [chartData, setChartData] = useState(pieChartData);
 
+  //새로 업데이트 된 글로 이동!
+  function goUpdatedDiary(id, userId) {
+    // console.log(id, userId);
+    movePage("/otherdiarydetail", { state: { id: id, userId: userId } });
+  }
+
+  //달력 보일건지 통계 보일건지 전환하는 함수
   function switchBox() {
     setDiary(!diary);
   }
@@ -19,7 +29,13 @@ function Main() {
     <S.All>
       <S.NewDiary>
         {newDiaryData.map((diary) => {
-          return <S.Profile profile={diary.imgUrl} key={diary.id} />;
+          return (
+            <S.Profile
+              profile={diary.imgUrl}
+              key={diary.id}
+              onClick={() => goUpdatedDiary(diary.id, diary.userId)}
+            />
+          );
         })}
       </S.NewDiary>
       <G.BodyContainer top="0" bottom="70px" color="true">

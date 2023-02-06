@@ -8,14 +8,27 @@ export const Header = styled.div`
   background-color: var(--color-background);
   padding-left: 20px;
   display: flex;
-  justify-contents: center;
+  flex-direction: row;
   align-items: center;
+
+  font-size: 18px;
+  font-family: "S-CoreDream-4Regular";
+  // font-family: "S-CoreDream-5Medium";
 `;
 
 export const Img = styled.img`
   height: 60%;
 `;
 
-export const Back = styled.div`
-  
-`
+export const BtnContainer = styled.div`
+  width: 30px;
+  height: 80%;
+  display: flex;
+  justifycontent: center;
+  alignitems: center;
+  // margin: 0 5px 0 0;
+`;
+
+export const TitleContainer = styled.div`
+  margin: 0 0 0 5px;
+`;

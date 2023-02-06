@@ -7,10 +7,5 @@ export default function GoogleLogInBtn() {
     onSuccess: (codeResponse) => console.log(codeResponse),
     flow: "auth-code",
   });
-  return (
-    <S.Google
-      className="social_login_box google"
-      onClick={() => googleSocialLogin()}
-    ></S.Google>
-  );
+  return <S.Google onClick={() => googleSocialLogin()}></S.Google>;
 }

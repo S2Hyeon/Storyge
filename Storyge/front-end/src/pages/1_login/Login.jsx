@@ -1,5 +1,8 @@
 import React from "react";
 import * as S from "./Loginstyle.js";
+import { Provider } from "react-redux";
+import store from "./store/exportStore";
+
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import GoogleLogInBtn from "./GoogleLogIn.jsx";
@@ -16,6 +19,7 @@ export default function Login() {
       </GoogleOAuthProvider>
 
       <NaverLoginBtn />
+
       <KakaoLogInBtn />
     </S.Login>
   );

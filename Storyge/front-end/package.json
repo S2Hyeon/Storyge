@@ -46,6 +46,8 @@
     "react-slick": "^0.29.0",
     "react-social-login-buttons": "^3.6.1",
     "react-spinners": "^0.13.8",
+    "redux": "^4.2.1",
+    "redux-actions": "^2.6.5",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.6",
     "tailwind-styled-components": "^2.2.0",

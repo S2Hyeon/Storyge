@@ -1,6 +1,5 @@
 package com.example.project.recentdiary.model.entity;
 
-import com.example.project.diary.model.entity.Diary;
 import com.example.project.user.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,11 +22,11 @@ public class ReadDiary {
     private Long readId;
 
     @ManyToOne
-    @Column(name="user_id")
+    @JoinColumn(name="user_id")
     private User userId;
 
     @ManyToOne
-    @Column(name="recent_id")
+    @JoinColumn(name="recent_id")
     private RecentDiary recentId;
 
 }

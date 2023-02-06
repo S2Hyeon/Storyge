@@ -23,11 +23,11 @@ public class RecentDiary {
     @Column(name = "recent_id")
     private Long recentId;
     @ManyToOne
-    @Column(name="user_id")
+    @JoinColumn(name="user_id")
     private User userId;
 
     @ManyToOne
-    @Column(name="diary_id")
+    @JoinColumn(name="diary_id")
     private Diary diaryId;
 
     @Column(name="created_at")
@@ -35,7 +35,7 @@ public class RecentDiary {
 
     @PrePersist
     private void createdAt(){
-        createdAt = LocalDateTime.now();
+        createdAt = LocalDateTime.now().plusHours(24);
     }
 
 }

@@ -1,19 +1,19 @@
 package com.example.project.recentdiary.model.service;
 
 import com.example.project.diary.model.entity.Diary;
-import com.example.project.follow.model.entity.Follow;
 import com.example.project.follow.model.repository.FollowRepository;
 import com.example.project.recentdiary.model.dto.RecentDiaryResponseDto;
 import com.example.project.recentdiary.model.entity.ReadDiary;
 import com.example.project.recentdiary.model.entity.RecentDiary;
 import com.example.project.recentdiary.model.repository.ReadDiaryRepository;
+import com.example.project.recentdiary.model.repository.RecentDiaryCustomRepository;
 import com.example.project.recentdiary.model.repository.RecentDiaryRepository;
 import com.example.project.user.model.entity.User;
+import com.example.project.user.model.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +26,8 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
     private final RecentDiaryRepository recentDiaryRepository;
     private final ReadDiaryRepository readDiaryRepository;
     private final FollowRepository followRepository;
+    private final UserRepository userRepository;
+    private final RecentDiaryCustomRepository recentDiaryCustomRepository;
 
 
     @Override
@@ -53,24 +55,53 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
 
     @Override
     public List<RecentDiaryResponseDto> selectAllRecentDiary() {
-        User user = null; // 현재 로그인한 사용자
-        List<Follow> followList = followRepository.findByFollower(user);
-        List<RecentDiaryResponseDto> recendDiaryList = new ArrayList<>();
+//        User user = null; // 현재 로그인한 사용자
+        User user =userRepository.findById(3L).orElse(null);
+        System.out.println(followRepository.findByFollower(user).size()+"!23123");
+        if(followRepository.findByFollower(user).size()==0){
+            return null;
+        }
+//        List<Follow> followList = followRepository.findByFollower(user);
+//        List<RecentDiaryResponseDto> recentDiaryList = new ArrayList<>();
+//        int i=0;
+//        for(Follow follow:followList){
+//            RecentDiary recentDiary = recentDiaryRepository.findByUserId(follow.getFollowing()).orElse(null);
+//            if(recentDiary.getCreatedAt().plusHours(24).compareTo(LocalDateTime.now())>0){
+//                recentDiaryRepository.delete(recentDiary);
+//            }
+//            else{
+//                recendDiaryList.add(RecentDiaryResponseDto.builder()
+//                        .diaryId(recentDiary.getDiaryId().getDiaryId())
+//                        .nickname(recentDiary.getUserId().getNickname())
+//                        .profileImg(recentDiary.getUserId().getProfileImg())
+//                        .build());
+//            }
+//
+//        }
+
+
+        List<RecentDiary> recentDiaryList = recentDiaryCustomRepository.selectAllRecentDiaryByFollowing(user);
+        List<RecentDiaryResponseDto> recentDiaryDtoList = new ArrayList<>();
         int i=0;
-        for(Follow follow:followList){
-            RecentDiary recentDiary = recentDiaryRepository.findByUserId(follow.getFollowing()).orElse(null);
-            if(recentDiary.getCreatedAt().plusHours(24).compareTo(LocalDateTime.now())>0){
-                recentDiaryRepository.delete(recentDiary);
-            }
-            else{
-                recendDiaryList.add(RecentDiaryResponseDto.builder()
+        for(RecentDiary recentDiary : recentDiaryList){
+            RecentDiary recent = recentDiaryRepository.findById(recentDiary.getRecentId()).orElse(null);
+
+            if(readDiaryRepository.findByUserIdAndAndRecentId(user,recent)==null){
+                recentDiaryDtoList.add(RecentDiaryResponseDto.builder()
                         .diaryId(recentDiary.getDiaryId().getDiaryId())
-                        .nickname(recentDiary.getUserId().getNickname())
                         .profileImg(recentDiary.getUserId().getProfileImg())
+                        .nickname(recentDiary.getUserId().getNickname())
                         .build());
+                i++;
+            }
+            if(i>=20){
+                break;
             }
 
         }
-        return null;
+        System.out.println(recentDiaryList.size()+"1111111111");
+        System.out.println(recentDiaryDtoList.size());
+
+        return recentDiaryDtoList;
     }
 }

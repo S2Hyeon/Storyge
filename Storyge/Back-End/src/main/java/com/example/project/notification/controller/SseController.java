@@ -23,7 +23,7 @@ public class SseController {
     @GetMapping("/sub")
     public SseEmitter subscribe(){
         //현재 로그인한 user 값(pk) 가져오는 코드 들어와야 함
-        Long userId = (long)1;
+        Long userId = (long)2;
         //////////
 
         // 현재 클라이언트를 위한 SseEmitter 생성

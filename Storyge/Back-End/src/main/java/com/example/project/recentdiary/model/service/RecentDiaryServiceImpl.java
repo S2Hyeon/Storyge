@@ -54,7 +54,7 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
     @Override
     public Boolean insertReadDiary(Long diaryId) {
 
-        User currentUser = null; // 현재 user
+        User currentUser = userRepository.findById(2L).orElse(null); // 현재 user -> 변경해야 함
         Diary nowDiary = diaryRepository.findById(diaryId).orElse(null);
 //        User diaryUser = userRepository.findById(nowDiary.getDiaryId()).orElse(null); // 다이어리 작성한 userid
         RecentDiary diary = recentDiaryRepository.findByDiaryId(nowDiary).orElse(null); // recent diary에 있는지 확인
@@ -120,8 +120,6 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
             }
 
         }
-        System.out.println(recentDiaryList.size()+"1111111111");
-        System.out.println(recentDiaryDtoList.size());
 
         return recentDiaryDtoList;
     }

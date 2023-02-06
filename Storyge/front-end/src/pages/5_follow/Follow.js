@@ -9,6 +9,7 @@ export const Box = styled.div`
   display: flex;
   width: 100%;
   height: 38px;
+  margin-top: 20px;
 `;
 
 export const LineText = styled.div`

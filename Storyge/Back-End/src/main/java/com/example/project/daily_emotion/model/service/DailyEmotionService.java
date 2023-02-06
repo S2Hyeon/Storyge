@@ -9,15 +9,15 @@ import java.util.Map;
 public interface DailyEmotionService {
 
     //C
-    void insertDailyEmotion(DailyEmotionDto dailyEmotionDto);
+    boolean insertDailyEmotion(DailyEmotionDto dailyEmotionDto);
 
     //R
-    Long selectDailyEmotionCount(Long userId, LocalDate date);
+    DailyEmotion selectDailyEmotion(Long userId, LocalDate date);
 
     Map<Integer, String> selectDailyEmotions(String nickname, String stringDate);
 
     //U
-    void updateDailyEmotion (Long userId, String emoticonName);
+    void updateDailyEmotion (Long userId, LocalDate date, String emoticonName);
 
     //D
 

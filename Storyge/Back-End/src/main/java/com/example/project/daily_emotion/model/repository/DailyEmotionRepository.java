@@ -10,10 +10,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public interface DailyEmotionRepository extends JpaRepository<DailyEmotion, Long> {
 
-    Long countByUser_UserIdAndCreatedAt(Long userId, LocalDate createdAt);
+    Optional<DailyEmotion> findByUser_UserIdAndCreatedAt(Long userId, LocalDate createdAt);
 
     List<DailyEmotion> findAllByUser_UserIdAndCreatedAtBetween(Long userId, LocalDate firstOfMonth, LocalDate lastOfMonth);
 

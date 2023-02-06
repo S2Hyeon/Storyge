@@ -4,6 +4,8 @@ import com.example.project.daily_emotion.model.dto.DailyEmotionDto;
 import com.example.project.daily_emotion.model.entity.DailyEmotion;
 import com.example.project.daily_emotion.model.repository.DailyEmotionRepository;
 import com.example.project.user.model.Service.UserService;
+import com.example.project.user.model.entity.User;
+import com.example.project.user.model.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,22 +23,34 @@ import java.util.stream.Collectors;
 public class DailyEmotionServiceImpl implements DailyEmotionService {
 
     private final DailyEmotionRepository dailyEmotionRepository;
-    private final UserService userService;
+    private final UserRepository userRepository;
 //    private final ConvertDateType convertDateType;
 
     @Override
-    public void insertDailyEmotion(DailyEmotionDto dailyEmotionDto) {
-        dailyEmotionRepository.save(toEntity(dailyEmotionDto));
+    public boolean insertDailyEmotion(DailyEmotionDto dailyEmotionDto) {
+        User user = userRepository.findById(dailyEmotionDto.getUserId()).orElse(null);
+        if(user == null) {
+            return false;
+        }
+        DailyEmotion dailyEmotion = DailyEmotion.builder()
+                .user(user)
+                .dailyId(dailyEmotionDto.getDailyId())
+                .emoticonName(dailyEmotionDto.getEmoticonName())
+                .createdAt(dailyEmotionDto.getCreatedAt())
+                .build();
+        dailyEmotionRepository.save(dailyEmotion);
+
+        return true;
     }
 
     /*
     해당 날짜 일기가 있는지 확인하기 위한 조회
      */
     @Override
-    public Long selectDailyEmotionCount(Long userId, LocalDate date) {
+    public DailyEmotion selectDailyEmotion(Long userId, LocalDate date) {
 
 //        LocalDate date = LocalDate.parse(stringDate); // convertDateType.stringDateToDateTime(stringDate);
-        return dailyEmotionRepository.countByUser_UserIdAndCreatedAt(userId, date);
+        return dailyEmotionRepository.findByUser_UserIdAndCreatedAt(userId, date).orElse(null);
     }
 
     /*
@@ -66,8 +80,8 @@ public class DailyEmotionServiceImpl implements DailyEmotionService {
     }
 
     @Override
-    public void updateDailyEmotion(Long userId, String emoticonName) {
-        DailyEmotion dailyEmotion = dailyEmotionRepository.findById(userId).orElseThrow();
+    public void updateDailyEmotion(Long userId, LocalDate date, String emoticonName) {
+        DailyEmotion dailyEmotion = selectDailyEmotion(userId, date);
         dailyEmotion.updateDailyEmotion(emoticonName);
     }
 

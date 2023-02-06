@@ -19,10 +19,10 @@ public interface DiaryService {
     List<DiaryDto> selectDailyDiaries(String nickname, String stringDate);
 
     //U
-    void updateDiary (DiaryUpdateParam param);
+    boolean updateDiary (DiaryUpdateParam param);
 
     //D
-    void deleteDiary(Long diaryId);
+    boolean deleteDiary(Long diaryId);
 
     // DB-> 서버
     default DiaryDto toDto(Diary diary){

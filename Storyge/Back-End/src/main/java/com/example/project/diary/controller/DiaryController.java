@@ -23,7 +23,7 @@ public class DiaryController {
         if(diaryService.insertDiary(diaryDto)) {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
-        return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(FAIL, HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/diary/detail/{diary_id}")
@@ -42,13 +42,17 @@ public class DiaryController {
 
     @PutMapping("/diary")
     public ResponseEntity<String> updateDiary(DiaryUpdateParam param){
-        diaryService.updateDiary(param);
-        return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
+        if(diaryService.updateDiary(param)) {
+            return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
+        }
+        else return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/diary")
     public ResponseEntity<String> deleteDiary(Long diaryId){
-        diaryService.deleteDiary(diaryId);
-        return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
+        if(diaryService.deleteDiary(diaryId)) {
+            return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
     }
 }

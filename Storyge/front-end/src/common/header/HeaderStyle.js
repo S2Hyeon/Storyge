@@ -24,8 +24,8 @@ export const BtnContainer = styled.div`
   width: 30px;
   height: 80%;
   display: flex;
-  justifycontent: center;
-  alignitems: center;
+  justify-content: center;
+  align-items: center;
   // margin: 0 5px 0 0;
 `;
 

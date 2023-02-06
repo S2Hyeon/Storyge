@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import HeaderBackIcon from "./HeaderBackIcon";
 import * as S from "./HeaderStyle";

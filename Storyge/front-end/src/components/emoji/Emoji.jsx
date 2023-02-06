@@ -14,7 +14,7 @@ import noEmotion from "assets/emotionIcons/noEmotion.png";
 function Emoji(props) {
   let thisWidth = props.thisWidth; //props로 받은 너비값
 
-  if (props.emotion == "noemotion") {
+  if (props.emotion === "noemotion") {
     return <img src={noEmotion} alt="noemotion" width={thisWidth} />;
   } else {
     if (props.emotion === "angry") {

@@ -16,18 +16,18 @@ export default function Follow() {
 
       <S.Box>
         <B.Follower
+          followAlarm={followAlarm}
           onClick={() => {
             setFollowAlarm(true);
-            console.log("팔로우 버튼 클릭!");
           }}
         >
-          <B.Text>팔로우</B.Text>
+          <B.Text>팔로워</B.Text>
         </B.Follower>
 
         <B.Following
+          followAlarm={followAlarm}
           onClick={() => {
             setFollowAlarm(false);
-            console.log("팔로잉 버튼 클릭!");
           }}
         >
           <B.Text>팔로잉</B.Text>

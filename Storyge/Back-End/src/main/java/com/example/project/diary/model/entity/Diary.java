@@ -1,5 +1,6 @@
 package com.example.project.diary.model.entity;
 
+import com.example.project.user.model.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,7 +35,8 @@ public class Diary {
         this.emoticonName = emoticonName;
         this.scope = scope;
     }
-    public void updateDiaryContent (String emoticonName, String diaryContent, int scope, String analizedResult){
+
+    public void updateDiaryContent(String emoticonName, String diaryContent, int scope, String analizedResult) {
         this.emoticonName = emoticonName;
         this.diaryContent = diaryContent;
         this.scope = scope;

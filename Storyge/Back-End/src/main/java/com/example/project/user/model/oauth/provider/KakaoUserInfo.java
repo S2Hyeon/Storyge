@@ -16,6 +16,9 @@ public class KakaoUserInfo implements OAuth2UserInfo {
 
     @Override
     public String getProviderId() {
+        System.out.println("KakaoUserInfo의 getProvider");
+        System.out.println("providerId : " + attributes.get("id").toString());
+        System.out.println("============================================================================");
         return attributes.get("id").toString();
     }
 
@@ -37,6 +40,6 @@ public class KakaoUserInfo implements OAuth2UserInfo {
     @Override
     public String getProfileImg() {
         //다시 생각해봐야할 수 있음
-        return properties.get("image");
+        return properties.get("profile_image");
     }
 }

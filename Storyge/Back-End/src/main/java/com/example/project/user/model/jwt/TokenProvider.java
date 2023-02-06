@@ -35,19 +35,14 @@ public class TokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
+    //유저 정보를 통해 accesstoken, refreshtoken  생성
     public TokenInfo generateToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-        System.out.println("===================================================================================");
-        System.out.println("authorities: "+authorities);
-        System.out.println("===================================================================================");
-        System.out.println("TokenProvider의 authentication.getName(): "+authentication.getName());
-        System.out.println("===================================================================================");
-        System.out.println("TokenProvider의 authentication.getPrincipal(): "+authentication.getPrincipal());
-        System.out.println("===================================================================================");
-        System.out.println("TokenProvider의 authentication.getDetails(): "+authentication.getDetails());
-        System.out.println("===================================================================================");
+        System.out.println("==========================================================");
+        System.out.println("TokenProvider generateToken의 authorities: " + authorities);
+        System.out.println("==========================================================");
         User user = userRepository.findByEmail(authorities).orElseThrow();
         long now = (new Date()).getTime();
 
@@ -83,13 +78,15 @@ public class TokenProvider {
                 .build();
     }
 
+    // 토큰 복호화해서 정보 꺼내기
     public Authentication getAuthentication(String accessToken) {
         Claims claims = parseClaims(accessToken);
 
         if (claims.get(JwtProperties.AUTHORITIES_KEY) == null) {
-            throw new RuntimeException("XX");
+            throw new RuntimeException("권한 정보가 없는 토큰 : AUTHORITIES_KEY가 없음");
         }
 
+        // 권한 가져오기
         Collection<? extends GrantedAuthority> authorities =
                 Arrays.stream(claims.get("auth").toString().split(","))
                         .map(SimpleGrantedAuthority::new)
@@ -101,6 +98,7 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
+    //토큰 정보 검증 메서드
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -126,14 +124,14 @@ public class TokenProvider {
     }
 
     public Long getExpiration(String accessToken) {
+        //access token 남은 시간
         Date expiration = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody().getExpiration();
+
+        //현재 시간
         Long now = new Date().getTime();
         return (expiration.getTime() - now);
     }
 
-    public Long getUserId(String accessToken) {
-        return Long.getLong(parseClaims(accessToken).get("id").toString());
-    }
 }
 
 

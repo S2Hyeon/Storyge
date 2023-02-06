@@ -9,7 +9,7 @@
 //   useEffect(() => {
 //     let code = new URL(window.location.href).searchParams.get("code");
 //     userActions(code);
-//   }, []);
+//   }, []); 
 
 //   return <Spinner />;
 // };

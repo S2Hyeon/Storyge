@@ -13,22 +13,70 @@ import noEmotion from "assets/emotionIcons/noEmotion.png";
 function Emoji(props) {
   if (props != null) {
     if (props.emotion === "angry") {
-      return <img src={angry} alt="angry" width="80%" />;
+      return (
+        <img
+          src={angry}
+          alt="angry"
+          width={(props) => (props.width ? props.width : "100%")}
+        />
+      );
     } else if (props.emotion === "aversion") {
-      return <img src={aversion} alt="aversion" width="80%" />;
+      return (
+        <img
+          src={aversion}
+          alt="aversion"
+          width={(props) => (props.width ? props.width : "100%")}
+        />
+      );
     } else if (props.emotion === "happy") {
-      return <img src={happy} alt="happy" width="80%" />;
+      return (
+        <img
+          src={happy}
+          alt="happy"
+          width={(props) => (props.width ? props.width : "100%")}
+        />
+      );
     } else if (props.emotion === "sad") {
-      return <img src={sad} alt="sad" width="80%" />;
+      return (
+        <img
+          src={sad}
+          alt="sad"
+          width={(props) => (props.width ? props.width : "100%")}
+        />
+      );
     } else if (props.emotion === "scared") {
-      return <img src={scared} alt="scared" width="80%" />;
+      return (
+        <img
+          src={scared}
+          alt="scared"
+          width={(props) => (props.width ? props.width : "100%")}
+        />
+      );
     } else if (props.emotion === "soso") {
-      return <img src={soso} alt="soso" width="80%" />;
+      return (
+        <img
+          src={soso}
+          alt="soso"
+          width={(props) => (props.width ? props.width : "100%")}
+        />
+      );
     } else if (props.emotion === "surprised") {
-      return <img src={surprised} alt="surprised" width="80%" />;
+      return (
+        <img
+          src={surprised}
+          alt="surprised"
+          width={(props) => (props.width ? props.width : "100%")}
+        />
+      );
     }
   } else {
-    return <img src={noEmotion} alt="noemotion" width="80%" />;
+    return (
+      <img
+        src={noEmotion}
+        alt="noemotion"
+        width={(props) => (props.width ? props.width : "100%")}
+      />
+    );
   }
 }
 

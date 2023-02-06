@@ -15,44 +15,47 @@ import surprised from "../../assets/emotionIcons/surprised.png";
 import noEmotion from "../../assets/emotionIcons/noEmotion.png";
 
 function CustomCalendar() {
-  const [emotionData, setEmotionData] = useState(datas);
+  const [emotionData] = useState(datas);
 
   function displayEmotion(props) {
     if (props != null) {
       if (props.emotion === "angry") {
-        return <img src={angry} width="80%" />;
+        return <img src={angry} alt="angry" width="80%" />;
       } else if (props.emotion === "aversion") {
-        return <img src={aversion} width="80%" />;
+        return <img src={aversion} alt="aversion" width="80%" />;
       } else if (props.emotion === "happy") {
-        return <img src={happy} width="80%" />;
+        return <img src={happy} alt="happy" width="80%" />;
       } else if (props.emotion === "sad") {
-        return <img src={sad} width="80%" />;
+        return <img src={sad} alt="sad" width="80%" />;
       } else if (props.emotion === "scared") {
-        return <img src={scared} width="80%" />;
+        return <img src={scared} alt="scared" width="80%" />;
       } else if (props.emotion === "soso") {
-        return <img src={soso} width="80%" />;
+        return <img src={soso} alt="soso" width="80%" />;
       } else if (props.emotion === "surprised") {
-        return <img src={surprised} width="80%" />;
+        return <img src={surprised} alt="surprised" width="80%" />;
       }
     } else {
-      return <img src={noEmotion} width="80%" />;
+      return <img src={noEmotion} alt="noemotion" width="80%" />;
     }
   }
 
   return (
-    <Calendar
-      calendarType="US"
-      showNeighboringMonth={false} //  이전, 이후 달의 날짜는 보이지 않도록 설정
-      formatDay={(locale, date) => dayjs(date).format("D")}
-      tileContent={({ date, view }) => {
-        let chosenData = emotionData.find(
-          ({ feelDate }) => feelDate === dayjs(date).format("YYYY-MM-DD")
-        );
-        console.log(chosenData);
-        return <Emoji emotion={chosenData.emotion} />;
-        // return displayEmotion(chosenData);
-      }}
-    />
+    <>
+      <Emoji emotion="happy" />
+      <Calendar
+        calendarType="US"
+        showNeighboringMonth={false} //  이전, 이후 달의 날짜는 보이지 않도록 설정
+        formatDay={(locale, date) => dayjs(date).format("D")}
+        tileContent={({ date, view }) => {
+          let chosenData = emotionData.find(
+            ({ feelDate }) => feelDate === dayjs(date).format("YYYY-MM-DD")
+          );
+          console.log(chosenData);
+          // return <Emoji emotion={chosenData.emotion} />;
+          return displayEmotion(chosenData);
+        }}
+      />
+    </>
   );
 }
 

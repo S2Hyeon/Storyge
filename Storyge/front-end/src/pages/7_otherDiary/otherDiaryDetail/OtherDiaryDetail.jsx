@@ -14,7 +14,7 @@ export default function OtherDiarylist() {
   const userId = location.state.userId; //글 작성자
   console.log("글작성자ID:", id, " / 글번호: ", userId);
 
-  const [isChecked, setIsChecked] = useState(true);
+  // const [isChecked, setIsChecked] = useState(true);
   return (
     <G.BodyContainer>
       <S.DiaryContainer>

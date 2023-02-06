@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Happy from "assets/emotionIcons/happy.png";
 
 export const submitBtn = styled.button`
   background-color: var(--color-primary);

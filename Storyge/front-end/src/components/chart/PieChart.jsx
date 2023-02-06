@@ -5,7 +5,7 @@ import {
   ArcElement,
   Tooltip,
   Legend,
-  plugins,
+  // plugins,
 } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 

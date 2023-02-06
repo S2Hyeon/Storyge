@@ -1,8 +1,5 @@
 import axios from "axios";
-// import { useNavigate } from 'react-router-dom';
 export const kakaoLogin = async (code) => {
-  // const navigate = useNavigate();
-
   // return await function (dispatch, getState, { history }) {
   axios({
     method: "GET",
@@ -14,17 +11,12 @@ export const kakaoLogin = async (code) => {
       const ACCESS_TOKEN = res.data.accessToken;
 
       localStorage.setItem("token", ACCESS_TOKEN); //예시로 로컬에 저장함
-      // navigate("/intro");
-      alert("로그인 성공");
-      window.location.href = "http://localhost:3000/";
-      // history.replace("/intro"); // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+      window.location.href = "http://localhost:3000/"; // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
     })
     .catch((err) => {
       console.log("소셜로그인 에러", err);
       window.alert("로그인에 실패하였습니다.");
-      // navigate("/login");
-      window.location.href = "http://localhost:3000/login";
-      // history.replace("/login"); // 로그인 실패하면 로그인화면으로 돌려보냄
+      window.location.href = "http://localhost:3000/login"; // 로그인 실패하면 로그인화면으로 돌려보냄
     });
   // };
 };

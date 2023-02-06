@@ -1,3 +1,19 @@
+import React, { useEffect } from "react";
+import { kakaoLogin as userActions } from "./../../redux/modules/user.js";
+import Spinner from "./Spinner.jsx";
+
+const OAuth2RedirectHandler = (props) => {
+  // 인가코드
+  useEffect(() => {
+    let code = new URL(window.location.href).searchParams.get("code");
+    userActions(code);
+  }, []);
+
+  return <Spinner />;
+};
+
+export default OAuth2RedirectHandler;
+
 // import React, { useEffect } from "react";
 // import { actionCreators as userActions } from "./../../redux/modules/user";
 // import Spinner from "./Spinner";
@@ -15,18 +31,3 @@
 // };
 
 // export default KaKaoLoginHandler;
-import React, { useEffect } from "react";
-import { kakaoLogin as userActions } from "./../../redux/modules/user.js";
-import Spinner from "./Spinner.jsx";
-
-const OAuth2RedirectHandler = (props) => {
-  // 인가코드
-  useEffect(() => {
-    let code = new URL(window.location.href).searchParams.get("code");
-    userActions(code);
-  }, []);
-
-  return <Spinner />;
-};
-
-export default OAuth2RedirectHandler;

@@ -10,7 +10,7 @@ import { GOOGLE_CLIENT_ID } from "./OAuth";
 export default function Login() {
   return (
     <S.Login>
-      <h1>Login</h1>
+      <S.LoginText>Login</S.LoginText>
       <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
         <GoogleLogInBtn />
       </GoogleOAuthProvider>

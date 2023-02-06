@@ -1,6 +1,6 @@
 import React from "react";
 import { useGoogleLogin } from "@react-oauth/google";
-import * as S from "./Loginstyle.js";
+import * as S from "../Loginstyle.js";
 
 export default function GoogleLogInBtn() {
   const googleSocialLogin = useGoogleLogin({

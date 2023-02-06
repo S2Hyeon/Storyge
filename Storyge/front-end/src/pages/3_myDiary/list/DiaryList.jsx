@@ -3,16 +3,24 @@ import data from "./DiaryListData";
 import * as G from "../../../styles/index";
 import * as S from "./DiaryListStyle";
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 export default function DiaryList() {
   const location = useLocation();
+  const movePage = useNavigate();
 
   const [dateInfo, setDateInfo] = useState(location.state.date);
 
+  function goDiaryDetail(id) {
+    movePage("/diary", { state: { id: id } });
+  }
+
+  //년월일 표시
   const headDate = `${dateInfo.getFullYear()}.${
     dateInfo.getMonth() + 1
   }.${dateInfo.getDate()}`;
+
+  //일자 감소
   const decreaseDate = () => {
     setDateInfo(
       new Date(
@@ -22,6 +30,8 @@ export default function DiaryList() {
       )
     );
   };
+
+  //일자
   const increaseDate = () => {
     setDateInfo(
       new Date(
@@ -47,7 +57,7 @@ export default function DiaryList() {
       {/* 리스트 부분 */}
       {data.map((data) => {
         return (
-          <S.ListBox key={data.id}>
+          <S.ListBox key={data.id} onClick={() => goDiaryDetail(data.id)}>
             <S.Emotion emotion={data.img} />
             <S.TimeSummaryContainer>
               <S.Time>{data.time}</S.Time>

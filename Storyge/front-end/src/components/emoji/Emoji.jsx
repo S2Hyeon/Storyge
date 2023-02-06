@@ -10,6 +10,7 @@ import soso from "assets/emotionIcons/soso.png";
 import surprised from "assets/emotionIcons/surprised.png";
 import noEmotion from "assets/emotionIcons/noEmotion.png";
 
+//<Emoji emotion="happy" thisWidth=""} /> 로 선언하기!
 function Emoji(props) {
   let thisWidth = props.thisWidth; //props로 받은 너비값
 

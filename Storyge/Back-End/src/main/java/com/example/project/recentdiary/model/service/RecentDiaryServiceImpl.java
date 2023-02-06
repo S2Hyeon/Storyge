@@ -1,6 +1,7 @@
 package com.example.project.recentdiary.model.service;
 
 import com.example.project.diary.model.entity.Diary;
+import com.example.project.diary.model.repository.DiaryRepository;
 import com.example.project.follow.model.repository.FollowRepository;
 import com.example.project.recentdiary.model.dto.RecentDiaryResponseDto;
 import com.example.project.recentdiary.model.entity.ReadDiary;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,36 +30,55 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
     private final FollowRepository followRepository;
     private final UserRepository userRepository;
     private final RecentDiaryCustomRepository recentDiaryCustomRepository;
+    private final DiaryRepository diaryRepository;
 
 
     @Override
-    public void insertRecentDiary(User user, Diary diary) {
-        if(diary.getScope()==1){ // 공개일때
-            RecentDiary recent = recentDiaryRepository.findByUserId(user).orElse(null);
+    public void insertRecentDiary(Long user, Long diary) {
+        User diaryUser = userRepository.findById(user).orElse(null);
+        Diary insertDiary =diaryRepository.findById(diary).orElse(null);
+
+        if(insertDiary.getScope()==1){ // 공개일때
+            RecentDiary recent = recentDiaryRepository.findByUserId(diaryUser).orElse(null);
             if(recent!=null){
-                 recentDiaryRepository.deleteByUserId(user); // 이미 24시간 내에 작성한 일기가 있다면 삭제
+                 recentDiaryRepository.deleteByUserId(diaryUser); // 이미 24시간 내에 작성한 일기가 있다면 삭제
             }
             recentDiaryRepository.save(RecentDiary.builder()
-                    .userId(user)
-                    .diaryId(diary)
+                    .userId(diaryUser)
+                    .diaryId(insertDiary)
                     .build());
 
         }
     }
 
     @Override
-    public void insertReadDiary(User user, RecentDiary recentDiary) {
-        readDiaryRepository.save(ReadDiary.builder()
-                .userId(user)
-                .recentId(recentDiary)
-                .build());
+    public Boolean insertReadDiary(Long diaryId) {
+
+        User currentUser = null; // 현재 user
+        Diary nowDiary = diaryRepository.findById(diaryId).orElse(null);
+//        User diaryUser = userRepository.findById(nowDiary.getDiaryId()).orElse(null); // 다이어리 작성한 userid
+        RecentDiary diary = recentDiaryRepository.findByDiaryId(nowDiary).orElse(null); // recent diary에 있는지 확인
+        if(diary==null ||(diary.getCreatedAt().isBefore(LocalDateTime.now()))){
+            return false;
+        }
+        else{
+            if(diary.getUserId()!=currentUser){
+                readDiaryRepository.save(ReadDiary.builder()
+                        .userId(currentUser)
+                        .recentId(diary)
+                        .build());
+            }
+            return true;
+        }
+
+
+
     }
 
     @Override
     public List<RecentDiaryResponseDto> selectAllRecentDiary() {
 //        User user = null; // 현재 로그인한 사용자
         User user =userRepository.findById(3L).orElse(null);
-        System.out.println(followRepository.findByFollower(user).size()+"!23123");
         if(followRepository.findByFollower(user).size()==0){
             return null;
         }

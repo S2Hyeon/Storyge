@@ -3,6 +3,7 @@ package com.example.project.quote.controller;
 import com.example.project.quote.model.dto.QuoteDto;
 import com.example.project.quote.model.scheduler.QuoteScheduler;
 import com.example.project.quote.model.service.QuoteService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin
+@Api(tags = {"하루 글귀 API"})
 public class QuoteController {
     private final QuoteService quoteService;
     private final QuoteScheduler quoteScheduler = new QuoteScheduler();

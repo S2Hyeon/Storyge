@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import * as S from "./MainStyle";
 import * as G from "../../styles";
 import newDiaryData from "./NewDiaryData";
-import pieChartData from "./PieChartData";
+// import pieChartData from "./PieChartData";
 import { BsCircleFill } from "react-icons/bs";
 import CustomCalendar from "../../components/calender/Calendar";
 import PieChart from "../../components/chart/PieChart";
@@ -12,7 +12,7 @@ function Main() {
   const movePage = useNavigate();
 
   let [diary, setDiary] = useState(true);
-  let [chartData, setChartData] = useState(pieChartData);
+  // let [chartData, setChartData] = useState(pieChartData);
 
   //새로 업데이트 된 글로 이동!
   function goUpdatedDiary(id, userId) {

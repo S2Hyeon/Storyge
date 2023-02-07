@@ -18,12 +18,13 @@ export const NewDiary = styled.div`
 `;
 
 export const Profile = styled.div`
-  height: 60px;
-  width: 60px;
-  margin: 0 5px;
+  height: 70px;
+  width: 70px;
+  margin: 0 8px;
   background-image: url(${(props) => props.profile});
   background-size: cover;
   border-radius: 100px;
+  // outline: 3px solid var(--color-primary);
   // flex: 0 0 auto;
 
   flex: 0 0 auto;

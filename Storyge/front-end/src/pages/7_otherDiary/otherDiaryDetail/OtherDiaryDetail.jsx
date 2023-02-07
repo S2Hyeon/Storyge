@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import * as S from "./OtherDiaryDetailStyle";
 import * as G from "styles/index";
 import commentData from "./CommentData";

@@ -31,14 +31,14 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         System.out.println("CustomOAuth2UserService 의 loadUser");
-        System.out.println("======================================================================");
         OAuth2User oAuth2User = super.loadUser(userRequest);
+        System.out.println("oAuth2User : " + super.loadUser(userRequest));
+        System.out.println("======================================================================");
         return process(userRequest, oAuth2User);
     }
 
     private OAuth2User process(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
         System.out.println("CustomOAuth2UserService 의 process");
-        System.out.println("======================================================================");
         OAuth2UserInfo userInfo = null;
 
         if (Objects.equals(userRequest.getClientRegistration().getRegistrationId(), "google")) {
@@ -72,6 +72,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             user = userOptional.get();
         }
 
+        System.out.println("======================================================================");
         return new UserDetailCustom(user, oAuth2User.getAttributes());
     }
 }

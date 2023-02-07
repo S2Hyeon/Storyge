@@ -18,7 +18,7 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin
-@Api(tags = {"Follow, Following API"})
+@Api(tags = {"Follower, Following API"})
 public class FollowController {
 
     private final FollowService followService;

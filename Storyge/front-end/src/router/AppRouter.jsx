@@ -24,7 +24,7 @@ import OtherPage from "../pages/6_otherPage/OtherProfile";
 import OtherDiaryList from "pages/7_otherDiary/otherDiaryList/OtherDiaryList";
 import OtherDiaryDetail from "pages/7_otherDiary/otherDiaryDetail/OtherDiaryDetail";
 
-import OAuth2RedirectHandler from "pages/1_login/Kakao/OAuth2RedirectHandeler";
+import OAuth2RedirectHandler from "pages/1_login/OAuth2RedirectHandler";
 // import { Pages } from "@mui/icons-material";
 
 function AppRouter() {
@@ -35,7 +35,15 @@ function AppRouter() {
       <Route path="login" element={<Login />} />
       <Route path="logininfo" element={<LoginInfo />} />
       <Route
-        path="oauth/callback/kakao"
+        path="/oauth/callback/kakao"
+        element={<OAuth2RedirectHandler />}
+      ></Route>
+      <Route
+        path="/oauth/callback/google"
+        element={<OAuth2RedirectHandler />}
+      ></Route>
+      <Route
+        path="/oauth/callback/naver"
         element={<OAuth2RedirectHandler />}
       ></Route>
 

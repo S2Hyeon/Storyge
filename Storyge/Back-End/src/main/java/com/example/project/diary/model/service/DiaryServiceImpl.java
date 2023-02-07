@@ -45,7 +45,7 @@ public class DiaryServiceImpl implements DiaryService{
                 .emoticonName(diaryDto.getEmoticonName())
                 .diaryContent(diaryDto.getDiaryContent())
                 .scope(diaryDto.getScope())
-                .update_cnt(diaryDto.getUpdate_cnt())
+                .updateCnt(diaryDto.getUpdate_cnt())
                 .analizedResult(diaryDto.getAnalizedResult())
                 .createdAt(LocalDateTime.now())
                 .build();
@@ -53,13 +53,14 @@ public class DiaryServiceImpl implements DiaryService{
 
         long userId = diaryDto.getUserId();
         LocalDate date = diaryDto.getCreatedAt();
+
+        // 오늘 평균 감정 있는지 확인
         DailyEmotion dailyEmotion = dailyEmotionService.selectDailyEmotion(userId, date);
+
         if(dailyEmotion == null) {
-            if(!dailyEmotionService.insertDailyEmotion(toDailyEmotionDto(diaryDto))) {
-                return false;
-            };
+            return dailyEmotionService.insertDailyEmotion(toDailyEmotionDto(diaryDto));
         }
-        else {
+        else {  // 평균 감정 있다면 오늘 일기 모두 가져온 뒤 평균 재계산 후 수정
             DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
             dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.getEmoticonName());
         }
@@ -69,12 +70,16 @@ public class DiaryServiceImpl implements DiaryService{
 
 
     @Override
-    public Optional<DiaryDto> selectOneDiary(Long diaryId) {
-        return Optional.ofNullable(toDto(diaryRepository.findById(diaryId).orElseThrow()));
+    public DiaryDto selectOneDiary(Long diaryId) {
+        Optional<Diary> diary = diaryRepository.findById(diaryId);
+        return diary.map(this::toDto).orElse(null);
     }
 
     public List<DiaryDto> selectDailyDiaries(String nickname, String stringDate) {
         User user = userRepository.findByNickname(nickname).orElse(null);
+        if(user == null) {
+            return null;
+        }
         LocalDate date = LocalDate.parse(stringDate);
         LocalDateTime startTimeOfDay = date.atStartOfDay();
         LocalDateTime endTimeOfDay = LocalDateTime.of(date, LocalTime.MAX).withNano(0);
@@ -83,47 +88,54 @@ public class DiaryServiceImpl implements DiaryService{
     }
 
     /*
-    만약 일기의 내용이 변경되지 않았다면 이모티콘과 공개여부 설정만 변경하고
-    일기의 내용이 변경되었다면 이모티콘과 일기내용, 공개여부, 감정분석 결과 모두를 변경한다.
-        => 일기 수정 횟수의 경우 일기의 내용이 변경되었다면 1로 변경되어야하기 때문에 entity에서 값을 변경할 때 설정해준다.
+    일기 수정 기회 남아있다면
+    일기 수정하고 updateCnt를 1로 변경한다.
+    이모티콘 바뀌었다면 일일 평균 감정에 반영한 뒤
+    수정을 진행한다.
      */
     @Override
     public boolean updateDiary(DiaryUpdateParam param) {
         Diary diary = diaryRepository.findById(param.getDiaryId()).orElse(null);
-        System.out.println(diary.getEmoticonName().hashCode());
-        System.out.println(param.getEmoticonName().hashCode());
         if(diary == null) {
             return false;
         }
 
-        if(diary.getDiaryContent().equals(param.getDiaryContent())) {
+        if(diary.getUpdateCnt() == 0) {
+            if(!param.getEmoticonName().equals(diary.getEmoticonName())) {
+                long userId = diary.getUser().getUserId();
+                LocalDate date = diary.getCreatedAt().toLocalDate();
+                DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
+                dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.getEmoticonName());
+            }
+
             diary.updateDiary(param.getEmoticonName(),
-                                param.getScope());
-        }
-        else {
-            diary.updateDiaryContent(param.getEmoticonName(),
-                                        param.getDiaryContent(),
-                                        param.getScope(),
-                                        param.getAnalizedResult());
+                    param.getDiaryContent(),
+                    param.getScope(),
+                    1,
+                    param.getAnalizedResult());
+
+            return true;
         }
 
-        System.out.println(diary.getEmoticonName().equals(param.getEmoticonName()));
-        if(!diary.getEmoticonName().equals(param.getEmoticonName())) {
-            long userId = diary.getUser().getUserId();
-            LocalDate date = diary.getCreatedAt().toLocalDate();
-            System.out.println("이모티콘 변경됨=======");
-            System.out.println(userId);
-            System.out.println(date);
-            DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
-            dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.getEmoticonName());
+        return false;
+    }
+
+    public boolean updateScope(long diaryId, int scope) {
+        Diary diary = diaryRepository.findById(diaryId).orElse(null);
+        if(diary == null) {
+            return false;
         }
+
+        diary.updateScope(scope);
 
         return true;
     }
 
+
+
     @Override
     public boolean deleteDiary(Long diaryId) {
-        DiaryDto diaryDto = selectOneDiary(diaryId).orElse(null);
+        DiaryDto diaryDto = selectOneDiary(diaryId);
         if(diaryDto == null) {
             return false;
         }

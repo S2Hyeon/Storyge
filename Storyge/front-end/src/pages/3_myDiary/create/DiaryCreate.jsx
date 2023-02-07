@@ -60,7 +60,7 @@ export default function Creatediary() {
           </A.longBtnBorder>
         </div>
       </S.Mother>
-      {modalOpen && <Modal setModalOpen={setModalOpen} />}
+      {modalOpen && <Modal setModalOpen={setModalOpen} content={content} />}
     </>
   );
 }

@@ -185,13 +185,13 @@ public class FollowServiceImpl implements FollowService {
         User currentUser = userRepository.findById((long)1).orElse(null);
 
         List<Follow> followingList = followRepository.findByFollowing(currentUser);
-        List<UserDto> followingUserList = new ArrayList<>();
+        List<UserDto> followerUserList = new ArrayList<>();
 
         for(Follow follow : followingList){
 
-            User user = follow.getFollowing();
-            // 팔로우 대기중인 사람들 userId, 프로필 사진, nickname 반환
-            followingUserList.add(UserDto.builder()
+            User user = follow.getFollower();
+            // 팔로워인 사람들 userId, 프로필 사진, nickname 반환
+            followerUserList.add(UserDto.builder()
                     .userId(user.getUserId())
                     .nickname(user.getNickname())
                     .profileImg(user.getProfileImg())
@@ -214,7 +214,7 @@ public class FollowServiceImpl implements FollowService {
 //                    .build());
 //        }
 
-        return followingUserList;
+        return followerUserList;
     }
 
     //팔로우 거절(대기 상태 삭제)

@@ -13,6 +13,6 @@ public class ReviewRequsetDto {
 
     private Long userId;
     private Long diaryId;
-    String reviewContent;
+    private String reviewContent;
 
 }

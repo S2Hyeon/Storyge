@@ -42,6 +42,10 @@ function AppRouter() {
         path="/oauth/callback/google"
         element={<OAuth2RedirectHandler />}
       ></Route>
+      <Route
+        path="/oauth/callback/naver"
+        element={<OAuth2RedirectHandler />}
+      ></Route>
 
       {/* 헤더, 내브바 포함 O */}
       <Route path="/" element={<Layout />}>

@@ -16,11 +16,11 @@ const OAuth2RedirectHandler = (props) => {
     console.log(new URL(window.location.href).pathname.split("/")[3]);
     let state = new URL(window.location.href).pathname.split("/")[3];
 
-    if (state == "google") {
+    if (state === "google") {
       googleLogin(code);
-    } else if (state == "kakao") {
+    } else if (state === "kakao") {
       kakaoLogin(code);
-    } else if (state == "naver") {
+    } else if (state === "naver") {
       naverLogin(code);
     }
   }, []);

@@ -10,6 +10,7 @@ export const Header = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  z-index: 2;
 
   font-size: 18px;
   font-family: "S-CoreDream-4Regular";

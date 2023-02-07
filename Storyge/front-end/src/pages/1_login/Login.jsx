@@ -1,24 +1,22 @@
 import React from "react";
-import * as S from "./Loginstyle.js";
-
-// import { GoogleOAuthProvider } from "@react-oauth/google";
-// import GoogleLogInBtn from "./google/GoogleLogIn.jsx";
-
-import KakaoLogInBtn from "./Kakao/KakaoLogIn.jsx";
-import NaverLoginBtn from "./naver/NaverLogin.jsx";
-// import { GOOGLE_CLIENT_ID } from "./OAuth";
+import * as S from "./Loginstyle";
+import {
+  KAKAO_AUTH_URL,
+  GOOGLE_AUTH_URL,
+  NAVER_AUTH_URL,
+} from "../1_login/OAuth.js";
 
 export default function Login() {
   return (
     <S.Login>
-      <S.LoginText>Login</S.LoginText>
-      {/* <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-        <GoogleLogInBtn />
-      </GoogleOAuthProvider> */}
+      <h1>Login</h1>
 
-      <NaverLoginBtn />
-
-      <KakaoLogInBtn />
+      <S.Google
+        href={GOOGLE_AUTH_URL}
+        onClick={() => alert("google")}
+      ></S.Google>
+      <S.Naver href={NAVER_AUTH_URL} onClick={() => alert("naver")}></S.Naver>
+      <S.Kakao href={KAKAO_AUTH_URL} onClick={() => alert("kakao")}></S.Kakao>
     </S.Login>
   );
 }

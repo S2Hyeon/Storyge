@@ -22,7 +22,7 @@ export const LoginInfoText = styled.h2`
   color: var(--color-black);
 `;
 
-export const Naver = styled.div`
+export const Naver = styled.a`
   width: 80%;
   height: 60px;
   margin-bottom: 20px;
@@ -31,7 +31,7 @@ export const Naver = styled.div`
   background-image: url("https://t1.daumcdn.net/cfile/tistory/99580C465C3D7D130C?original");
 `;
 
-export const Kakao = styled.div`
+export const Kakao = styled.a`
   width: 80%;
   height: 60px;
   margin-bottom: 20px;
@@ -40,7 +40,7 @@ export const Kakao = styled.div`
   background-image: url("https://t1.daumcdn.net/cfile/tistory/99BEE8465C3D7D1214?original");
 `;
 
-export const Google = styled.div`
+export const Google = styled.a`
   width: 80%;
   height: 60px;
   margin-bottom: 20px;

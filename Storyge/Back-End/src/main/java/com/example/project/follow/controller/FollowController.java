@@ -3,6 +3,7 @@ package com.example.project.follow.controller;
 import com.example.project.follow.model.dto.UserNicknameDto;
 import com.example.project.follow.model.service.FollowService;
 import com.example.project.user.model.dto.UserDto;
+import com.example.project.user.model.jwt.JwtUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,6 +22,7 @@ public class FollowController {
     private final FollowService followService;
     private static final String SUCCESS = "Success";
     private static final String FAIL = "Fail";
+    private static JwtUtil jwtUtil;
 
     //팔로우 신청하기
     @ApiOperation(value = "팔로우 신청", notes = "팔로우 신청을 보낸다")
@@ -27,9 +31,11 @@ public class FollowController {
 //                    required = true,
 //                    dataType = "String")
     @PostMapping("/follow-wait")
-    public ResponseEntity insertFollowWait(@RequestBody UserNicknameDto userNicknameDto){
+    public ResponseEntity insertFollowWait(@RequestHeader(name = TOKEN_PREFIX) String token, @RequestBody UserNicknameDto userNicknameDto){
 
-        if(followService.insertFollowWait(userNicknameDto)){ // 신청 성공
+        Long userId = jwtUtil.getUserId(token);
+
+        if(followService.insertFollowWait(userId, userNicknameDto)){ // 신청 성공
             return new ResponseEntity(SUCCESS, HttpStatus.OK);
         }
         else{
@@ -43,9 +49,11 @@ public class FollowController {
     @ApiOperation(value = "팔로우 수락", notes = "팔로우를 수락한다")
 //    @ApiImplicitParam(name="UserNicknameDto", value = "팔로우 수락할 사용자의 nickname")
     @PostMapping("/follow")
-    public ResponseEntity insertFollower(@RequestBody UserNicknameDto userNicknameDto){
+    public ResponseEntity insertFollower(@RequestHeader(name = TOKEN_PREFIX) String token, @RequestBody UserNicknameDto userNicknameDto){
 
-        if(followService.insertFollower(userNicknameDto)){
+        Long userId = jwtUtil.getUserId(token);
+
+        if(followService.insertFollower(userId,userNicknameDto)){
             return new ResponseEntity(SUCCESS, HttpStatus.OK);
         }
         else{
@@ -58,8 +66,11 @@ public class FollowController {
     @ApiOperation(value = "팔로우 신청 대기 목록",
             notes = "팔로우 신청을 한 사람들의 목록 조회")
     @GetMapping("/follow-wait")
-    public ResponseEntity<List<UserDto>> selectAllFollowWait(){
-        List<UserDto> followWaitList = followService.selectAllFollowWait();
+    public ResponseEntity<List<UserDto>> selectAllFollowWait(@RequestHeader(name = TOKEN_PREFIX) String token){
+
+        Long userId = jwtUtil.getUserId(token);
+
+        List<UserDto> followWaitList = followService.selectAllFollowWait(userId);
         return new ResponseEntity<>(followWaitList, HttpStatus.OK);
     }
 
@@ -68,8 +79,11 @@ public class FollowController {
     @ApiOperation(value = "내 팔로잉 목록",
             notes = "내가 팔로우 하는 사람들의 목록 조회")
     @GetMapping("/following")
-    public ResponseEntity<List<UserDto>> selectAllFollowing(){
-        List<UserDto> followingList = followService.selectAllFollowing();
+    public ResponseEntity<List<UserDto>> selectAllFollowing(@RequestHeader(name = TOKEN_PREFIX) String token){
+
+        Long userId = jwtUtil.getUserId(token);
+
+        List<UserDto> followingList = followService.selectAllFollowing(userId);
         return new ResponseEntity<>(followingList, HttpStatus.OK);
     }
 
@@ -77,8 +91,11 @@ public class FollowController {
     @ApiOperation(value = "내 팔로워 목록",
             notes = "나를 팔로우 하는 사람들의 목록 조회")
     @GetMapping("/follower")
-    public ResponseEntity<List<UserDto>> selectAllFollower(){
-        List<UserDto> followerList = followService.selectAllFollower();
+    public ResponseEntity<List<UserDto>> selectAllFollower(@RequestHeader(name = TOKEN_PREFIX) String token){
+
+        Long userId = jwtUtil.getUserId(token);
+
+        List<UserDto> followerList = followService.selectAllFollower(userId);
         return new ResponseEntity<>(followerList, HttpStatus.OK);
     }
 
@@ -87,8 +104,11 @@ public class FollowController {
             notes = "나에게 들어온 팔로우 신청을 삭제한다(거절)")
 //    @ApiImplicitParam(name="nickname", value = "거절할 사용자의 nickname")
     @DeleteMapping("/follow-wait/{nickname}")
-    public ResponseEntity<String> deleteFollowWait(@PathVariable String nickname){
-        if(followService.deleteFollowWait(nickname)){
+    public ResponseEntity<String> deleteFollowWait(@RequestHeader(name = TOKEN_PREFIX) String token, @PathVariable String nickname){
+
+        Long userId = jwtUtil.getUserId(token);
+
+        if(followService.deleteFollowWait(userId, nickname)){
             return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
         }
         else{
@@ -101,8 +121,11 @@ public class FollowController {
             notes = "팔로우를 취소함 - 내가 팔로우 하고 있는 사람 삭제")
 //    @ApiImplicitParam(name="nickname", value = "거절할 사용자의 nickname")
     @DeleteMapping("/following/{nickname}")
-    public ResponseEntity<String> deleteFollowing(@PathVariable String nickname){
-        if(followService.deleteFollowing(nickname)){
+    public ResponseEntity<String> deleteFollowing(@RequestHeader(name = TOKEN_PREFIX) String token, @PathVariable String nickname){
+
+        Long userId = jwtUtil.getUserId(token);
+
+        if(followService.deleteFollowing(userId, nickname)){
             return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
         }else{
             return new ResponseEntity<>(FAIL,HttpStatus.NO_CONTENT);
@@ -114,8 +137,12 @@ public class FollowController {
             notes = "나를 팔로우 하고 있는 사람 삭제")
 //    @ApiImplicitParam(name="nickname", value = "삭제할 사용자의 nickname")
     @DeleteMapping("/follower/{nickname}")
-    public ResponseEntity<String> deleteFollower(@PathVariable String nickname){
-        if(followService.deleteFollower(nickname)){
+    public ResponseEntity<String> deleteFollower(@RequestHeader(name = TOKEN_PREFIX) String token, @PathVariable String nickname){
+
+        Long userId = jwtUtil.getUserId(token);
+
+
+        if(followService.deleteFollower(userId, nickname)){
             return new ResponseEntity<>(SUCCESS,HttpStatus.OK);
         }
         else{

@@ -32,34 +32,52 @@ public class NotificationServiceImpl implements NotificationService {
     private final String FOLLOW = "FOLLOW"; // 팔로우 수락
     private final String REVIEW = "REVIEW"; // 댓글
 
+    
+    //userid 알림 받을 사람
+    //follow 현재 사용자
+    
     @Override
-    public void insertFollowWaitNotification(NotificationFollowDto notificationFollowDto) {
-        User user = userRepository.findById(notificationFollowDto.getUserId()).orElse(null);
+    public Boolean insertFollowWaitNotification(NotificationFollowDto notificationFollowDto) {
+
+        User user = userRepository.findById(notificationFollowDto.getUserId()).orElse(null); // 현재 user
         User follow = userRepository.findById(notificationFollowDto.getFollow()).orElse(null);
 
+        if(user==null || follow==null){
+            return false;
+        }
 
-//        User user = notificationFollowDto.getUserId();
-//        User follow = notificationFollowDto.getFollow();
         notificationRepository.save(Notification.builder()
                 .userId(user)
                 .follow(follow)
                 .notiType(WAIT)
                 .build());
-        Long userId = user.getUserId(); //알림 받을 사람 id
-        if(sseEmitters.containsKey(userId)){
-            SseEmitter sseEmitter = sseEmitters.get(userId);
+
+        Long notificationUser = user.getUserId(); //알림 받을 사람 id
+        if(sseEmitters.containsKey(notificationUser)){
+            SseEmitter sseEmitter = sseEmitters.get(notificationUser);
             try {
                 sseEmitter.send(SseEmitter.event().name("notification").data("follow wait"));
             }catch (Exception e){
-                sseEmitters.remove(userId);
+                sseEmitters.remove(notificationUser);
             }
         }
+
+        return true;
     }
 
     @Override
-    public void insertFollowNotification(NotificationFollowDto notificationFollowDto) {
+    public Boolean insertFollowNotification(NotificationFollowDto notificationFollowDto) {
+
+//        if(userId!=notificationFollowDto.getFollow()){
+//            return false;
+//        }
+
         User user = userRepository.findById(notificationFollowDto.getUserId()).orElse(null);
         User follow = userRepository.findById(notificationFollowDto.getFollow()).orElse(null);
+
+        if(user==null || follow==null){
+            return false;
+        }
 //        User user = notificationFollowDto.getUserId();
 //        User follow = notificationFollowDto.getFollow();
         notificationRepository.save(Notification.builder()
@@ -68,19 +86,22 @@ public class NotificationServiceImpl implements NotificationService {
                 .notiType(FOLLOW)
                 .build());
 
-        Long userId = user.getUserId(); //알림 받을 사람 id
-        if(sseEmitters.containsKey(userId)){
-            SseEmitter sseEmitter = sseEmitters.get(userId);
+        Long notificationUserId = user.getUserId(); //알림 받을 사람 id
+        if(sseEmitters.containsKey(notificationUserId)){
+            SseEmitter sseEmitter = sseEmitters.get(notificationUserId);
             try {
                 sseEmitter.send(SseEmitter.event().name("notification").data("follow accept"));
             }catch (Exception e){
-                sseEmitters.remove(userId);
+                sseEmitters.remove(notificationUserId);
             }
         }
+
+        return true;
     }
 
     @Override
-    public void insertReviewNotificatino(NotificationReviewDto notificationReviewDto) {
+    public Boolean insertReviewNotification(NotificationReviewDto notificationReviewDto) {
+
         User user = userRepository.findById(notificationReviewDto.getUserId()).orElse(null);
         User follow = userRepository.findById(notificationReviewDto.getFollow()).orElse(null);
         Diary diary = diaryRepository.findById(notificationReviewDto.getDiaryId()).orElse(null);
@@ -92,21 +113,23 @@ public class NotificationServiceImpl implements NotificationService {
                 .diaryId(diary)
                 .build());
 
-        Long userId = user.getUserId(); //알림 받을 사람 id
-        if(sseEmitters.containsKey(userId)){
-            SseEmitter sseEmitter = sseEmitters.get(userId);
+        Long notificationUserId = user.getUserId(); //알림 받을 사람 id
+        if(sseEmitters.containsKey(notificationUserId)){
+            SseEmitter sseEmitter = sseEmitters.get(notificationUserId);
             try {
                 sseEmitter.send(SseEmitter.event().name("notification").data("review"));
             }catch (Exception e){
-                sseEmitters.remove(userId);
+                sseEmitters.remove(notificationUserId);
             }
         }
+
+        return true;
     }
 
     @Override
-    public List<NotificationReponseDto> selectAllNotification() {
+    public List<NotificationReponseDto> selectAllNotification(Long userId) {
 
-        User currentUser = userRepository.findById(2L).orElse(null); // 현재 user 가져오기
+        User currentUser = userRepository.findById(userId).orElse(null); // 현재 user 가져오기
 
         List<Notification> notifications = notificationRepository.findTop30ByUserIdOrderByCreatedAtDesc(currentUser);
         List<NotificationReponseDto> notificationList = new ArrayList<>();

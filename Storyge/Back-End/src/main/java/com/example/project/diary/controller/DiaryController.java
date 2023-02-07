@@ -4,12 +4,15 @@ import com.example.project.diary.model.dto.DiaryDto;
 import com.example.project.diary.model.dto.DiaryUpdateParam;
 import com.example.project.diary.model.service.DiaryService;
 import com.example.project.recentdiary.model.service.RecentDiaryService;
+import com.example.project.user.model.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +23,9 @@ public class DiaryController {
 
     private static final String SUCCESS = "Success";
     private static final String FAIL = "Fail";
+
+    private final JwtUtil jwtUtil;
+
     @PostMapping("/diary")
     public ResponseEntity<String> insertDiary(@RequestBody DiaryDto diaryDto){
         if(diaryService.insertDiary(diaryDto)) {
@@ -30,12 +36,15 @@ public class DiaryController {
     }
 
     @GetMapping("/diary/detail/{diary_id}")
-    public ResponseEntity<?> selectOneDiary(@PathVariable("diary_id") Long diaryId){
+    public ResponseEntity<?> selectOneDiary(@RequestHeader(name = TOKEN_PREFIX) String token, @PathVariable("diary_id") Long diaryId){
+
+        Long userId=jwtUtil.getUserId(token);
+
         DiaryDto diaryDto = diaryService.selectOneDiary(diaryId).orElse(null);
         if(diaryDto == null) {
             return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
         }
-        recentDiaryService.insertReadDiary(diaryId);
+        recentDiaryService.insertReadDiary(userId, diaryId);
         return new ResponseEntity<>(diaryDto, HttpStatus.OK);
     }
 

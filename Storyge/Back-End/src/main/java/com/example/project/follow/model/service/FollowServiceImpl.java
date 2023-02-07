@@ -54,11 +54,11 @@ public class FollowServiceImpl implements FollowService {
                         .following(followingUser)
                         .build());
 
-        // 알림 table에 insert
-        notificationService.insertFollowWaitNotification(NotificationFollowDto.builder()
-                .userId(followingUser.getUserId())
-                .follow(currentUser.getUserId())
-                .build());
+                // 알림 table에 insert
+                notificationService.insertFollowWaitNotification(NotificationFollowDto.builder()
+                        .userId(followingUser.getUserId())
+                        .follow(currentUser.getUserId())
+                        .build());
 
                 return true;
             }
@@ -122,82 +122,57 @@ public class FollowServiceImpl implements FollowService {
         }
 //        List<FollowInfoDto> followWaitUserList = new ArrayList<>();
 //        for(FollowWait follow : followWaitList){
-//
 //            User user = follow.getUserId();
+//            UserDto userDto = UserDto.builder()
+//                            .userId(user.getUserId())
+//                            .nickname(user.getNickname())
+//                            .profileImg(user.getProfileImg())
+//                            .build();
 //
-//            // 팔로우 대기중인 사람들 userId, 프로필 사진, nickname 반환
-//            followWaitUserList.add(UserDto.builder()
-//                    .userId(user.getUserId())
-//                    .profileImg(user.getProfileImg())
-//                    .nickname(user.getNickname())
+//            followWaitUserList.add(FollowInfoDto.builder()
+//                    .followId(follow.getWaitingId())
+//                    .userDto(userDto)
 //                    .build());
 //        }
-////        List<FollowInfoDto> followWaitUserList = new ArrayList<>();
-////        for(FollowWait follow : followWaitList){
-////            User user = follow.getUserId();
-////            UserDto userDto = UserDto.builder()
-////                            .userId(user.getUserId())
-////                            .nickname(user.getNickname())
-////                            .profileImg(user.getProfileImg())
-////                            .build();
-////
-////            followWaitUserList.add(FollowInfoDto.builder()
-////                    .followId(follow.getWaitingId())
-////                    .userDto(userDto)
-////                    .build());
-////        }
-//
-//        return followWaitUserList;
-//    }
-//
-//    //내 팔로잉 목록
-//    @Override
-//    public List<UserDto> selectAllFollowing() {
-//        //내가 팔로워인 사람들 리스트 가져오기
-////        Long currentUserId = (long)1;
-//        User currentUser = userRepository.findById((long)1).orElse(null);
-//
-//        List<Follow> followingList = followRepository.findByFollower(currentUser); //내 팔로잉 목록 가져오기
-//        List<UserDto> followerUserList = new ArrayList<>();
+
+        return followWaitUserList;
+    }
+
+    //내 팔로잉 목록
+    @Override
+    public List<UserDto> selectAllFollowing() {
+        //내가 팔로워인 사람들 리스트 가져오기
+//        Long currentUserId = (long)1;
+        User currentUser = userRepository.findById((long)1).orElse(null);
+
+        List<Follow> followingList = followRepository.findByFollower(currentUser); //내 팔로잉 목록 가져오기
+        List<UserDto> followerUserList = new ArrayList<>();
+        for(Follow follow : followingList){
+
+            User user = follow.getFollowing();
+            // 팔로우 대기중인 사람들 userId, 프로필 사진, nickname 반환
+            followerUserList.add(UserDto.builder()
+                    .userId(user.getUserId())
+                    .nickname(user.getNickname())
+                    .profileImg(user.getProfileImg())
+                    .build());
+        }
+
+//        List<FollowInfoDto> followerUserList = new ArrayList<>();
 //        for(Follow follow : followingList){
-//
 //            User user = follow.getFollowing();
-//            // 팔로우 대기중인 사람들 userId, 프로필 사진, nickname 반환
-//            followerUserList.add(UserDto.builder()
+//            UserDto userDto = UserDto.builder()
 //                    .userId(user.getUserId())
 //                    .nickname(user.getNickname())
 //                    .profileImg(user.getProfileImg())
+//                    .build();
+//
+//            followerUserList.add(FollowInfoDto.builder()
+//                    .followId(follow.getFollowId())
+//                    .userDto(userDto)
 //                    .build());
 //        }
 //
-////        List<FollowInfoDto> followerUserList = new ArrayList<>();
-////        for(Follow follow : followingList){
-////            User user = follow.getFollowing();
-////            UserDto userDto = UserDto.builder()
-////                    .userId(user.getUserId())
-////                    .nickname(user.getNickname())
-////                    .profileImg(user.getProfileImg())
-////                    .build();
-////
-////            followerUserList.add(FollowInfoDto.builder()
-////                    .followId(follow.getFollowId())
-////                    .userDto(userDto)
-////                    .build());
-////        }
-////
-////
-//        return followerUserList;
-//    }
-//
-//    //내 팔로워 목록
-//    @Override
-//    public List<UserDto> selectAllFollower() {
-//        //내가 팔로잉에 있는 리스트
-////        Long currentUserId = (long)1;
-//        User currentUser = userRepository.findById((long)1).orElse(null);
-//
-//        List<Follow> followingList = followRepository.findByFollowing(currentUser);
-//        List<UserDto> followingUserList = new ArrayList<>();
 //
         return followerUserList;
     }
@@ -226,13 +201,16 @@ public class FollowServiceImpl implements FollowService {
 
 //        List<FollowInfoDto> followingUserList = new ArrayList<>();
 //        for(Follow follow : followingList){
-//
-//            User user = follow.getFollowing();
-//            // 팔로우 대기중인 사람들 userId, 프로필 사진, nickname 반환
-//            followingUserList.add(UserDto.builder()
+//            User user = follow.getFollower();
+//            UserDto userDto = UserDto.builder()
 //                    .userId(user.getUserId())
 //                    .nickname(user.getNickname())
 //                    .profileImg(user.getProfileImg())
+//                    .build();
+//
+//            followingUserList.add(FollowInfoDto.builder()
+//                    .followId(follow.getFollowId())
+//                    .userDto(userDto)
 //                    .build());
 //        }
 

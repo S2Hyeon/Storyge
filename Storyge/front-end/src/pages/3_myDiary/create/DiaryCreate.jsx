@@ -53,7 +53,7 @@ export default function Creatediary() {
     } else if (content.length > 100) {
     } else {
       const test = await getInfo(content, setModalOpen);
-      console.log(test);
+      // console.log(test);
       setInfo(test);
     }
   }

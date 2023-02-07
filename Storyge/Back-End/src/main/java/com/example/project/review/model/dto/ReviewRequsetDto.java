@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReviewRequsetDto {
 
-    Long userId;
-    Long diaryId;
+    private Long userId;
+    private Long diaryId;
     String reviewContent;
 
 }

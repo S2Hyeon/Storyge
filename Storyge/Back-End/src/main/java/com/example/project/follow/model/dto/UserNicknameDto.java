@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserNicknameDto {
-    String nickname;
+    private String nickname;
 }

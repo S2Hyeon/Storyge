@@ -11,6 +11,7 @@ public class GoogleUserInfo implements OAuth2UserInfo {
 
     @Override
     public String getProviderId() {
+        System.out.println("google의 getProviderId() : "+ attributes.get("sub").toString());
         return attributes.get("sub").toString();
     }
 
@@ -21,16 +22,19 @@ public class GoogleUserInfo implements OAuth2UserInfo {
 
     @Override
     public String getEmail() {
+        System.out.println("google의 getEmail() : "+ attributes.get("email").toString());
         return attributes.get("email").toString();
     }
 
     @Override
     public String getName() {
+        System.out.println("google의 getName() : "+ attributes.get("name").toString());
         return attributes.get("name").toString();
     }
 
     @Override
     public String getProfileImg() {
+        System.out.println("google의 getProfileImg() : "+ attributes.get("picture").toString());
         return attributes.get("picture").toString();
     }
 }

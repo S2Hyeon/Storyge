@@ -30,12 +30,12 @@ public class RecentDiary {
     @JoinColumn(name="diary_id")
     private Diary diaryId;
 
-    @Column(name="created_at")
-    private LocalDateTime createdAt;
+    @Column(name="ends_at")
+    private LocalDateTime endsAt;
 
     @PrePersist
     private void createdAt(){
-        createdAt = LocalDateTime.now().plusHours(24);
+        endsAt = LocalDateTime.now().plusHours(24);
     }
 
 }

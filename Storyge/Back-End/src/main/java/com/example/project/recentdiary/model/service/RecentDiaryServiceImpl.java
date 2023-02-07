@@ -55,14 +55,14 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
     public Boolean insertReadDiary(Long diaryId) {
 
         User currentUser = userRepository.findById(2L).orElse(null); // 현재 user -> 변경해야 함
-        Diary nowDiary = diaryRepository.findById(diaryId).orElse(null);
+        Diary nowDiary = diaryRepository.findById(diaryId).orElse(null); // 현재 읽은 diary
 //        User diaryUser = userRepository.findById(nowDiary.getDiaryId()).orElse(null); // 다이어리 작성한 userid
         RecentDiary diary = recentDiaryRepository.findByDiaryId(nowDiary).orElse(null); // recent diary에 있는지 확인
-        if(diary==null ||(diary.getCreatedAt().isBefore(LocalDateTime.now()))){
+        if(diary==null ||(diary.getEndsAt().isBefore(LocalDateTime.now()))){ // recent diary에 존재하지 않거나 이미 24시간이 지난 diary
             return false;
         }
         else{
-            if(diary.getUserId()!=currentUser){
+            if(diary.getUserId()!=currentUser){ // 현재 user와 글 쓴 user가 다름
                 readDiaryRepository.save(ReadDiary.builder()
                         .userId(currentUser)
                         .recentId(diary)

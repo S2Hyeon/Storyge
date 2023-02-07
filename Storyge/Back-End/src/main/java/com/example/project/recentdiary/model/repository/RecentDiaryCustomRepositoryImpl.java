@@ -35,11 +35,11 @@ public class RecentDiaryCustomRepositoryImpl implements RecentDiaryCustomReposit
                                 .select(follow.following)
                                 .from(follow)
                                 .where(follow.follower.eq(userId))
-                        )).and(recentDiary.createdAt.after(LocalDateTime.now()))
+                        )).and(recentDiary.endsAt.after(LocalDateTime.now()))
 //                                .and(recentDiary.recentId.eq(readDiary.recentId))
 
                 )
-                .orderBy(recentDiary.createdAt.desc())
+                .orderBy(recentDiary.endsAt.desc())
 //                .limit(20)
                 .fetch();
 

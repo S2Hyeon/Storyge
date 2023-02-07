@@ -3,7 +3,7 @@
 
 import React, { useEffect } from "react";
 import { kakaoLogin as userActions } from "./../../redux/modules/user.js";
-import Spinner from "./Spinner.jsx";
+import Spinner from "../../components/spinner/Spinner.jsx";
 
 const OAuth2RedirectHandler = (props) => {
   // 인가코드

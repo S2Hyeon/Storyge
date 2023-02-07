@@ -35,7 +35,8 @@ public class Diary {
         this.emoticonName = emoticonName;
         this.scope = scope;
     }
-    public void updateDiaryContent (String emoticonName, String diaryContent, int scope, String analizedResult){
+
+    public void updateDiaryContent(String emoticonName, String diaryContent, int scope, String analizedResult) {
         this.emoticonName = emoticonName;
         this.diaryContent = diaryContent;
         this.scope = scope;

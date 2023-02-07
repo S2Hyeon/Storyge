@@ -1,55 +1,41 @@
 import dayjs from "dayjs";
 import React, { useState } from "react";
 import Calendar from "react-calendar";
-import { useQuery } from "react-query";
 import "./Calendar.css"; // css import
 import datas from "./CalendarData";
-// import { EmotionImg } from "./EmotionIcon";
-
-import angry from "../../assets/emotionIcons/angry.png";
-import aversion from "../../assets/emotionIcons/aversion.png";
-import happy from "../../assets/emotionIcons/happy.png";
-import sad from "../../assets/emotionIcons/sad.png";
-import scared from "../../assets/emotionIcons/scared.png";
-import soso from "../../assets/emotionIcons/soso.png";
-import surprised from "../../assets/emotionIcons/surprised.png";
-import noEmotion from "../../assets/emotionIcons/noEmotion.png";
+import Emoji from "components/emoji/Emoji";
+import { useNavigate } from "react-router";
 
 function CustomCalendar() {
-  const [emotionData, setEmotionData] = useState(datas);
+  const [emotionData] = useState(datas);
+  const movePage = useNavigate();
 
-  function displayEmotion(props) {
-    if (props != null) {
-      if (props.emotion === "angry") {
-        return <img src={angry} width="80%" />;
-      } else if (props.emotion === "aversion") {
-        return <img src={aversion} width="80%" />;
-      } else if (props.emotion === "happy") {
-        return <img src={happy} width="80%" />;
-      } else if (props.emotion === "sad") {
-        return <img src={sad} width="80%" />;
-      } else if (props.emotion === "scared") {
-        return <img src={scared} width="80%" />;
-      } else if (props.emotion === "soso") {
-        return <img src={soso} width="80%" />;
-      } else if (props.emotion === "surprised") {
-        return <img src={surprised} width="80%" />;
-      }
-    } else {
-      return <img src={noEmotion} width="80%" />;
-    }
+  //1. 사용자가 자신의 글을 보는 경우
+  function goDiaryList(date) {
+    movePage("/diarylist", { state: { date: date } });
   }
+
+  //2. 다른 사용자의 글을 보는 경우(== 다른 사용자 달력에서 클릭할 경우)
 
   return (
     <Calendar
       calendarType="US"
       showNeighboringMonth={false} //  이전, 이후 달의 날짜는 보이지 않도록 설정
       formatDay={(locale, date) => dayjs(date).format("D")}
-      tileContent={({ date, view }) => {
+      onClickDay={(date) => goDiaryList(date)}
+      tileContent={({ date }) => {
         let chosenData = emotionData.find(
           ({ feelDate }) => feelDate === dayjs(date).format("YYYY-MM-DD")
         );
-        return displayEmotion(chosenData);
+
+        //해당 일자에 데이터가 있다면 그 감정을 props로 넘김
+        if (chosenData != null) {
+          return <Emoji emotion={chosenData.emotion} thisWidth="80%" />;
+        }
+        //해당 일자에 데이터가 없다면 noemotion을 props로 넘기기
+        else {
+          return <Emoji emotion="noemotion" thisWidth="80%" />;
+        }
       }}
     />
   );

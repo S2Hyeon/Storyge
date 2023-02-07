@@ -1,30 +1,37 @@
 import React, { useState } from "react";
-import * as S from "../MyDiaryStyle";
-import * as OwnS from "./DiaryDetailStyle";
+import * as S from "./DiaryDetailStyle";
 import * as G from "styles/index";
 import commentData from "./CommentData";
 import diaryData from "./DiaryData";
-import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
+import analyzedData from "./AnalyzedData";
 
-export default function Diarylist() {
+import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
+import { useLocation } from "react-router";
+
+export default function DiaryDetail() {
+  const location = useLocation();
+
   const [isChecked, setIsChecked] = useState(true);
+  const [id] = useState(location.state.id); //글 번호
+  console.log("현재 글번호: ", id);
+
   return (
     <G.BodyContainer>
-      <OwnS.DiaryContainer>
-        <OwnS.Diary>
-          <OwnS.EmotionContainer>
-            <OwnS.Emotion />
-          </OwnS.EmotionContainer>
-          <OwnS.ContentContiner>
-            <OwnS.TimeContainer>
+      <S.DiaryContainer>
+        <S.Diary>
+          <S.EmotionContainer>
+            <S.Emotion />
+          </S.EmotionContainer>
+          <S.ContentContiner>
+            <S.TimeContainer>
               {/* 맨 오른쪽에 시간, 맨 왼쪽에 수정, 삭제, 공개비공개 */}
               {diaryData.date} {diaryData.time}
-            </OwnS.TimeContainer>
-            <OwnS.Content>{diaryData.content}</OwnS.Content>
-          </OwnS.ContentContiner>
-        </OwnS.Diary>
-      </OwnS.DiaryContainer>
-      <OwnS.AnalyzedContainer height={isChecked ? "30px" : "120px"}>
+            </S.TimeContainer>
+            <S.Content>{diaryData.content}</S.Content>
+          </S.ContentContiner>
+        </S.Diary>
+      </S.DiaryContainer>
+      <S.AnalyzedContainer minHeight={isChecked ? "30px" : "120px"}>
         <S.Toggle fontSize="14px" onClick={() => setIsChecked((e) => !e)}>
           <S.ToggleBtnBox>
             {isChecked ? (
@@ -38,23 +45,24 @@ export default function Diarylist() {
             )}
           </S.ToggleBtnBox>
         </S.Toggle>
-        {isChecked ? null : <S.Mother>{S.data[1].content}</S.Mother>}
-      </OwnS.AnalyzedContainer>
-      <OwnS.CommentWriteBox>
-        <OwnS.CommentWrite placeholder="댓글 쓰기" />
-        <OwnS.submitBtn>작성</OwnS.submitBtn>
-      </OwnS.CommentWriteBox>
+        {isChecked ? null : <S.Analyzed>{analyzedData.content}</S.Analyzed>}
+      </S.AnalyzedContainer>
+      <S.CommentWriteBox>
+        <S.CommentWrite placeholder="댓글 쓰기" />
+        <S.submitBtn>작성</S.submitBtn>
+      </S.CommentWriteBox>
       {commentData.map((comment) => {
         return (
-          <OwnS.ListBox key={comment.id}>
-            <OwnS.ProfileImg emotion={comment.img} />
-            <S.Col>
-              <div>{comment.userName}</div>
-              <div>{comment.time}</div>
-
-              <S.Content>{comment.content}</S.Content>
-            </S.Col>
-          </OwnS.ListBox>
+          <S.CommentBox key={comment.id}>
+            <S.CommentInfo>
+              <S.ProfileImg emotion={comment.img} />
+              <S.CommentNameTime>
+                <S.CommentName>{comment.userName}</S.CommentName>
+                <S.CommentTime>{comment.time}</S.CommentTime>
+              </S.CommentNameTime>
+            </S.CommentInfo>
+            <S.CommentContent>{comment.content}</S.CommentContent>
+          </S.CommentBox>
         );
       })}
     </G.BodyContainer>

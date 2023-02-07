@@ -35,15 +35,15 @@
 }
 @font-face {
   font-family: "Roboto-400Regular";
-  src: url('https://fonts.googleapis.com/css2?family=Roboto&display=swap')
-  format("woff");
+  src: url("https://fonts.googleapis.com/css2?family=Roboto&display=swap")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "Roboto-500Medium";
-  src: url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap')
-  format("woff");
+  src: url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -54,10 +54,11 @@
   --color-background: #eaf2ea;
   --color-warning: #ff7272;
   --color-darkgrey: #c0bcbc;
-  --color-lightgrey: #F6F6F6;
+  --color-lightgrey: #f6f6f6;
   --color-grey: #eeefec;
   --color-black: #222222;
   --color-white: #ffffff;
+  --color-naver: #03C75A;
 
   /* Font */
 

@@ -25,6 +25,8 @@ export const All = styled.div`
 `;
 
 export const Modal = styled.div`
+  display: flex;
+  flex-direction: column;
   border-radius: 20px;
   border: 3px solid #accebc;
   position: fixed;
@@ -34,7 +36,7 @@ export const Modal = styled.div`
   background-color: white;
   width: 330px;
   height: 200px;
-  align-items: center;
+  justify-content: center;
 `;
 
 export const ModalItems = styled.div`
@@ -77,6 +79,7 @@ export const TextBox = styled.textarea`
 
 export const Mother = styled.div`
   margin: 0 20px 0 20px;
+  border: 1px solid red;
 `;
 
 export const Card = styled.div`

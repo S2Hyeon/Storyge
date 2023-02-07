@@ -31,12 +31,15 @@ public class Diary {
 
     private LocalDateTime createdAt;
 
-
     public void updateDiary(String emoticonName, String diaryContent, int scope, int updateCnt, String analizedResult) {
         this.emoticonName = emoticonName;
         this.diaryContent = diaryContent;
         this.scope = scope;
         this.updateCnt = updateCnt;
         this.analizedResult = analizedResult;
+    }
+
+    public void updateScope(int scope) {
+        this.scope = scope;
     }
 }

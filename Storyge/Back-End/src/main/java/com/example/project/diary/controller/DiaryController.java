@@ -52,6 +52,14 @@ public class DiaryController {
         else return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
     }
 
+    @PutMapping("/diary/{diaryId}/{scope}")
+    public ResponseEntity<String> updateScope(@PathVariable long diaryId, @PathVariable int scope) {
+        if(diaryService.updateScope(diaryId, scope)) {
+            return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
+        }
+        else return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+    }
+
     @DeleteMapping("/diary")
     public ResponseEntity<String> deleteDiary(Long diaryId){
         if(diaryService.deleteDiary(diaryId)) {

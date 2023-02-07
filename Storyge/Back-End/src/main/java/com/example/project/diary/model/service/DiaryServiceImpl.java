@@ -101,7 +101,6 @@ public class DiaryServiceImpl implements DiaryService{
         }
 
         if(diary.getUpdateCnt() == 0) {
-
             if(!param.getEmoticonName().equals(diary.getEmoticonName())) {
                 long userId = diary.getUser().getUserId();
                 LocalDate date = diary.getCreatedAt().toLocalDate();
@@ -120,6 +119,19 @@ public class DiaryServiceImpl implements DiaryService{
 
         return false;
     }
+
+    public boolean updateScope(long diaryId, int scope) {
+        Diary diary = diaryRepository.findById(diaryId).orElse(null);
+        if(diary == null) {
+            return false;
+        }
+
+        diary.updateScope(scope);
+
+        return true;
+    }
+
+
 
     @Override
     public boolean deleteDiary(Long diaryId) {

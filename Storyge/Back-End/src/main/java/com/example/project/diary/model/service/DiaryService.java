@@ -20,6 +20,8 @@ public interface DiaryService {
     //U
     boolean updateDiary (DiaryUpdateParam param);
 
+    boolean updateScope(long diaryId, int scope);
+
     //D
     boolean deleteDiary(Long diaryId);
 

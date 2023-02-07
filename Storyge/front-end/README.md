@@ -1,4 +1,5 @@
 ## Install
+
 react-social-login-buttons
 `npm install --save react-social-login-buttons`
 
@@ -19,3 +20,5 @@ react-icons
 
 react-player
 `npm install react-player --save`
+
+//front 브랜치 생성

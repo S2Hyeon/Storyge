@@ -3,6 +3,7 @@ package com.example.project.recentdiary.controller;
 import com.example.project.recentdiary.model.dto.RecentDiaryResponseDto;
 import com.example.project.recentdiary.model.service.RecentDiaryService;
 import com.example.project.user.model.jwt.JwtUtil;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin
+@Api(tags = {"Following의 최근 일기(스토리) API"})
 public class RecentDiaryController {
 
     private final RecentDiaryService recentDiaryService;

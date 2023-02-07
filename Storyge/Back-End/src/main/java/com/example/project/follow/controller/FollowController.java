@@ -4,6 +4,7 @@ import com.example.project.follow.model.dto.UserNicknameDto;
 import com.example.project.follow.model.service.FollowService;
 import com.example.project.user.model.dto.UserDto;
 import com.example.project.user.model.jwt.JwtUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin
+@Api(tags = {"Follow, Following API"})
 public class FollowController {
 
     private final FollowService followService;

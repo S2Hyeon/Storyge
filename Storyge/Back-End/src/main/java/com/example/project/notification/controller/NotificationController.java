@@ -3,6 +3,7 @@ package com.example.project.notification.controller;
 import com.example.project.notification.model.dto.NotificationReponseDto;
 import com.example.project.notification.model.service.NotificationService;
 import com.example.project.user.model.jwt.JwtUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin
+@Api(tags = {"알림 API"})
 public class NotificationController {
 
     private final NotificationService notificationService;

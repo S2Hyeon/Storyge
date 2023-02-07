@@ -6,7 +6,7 @@ export default function SearchBar() {
   let [keyword, setKeyword] = useState("");
 
   function onKeyUpKeyword(e) {
-    setTimeout(setKeyword(e.target.value), 500);
+    setKeyword(e.target.value);
   }
 
   return (
@@ -22,19 +22,6 @@ export default function SearchBar() {
           <S.AutoSearchContainer>
             <S.AutoSearchWrap>
               <S.AutoSearchData>뀨1</S.AutoSearchData>
-              <S.AutoSearchData>뀨2</S.AutoSearchData>
-              <S.AutoSearchData>뀨3</S.AutoSearchData>
-              <S.AutoSearchData>뀨3</S.AutoSearchData>
-              <S.AutoSearchData>뀨3</S.AutoSearchData>
-              <S.AutoSearchData>뀨3</S.AutoSearchData>
-              <S.AutoSearchData>뀨3</S.AutoSearchData>
-              <S.AutoSearchData>뀨3</S.AutoSearchData>
-              <S.AutoSearchData>뀨3</S.AutoSearchData>
-              <S.AutoSearchData>뀨3</S.AutoSearchData>
-              <S.AutoSearchData>뀨3</S.AutoSearchData>
-              <S.AutoSearchData>뀨3</S.AutoSearchData>
-              <S.AutoSearchData>뀨3</S.AutoSearchData>
-              <S.AutoSearchData>뀨3</S.AutoSearchData>
             </S.AutoSearchWrap>
           </S.AutoSearchContainer>
         ) : null}

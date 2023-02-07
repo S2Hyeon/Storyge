@@ -40,17 +40,21 @@ export const AutoSearchContainer = styled.div`
   width: 100%;
   background-color: #fff;
   position: absolute;
-  top: 45px;
-  border: 2px solid;
-  padding: 15px;
+  top: 40px;
+  border: 2px solid pink;
+  padding: 5px;
   overflow: auto;
+  border-radius: 0 0 8px 8px;
+
+  // -webkit-backdrop-filter: blur(30px);
+  // backdrop-filter: blur(10px);
 `;
 
-export const AutoSearchWrap = styled.ul`
+export const AutoSearchWrap = styled.div`
   border: 1px solid red;
 `;
 
-export const AutoSearchData = styled.li`
+export const AutoSearchData = styled.div`
   padding: 10px 8px;
   width: 100%;
   font-size: 14px;

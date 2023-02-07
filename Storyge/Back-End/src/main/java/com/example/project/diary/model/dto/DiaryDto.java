@@ -1,11 +1,12 @@
 package com.example.project.diary.model.dto;
 
+import com.example.project.user.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -22,5 +23,5 @@ public class DiaryDto {
     private int scope;
     private int update_cnt;
     private String analizedResult;
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 }

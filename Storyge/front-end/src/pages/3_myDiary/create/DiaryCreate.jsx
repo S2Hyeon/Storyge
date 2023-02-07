@@ -1,16 +1,44 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import Clock from "react-live-clock";
-import Modal from "../Modal";
+// import Modal from "../Modal";
 import * as S from "../MyDiaryStyle";
 import * as A from "../../../styles/index";
 import Toggle from "../Toggle";
+import Spinner from "../../../components/spinner/Spinner";
+import { OpenAI } from "../../../openai/OpenAI";
 
+// async function getInfo(content, setModalOpen) {
+//   const data1 = await OpenAI({ input: content, type: 1 });
+//   const data2 = await OpenAI({ input: data1[1], type: 2 });
+//   console.log(data1, data2);
+//   setModalOpen(true);
+//   return [data1[0], data2];
+// }
 export default function Creatediary() {
   const navigate = useNavigate();
   const contentRef = useRef();
   const [content, setContent] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  const [info, setInfo] = useState([]);
+  async function getInfo(content, setModalOpen) {
+    await OpenAI({ input: content, type: 1 })
+      .then((data1) => {
+        console.log("then 실행됨", data1);
+        OpenAI({ input: data1[1], type: 2 })
+          .then((data2) => {
+            console.log("번역 실행됨", data2);
+            setModalOpen(true);
+            setInfo([data1[0], data2]);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   function onChange(e) {
     setContent(e.target.value);
@@ -19,18 +47,16 @@ export default function Creatediary() {
       setContent(content.substr(0, 99));
     }
   }
-  function isWritten() {
+  async function isWritten() {
     if (content.length === 0) {
       alert("일기를 작성하세요~");
     } else if (content.length > 100) {
-      console.log("일기가 너무 길다 얘야");
     } else {
-      console.log("무사히 작성됨", content.length);
-      setModalOpen(true);
-      console.log(modalOpen);
+      const test = await getInfo(content, setModalOpen);
+      console.log(test);
+      setInfo(test);
     }
   }
-
   return (
     <>
       <S.Mother>
@@ -60,7 +86,11 @@ export default function Creatediary() {
           </A.longBtnBorder>
         </div>
       </S.Mother>
-      {modalOpen && <Modal setModalOpen={setModalOpen} content={content} />}
+      {modalOpen && (
+        <S.Modal>
+          <p>{info}</p>
+        </S.Modal>
+      )}
     </>
   );
 }

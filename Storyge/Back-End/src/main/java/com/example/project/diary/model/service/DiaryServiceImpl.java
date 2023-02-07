@@ -53,11 +53,14 @@ public class DiaryServiceImpl implements DiaryService{
 
         long userId = diaryDto.getUserId();
         LocalDate date = diaryDto.getCreatedAt();
+
+        // 오늘 평균 감정 있는지 확인
         DailyEmotion dailyEmotion = dailyEmotionService.selectDailyEmotion(userId, date);
+
         if(dailyEmotion == null) {
             return dailyEmotionService.insertDailyEmotion(toDailyEmotionDto(diaryDto));
         }
-        else {
+        else {  // 평균 감정 있다면 오늘 일기 모두 가져온 뒤 평균 재계산 후 수정
             DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
             dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.getEmoticonName());
         }
@@ -85,9 +88,10 @@ public class DiaryServiceImpl implements DiaryService{
     }
 
     /*
-    만약 일기의 내용이 변경되지 않았다면 이모티콘과 공개여부 설정만 변경하고
-    일기의 내용이 변경되었다면 이모티콘과 일기내용, 공개여부, 감정분석 결과 모두를 변경한다.
-        => 일기 수정 횟수의 경우 일기의 내용이 변경되었다면 1로 변경되어야하기 때문에 entity에서 값을 변경할 때 설정해준다.
+    일기 수정 기회 남아있다면
+    일기 수정하고 updateCnt를 1로 변경한다.
+    이모티콘 바뀌었다면 일일 평균 감정에 반영한 뒤
+    수정을 진행한다.
      */
     @Override
     public boolean updateDiary(DiaryUpdateParam param) {
@@ -96,18 +100,20 @@ public class DiaryServiceImpl implements DiaryService{
             return false;
         }
 
-        // 수정 기회 남아있다면
         if(diary.getUpdateCnt() == 0) {
+
+            if(!param.getEmoticonName().equals(diary.getEmoticonName())) {
+                long userId = diary.getUser().getUserId();
+                LocalDate date = diary.getCreatedAt().toLocalDate();
+                DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
+                dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.getEmoticonName());
+            }
+
             diary.updateDiary(param.getEmoticonName(),
                     param.getDiaryContent(),
                     param.getScope(),
                     1,
                     param.getAnalizedResult());
-
-            long userId = diary.getUser().getUserId();
-            LocalDate date = diary.getCreatedAt().toLocalDate();
-            DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
-            dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.getEmoticonName());
 
             return true;
         }

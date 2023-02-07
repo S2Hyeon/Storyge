@@ -26,21 +26,17 @@ public class Diary {
 
     private String diaryContent;
     private int scope;
-    private int update_cnt;
+    private int updateCnt;
     private String analizedResult;
 
     private LocalDateTime createdAt;
 
-    public void updateDiary(String emoticonName, int scope) {
-        this.emoticonName = emoticonName;
-        this.scope = scope;
-    }
 
-    public void updateDiaryContent(String emoticonName, String diaryContent, int scope, String analizedResult) {
+    public void updateDiary(String emoticonName, String diaryContent, int scope, int updateCnt, String analizedResult) {
         this.emoticonName = emoticonName;
         this.diaryContent = diaryContent;
         this.scope = scope;
-        this.update_cnt = 1;    // 일기 내용이 변경되면 수정 횟수가 1이되어야 한다.
+        this.updateCnt = updateCnt;
         this.analizedResult = analizedResult;
     }
 }

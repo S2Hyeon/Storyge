@@ -6,7 +6,6 @@ import com.example.project.diary.model.dto.DiaryUpdateParam;
 import com.example.project.diary.model.entity.Diary;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface DiaryService {
 
@@ -15,7 +14,7 @@ public interface DiaryService {
 
     //R
 
-    Optional<DiaryDto> selectOneDiary(Long diaryId);
+    DiaryDto selectOneDiary(Long diaryId);
     List<DiaryDto> selectDailyDiaries(String nickname, String stringDate);
 
     //U
@@ -32,7 +31,7 @@ public interface DiaryService {
                 .emoticonName(diary.getEmoticonName())
                 .diaryContent(diary.getDiaryContent())
                 .scope(diary.getScope())
-                .update_cnt(diary.getUpdate_cnt())
+                .update_cnt(diary.getUpdateCnt())
                 .analizedResult(diary.getAnalizedResult())
                 .createdAt(diary.getCreatedAt().toLocalDate())
                 .build();

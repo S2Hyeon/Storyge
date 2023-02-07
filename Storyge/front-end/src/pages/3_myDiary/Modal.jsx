@@ -12,34 +12,24 @@ import soso from "./../../assets/emotionIcons/soso.png";
 import surprised from "./../../assets/emotionIcons/surprised.png";
 
 function Modal({ setModalOpen, content }) {
-  // const [isChecked, setIsChecked] = useState(true);
-  const [isChecked, setIsChecked] = useState(2);
+  console.log(content);
+  // let data = null;
+  const [isChecked, setIsChecked] = useState(0);
   const emotionList = [angry, aversion, happy, sad, scared, soso, surprised];
-  const [result, setResult] = useState("");
-
-  // setResult(OpenAI({ input: content, type: 1 }));
-
-  useEffect(() => {
-    setResult(OpenAI({ input: content, type: 1 }));
-  }, []);
-
   // useEffect(() => {
-  //   console.log(result);
-  //   if (result) {
+  //   if (data === null) {
+  //     setIsChecked(2);
+  //   } else {
   //     setIsChecked(0);
   //   }
-  // }, [result]);
-
-  setTimeout(() => {
-    setIsChecked(0);
-    console.log(result);
-  }, 3000);
+  // }, []);
 
   return (
     <S.Modal>
       {isChecked === 0 ? (
         <S.ModalItems>
           <p>우리가 분석한 감정이에요! 😍</p>
+          <p>{content}</p>
           <S.ModalBtnDiv>
             <button onClick={() => setModalOpen(false)}>맞워요</button>
             <button onClick={() => setIsChecked(1)}>않이요</button>

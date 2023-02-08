@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { getCookie } from "./../utils/Cookies";
 import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
 import Layout from "./Layout";
 
 import Intro from "../pages/0_intro/Intro";
@@ -31,25 +32,47 @@ import OAuth2RedirectHandler from "pages/1_login/OAuth2RedirectHandler";
 
 function AppRouter() {
   const token = getCookie("token");
+  let state = false;
 
   return (
     <Routes>
       {/* 헤더, 내브바 포함 X */}
 
-      <Route path="intro" element={<Intro />} />
-      <Route path="login" element={<Login />} />
+      <Route
+        path="intro"
+        element={<PublicRoute component={<Intro />} authenticated={token} />}
+      />
+      <Route
+        path="login"
+        element={<PublicRoute component={<Login />} authenticated={token} />}
+      />
       <Route path="logininfo" element={<LoginInfo />} />
       <Route
         path="/oauth/callback/kakao"
-        element={<OAuth2RedirectHandler />}
+        element={
+          <PublicRoute
+            component={<OAuth2RedirectHandler />}
+            authenticated={token}
+          />
+        }
       ></Route>
       <Route
         path="/oauth/callback/google"
-        element={<OAuth2RedirectHandler />}
+        element={
+          <PublicRoute
+            component={<OAuth2RedirectHandler />}
+            authenticated={token}
+          />
+        }
       ></Route>
       <Route
         path="/oauth/callback/naver"
-        element={<OAuth2RedirectHandler />}
+        element={
+          <PublicRoute
+            component={<OAuth2RedirectHandler />}
+            authenticated={token}
+          />
+        }
       ></Route>
 
       {/* 헤더, 내브바 포함 O */}

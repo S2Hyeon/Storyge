@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserNicknameDto {
-    private String nickname;
+public class UserIdDto {
+    private Long userId;
 }

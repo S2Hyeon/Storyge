@@ -50,7 +50,7 @@ public class TokenProvider {
         //accessToken에 userId만 담아서 보냄
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
-                .claim("id", user.getUserId())
+                .claim("userId", user.getUserId())
 //                .claim("name", user.getNickname())
                 .claim(JwtProperties.AUTHORITIES_KEY, authorities)
                 .setExpiration(accessTokenExpiresIn)
@@ -87,12 +87,12 @@ public class TokenProvider {
         }
 
         // 권한 가져오기
-        Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get("auth").toString().split(","))
+        Collection<? extends GrantedAuthority> authorities = // 여기 바꿈
+                Arrays.stream(claims.get(JwtProperties.AUTHORITIES_KEY).toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        User user = userRepository.findById(Long.parseLong(claims.get("id").toString())).orElseThrow();
+        User user = userRepository.findById(Long.parseLong(claims.get("userId").toString())).orElseThrow();
         UserDetailCustom principal = new UserDetailCustom(user);
 
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);

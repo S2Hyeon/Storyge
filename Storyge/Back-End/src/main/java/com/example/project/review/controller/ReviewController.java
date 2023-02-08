@@ -12,8 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+import static com.example.project.user.model.jwt.JwtProperties.TOKEN_HEADER;
 import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
 
 @RestController
@@ -30,8 +32,9 @@ public class ReviewController {
     // 댓글 입력
     @ApiOperation(value = "댓글 입력", notes = "다이어리에 댓글 달기")
     @PostMapping("/review")
-    public ResponseEntity<String> insertReview(@RequestHeader(name = TOKEN_PREFIX) String token, @RequestBody ReviewRequsetDto reviewRequsetDto){
+    public ResponseEntity<String> insertReview(HttpServletRequest request, @RequestBody ReviewRequsetDto reviewRequsetDto){
 
+        String token = request.getHeader(TOKEN_HEADER);
         Long userId = jwtUtil.getUserId(token);
 
         reviewService.insertReview(userId, reviewRequsetDto);
@@ -49,8 +52,9 @@ public class ReviewController {
     // 댓글 수정
     @ApiOperation(value = "댓글 수정", notes = "댓글 수정, 수정할 내용과 그 댓글의 id 필요")
     @PutMapping("/review")
-    public ResponseEntity<String> updateReview(@RequestHeader(name = TOKEN_PREFIX) String token, @RequestBody ReviewUpdateParam reviewUpdateParam){
+    public ResponseEntity<String> updateReview(HttpServletRequest request, @RequestBody ReviewUpdateParam reviewUpdateParam){
 
+        String token = request.getHeader(TOKEN_HEADER);
         Long userId = jwtUtil.getUserId(token);
 
         if(reviewService.updateReview(userId, reviewUpdateParam)){
@@ -63,8 +67,9 @@ public class ReviewController {
     // 댓글 삭제
     @ApiOperation(value = "댓글 삭제", notes = "댓글 삭제")
     @DeleteMapping("/review/{reviewId}")
-    public ResponseEntity<String> deleteReview(@RequestHeader(name = TOKEN_PREFIX) String token, @PathVariable Long reviewId){
+    public ResponseEntity<String> deleteReview(HttpServletRequest request, @PathVariable Long reviewId){
 
+        String token = request.getHeader(TOKEN_HEADER);
         Long userId = jwtUtil.getUserId(token);
 
         if(reviewService.deleteReview(userId, reviewId)) {

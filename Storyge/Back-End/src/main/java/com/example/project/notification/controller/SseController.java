@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.example.project.user.model.jwt.JwtProperties.TOKEN_HEADER;
 import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
 
 @RestController
@@ -26,8 +28,9 @@ public class SseController {
 
     @ApiOperation(value = "실시간 알림 서버", notes = "토큰 보유시에만 /sub 서버를 구독해야 함...!")
     @GetMapping("/sub")
-    public SseEmitter subscribe(@RequestHeader(name = TOKEN_PREFIX) String token){
+    public SseEmitter subscribe(HttpServletRequest request){
         //현재 로그인한 user 값(pk)
+        String token = request.getHeader(TOKEN_HEADER);
         Long userId = jwtUtil.getUserId(token);
         //////////
 

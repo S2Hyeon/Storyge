@@ -33,8 +33,13 @@ export const googleLogin = async (code) => {
   })
     .then((res) => {
       console.log(res);
-      const ACCESS_TOKEN = res.data.accessToken;
-      localStorage.setItem("token", ACCESS_TOKEN);
+      if (res.data.accessToken) {
+        // 쿠키에 access-token 저장
+        setCookie("token", `${res.data.accessToken}`, {
+          path: "/", // 모든 페이지에서 쿠키 접근 가능
+          sameSite: "strict",
+        });
+      }
       window.location.href = `http://localhost:3000/`;
     })
     .catch((err) => {
@@ -51,8 +56,13 @@ export const naverLogin = async (code) => {
   })
     .then((res) => {
       console.log(res);
-      const ACCESS_TOKEN = res.data.accessToken;
-      localStorage.setItem("token", ACCESS_TOKEN);
+      if (res.data.accessToken) {
+        // 쿠키에 access-token 저장
+        setCookie("token", `${res.data.accessToken}`, {
+          path: "/", // 모든 페이지에서 쿠키 접근 가능
+          sameSite: "strict",
+        });
+      }
       window.location.href = `http://localhost:3000/`;
     })
     .catch((err) => {

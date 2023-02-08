@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./MainStyle";
 import * as G from "../../styles";
@@ -7,8 +7,15 @@ import newDiaryData from "./NewDiaryData";
 import { BsCircleFill } from "react-icons/bs";
 import CustomCalendar from "../../components/calender/Calendar";
 import PieChart from "../../components/chart/PieChart";
+import { getCookie } from "./../../utils/Cookies";
 
 function Main() {
+  // 로그인 여부 확인 : 쿠기 값 가져오기
+  useEffect(() => {
+    const ACCESS_TOKEN = getCookie("token");
+    console.log("메인 실행되면 액세스 토큰 받아옴" + ACCESS_TOKEN);
+  }, []);
+
   const movePage = useNavigate();
 
   let [diary, setDiary] = useState(true);

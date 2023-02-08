@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Clock from "react-live-clock";
 // import Modal from "../Modal";
 import * as S from "../MyDiaryStyle";
-import * as A from "../../../styles/index";
+import * as heyhey from "./DiaryCreateStyle";
+import * as G from "../../../styles/index";
 import Toggle from "../Toggle";
 import Spinner from "../../../components/spinner/Spinner";
 import { OpenAI } from "../../../openai/OpenAI";
@@ -59,33 +60,33 @@ export default function Creatediary() {
   }
   return (
     <>
-      <S.Mother>
+      <heyhey.container>
         <h1>일기 작성 페이지</h1>
         <Clock format={"작성날짜 YYYY.MM.DD 작성시간 HH:mm"} ticking={true} />
-        <S.Card backgroundColor="var(--color-white)">
-          <S.TextBox
+        <heyhey.card backgroundColor="var(--color-white)">
+          <heyhey.TextBox
             type="text"
             placeholder="대충 멋진 문구로 글쓰기를 자극하라"
             ref={contentRef}
             value={content}
             onChange={onChange}
           />
-          <S.CardFoot height="30px" backgroundColor="var(--color-white)">
-            <S.CountDiary>{content.length} / 100</S.CountDiary>
+          <heyhey.CardFoot height="30px" backgroundColor="var(--color-white)">
+            <heyhey.CountDiary>{content.length} / 100</heyhey.CountDiary>
             <Toggle />
-          </S.CardFoot>
-        </S.Card>
+          </heyhey.CardFoot>
+        </heyhey.card>
         <div>
           <div>
-            <A.longBtnDefault onClick={isWritten}>
+            <G.longBtnDefault onClick={isWritten}>
               감정분석하기 버튼
-            </A.longBtnDefault>
+            </G.longBtnDefault>
           </div>
-          <A.longBtnBorder onClick={() => navigate(-1)}>
+          <G.longBtnBorder onClick={() => navigate(-1)}>
             일단 뒤로가기 버튼
-          </A.longBtnBorder>
+          </G.longBtnBorder>
         </div>
-      </S.Mother>
+      </heyhey.container>
       {modalOpen && (
         <S.Modal>
           <p>{info}</p>

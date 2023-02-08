@@ -8,6 +8,7 @@ import { BsCircleFill } from "react-icons/bs";
 import CustomCalendar from "../../components/calender/Calendar";
 import PieChart from "../../components/chart/PieChart";
 import { getCookie } from "./../../utils/Cookies";
+import { getQuote } from "api/quote/getQuote";
 
 function Main() {
   // 로그인 여부 확인 : 쿠기 값 가져오기
@@ -31,6 +32,10 @@ function Main() {
   function switchBox() {
     setDiary(!diary);
   }
+
+  //하루 글귀 받아오기 api
+  const quoteData = getQuote();
+  console.log(quoteData);
 
   return (
     <S.All>
@@ -86,12 +91,8 @@ function Main() {
           </S.CalendarToggle>
         </S.CalendarContainer>
         <S.WiseBox>
-          <S.Wise>
-            우리가 출발한 곳은 선택할 수 없지만,
-            <br />
-            그곳에서 어딜 향해 갈지는 선택할 수 있어.
-          </S.Wise>
-          <S.WiseFrom>영화 &lt;월 플라워&gt; 중</S.WiseFrom>
+          <S.Wise>{quoteData && quoteData.quoteContent}</S.Wise>
+          <S.WiseFrom>{quoteData && quoteData.quoteSource}</S.WiseFrom>
         </S.WiseBox>
       </G.BodyContainer>
     </S.All>

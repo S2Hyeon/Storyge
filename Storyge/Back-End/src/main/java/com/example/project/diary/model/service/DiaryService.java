@@ -3,6 +3,7 @@ package com.example.project.diary.model.service;
 import com.example.project.daily_emotion.model.dto.DailyEmotionDto;
 import com.example.project.diary.model.dto.DiaryDto;
 import com.example.project.diary.model.dto.DiaryUpdateParam;
+import com.example.project.diary.model.dto.EmotionStatistic;
 import com.example.project.diary.model.entity.Diary;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public interface DiaryService {
     List<DiaryDto> selectDailyDiaries(String nickname, String stringDate);
 
     int selectDiaryCount(long userId);
+
+    List<EmotionStatistic> selectEmotionStatistic(String period, String stringDate, Long userId);
 
     //U
     boolean updateDiary (DiaryUpdateParam param);

@@ -5,6 +5,7 @@ import com.example.project.daily_emotion.model.service.DailyEmotionService;
 import com.example.project.diary.model.dto.DailyEmotionStatistic;
 import com.example.project.diary.model.dto.DiaryDto;
 import com.example.project.diary.model.dto.DiaryUpdateParam;
+import com.example.project.diary.model.dto.EmotionStatistic;
 import com.example.project.diary.model.entity.Diary;
 import com.example.project.diary.model.entity.DiaryCount;
 import com.example.project.diary.model.repository.DiaryCustomRepository;
@@ -117,6 +118,11 @@ public class DiaryServiceImpl implements DiaryService{
 
         return diaryCount.getDiaryCnt();
 
+    }
+
+    public List<EmotionStatistic> selectEmotionStatistic(String period, String stringDate, Long userId) {
+        LocalDate date = LocalDate.parse(stringDate);
+        return diaryCustomRepository.emotionStatistic(period, date, userId);
     }
 
     /*

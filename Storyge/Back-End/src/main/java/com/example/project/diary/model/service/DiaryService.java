@@ -17,6 +17,8 @@ public interface DiaryService {
     DiaryDto selectOneDiary(Long diaryId);
     List<DiaryDto> selectDailyDiaries(String nickname, String stringDate);
 
+    int selectDiaryCount(long userId);
+
     //U
     boolean updateDiary (DiaryUpdateParam param);
 

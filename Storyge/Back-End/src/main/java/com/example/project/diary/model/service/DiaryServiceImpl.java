@@ -6,8 +6,10 @@ import com.example.project.diary.model.dto.DailyEmotionStatistic;
 import com.example.project.diary.model.dto.DiaryDto;
 import com.example.project.diary.model.dto.DiaryUpdateParam;
 import com.example.project.diary.model.entity.Diary;
+import com.example.project.diary.model.entity.DiaryCount;
 import com.example.project.diary.model.repository.DiaryCustomRepository;
 import com.example.project.diary.model.repository.DiaryRepository;
+import com.example.project.diary.model.repository.DiaryCountRepository;
 import com.example.project.user.model.entity.User;
 import com.example.project.user.model.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +33,28 @@ public class DiaryServiceImpl implements DiaryService{
     private final DailyEmotionService dailyEmotionService;
     private final UserRepository userRepository;
 
+    private final DiaryCountRepository diaryCountRepository;
+
     @Override
     public boolean insertDiary(DiaryDto diaryDto) {
         User user = userRepository.findById(diaryDto.getUserId()).orElse(null);
         if(user == null) {
             return false;
         }
+        
+        // 오늘 작성한 일기 개수 확인
+        DiaryCount diaryCount = diaryCountRepository.findById(user.getUserId()).orElse(null);
+        if(diaryCount == null) {
+            return false;
+        }
+        int currentCount = diaryCount.getDiaryCnt();
+        if(currentCount >= 24) { // 제한개수(24개)를 넘어서면 false 리턴
+            return false;
+        }
+
+        // 일기 작성 개수 증가
+        diaryCount.updateCount(currentCount + 1);
+
         // To DO : 문장 분석 결과 가져오기
         diaryDto.setAnalizedResult("문장 분석 결과 테스트");
 
@@ -64,7 +82,6 @@ public class DiaryServiceImpl implements DiaryService{
             DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
             dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.getEmoticonName());
         }
-
         return true;
     }
 
@@ -85,6 +102,21 @@ public class DiaryServiceImpl implements DiaryService{
         LocalDateTime endTimeOfDay = LocalDateTime.of(date, LocalTime.MAX).withNano(0);
         List<Diary> diaryList = diaryRepository.findAllByUser_UserIdAndCreatedAtBetween(user.getUserId(), startTimeOfDay, endTimeOfDay);
         return diaryList.stream().map(this::toDto).collect(Collectors.toList());
+    }
+
+    public int selectDiaryCount(long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if(user == null) {
+            return -1;
+        }
+
+        DiaryCount diaryCount = diaryCountRepository.findById(user.getUserId()).orElse(null);
+        if(diaryCount == null) {
+            return -1;
+        }
+
+        return diaryCount.getDiaryCnt();
+
     }
 
     /*

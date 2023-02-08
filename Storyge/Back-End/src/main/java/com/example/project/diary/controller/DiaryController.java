@@ -44,6 +44,15 @@ public class DiaryController {
         return new ResponseEntity<>(diaryDtoList, HttpStatus.OK);
     }
 
+    @GetMapping("/diary/count/{userId}")
+    public ResponseEntity<?> selectDiaryCount(@PathVariable Long userId){
+        int diaryCnt = diaryService.selectDiaryCount(userId);
+        if(diaryCnt < 0) {
+            return new ResponseEntity<>(FAIL, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(diaryCnt, HttpStatus.OK);
+    }
+
     @PutMapping("/diary")
     public ResponseEntity<String> updateDiary(DiaryUpdateParam param){
         if(diaryService.updateDiary(param)) {

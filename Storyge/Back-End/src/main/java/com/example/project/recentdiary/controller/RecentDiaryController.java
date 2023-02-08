@@ -30,17 +30,16 @@ public class RecentDiaryController {
 
     @GetMapping("/recent")
     public ResponseEntity<List<RecentDiaryResponseDto>> selectAllRecentDiary(HttpServletRequest request){
-        System.out.println("ACCESS_TOKEN"+request.getHeader(ACCESS_TOKEN));
-        System.out.println("TOKEN_PREFIX"+ request.getHeader(TOKEN_PREFIX));
-        System.out.println("AUTHORIZATION"+ request.getHeader(AUTHORITIES_KEY));
-        String token = request.getHeader(TOKEN_HEADER);
+        System.out.println("request: "+request.getHeader(TOKEN_PREFIX));
+        System.out.println("request: "+request.getHeader(ACCESS_TOKEN));
 
+
+        String token = request.getHeader(TOKEN_HEADER);
         Long userId = jwtUtil.getUserId(token);
 
         List<RecentDiaryResponseDto> recentDiaryList = recentDiaryService.selectAllRecentDiary(userId);
         return new ResponseEntity<>(recentDiaryList, HttpStatus.OK);
     }
-
 
 
 }

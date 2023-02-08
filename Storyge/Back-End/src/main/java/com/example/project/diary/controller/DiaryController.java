@@ -10,8 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+import static com.example.project.user.model.jwt.JwtProperties.TOKEN_HEADER;
 import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
 
 @RestController
@@ -36,8 +38,9 @@ public class DiaryController {
     }
 
     @GetMapping("/diary/detail/{diary_id}")
-    public ResponseEntity<?> selectOneDiary(@RequestHeader(name = TOKEN_PREFIX) String token, @PathVariable("diary_id") Long diaryId){
+    public ResponseEntity<?> selectOneDiary(HttpServletRequest request, @PathVariable("diary_id") Long diaryId){
 
+        String token = request.getHeader(TOKEN_HEADER);
         Long userId=jwtUtil.getUserId(token);
 
         DiaryDto diaryDto = diaryService.selectOneDiary(diaryId);

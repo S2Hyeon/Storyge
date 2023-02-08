@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
+import static com.example.project.user.model.jwt.JwtProperties.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,14 +29,17 @@ public class RecentDiaryController {
     private final JwtUtil jwtUtil;
 
     @GetMapping("/recent")
-    public ResponseEntity<List<RecentDiaryResponseDto>> selectAllRecentDiary(@RequestHeader(name = TOKEN_PREFIX) String token){
+    public ResponseEntity<List<RecentDiaryResponseDto>> selectAllRecentDiary(HttpServletRequest request){
+        System.out.println("request: "+request.getHeader(TOKEN_PREFIX));
+        System.out.println("request: "+request.getHeader(ACCESS_TOKEN));
 
+
+        String token = request.getHeader(TOKEN_HEADER);
         Long userId = jwtUtil.getUserId(token);
 
         List<RecentDiaryResponseDto> recentDiaryList = recentDiaryService.selectAllRecentDiary(userId);
         return new ResponseEntity<>(recentDiaryList, HttpStatus.OK);
     }
-
 
 
 }

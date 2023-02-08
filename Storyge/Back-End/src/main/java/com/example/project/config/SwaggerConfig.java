@@ -49,7 +49,7 @@ public class SwaggerConfig {
 
     // 버튼 클릭 시 입력 값 설정
     private ApiKey apiKey(){
-        return new ApiKey("Authorization", "Bearer", "header");
+        return new ApiKey("Authorization", "Authorization", "header");
     }
 
     private ApiInfo apiInfo() {

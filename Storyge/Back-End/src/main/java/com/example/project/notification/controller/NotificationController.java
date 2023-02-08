@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
@@ -33,8 +34,8 @@ public class NotificationController {
     //알림 목록
     @ApiOperation(value = "알림 목록 조회", notes = "사용자 알림 목록 리스트 가져옴")
     @GetMapping("/notification")
-    public ResponseEntity<List<NotificationReponseDto>> selectAllNotification(@ApiIgnore @RequestHeader(name = TOKEN_PREFIX) String token){
-
+    public ResponseEntity<List<NotificationReponseDto>> selectAllNotification(HttpServletRequest request){
+        String token = request.getHeader(TOKEN_PREFIX);
         Long userId = jwtUtil.getUserId(token);
 
         List<NotificationReponseDto> notificationList = notificationService.selectAllNotification(userId);

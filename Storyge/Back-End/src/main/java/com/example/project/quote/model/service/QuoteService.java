@@ -9,6 +9,8 @@ public interface QuoteService {
     
     //명언 한 개 반환
     Optional<QuoteDto> selectOneQuote(Long quoteId);
+    void setQuoteId(Long quoteId);
+    Long getQuoteId();
 
     default QuoteDto toDto(Quote quote){
         return new QuoteDto().builder()

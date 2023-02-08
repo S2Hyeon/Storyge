@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import * as S from "./MainStyle";
 import * as G from "../../styles";
 import newDiaryData from "./NewDiaryData";
-// import pieChartData from "./PieChartData";
 import { BsCircleFill } from "react-icons/bs";
 import CustomCalendar from "../../components/calender/Calendar";
 import PieChart from "../../components/chart/PieChart";
@@ -34,8 +33,17 @@ function Main() {
   }
 
   //하루 글귀 받아오기 api
-  const quoteData = getQuote();
-  console.log(quoteData);
+  const [quoteData, setQuoteData] = useState();
+
+  useEffect(() => {
+    async function getAndSetQuoteData() {
+      const response = await getQuote();
+      setQuoteData(response);
+    }
+    getAndSetQuoteData();
+  }, []);
+
+  const tmp = "하\n잉";
 
   return (
     <S.All>
@@ -90,6 +98,7 @@ function Main() {
             </S.ToggleOne>
           </S.CalendarToggle>
         </S.CalendarContainer>
+
         <S.WiseBox>
           <S.Wise>{quoteData && quoteData.quoteContent}</S.Wise>
           <S.WiseFrom>{quoteData && quoteData.quoteSource}</S.WiseFrom>

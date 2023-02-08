@@ -19,7 +19,9 @@ import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
 
 @Slf4j
 @Component
@@ -43,15 +45,15 @@ public class TokenProvider {
         System.out.println("==========================================================");
         System.out.println("TokenProvider generateToken의 authorities: " + authorities);
         System.out.println("==========================================================");
-        User user = userRepository.findByEmail(authorities).orElseThrow();
-        long now = (new Date()).getTime();
+        User user = userRepository.findByEmail(authorities).orElse(null);
 
-        Date accessTokenExpiresIn = new Date(now + JwtProperties.ACCESS_TOKEN_TIME);
+        Date now = new Date();
+
+        Date accessTokenExpiresIn = new Date(now.getTime() + JwtProperties.ACCESS_TOKEN_TIME);
         //accessToken에 userId만 담아서 보냄
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
-                .claim("id", user.getUserId())
-//                .claim("name", user.getNickname())
+                .claim("userId", user.getUserId())
                 .claim(JwtProperties.AUTHORITIES_KEY, authorities)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -59,15 +61,21 @@ public class TokenProvider {
 
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + JwtProperties.REFRESH_TOKEN_TIME))
+                .setExpiration(new Date(now.getTime() + JwtProperties.REFRESH_TOKEN_TIME))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
         Token token = Token.builder()
-                .user(user)
+                .userId(user.getUserId())
                 .refreshToken(refreshToken)
                 .build();
-        //refresh token 저장
+        //refresh token 저장하는 데 만약에 토큰이 있는 사람이면 갱신, 없으면 추가
+//        Optional<Token> originToken = tokenRepository.findByUserId(user.getUserId());
+//        if(originToken.isPresent()){
+//            System.out.println("토큰이 있어요~ 갱신할게요!");
+//
+//        }
+
         tokenRepository.save(token);
 
         return TokenInfo.builder()
@@ -101,8 +109,9 @@ public class TokenProvider {
     //토큰 정보 검증 메서드
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return true;
+            Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            //현재보다 만료가 이전인지 확인
+            return claimsJws.getBody().getExpiration().before(new Date());
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT Token", e);
         } catch (ExpiredJwtException e) {

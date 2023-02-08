@@ -59,7 +59,7 @@ public class SecurityConfig {
                 .and()
 //                .authorizeRequests(authorize -> authorize.anyRequest().authenticated())
                 .oauth2Login()
-                .loginProcessingUrl("/oauth/callback/*") // 폼 로그인을 처리할 URL 입력
+                .loginProcessingUrl("/api/oauth/callback/*") // 폼 로그인을 처리할 URL 입력
                 .authorizationEndpoint(authorize -> {
                     authorize.authorizationRequestRepository(
                             customOAuth2AuthorizationRequestRepository);

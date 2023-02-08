@@ -65,6 +65,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .provider(userInfo.getProvider())
                     .providerId(userInfo.getProviderId())
                     .build();
+            // 일기 작성 제한 테이블에도 생성해주기!
+
+
 
             userRepository.save(user);
         } else {

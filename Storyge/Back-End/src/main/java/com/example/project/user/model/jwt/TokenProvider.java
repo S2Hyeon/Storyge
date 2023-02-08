@@ -81,14 +81,15 @@ public class TokenProvider {
     // 토큰 복호화해서 정보 꺼내기
     public Authentication getAuthentication(String accessToken) {
         Claims claims = parseClaims(accessToken);
+        System.out.println("claimssssss "+claims);
 
         if (claims.get(JwtProperties.AUTHORITIES_KEY) == null) {
             throw new RuntimeException("권한 정보가 없는 토큰 : AUTHORITIES_KEY가 없음");
         }
 
         // 권한 가져오기
-        Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get("auth").toString().split(","))
+        Collection<? extends GrantedAuthority> authorities = // 여기 바꿈
+                Arrays.stream(claims.get(JwtProperties.AUTHORITIES_KEY).toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 

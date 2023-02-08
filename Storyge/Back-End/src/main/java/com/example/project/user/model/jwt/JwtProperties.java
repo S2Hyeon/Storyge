@@ -8,4 +8,5 @@ public interface JwtProperties {
     String AUTHORITIES_KEY = "auth";
     String TOKEN_PREFIX = "Bearer ";
     String ACCESS_TOKEN = "access-token";
+    String TOKEN_HEADER = "Authorization";
 }

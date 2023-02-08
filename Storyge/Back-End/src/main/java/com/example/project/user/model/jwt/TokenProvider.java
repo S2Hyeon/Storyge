@@ -50,7 +50,7 @@ public class TokenProvider {
         //accessToken에 userId만 담아서 보냄
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
-                .claim("id", user.getUserId())
+                .claim("userId", user.getUserId())
 //                .claim("name", user.getNickname())
                 .claim(JwtProperties.AUTHORITIES_KEY, authorities)
                 .setExpiration(accessTokenExpiresIn)
@@ -81,7 +81,6 @@ public class TokenProvider {
     // 토큰 복호화해서 정보 꺼내기
     public Authentication getAuthentication(String accessToken) {
         Claims claims = parseClaims(accessToken);
-        System.out.println("claimssssss "+claims);
 
         if (claims.get(JwtProperties.AUTHORITIES_KEY) == null) {
             throw new RuntimeException("권한 정보가 없는 토큰 : AUTHORITIES_KEY가 없음");
@@ -93,7 +92,7 @@ public class TokenProvider {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        User user = userRepository.findById(Long.parseLong(claims.get("id").toString())).orElseThrow();
+        User user = userRepository.findById(Long.parseLong(claims.get("userId").toString())).orElseThrow();
         UserDetailCustom principal = new UserDetailCustom(user);
 
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);

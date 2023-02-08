@@ -6,7 +6,24 @@ import { useNavigate } from "react-router-dom";
 import { BsPersonCircle } from "react-icons/bs";
 import { removeCookie } from "./../../utils/Cookies";
 
-export default function MyPage() {
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal);
+
+const Toast = MySwal.mixin({
+  toast: true,
+  position: "center-center",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
+
+export default function MyPage({ setToken }) {
   const movePage = useNavigate();
 
   function gomodifyprofile() {
@@ -14,9 +31,26 @@ export default function MyPage() {
   }
 
   function logout() {
-    if (window.confirm("로그아웃?")) {
-      removeCookie("token");
-      movePage("/login");
+    if (
+      Swal.fire({
+        text: "로그아웃하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setToken(undefined);
+          removeCookie("token");
+          Toast.fire({
+            icon: "warning",
+            title: "로그아웃되었습니다.",
+          });
+          movePage("/login");
+        }
+      })
+    ) {
     }
   }
 

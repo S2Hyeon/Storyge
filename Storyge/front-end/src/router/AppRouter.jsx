@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { getCookie } from "./../utils/Cookies";
 import PrivateRoute from "./PrivateRoute";
@@ -31,13 +31,13 @@ import OAuth2RedirectHandler from "pages/1_login/OAuth2RedirectHandler";
 // import { Pages } from "@mui/icons-material";
 
 function AppRouter() {
-  const token = getCookie("token");
-  let state = false;
+  // const [token, setToken] = useState("");
+  // let token = getCookie("token");
+  const [token, setToken] = useState(getCookie("token"));
 
   return (
     <Routes>
       {/* 헤더, 내브바 포함 X */}
-
       <Route
         path="intro"
         element={<PublicRoute component={<Intro />} authenticated={token} />}
@@ -46,7 +46,12 @@ function AppRouter() {
         path="login"
         element={<PublicRoute component={<Login />} authenticated={token} />}
       />
-      <Route path="logininfo" element={<LoginInfo />} />
+      <Route
+        path="logininfo"
+        element={
+          <PublicRoute component={<LoginInfo />} authenticated={token} />
+        }
+      />
       <Route
         path="/oauth/callback/kakao"
         element={
@@ -115,7 +120,10 @@ function AppRouter() {
         <Route
           path="mypage"
           element={
-            <PrivateRoute component={<MyPage />} authenticated={token} />
+            <PrivateRoute
+              component={<MyPage setToken={setToken} />}
+              authenticated={token}
+            />
           }
         />
         <Route

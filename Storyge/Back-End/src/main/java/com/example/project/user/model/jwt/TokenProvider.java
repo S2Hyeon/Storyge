@@ -117,6 +117,9 @@ public class TokenProvider {
             log.info("Invalid JWT Token", e);
         } catch (ExpiredJwtException e) {
             log.info("Expired JWT Token", e);
+            //토큰이 유효기간이 다 되었을 경우 재생성해서 보내주기
+
+
         } catch (UnsupportedJwtException e) {
             log.info("Unsupported JWT Token", e);
         } catch (IllegalArgumentException e) {

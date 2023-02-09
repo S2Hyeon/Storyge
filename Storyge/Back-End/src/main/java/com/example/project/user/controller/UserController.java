@@ -40,7 +40,7 @@ public class UserController {
     @GetMapping("/user")
     public ResponseEntity<UserDto> selectOneUser(HttpServletRequest request) {
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
-
+        System.out.println("userId: " + userId);
         return new ResponseEntity<>(userService.selectOneUser(userId), HttpStatus.OK);
     }
 

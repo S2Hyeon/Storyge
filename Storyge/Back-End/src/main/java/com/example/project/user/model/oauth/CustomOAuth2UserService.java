@@ -71,6 +71,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .provider(userInfo.getProvider())
                     .providerId(userInfo.getProviderId())
                     .build();
+            userRepository.save(user);
 
             // 일기 작성 제한 테이블에도 생성해주기!
             DiaryCount diaryCount = DiaryCount.builder()
@@ -78,7 +79,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .build();
 
             diaryCountRepository.save(diaryCount);
-            userRepository.save(user);
         } else {
             System.out.println("유저가 있으니까 있는 애로 바꿔주자");
             user = userOptional.get();

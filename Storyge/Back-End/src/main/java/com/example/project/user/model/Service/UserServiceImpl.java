@@ -22,11 +22,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto selectOneUser(Long userId) {
+
         //팔로워 찾기
-        Long follower = followRepository.countAllByFollowing(userId);
+        Long follower = followRepository.countByFollowing(userId);
 
         //팔로잉 찾기
-        Long following = followRepository.countAllByFollower(userId);
+        Long following = followRepository.countByFollower(userId);
         UserDto user = toDto(userRepository.findById(userId).orElseThrow());
         user.setFollower(follower);
         user.setFollowing(following);

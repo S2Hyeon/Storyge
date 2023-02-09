@@ -5,7 +5,9 @@ import com.example.project.follow.model.service.FollowService;
 import com.example.project.user.model.dto.UserDto;
 import com.example.project.user.model.jwt.JwtUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,13 +32,9 @@ public class FollowController {
     private final JwtUtil jwtUtil;
 
     //팔로우 신청하기
-    @ApiOperation(value = "팔로우 신청", notes = "팔로우 신청을 보낸다")
-//    @ApiImplicitParam(name="UserNicknameDto",
-//                    value = "팔로우 신청하려는 사용자 nickname",
-//                    required = true,
-//                    dataType = "String")
+    @ApiOperation(value = "팔로우 신청", notes = "상대방에게 팔로우 신청을 보낸다")
     @PostMapping("/follow-wait")
-    public ResponseEntity insertFollowWait(HttpServletRequest request, @RequestBody UserIdDto userIdDto){
+    public ResponseEntity insertFollowWait(HttpServletRequest request, @RequestBody @ApiParam(value = "신청할 사용자의 userId(pk)")  UserIdDto userIdDto){
 
         String token = request.getHeader(TOKEN_HEADER);
         Long userId = jwtUtil.getUserId(token);
@@ -52,10 +50,9 @@ public class FollowController {
     }
 
     //팔로우 수락
-    @ApiOperation(value = "팔로우 수락", notes = "팔로우를 수락한다")
-//    @ApiImplicitParam(name="UserNicknameDto", value = "팔로우 수락할 사용자의 nickname")
+    @ApiOperation(value = "팔로우 수락", notes = "나에게 들어온 팔로우를 수락한다")
     @PostMapping("/follow")
-    public ResponseEntity insertFollower(HttpServletRequest request, @RequestBody UserIdDto userIdDto){
+    public ResponseEntity insertFollower(HttpServletRequest request, @RequestBody @ApiParam(value = "수락할 사용자의 userId(pk)") UserIdDto userIdDto){
 
         String token = request.getHeader(TOKEN_HEADER);
         Long userId = jwtUtil.getUserId(token);
@@ -71,7 +68,7 @@ public class FollowController {
 
     //팔로우 수락 대기 목록
     @ApiOperation(value = "팔로우 신청 대기 목록",
-            notes = "팔로우 신청을 한 사람들의 목록 조회")
+            notes = "나에게 팔로우 신청을 한 사람들의 목록 조회")
     @GetMapping("/follow-wait")
     public ResponseEntity<List<UserDto>> selectAllFollowWait(HttpServletRequest request){
 
@@ -122,7 +119,7 @@ public class FollowController {
     //팔로우 대기 삭제
     @ApiOperation(value = "팔로우 대기 삭제",
             notes = "나에게 들어온 팔로우 신청을 삭제한다(거절)")
-//    @ApiImplicitParam(name="nickname", value = "거절할 사용자의 nickname")
+    @ApiImplicitParam(name="userId", value = "거절할 사용자의 userId(pk)")
     @DeleteMapping("/follow-wait/{userId}")
     public ResponseEntity<String> deleteFollowWait(HttpServletRequest request, @PathVariable Long userId){
 
@@ -140,7 +137,7 @@ public class FollowController {
     // 팔로잉 삭제
     @ApiOperation(value = "팔로잉 삭제",
             notes = "팔로우를 취소함 - 내가 팔로우 하고 있는 사람 삭제")
-//    @ApiImplicitParam(name="nickname", value = "거절할 사용자의 nickname")
+    @ApiImplicitParam(name="userId", value = "삭제할 사용자(팔로잉)의 userId(pk)")
     @DeleteMapping("/following/{userId}")
     public ResponseEntity<String> deleteFollowing(HttpServletRequest request, @PathVariable Long userId){
 
@@ -157,7 +154,7 @@ public class FollowController {
     // 팔로워 삭제
     @ApiOperation(value = "팔로워 삭제",
             notes = "나를 팔로우 하고 있는 사람 삭제")
-//    @ApiImplicitParam(name="nickname", value = "삭제할 사용자의 nickname")
+    @ApiImplicitParam(name="userId", value = "삭제할 사용자(팔로워)의 userId(pk)")
     @DeleteMapping("/follower/{userId}")
     public ResponseEntity<String> deleteFollower(HttpServletRequest request, @PathVariable Long userId){
 

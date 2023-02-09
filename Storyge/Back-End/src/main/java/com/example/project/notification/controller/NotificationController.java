@@ -33,7 +33,7 @@ public class NotificationController {
     private final JwtUtil jwtUtil;
 
     //알림 목록
-    @ApiOperation(value = "알림 목록 조회", notes = "사용자 알림 목록 리스트 가져옴")
+    @ApiOperation(value = "알림 목록 조회", notes = "현재 로그인한 사용자의 알림 목록 가져옴")
     @GetMapping("/notification")
     public ResponseEntity<List<NotificationReponseDto>> selectAllNotification(HttpServletRequest request){
         String token = request.getHeader(TOKEN_HEADER);

@@ -21,18 +21,20 @@ public class QuoteServiceImpl implements QuoteService{
     private final TodayQuoteRepository todayQuoteRepository;
 
     @Override
-    public Optional<QuoteDto> selectOneQuote(Long quoteId) {
-        return Optional.ofNullable(toDto(quoteRepository.findById(quoteId).orElseThrow()));
+    public Optional<QuoteDto> selectOneQuote() {
+        TodayQuote quote = todayQuoteRepository.findById((long)1).orElse(null);
+        if(quote==null){
+            todayQuoteRepository.save(TodayQuote.builder()
+                    .todayId(1L)
+                    .todayQuoteId(15L).build());
+            quote = todayQuoteRepository.findById((long)1).orElse(null);
+        }
+        return Optional.ofNullable(toDto(quoteRepository.findById(quote.getTodayQuoteId()).orElseThrow()));
     }
 
     @Override
     public void setQuoteId(Long quoteId) {
-        TodayQuote quote = todayQuoteRepository.findById((long)1).orElse(null);
-        todayQuoteRepository.save(TodayQuote.builder().quoteId(quoteId).build());
+        todayQuoteRepository.save(TodayQuote.builder().todayId((long)1).todayQuoteId(quoteId).build());
     }
 
-    @Override
-    public Long getQuoteId() {
-        return todayQuoteRepository.findById((long)1).get().getQuoteId();
-    }
 }

@@ -57,10 +57,10 @@ export default function MyPage({ setToken }) {
   }
 
   const [userData, setUserData] = useState({
-    profile: "",
-    nickname: "",
-    follower: "",
-    following: "",
+    profileImg: '',
+    nickname: '',
+    follower: '',
+    following: '',
   });
 
   //처음 렌더링이 될 때만 실행
@@ -68,26 +68,17 @@ export default function MyPage({ setToken }) {
     async function getUserData() {
       try {
         alert("마이페이지");
-        // setUserData(
-        //   await axios.get("https://storyge.xyz/api/user", {
-        //     headers: {
-        //       Authorization: getCookie("token"),
-        //     },
-        //   })
-        // );
-
-        //
-        const tmp = await axios.get("https://storyge.xyz/api/user", {
+        const data = await axios.get("https://storyge.xyz/api/user", {
           headers: {
             Authorization: getCookie("token"),
           },
         });
-        console.log(tmp);
-
-        //
-
         console.log("마이페이지");
+        setUserData(data);
         console.log(userData);
+        console.log('프로필 이미지 : ' + userData.data.profileImg);
+        // console.log('닉네임 : ' + userData.data.nickname); 
+        // console.log('팔로워 : ' + userData.data.follower); 
       } catch (err) {
         console.log(err);
       }
@@ -97,7 +88,7 @@ export default function MyPage({ setToken }) {
 
   return (
     <G.BodyContainer>
-      <ProfileBox />
+      <ProfileBox profileImg={ userData.data.profileImg} nickname={userData.data.nickname } follower={userData.data.follower } following={ userData.data.following} />
       <S.Menu onClick={gomodifyprofile}>
         <BsPersonCircle
           style={{ color: "#ACCEBC", width: "30px", height: "30px" }}

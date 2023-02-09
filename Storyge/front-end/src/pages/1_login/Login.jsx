@@ -6,10 +6,13 @@ import {
   NAVER_AUTH_URL,
 } from "../1_login/OAuth.js";
 
+import logo from "./../../assets/logo1.png";
+
+
 export default function Login() {
   return (
     <S.Login>
-      <S.LoginText>Login</S.LoginText>
+      <S.Logo src={logo}></S.Logo>
 
       <S.LinkBtn href={GOOGLE_AUTH_URL} onClick={() => alert("google")}>
         <S.GoogleImg

@@ -13,7 +13,7 @@ export const kakaoLogin = async (code) => {
     .then((res) => {
       console.log(res);
       if (res.data.accessToken) {
-        setCookie("token", `Bearer  ${res.data.accessToken}`, {
+        setCookie("token", `Bearer ${res.data.accessToken}`, {
           path: "/", // 모든 페이지에서 쿠키 접근 가능
           sameSite: "strict",
         });

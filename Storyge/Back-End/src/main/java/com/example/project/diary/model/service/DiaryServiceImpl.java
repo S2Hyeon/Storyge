@@ -59,15 +59,8 @@ public class DiaryServiceImpl implements DiaryService{
         // To DO : 문장 분석 결과 가져오기
         diaryDto.setAnalizedResult("문장 분석 결과 테스트");
 
-        Diary diary = Diary.builder()
-                .user(user)
-                .emoticonName(diaryDto.getEmoticonName())
-                .diaryContent(diaryDto.getDiaryContent())
-                .scope(diaryDto.getScope())
-                .updateCnt(diaryDto.getUpdate_cnt())
-                .analizedResult(diaryDto.getAnalizedResult())
-                .createdAt(LocalDateTime.now())
-                .build();
+        Diary diary = toEntity(diaryDto);
+        diary.setCreatedAt(LocalDateTime.now());
         diaryRepository.save(diary);
 
         long userId = diaryDto.getUserId();
@@ -93,19 +86,19 @@ public class DiaryServiceImpl implements DiaryService{
         return diary.map(this::toDto).orElse(null);
     }
 
-    public List<DiaryDto> selectDailyDiaries(String nickname, String stringDate) {
-        User user = userRepository.findByNickname(nickname).orElse(null);
+    public List<DiaryDto> selectDailyDiaries(Long userId, String stringDate) {
+        User user = userRepository.findById(userId).orElse(null);
         if(user == null) {
             return null;
         }
         LocalDate date = LocalDate.parse(stringDate);
         LocalDateTime startTimeOfDay = date.atStartOfDay();
         LocalDateTime endTimeOfDay = LocalDateTime.of(date, LocalTime.MAX).withNano(0);
-        List<Diary> diaryList = diaryRepository.findAllByUser_UserIdAndCreatedAtBetween(user.getUserId(), startTimeOfDay, endTimeOfDay);
+        List<Diary> diaryList = diaryRepository.findAllByUser_UserIdAndCreatedAtBetween(userId, startTimeOfDay, endTimeOfDay);
         return diaryList.stream().map(this::toDto).collect(Collectors.toList());
     }
 
-    public int selectDiaryCount(long userId) {
+    public int selectDiaryCount(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
         if(user == null) {
             return -1;
@@ -132,15 +125,14 @@ public class DiaryServiceImpl implements DiaryService{
     수정을 진행한다.
      */
     @Override
-    public boolean updateDiary(DiaryUpdateParam param) {
+    public boolean updateDiary(Long userId, DiaryUpdateParam param) {
         Diary diary = diaryRepository.findById(param.getDiaryId()).orElse(null);
-        if(diary == null) {
+        if(diary == null || userId != diary.getUserId()) {
             return false;
         }
 
         if(diary.getUpdateCnt() == 0) {
             if(!param.getEmoticonName().equals(diary.getEmoticonName())) {
-                long userId = diary.getUser().getUserId();
                 LocalDate date = diary.getCreatedAt().toLocalDate();
                 DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
                 dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.getEmoticonName());
@@ -158,9 +150,9 @@ public class DiaryServiceImpl implements DiaryService{
         return false;
     }
 
-    public boolean updateScope(long diaryId, int scope) {
+    public boolean updateScope(Long userId, Long diaryId, int scope) {
         Diary diary = diaryRepository.findById(diaryId).orElse(null);
-        if(diary == null) {
+        if(diary == null || userId != diary.getUserId()) {
             return false;
         }
 
@@ -172,13 +164,13 @@ public class DiaryServiceImpl implements DiaryService{
 
 
     @Override
-    public boolean deleteDiary(Long diaryId) {
+    public boolean deleteDiary(Long userId, Long diaryId) {
         DiaryDto diaryDto = selectOneDiary(diaryId);
-        if(diaryDto == null) {
+        if(diaryDto == null || userId != diaryDto.getUserId()) {
             return false;
         }
         diaryRepository.deleteById(diaryId);
-        long userId = diaryDto.getUserId();
+
         LocalDate date = diaryDto.getCreatedAt();
         DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
         dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.getEmoticonName());

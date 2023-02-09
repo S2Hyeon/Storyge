@@ -19,8 +19,11 @@ public class DailyEmotion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long dailyId;
 
+    @Column(name = "user_id")
+    private Long userId;
+
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
     private String emoticonName;

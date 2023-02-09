@@ -1,6 +1,5 @@
 package com.example.project.diary.model.dto;
 
-import com.example.project.user.model.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +20,7 @@ public class DiaryDto {
 
     private String diaryContent;
     private int scope;
-    private int update_cnt;
+    private int updateCnt;
     private String analizedResult;
     private LocalDate createdAt;
 }

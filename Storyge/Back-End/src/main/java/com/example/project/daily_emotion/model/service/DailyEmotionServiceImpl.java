@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,13 +50,12 @@ public class DailyEmotionServiceImpl implements DailyEmotionService {
     캘린더 조회할 때 일별 감정통계 조회
      */
     @Override
-    public Map<Integer, String> selectDailyEmotions(String nickname, String stringDate) {
-        Map<Integer, String> map = new HashMap<>();
-        User user = userRepository.findByNickname(nickname).orElse(null);
+    public List<DailyEmotionDto> selectDailyEmotions(Long userId, String stringDate) {
+        List<DailyEmotionDto> dailyEmotionDtoList = null;
+        User user = userRepository.findById(userId).orElse(null);
         if(user == null) {
             return null;
         }
-        long userId = user.getUserId();
 
         LocalDate date = LocalDate.parse(stringDate); //convertDateType.stringDateToDateTime(stringDate);
         LocalDate firstOfMonth = date.withDayOfMonth(1); // 주어진 날짜의 1번째 날로 날짜 값 변경
@@ -68,17 +65,10 @@ public class DailyEmotionServiceImpl implements DailyEmotionService {
 
         if(!dailyEmotions.isEmpty()) {
             // DTO 변환
-            List<DailyEmotionDto> dailyEmotionDtos = dailyEmotions.stream().map(this::toDto).collect(Collectors.toList());
-
-            // Map<날짜, 이모티콘 이름> 형식으로 반환
-            for(DailyEmotionDto dailyEmotionDto : dailyEmotionDtos) {
-                int day = dailyEmotionDto.getCreatedAt().getDayOfMonth();
-                String emoticonName = dailyEmotionDto.getEmoticonName();
-                map.put(day, emoticonName);
-            }
+            dailyEmotionDtoList = dailyEmotions.stream().map(this::toDto).collect(Collectors.toList());
         }
 
-        return map;
+        return dailyEmotionDtoList;
     }
 
     @Override

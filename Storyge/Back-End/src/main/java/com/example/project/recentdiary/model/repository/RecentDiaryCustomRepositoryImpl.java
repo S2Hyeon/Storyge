@@ -28,7 +28,6 @@ public class RecentDiaryCustomRepositoryImpl implements RecentDiaryCustomReposit
 
         List<RecentDiary> recentDiaryList = jpaQueryFactory
                 .selectFrom(recentDiary)
-//                .leftJoin(readDiary)
                 .where(
                         (recentDiary.userId.in(
                         JPAExpressions
@@ -36,15 +35,12 @@ public class RecentDiaryCustomRepositoryImpl implements RecentDiaryCustomReposit
                                 .from(follow)
                                 .where(follow.followerUsers.eq(userId))
                         )).and(recentDiary.endsAt.after(LocalDateTime.now()))
-//                                .and(recentDiary.recentId.eq(readDiary.recentId))
 
                 )
                 .orderBy(recentDiary.endsAt.desc())
-//                .limit(20)
                 .fetch();
 
 
-//        return recentDiaryList;
-        return null;
+        return recentDiaryList;
     }
 }

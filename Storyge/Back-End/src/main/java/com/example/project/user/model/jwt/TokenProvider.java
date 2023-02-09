@@ -58,12 +58,15 @@ public class TokenProvider {
                 .compact();
 
         // Refresh Token 생성
-        //이미 있는 유저라면 있는 토큰 보내주기
+        //이미 토큰이 있는 유저라면 있는 토큰 보내주기
         //없다면 생성해서 보내주고 DB 저장
         String refreshToken;
-        if (user.isPresent())
-            refreshToken = String.valueOf(tokenRepository.findByUserId(user.get().getUserId()));
-        else {
+        Optional<Token> restoreToken = tokenRepository.findByUserId(user.get().getUserId());
+        if (restoreToken.isPresent()) {
+            System.out.println("refreshToken이 이미 존재하는 유저입니다.");
+            refreshToken = String.valueOf(restoreToken);
+        } else {
+            System.out.println("refreshToken이 없는 유저입니다.");
             refreshToken = Jwts.builder()
                     .setExpiration(new Date(now + JwtProperties.REFRESH_TOKEN_TIME))
                     .claim("userId", user.get().getUserId())

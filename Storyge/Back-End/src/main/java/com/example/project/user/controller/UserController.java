@@ -41,6 +41,8 @@ public class UserController {
     //내 정보 불러오기 -> 이름, 프로필, 팔로워/팔로잉 수
     @GetMapping("/user")
     public ResponseEntity<UserDto> selectOneUser(HttpServletRequest request) {
+        System.out.println("request getcookie: " + request.getCookies());
+        System.out.println("request header: " + request.getHeader(TOKEN_HEADER));
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
         System.out.println("userId: " + userId);
         return new ResponseEntity<>(userService.selectOneUser(userId), HttpStatus.OK);

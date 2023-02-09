@@ -22,4 +22,6 @@ public class UserDto {
     private String nickname;
     @ApiModelProperty(value = "사용자 프로필 이미지 url")
     private String profileImg;
+    private Long follower;
+    private Long following;
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Api from "../../lib/customApi";
 
 import * as G from "./../../styles/index";
 import * as S from "./MyPage";
@@ -56,18 +57,13 @@ export default function MyPage({ setToken }) {
     }
   }
 
-  const [userData, setUserData] = useState({
-    profile: "",
-    nickname: "",
-    follower: "",
-    following: "",
-  });
+  const [userData, setUserData] = useState();
 
   //처음 렌더링이 될 때만 실행
   useEffect(() => {
     async function getUserData() {
       try {
-        alert("마이페이지");
+        // alert("마이페이지");
         // setUserData(
         //   await axios.get("https://storyge.xyz/api/user", {
         //     headers: {
@@ -77,7 +73,9 @@ export default function MyPage({ setToken }) {
         // );
 
         //
-        const tmp = await axios.get("https://storyge.xyz/api/user", {
+        // console.log("으아아아", getCookie("token"));
+
+        const tmp = await Api.get("https://storyge.xyz/api/user", {
           headers: {
             Authorization: getCookie("token"),
           },
@@ -85,9 +83,6 @@ export default function MyPage({ setToken }) {
         console.log(tmp);
 
         //
-
-        console.log("마이페이지");
-        console.log(userData);
       } catch (err) {
         console.log(err);
       }

@@ -2,11 +2,7 @@
 // OAuth2RedirectHandeler.js
 
 import React, { useEffect } from "react";
-import {
-  kakaoLogin,
-  googleLogin,
-  naverLogin,
-} from "./../../redux/modules/user.js";
+import { kakaoLogin, googleLogin, naverLogin } from "api/user/login";
 import Spinner from "./../../components/spinner/Spinner";
 
 const OAuth2RedirectHandler = (props) => {

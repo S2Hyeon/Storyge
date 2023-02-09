@@ -1,6 +1,7 @@
 package com.example.project.notification.controller;
 
 import com.example.project.user.model.jwt.JwtUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +21,7 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin
+@Api(tags = {"실시간 알림 API"})
 public class SseController {
 
     public static Map<Long, SseEmitter> sseEmitters = new ConcurrentHashMap<>();

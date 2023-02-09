@@ -23,7 +23,7 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin
-@Api(tags = {"Follower, Following API"})
+@Api(tags = {"팔로워, 팔로잉 관련 API"})
 public class FollowController {
 
     private final FollowService followService;
@@ -119,7 +119,7 @@ public class FollowController {
     //팔로우 대기 삭제
     @ApiOperation(value = "팔로우 대기 삭제",
             notes = "나에게 들어온 팔로우 신청을 삭제한다(거절)")
-    @ApiImplicitParam(name="userId", value = "거절할 사용자의 userId(pk)")
+    @ApiImplicitParam(name="userId", value = "거절할 사용자의 userId(pk)", example = "0")
     @DeleteMapping("/follow-wait/{userId}")
     public ResponseEntity<String> deleteFollowWait(HttpServletRequest request, @PathVariable Long userId){
 
@@ -137,7 +137,7 @@ public class FollowController {
     // 팔로잉 삭제
     @ApiOperation(value = "팔로잉 삭제",
             notes = "팔로우를 취소함 - 내가 팔로우 하고 있는 사람 삭제")
-    @ApiImplicitParam(name="userId", value = "삭제할 사용자(팔로잉)의 userId(pk)")
+    @ApiImplicitParam(name="userId", value = "삭제할 사용자(팔로잉)의 userId(pk)", example = "0")
     @DeleteMapping("/following/{userId}")
     public ResponseEntity<String> deleteFollowing(HttpServletRequest request, @PathVariable Long userId){
 
@@ -154,7 +154,7 @@ public class FollowController {
     // 팔로워 삭제
     @ApiOperation(value = "팔로워 삭제",
             notes = "나를 팔로우 하고 있는 사람 삭제")
-    @ApiImplicitParam(name="userId", value = "삭제할 사용자(팔로워)의 userId(pk)")
+    @ApiImplicitParam(name="userId", value = "삭제할 사용자(팔로워)의 userId(pk)", example = "0")
     @DeleteMapping("/follower/{userId}")
     public ResponseEntity<String> deleteFollower(HttpServletRequest request, @PathVariable Long userId){
 

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 // 알림 리스트 반환시 필요한 dto
 public class NotificationReponseDto {
 
-    @ApiModelProperty(value = "팔로우 신청/수락을 했거나, 댓글 단 사용자 아이디(pk)")
+    @ApiModelProperty(value = "팔로우 신청/수락을 했거나, 댓글 단 사용자 아이디(pk)", example = "0")
     private Long follow;
     @ApiModelProperty(value = "팔로우 신청/수락을 했거나, 댓글 단 사용자 닉네임")
     private String nickname;
@@ -23,7 +23,7 @@ public class NotificationReponseDto {
     private String profileImg;
     @ApiModelProperty(value = "팔로우 신청(WAIT)/수락(FOLLOW), 댓글(REVIEW) 구분")
     private String notiType;
-    @ApiModelProperty(value = "댓글이 달렸을 때만 그 다이어리의 diaryId 반환")
+    @ApiModelProperty(value = "댓글이 달렸을 때만 그 다이어리의 diaryId 반환", example = "0")
     private Long diaryId;
 
 }

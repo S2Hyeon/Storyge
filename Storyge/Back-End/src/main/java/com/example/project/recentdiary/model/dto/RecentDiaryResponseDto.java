@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @ApiModel(value = "팔로잉 최근 다이어리", description = "최근 다이어리와 사용자 정보")
 public class RecentDiaryResponseDto {
 
-    @ApiModelProperty(value = "다이어리 id(pk)")
+    @ApiModelProperty(value = "다이어리 id(pk)", example = "0")
     private Long diaryId;
     @ApiModelProperty(value = "사용자 닉네임")
     private String nickname;

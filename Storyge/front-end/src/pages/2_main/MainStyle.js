@@ -86,6 +86,7 @@ export const WiseBox = styled.div`
 export const Wise = styled.div`
   padding-top: 25px;
   line-height: 130%;
+  white-space: pre-wrap;
 `;
 
 export const WiseFrom = styled.div`

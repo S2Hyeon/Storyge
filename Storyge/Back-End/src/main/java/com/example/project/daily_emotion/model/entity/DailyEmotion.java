@@ -23,7 +23,7 @@ public class DailyEmotion {
     private Long userId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
     private String emoticonName;

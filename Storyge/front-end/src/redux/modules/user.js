@@ -5,7 +5,7 @@ export const kakaoLogin = async (code) => {
   // return await function (dispatch, getState, { history }) {
   axios({
     method: "GET",
-    url: `http://localhost:8080/oauth/callback/kakao?code=${code}&state=kakao&prompt=none`,
+    url: `http://localhost:8080/api/oauth/callback/kakao?code=${code}&state=kakao&prompt=none`,
   })
     .then((res) => {
       console.log(res); // 토큰이 넘어올 것임

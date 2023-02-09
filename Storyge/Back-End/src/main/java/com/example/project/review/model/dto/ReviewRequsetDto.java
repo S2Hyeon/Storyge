@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class ReviewRequsetDto {
 
 //    private Long userId;
-    @ApiModelProperty(value = "댓글을 입력한 일기의 id(pk)")
+    @ApiModelProperty(value = "댓글을 입력한 일기의 id(pk)", example = "0")
     private Long diaryId;
     @ApiModelProperty(value = "입력한 댓글의 내용")
     private String reviewContent;

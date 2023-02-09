@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class ReviewUpdateParam {
 
 //    private Long diaryId;
-    @ApiModelProperty(value = "수정할 댓글의 id(pk)")
+    @ApiModelProperty(value = "수정할 댓글의 id(pk)", example = "0")
     private Long reviewId;
     @ApiModelProperty(value = "수정할 내용")
     private String reviewContent;

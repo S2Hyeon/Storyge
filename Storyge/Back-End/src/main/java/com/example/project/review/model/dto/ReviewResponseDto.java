@@ -17,9 +17,9 @@ import java.time.LocalDateTime;
 @ApiModel(value = "댓글 조회시 반환하는 정보")
 public class ReviewResponseDto {
 
-    @ApiModelProperty(value = "댓글의 id(pk)")
+    @ApiModelProperty(value = "댓글의 id(pk)", example = "0")
     private Long reviewId;
-    @ApiModelProperty(value = "댓글을 입력한 사람의 id(pk)")
+    @ApiModelProperty(value = "댓글을 입력한 사람의 id(pk)", example = "0")
     private Long userId;
     @ApiModelProperty(value = "댓글을 입력한 사람의 닉네임")
     private String nickname;

@@ -67,16 +67,16 @@ export default function MyPage({ setToken }) {
   useEffect(() => {
     async function getUserData() {
       try {
-        setUserData(await axios.get("/user"));
+        alert("마이페이지");
+        setUserData(await axios.get("https://storyge.xyz/api/user"));
         console.log("마이페이지");
         console.log(userData);
       } catch (err) {
         console.log(err);
       }
     }
-
     getUserData();
-  }, [userData]);
+  }, []);
 
   return (
     <G.BodyContainer>

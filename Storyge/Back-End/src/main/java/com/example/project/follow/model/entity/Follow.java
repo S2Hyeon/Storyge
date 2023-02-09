@@ -1,7 +1,10 @@
 package com.example.project.follow.model.entity;
 
 import com.example.project.user.model.entity.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -17,13 +20,17 @@ public class Follow {
     @Column(name = "follow_id")
     private Long followId;
 
+    @Column(name = "following")
+    private Long following;
     @ManyToOne
-    @JoinColumn(name="following")
-    private User following;
+    @JoinColumn(name = "following", insertable = false, updatable = false)
+    private User followingUsers;
 
+    @Column(name = "follower")
+    private Long follower;
     @ManyToOne
-    @JoinColumn(name="follower")
-    private User follower;
+    @JoinColumn(name = "follower", updatable = false, insertable = false)
+    private User followerUsers;
 
 
 }

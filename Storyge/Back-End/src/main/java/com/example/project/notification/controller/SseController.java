@@ -1,6 +1,7 @@
 package com.example.project.notification.controller;
 
 import com.example.project.user.model.jwt.JwtUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,7 +20,7 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin
+@Api(tags = {"실시간 알림 API"})
 public class SseController {
 
     public static Map<Long, SseEmitter> sseEmitters = new ConcurrentHashMap<>();
@@ -32,7 +33,6 @@ public class SseController {
         //현재 로그인한 user 값(pk)
         String token = request.getHeader(TOKEN_HEADER);
         Long userId = jwtUtil.getUserId(token);
-        //////////
 
         // 현재 클라이언트를 위한 SseEmitter 생성
         SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);

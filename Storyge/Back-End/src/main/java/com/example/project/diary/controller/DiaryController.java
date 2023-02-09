@@ -5,7 +5,11 @@ import com.example.project.diary.model.dto.DiaryUpdateParam;
 import com.example.project.diary.model.dto.EmotionStatistic;
 import com.example.project.diary.model.service.DiaryService;
 import com.example.project.recentdiary.model.service.RecentDiaryService;
+import com.example.project.user.model.jwt.JwtProperties;
 import com.example.project.user.model.jwt.JwtUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +23,7 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_HEADER;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin
+@Api(tags = {"다이어리 API"})
 public class DiaryController {
     private final DiaryService diaryService;
     private final RecentDiaryService recentDiaryService;
@@ -26,6 +31,8 @@ public class DiaryController {
     private static final String SUCCESS = "Success";
     private static final String FAIL = "Fail";
 
+
+    @ApiOperation(value = "일기 작성", notes = "일기 작성하기")
     @PostMapping("/diary")
     public ResponseEntity<String> insertDiary(@RequestBody DiaryDto diaryDto, HttpServletRequest request){
 
@@ -39,6 +46,7 @@ public class DiaryController {
         return new ResponseEntity<>(FAIL, HttpStatus.BAD_REQUEST);
     }
 
+    @ApiOperation(value = "일기 읽기", notes = "일기 1개를 선택한다")
     @GetMapping("/diary/detail/{diaryId}")
     public ResponseEntity<?> selectOneDiary(@PathVariable Long diaryId, HttpServletRequest request){
 
@@ -54,7 +62,7 @@ public class DiaryController {
         return new ResponseEntity<>(diaryDto, HttpStatus.OK);
     }
 
-    @GetMapping("/diary/daily/{date}")
+    @GetMapping("/diary/daily/{date}")@ApiOperation(value = "일별 일기 목록", notes = "선택한 날짜의 일기들을 가져온다")
     public ResponseEntity<?> selectMyDailyDiaries(@PathVariable("date") String stringDate, HttpServletRequest request) {
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
         List<DiaryDto> diaryDtoList = diaryService.selectDailyDiaries(userId, stringDate);
@@ -73,6 +81,7 @@ public class DiaryController {
         return new ResponseEntity<>(diaryDtoList, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "일기 개수", notes = "오늘 하루동안 작성한 일기 개수 반환")
     @GetMapping("/diary/count")
     public ResponseEntity<?> selectDiaryCount(HttpServletRequest request) {
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
@@ -117,6 +126,7 @@ public class DiaryController {
         else return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
     }
 
+    @ApiOperation(value = "일기 공개 여부 변경", notes = "일기 공개 여부를 변경한다 - 1: 공개, 0: 비공개 ")
     @PutMapping("/diary/scope/{diaryId}/{scope}")
     public ResponseEntity<String> updateScope(@PathVariable Long diaryId, @PathVariable Integer scope, HttpServletRequest request) {
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
@@ -126,6 +136,7 @@ public class DiaryController {
         else return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
     }
 
+    @ApiOperation(value = "일기 삭제", notes = "선택한 일기를 삭제한다")
     @DeleteMapping("/diary")
     public ResponseEntity<String> deleteDiary(Long diaryId, HttpServletRequest request){
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));

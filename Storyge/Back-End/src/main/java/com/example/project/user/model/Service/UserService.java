@@ -9,6 +9,8 @@ public interface UserService {
     //유저 정보 수정
     void updateUser(UserUpdateParam param);
 
+    UserDto selectOneUser(Long userId);
+
     default UserDto toDto(User user) {
         return UserDto.builder()
                 .userId(user.getUserId())

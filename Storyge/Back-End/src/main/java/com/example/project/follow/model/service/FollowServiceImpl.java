@@ -1,5 +1,6 @@
 package com.example.project.follow.model.service;
 
+import com.example.project.follow.model.dto.FollowDto;
 import com.example.project.follow.model.dto.UserIdDto;
 import com.example.project.follow.model.entity.Follow;
 import com.example.project.follow.model.entity.FollowWait;
@@ -55,9 +56,9 @@ public class FollowServiceImpl implements FollowService {
                 // 알림 table에 insert
                 notificationService.insertFollowWaitNotification(
                         NotificationFollowDto.builder()
-                        .userId(followingUser.getUserId())
-                        .follow(currentUser.getUserId())
-                        .build());
+                                .userId(followingUser.getUserId())
+                                .follow(currentUser.getUserId())
+                                .build());
 
                 return true;
             }
@@ -72,11 +73,11 @@ public class FollowServiceImpl implements FollowService {
         User currentUser = userRepository.findById(userId).orElse(null); // 나
         User followerUser = userRepository.findById(follower.getUserId()).orElse(null); // 팔로우 신청한 사람
 
-        if(followerUser==null){
+        if (followerUser == null) {
             return false;
         }
 
-        if(followRepository.findByFollowingAndFollower(currentUser, followerUser)!=null){ // 이미 상대가 팔로우 중임
+        if (followRepository.findByFollowingAndFollower(currentUser, followerUser) != null) { // 이미 상대가 팔로우 중임
             return false;
         }
 
@@ -85,16 +86,16 @@ public class FollowServiceImpl implements FollowService {
 
         // follow table에 insert (팔로우 수락)
         followRepository.save(Follow.builder()
-                .following(currentUser)
-                .follower(followerUser)
+                .following(userId)
+                .follower(follower.getUserId())
                 .build());
 
         // 팔로우 수락 알림 -> 알림 table에 insert
         notificationService.insertFollowNotification(
                 NotificationFollowDto.builder()
-                .userId(followerUser.getUserId())
-                .follow(currentUser.getUserId())
-                .build());
+                        .userId(followerUser.getUserId())
+                        .follow(currentUser.getUserId())
+                        .build());
 
         return true;
     }
@@ -119,20 +120,6 @@ public class FollowServiceImpl implements FollowService {
                     .nickname(user.getNickname())
                     .build());
         }
-//        List<FollowInfoDto> followWaitUserList = new ArrayList<>();
-//        for(FollowWait follow : followWaitList){
-//            User user = follow.getUserId();
-//            UserDto userDto = UserDto.builder()
-//                            .userId(user.getUserId())
-//                            .nickname(user.getNickname())
-//                            .profileImg(user.getProfileImg())
-//                            .build();
-//
-//            followWaitUserList.add(FollowInfoDto.builder()
-//                    .followId(follow.getWaitingId())
-//                    .userDto(userDto)
-//                    .build());
-//        }
 
         return followWaitUserList;
     }
@@ -148,31 +135,15 @@ public class FollowServiceImpl implements FollowService {
         List<UserDto> followerUserList = new ArrayList<>();
         for(Follow follow : followingList){
 
-            User user = follow.getFollowing();
-            // 팔로우 대기중인 사람들 userId, 프로필 사진, nickname 반환
-            followerUserList.add(UserDto.builder()
-                    .userId(user.getUserId())
-                    .nickname(user.getNickname())
-                    .profileImg(user.getProfileImg())
-                    .build());
-        }
-
-//        List<FollowInfoDto> followerUserList = new ArrayList<>();
-//        for(Follow follow : followingList){
 //            User user = follow.getFollowing();
-//            UserDto userDto = UserDto.builder()
+//            // 팔로우 대기중인 사람들 userId, 프로필 사진, nickname 반환
+//            followerUserList.add(UserDto.builder()
 //                    .userId(user.getUserId())
 //                    .nickname(user.getNickname())
 //                    .profileImg(user.getProfileImg())
-//                    .build();
-//
-//            followerUserList.add(FollowInfoDto.builder()
-//                    .followId(follow.getFollowId())
-//                    .userDto(userDto)
 //                    .build());
-//        }
-//
-//
+        }
+
         return followerUserList;
     }
 
@@ -186,32 +157,19 @@ public class FollowServiceImpl implements FollowService {
         List<Follow> followingList = followRepository.findAllByFollowing(currentUser);
         List<UserDto> followerUserList = new ArrayList<>();
 
-        for(Follow follow : followingList){
-
-            User user = follow.getFollower();
-            // 팔로워인 사람들 userId, 프로필 사진, nickname 반환
-            followerUserList.add(UserDto.builder()
-                    .userId(user.getUserId())
-                    .nickname(user.getNickname())
-                    .profileImg(user.getProfileImg())
-                    .build());
-        }
-
-
-//        List<FollowInfoDto> followingUserList = new ArrayList<>();
-//        for(Follow follow : followingList){
+        //여기 수정해야함 /////////////////////////////////////////////////////////////////////////////////
+//        for (Follow follow : followingList) {
+//
 //            User user = follow.getFollower();
-//            UserDto userDto = UserDto.builder()
+//            // 팔로워인 사람들 userId, 프로필 사진, nickname 반환
+//            followerUserList.add(UserDto.builder()
 //                    .userId(user.getUserId())
 //                    .nickname(user.getNickname())
 //                    .profileImg(user.getProfileImg())
-//                    .build();
-//
-//            followingUserList.add(FollowInfoDto.builder()
-//                    .followId(follow.getFollowId())
-//                    .userDto(userDto)
 //                    .build());
 //        }
+
+
 
         return followerUserList;
     }

@@ -21,7 +21,7 @@ public class DiaryCount {
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
-    private int diaryCnt;
+    private Integer diaryCnt;
 
     public void updateCount(int diaryCnt) {
         this.diaryCnt = diaryCnt;

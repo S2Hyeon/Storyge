@@ -13,8 +13,6 @@ public interface RecentDiaryRepository extends JpaRepository<RecentDiary, Long> 
 
     Optional<RecentDiary> findByUserId(User userId);
     Optional<RecentDiary> findByDiaryId(Diary diary);
-//    Optional<RecentDiary> findTop1ByUserIdOrderByCreatedAtCreatedAtDesc(User user);
     void deleteByUserId(User user);
-//    List<RecentDiary> findTop20ByUserIdOreOrderByCratedTimeDesc(User user);
 
 }

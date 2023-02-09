@@ -22,10 +22,6 @@ public class QuoteController {
     @GetMapping("/quote")
     public ResponseEntity<QuoteDto> selectOneQuote(){
 
-//        long quoteId = (long)(Math.random()*35);
-//        long quoteId = 21; //db에 넣고 결정할 것
-//        System.out.println("aaa"+quoteId);
-//        long quoteId = 23L;
 
         QuoteDto quoteDto = quoteService.selectOneQuote().orElseThrow();
         return new ResponseEntity<>(quoteDto, HttpStatus.OK);

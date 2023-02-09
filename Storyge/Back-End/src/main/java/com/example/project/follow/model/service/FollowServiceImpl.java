@@ -119,20 +119,6 @@ public class FollowServiceImpl implements FollowService {
                     .nickname(user.getNickname())
                     .build());
         }
-//        List<FollowInfoDto> followWaitUserList = new ArrayList<>();
-//        for(FollowWait follow : followWaitList){
-//            User user = follow.getUserId();
-//            UserDto userDto = UserDto.builder()
-//                            .userId(user.getUserId())
-//                            .nickname(user.getNickname())
-//                            .profileImg(user.getProfileImg())
-//                            .build();
-//
-//            followWaitUserList.add(FollowInfoDto.builder()
-//                    .followId(follow.getWaitingId())
-//                    .userDto(userDto)
-//                    .build());
-//        }
 
         return followWaitUserList;
     }
@@ -157,22 +143,6 @@ public class FollowServiceImpl implements FollowService {
                     .build());
         }
 
-//        List<FollowInfoDto> followerUserList = new ArrayList<>();
-//        for(Follow follow : followingList){
-//            User user = follow.getFollowing();
-//            UserDto userDto = UserDto.builder()
-//                    .userId(user.getUserId())
-//                    .nickname(user.getNickname())
-//                    .profileImg(user.getProfileImg())
-//                    .build();
-//
-//            followerUserList.add(FollowInfoDto.builder()
-//                    .followId(follow.getFollowId())
-//                    .userDto(userDto)
-//                    .build());
-//        }
-//
-//
         return followerUserList;
     }
 
@@ -198,20 +168,6 @@ public class FollowServiceImpl implements FollowService {
         }
 
 
-//        List<FollowInfoDto> followingUserList = new ArrayList<>();
-//        for(Follow follow : followingList){
-//            User user = follow.getFollower();
-//            UserDto userDto = UserDto.builder()
-//                    .userId(user.getUserId())
-//                    .nickname(user.getNickname())
-//                    .profileImg(user.getProfileImg())
-//                    .build();
-//
-//            followingUserList.add(FollowInfoDto.builder()
-//                    .followId(follow.getFollowId())
-//                    .userDto(userDto)
-//                    .build());
-//        }
 
         return followerUserList;
     }
@@ -226,7 +182,6 @@ public class FollowServiceImpl implements FollowService {
         if(selectFollower==null){
             return false;
         }
-//        long followingWaitUser = wait.getUserId(); //나에게 신청을 한사람
         followWaitRepository.deleteByFollowingAndUserId(currentUser, selectFollower);
         return true;
     }

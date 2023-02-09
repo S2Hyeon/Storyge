@@ -65,14 +65,13 @@ export default function MyPage({ setToken }) {
 
   //처음 렌더링이 될 때만 실행
   useEffect(() => {
-    // async await 함수를 사용
     async function getUserData() {
       try {
         setUserData(await axios.get("/user"));
+        console.log("마이페이지");
         console.log(userData);
-      } catch {
-        // 오류 발생시 실행
-        alert("마이데이터 못 가져옴!!!");
+      } catch (err) {
+        console.log(err);
       }
     }
 

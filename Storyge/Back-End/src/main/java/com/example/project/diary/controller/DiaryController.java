@@ -40,7 +40,6 @@ public class DiaryController {
         diaryDto.setUserId(userId);
 
         if(diaryService.insertDiary(diaryDto)) {
-            recentDiaryService.insertRecentDiary(diaryDto.getUserId(), diaryDto.getDiaryId()); // 최근
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
         return new ResponseEntity<>(FAIL, HttpStatus.BAD_REQUEST);

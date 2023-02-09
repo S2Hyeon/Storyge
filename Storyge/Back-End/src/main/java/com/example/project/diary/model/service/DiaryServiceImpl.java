@@ -11,6 +11,8 @@ import com.example.project.diary.model.entity.DiaryCount;
 import com.example.project.diary.model.repository.DiaryCustomRepository;
 import com.example.project.diary.model.repository.DiaryRepository;
 import com.example.project.diary.model.repository.DiaryCountRepository;
+import com.example.project.recentdiary.model.entity.RecentDiary;
+import com.example.project.recentdiary.model.service.RecentDiaryService;
 import com.example.project.user.model.entity.User;
 import com.example.project.user.model.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,8 @@ public class DiaryServiceImpl implements DiaryService{
     private final UserRepository userRepository;
 
     private final DiaryCountRepository diaryCountRepository;
+    private final RecentDiaryService recentDiaryService;
+
 
     @Override
     public boolean insertDiary(DiaryDto diaryDto) {
@@ -62,6 +66,9 @@ public class DiaryServiceImpl implements DiaryService{
         Diary diary = toEntity(diaryDto);
         diary.setCreatedAt(LocalDateTime.now());
         diaryRepository.save(diary);
+
+        recentDiaryService.insertRecentDiary(user.getUserId(), diary.getDiaryId()); // 최근 다이어리 저장
+
 
         long userId = diaryDto.getUserId();
         LocalDate date = diaryDto.getCreatedAt();

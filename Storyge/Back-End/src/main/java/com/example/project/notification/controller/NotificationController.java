@@ -22,7 +22,6 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin
 @Api(tags = {"알림 API"})
 public class NotificationController {
 

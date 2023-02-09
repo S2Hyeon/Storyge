@@ -28,7 +28,6 @@ public class RecentDiaryCustomRepositoryImpl implements RecentDiaryCustomReposit
 
         List<RecentDiary> recentDiaryList = jpaQueryFactory
                 .selectFrom(recentDiary)
-//                .leftJoin(readDiary)
                 .where(
                         (recentDiary.userId.in(
                         JPAExpressions
@@ -40,7 +39,6 @@ public class RecentDiaryCustomRepositoryImpl implements RecentDiaryCustomReposit
 
                 )
                 .orderBy(recentDiary.endsAt.desc())
-//                .limit(20)
                 .fetch();
 
 

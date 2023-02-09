@@ -22,7 +22,6 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin
 @Api(tags = {"팔로워, 팔로잉 관련 API"})
 public class FollowController {
 
@@ -99,15 +98,6 @@ public class FollowController {
     @GetMapping("/follower")
     public ResponseEntity<List<UserDto>> selectAllFollower(HttpServletRequest request){
 
-        Enumeration<String> em =request.getHeaderNames();
-        System.out.println("---------");
-        while(em.hasMoreElements()){
-            String name = em.nextElement() ;
-            String val = request.getHeader(name) ;
-
-            System.out.println(name + "-" + val) ;
-        }
-        System.out.println("--------");
 
         String token = request.getHeader(TOKEN_HEADER);
         Long userId = jwtUtil.getUserId(token);

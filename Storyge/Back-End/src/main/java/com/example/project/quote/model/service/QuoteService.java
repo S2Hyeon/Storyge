@@ -8,7 +8,8 @@ import java.util.Optional;
 public interface QuoteService {
     
     //명언 한 개 반환
-    Optional<QuoteDto> selectOneQuote(Long quoteId);
+    Optional<QuoteDto> selectOneQuote();
+    void setQuoteId(Long quoteId);
 
     default QuoteDto toDto(Quote quote){
         return new QuoteDto().builder()

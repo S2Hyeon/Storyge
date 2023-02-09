@@ -54,12 +54,12 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/swagger-ui/**", "/swagger-resources/", "/**", "/favicon.ico").permitAll()
-                .antMatchers("/users/login", "/user", "/users/duplicate", "/users/sign-up").permitAll()
+                .antMatchers("/users/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
 //                .authorizeRequests(authorize -> authorize.anyRequest().authenticated())
                 .oauth2Login()
-                .loginProcessingUrl("/api/oauth/callback/*") // 폼 로그인을 처리할 URL 입력
+                .loginProcessingUrl("/oauth/callback/*") // 폼 로그인을 처리할 URL 입력
                 .authorizationEndpoint(authorize -> {
                     authorize.authorizationRequestRepository(
                             customOAuth2AuthorizationRequestRepository);

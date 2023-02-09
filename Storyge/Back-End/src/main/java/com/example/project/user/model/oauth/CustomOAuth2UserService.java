@@ -1,5 +1,7 @@
 package com.example.project.user.model.oauth;
 
+import com.example.project.diary.model.entity.DiaryCount;
+import com.example.project.diary.model.repository.DiaryCountRepository;
 import com.example.project.user.model.entity.User;
 import com.example.project.user.model.oauth.provider.GoogleUserInfo;
 import com.example.project.user.model.oauth.provider.KakaoUserInfo;
@@ -21,10 +23,12 @@ import java.util.Optional;
 @Slf4j
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final UserRepository userRepository;
+    private final DiaryCountRepository diaryCountRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public CustomOAuth2UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public CustomOAuth2UserService(UserRepository userRepository, DiaryCountRepository diaryCountRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.diaryCountRepository = diaryCountRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -41,13 +45,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         System.out.println("CustomOAuth2UserService 의 process");
         OAuth2UserInfo userInfo = null;
 
-        if (Objects.equals(userRequest.getClientRegistration().getRegistrationId(), "google")) {
+        if (Objects.equals(userRequest.getClientRegistration().getRegistrationId(), "google"))
             userInfo = new GoogleUserInfo(oAuth2User.getAttributes());
-        } else if (Objects.equals(userRequest.getClientRegistration().getRegistrationId(), "kakao")) {
+
+        else if (Objects.equals(userRequest.getClientRegistration().getRegistrationId(), "kakao"))
             userInfo = new KakaoUserInfo(oAuth2User.getAttributes());
-        } else if (Objects.equals(userRequest.getClientRegistration().getRegistrationId(), "naver")) {
+
+        else if (Objects.equals(userRequest.getClientRegistration().getRegistrationId(), "naver"))
             userInfo = new NaverUserInfo(oAuth2User.getAttributes());
-        }
+
 
         String name = userInfo.getProvider() + '_' + userInfo.getProviderId();
         System.out.println("CustomOAuth2UserService process name : " + name);
@@ -65,10 +71,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .provider(userInfo.getProvider())
                     .providerId(userInfo.getProviderId())
                     .build();
+
             // 일기 작성 제한 테이블에도 생성해주기!
+            DiaryCount diaryCount = DiaryCount.builder()
+                    .userId(user.getUserId())
+                    .build();
 
-
-
+            diaryCountRepository.save(diaryCount);
             userRepository.save(user);
         } else {
             System.out.println("유저가 있으니까 있는 애로 바꿔주자");

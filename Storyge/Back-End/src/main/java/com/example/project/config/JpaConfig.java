@@ -1,5 +1,6 @@
 package com.example.project.config;
 
+import com.example.project.follow.model.repository.FollowRepository;
 import com.example.project.user.model.Service.UserService;
 import com.example.project.user.model.Service.UserServiceImpl;
 import com.example.project.user.model.jwt.JwtUtil;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class JpaConfig {
 
     private final UserRepository userRepository;
+    private final FollowRepository followRepository;
 
     @Bean
     public JwtUtil jwtUtil() {
@@ -21,6 +23,6 @@ public class JpaConfig {
 
     @Bean
     public UserService userService() {
-        return new UserServiceImpl(userRepository);
+        return new UserServiceImpl(userRepository, followRepository);
     }
 }

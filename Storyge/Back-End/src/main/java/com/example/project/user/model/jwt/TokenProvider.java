@@ -19,6 +19,7 @@ import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -43,32 +44,41 @@ public class TokenProvider {
         System.out.println("==========================================================");
         System.out.println("TokenProvider generateToken의 authorities: " + authorities);
         System.out.println("==========================================================");
-        User user = userRepository.findByEmail(authorities).orElseThrow();
+        Optional<User> user = userRepository.findByEmail(authorities);
         long now = (new Date()).getTime();
 
         Date accessTokenExpiresIn = new Date(now + JwtProperties.ACCESS_TOKEN_TIME);
         //accessToken에 userId만 담아서 보냄
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
-                .claim("userId", user.getUserId())
-//                .claim("name", user.getNickname())
+                .claim("userId", user.get().getUserId())
                 .claim(JwtProperties.AUTHORITIES_KEY, authorities)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
         // Refresh Token 생성
-        String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + JwtProperties.REFRESH_TOKEN_TIME))
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
+        //이미 있는 유저라면 있는 토큰 보내주기
+        //없다면 생성해서 보내주고 DB 저장
+        String refreshToken;
+        if (user.isPresent())
+            refreshToken = String.valueOf(tokenRepository.findByUserId(user.get().getUserId()));
+        else {
+            refreshToken = Jwts.builder()
+                    .setExpiration(new Date(now + JwtProperties.REFRESH_TOKEN_TIME))
+                    .claim("userId", user.get().getUserId())
+                    .signWith(key, SignatureAlgorithm.HS256)
+                    .compact();
 
-        Token token = Token.builder()
-                .user(user)
-                .refreshToken(refreshToken)
-                .build();
-        //refresh token 저장
-        tokenRepository.save(token);
+            //refresh 토큰 DB 저장
+            Token token = Token.builder()
+                    .userId(user.get().getUserId())
+                    .refreshToken(refreshToken)
+                    .build();
+
+            tokenRepository.save(token);
+
+        }
 
         return TokenInfo.builder()
                 .grantType(JwtProperties.TOKEN_PREFIX)
@@ -87,7 +97,7 @@ public class TokenProvider {
         }
 
         // 권한 가져오기
-        Collection<? extends GrantedAuthority> authorities = // 여기 바꿈
+        Collection<? extends GrantedAuthority> authorities =
                 Arrays.stream(claims.get(JwtProperties.AUTHORITIES_KEY).toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());

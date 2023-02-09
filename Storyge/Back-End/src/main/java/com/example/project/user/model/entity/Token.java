@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.Columns;
 
 import javax.naming.Name;
 import javax.persistence.*;
@@ -18,15 +19,21 @@ public class Token {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tokenId;
 
+    @Column(name = "user_id")
+    private Long userId;
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", updatable = false, insertable = false)
     private User user;
 
     private String refreshToken;
+
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
     @Builder
-    public Token(Long tokenId, User user, String refreshToken) {
+    public Token(Long tokenId, Long userId, String refreshToken) {
         this.tokenId = tokenId;
-        this.user = user;
+        this.userId = userId;
         this.refreshToken = refreshToken;
     }
 }

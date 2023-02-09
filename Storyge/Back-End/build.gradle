@@ -86,6 +86,6 @@ compileQuerydsl {
 }
 //querydsl 추가 끝
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
+//tasks.named('test') {
+//    useJUnitPlatform()
+//}

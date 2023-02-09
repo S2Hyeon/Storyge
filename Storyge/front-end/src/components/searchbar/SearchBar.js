@@ -9,7 +9,8 @@ export const SearchContainer = styled.div`
   height: 40px;
   position: relative;
   margin-top: 20px;
-  border-radius: 8px;
+  border-radius: 8px 8px ${(props) => (props.isFocused ? "0" : "8px")}
+    ${(props) => (props.isFocused ? "0" : "8px")};
 `;
 
 export const Icon = styled.div`
@@ -35,14 +36,14 @@ export const Text = styled.input`
 `;
 
 export const AutoSearchContainer = styled.div`
+  // border: 2px solid pink;
   z-index: 1;
   max-height: 50vh;
   width: 100%;
-  background-color: #fff;
+  background-color: #e8e8e8;
   position: absolute;
   top: 40px;
-  border: 2px solid pink;
-  padding: 5px;
+  padding: 5px 20px;
   overflow: auto;
   border-radius: 0 0 8px 8px;
 
@@ -54,12 +55,34 @@ export const AutoSearchWrap = styled.div`
   border: 1px solid red;
 `;
 
+export const noKeyword = styled.div`
+  height: 30px;
+  display: flex;
+  align-items: center;
+`;
+
 export const AutoSearchData = styled.div`
-  padding: 10px 8px;
+  // border: 1px solid blue;
+  padding: 10px 0;
   width: 100%;
+  height: 70px;
   font-size: 14px;
   z-index: 4;
-  letter-spacing: 2px;
   position: relative;
-  border: 1px solid blue;
+  display: flex;
+  align-items: center;
+
+  $:active {
+    background-color: red;
+  }
+`;
+
+export const ProfileImg = styled.div`
+  // border: 1px solid red;
+  border-radius: 100px;
+  width: 50px;
+  height: 50px;
+  background-image: url(${(props) => props.imgUrl});
+  background-size: cover;
+  margin: 0 10px 0 0;
 `;

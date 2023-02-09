@@ -18,12 +18,6 @@ export const data = [
   },
 ];
 
-export const All = styled.div`
-  height: 100vh;
-  width: 100vw;
-  background-color: #eaf2ea;
-`;
-
 export const Modal = styled.div`
   display: flex;
   flex-direction: column;
@@ -63,98 +57,6 @@ export const EmotionBtn = styled.div`
   margin: 0 10px 0 0;
 `;
 
-export const TextBox = styled.textarea`
-  text-align: top;
-  box-sizing: border-box;
-  width: 100%;
-  height: 80%;
-  border: 3px solid #accebc;
-  padding: auto;
-  border: none;
-  border-radius: 20px 20px 0 0;
-  padding: 10px 20px 0 20px;
-  font-size: 15px;
-  background-color: ${(props) => props.backgroundColor};
-`;
-
-export const Mother = styled.div`
-  margin: 0 20px 0 20px;
-  border: 1px solid red;
-`;
-
-export const Card = styled.div`
-  border-radius: 20px;
-  border: 3px solid #accebc;
-  background-color: ${(props) => props.backgroundColor};
-  margin: 20px 0 20px 0;
-  width: 100%;
-  height: 230px;
-`;
-
-export const CardFoot = styled.div`
-  height: 10%;
-  width: 100%;
-  display: flex;
-  background-color: ${(props) => props.backgroundColor};
-  height: ${(props) => props.height};
-  border-radius: 0 0 20px 20px;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const CountDiary = styled.div`
-  margin: 0 0 0 10px;
-`;
-
-export const LockToggle = styled.button`
-  background-color: var(--color-primary);
-  border: hidden;
-  margin: 0 10px 0 0;
-`;
-
-export const BtnPositive = styled.button`
-  background-color: var(--color-primary);
-  border-radius: 100px;
-  height: 48px;
-  width: 100%;
-  font-size: 18px;
-  border: hidden;
-`;
-export const BtnNegative = styled.button`
-  border: hidden;
-  background-color: var(--color-white);
-  border-radius: 100px;
-  height: 48px;
-  width: 100%;
-  font-size: 18px;
-  border: 3px solid var(--color-primary);
-`;
-
-export const AutoBtn = styled.button`
-  width: auto;
-  height: auto;
-  background-color: var(--color-white);
-  border: hidden;
-  padding: 3px 0 0 0;
-`;
-
-export const DiaryHeader = styled.div`
-  display: flex;
-  font-size: 18px;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  height: 60px;
-  border-color: white white var(--color-primary);
-  border-style: solid;
-  border-width: 1px;
-`;
-
-export const DateInfo = styled.div`
-  width: 100px;
-  text-align: center;
-`;
-
 export const Emotion = styled.div`
   height: 60px;
   width: 60px;
@@ -175,55 +77,3 @@ export const Row = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
-export const Time = styled.div`
-  font-size: 14px;
-`;
-
-export const Content = styled.div`
-  font-size: 12px;
-`;
-
-export const Toggle = styled.button`
-  background-color: var(--color-primary);
-  border: hidden;
-  font-size: ${(props) => props.fontSize};
-  border-radius: 100px;
-  height: 30px;
-  margin: 0 10px 0 0;
-`;
-
-export const Card2 = styled.div`
-  border-radius: 20px 20px 0 0;
-  border: 3px solid #accebc;
-  background-color: ${(props) => props.backgroundColor};
-  margin: 20px 0 0 0;
-  height: 200px;
-  width: 100%;
-  // box-sizing: border-box;
-`;
-
-export const CardFoot2 = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  border: 3px solid #accebc;
-  background-color: ${(props) => props.backgroundColor};
-  height: ${(props) => props.height};
-  border-radius: 0 0 20px 20px;
-`;
-
-export const ToggleBtnBox = styled.div`
-  border: 1px solid red;
-  width: 100%;
-  display: flex;
-  justify-content: right;
-`;
-
-export const MainContent = styled.div`
-  margin: 10px;
-  display: flex;
-  align-items: center;
-`;
-
-// 공통

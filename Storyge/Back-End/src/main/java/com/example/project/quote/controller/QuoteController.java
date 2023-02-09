@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"하루 글귀 API"})
 public class QuoteController {
     private final QuoteService quoteService;
-//    private long quoteId = quoteScheduler.selectQuoteId();
+
 
     //글귀 1개 가져오기
     @GetMapping("/quote")

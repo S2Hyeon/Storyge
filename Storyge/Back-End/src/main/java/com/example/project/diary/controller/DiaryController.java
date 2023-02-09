@@ -4,9 +4,8 @@ import com.example.project.diary.model.dto.DiaryDto;
 import com.example.project.diary.model.dto.DiaryUpdateParam;
 import com.example.project.diary.model.dto.EmotionStatistic;
 import com.example.project.diary.model.service.DiaryService;
-import com.example.project.user.model.jwt.JwtProperties;
-import com.example.project.user.model.jwt.JwtUtil;
 import com.example.project.recentdiary.model.service.RecentDiaryService;
+import com.example.project.user.model.jwt.JwtProperties;
 import com.example.project.user.model.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static com.example.project.user.model.jwt.JwtProperties.TOKEN_HEADER;
-import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
 
 @RestController
 @RequiredArgsConstructor
@@ -72,7 +70,7 @@ public class DiaryController {
     }
 
     @GetMapping("/diary/{period}/{date}")
-    public ResponseEntity<?> selectEmotionStatistic(@PathVariable String period,
+    public ResponseEntity<?> selectMyEmotionStatistic(@PathVariable String period,
                                                     @PathVariable("date") String stringDate,
                                                     HttpServletRequest request){
 

@@ -22,7 +22,6 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_PREFIX;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin
 @Api(tags = {"팔로워, 팔로잉 관련 API"})
 public class FollowController {
 

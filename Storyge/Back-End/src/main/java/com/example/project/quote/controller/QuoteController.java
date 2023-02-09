@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin
 @Api(tags = {"하루 글귀 API"})
 public class QuoteController {
     private final QuoteService quoteService;

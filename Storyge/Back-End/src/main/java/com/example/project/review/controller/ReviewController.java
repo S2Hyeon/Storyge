@@ -20,7 +20,6 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_HEADER;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin
 @Api(tags = {"다이어리의 댓글 API"})
 public class ReviewController {
 

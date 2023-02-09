@@ -20,7 +20,6 @@ import static com.example.project.user.model.jwt.JwtProperties.*;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin
 @Api(tags = {"팔로잉의 최근 일기(스토리) API"})
 public class RecentDiaryController {
 

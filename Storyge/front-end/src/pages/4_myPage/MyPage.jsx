@@ -6,7 +6,7 @@ import * as S from "./MyPage";
 import ProfileBox from "./../../components/profileBox/ProfileBox.jsx";
 import { useNavigate } from "react-router-dom";
 import { BsPersonCircle } from "react-icons/bs";
-import { removeCookie } from "./../../utils/Cookies";
+import { getCookie, removeCookie } from "./../../utils/Cookies";
 
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -67,16 +67,33 @@ export default function MyPage({ setToken }) {
   useEffect(() => {
     async function getUserData() {
       try {
-        setUserData(await axios.get("/user"));
+        alert("마이페이지");
+        // setUserData(
+        //   await axios.get("https://storyge.xyz/api/user", {
+        //     headers: {
+        //       Authorization: getCookie("token"),
+        //     },
+        //   })
+        // );
+
+        //
+        const tmp = await axios.get("https://storyge.xyz/api/user", {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        });
+        console.log(tmp);
+
+        //
+
         console.log("마이페이지");
         console.log(userData);
       } catch (err) {
         console.log(err);
       }
     }
-
     getUserData();
-  }, [userData]);
+  }, []);
 
   return (
     <G.BodyContainer>

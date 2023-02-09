@@ -13,10 +13,13 @@ export const kakaoLogin = async (code) => {
     .then((res) => {
       console.log(res);
       if (res.data.accessToken) {
-        setCookie("token", `${res.data.accessToken}`, {
+        setCookie("token", `Bearer  ${res.data.accessToken}`, {
           path: "/", // 모든 페이지에서 쿠키 접근 가능
           sameSite: "strict",
         });
+        // axios.defaults.headers.common[
+        //   "Authorization"
+        // ] = `Bearer ${res.data.accessToken}`;
       }
       window.location.href = `http://localhost:3000/`; // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
       // window.location.href = `http://storyge.xyz/`; // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
@@ -52,7 +55,7 @@ export const googleLogin = async (code) => {
         localStorage.setItem("accessToken", ACCESS_TOKEN);
         localStorage.setItem("expirationTime", EXPIRATION_TIME);
 
-        setCookie("refresh_token", `${REFRESH_TOKEN}`, {
+        setCookie("accessToken", `Bearer ${ACCESS_TOKEN}`, {
           path: "/", // 모든 페이지에서 쿠키 접근 가능
           sameSite: "strict",
         });

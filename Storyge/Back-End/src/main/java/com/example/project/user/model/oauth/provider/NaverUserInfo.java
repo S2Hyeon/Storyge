@@ -5,13 +5,17 @@ import java.util.Map;
 public class NaverUserInfo implements OAuth2UserInfo {
     private final Map<String, Object> attributes;
 
+    private Map<String, String> response;
+
     public NaverUserInfo(Map<String, Object> attributes) {
         this.attributes = attributes;
+        response = (Map<String, String>) attributes.get("response");
     }
 
     @Override
     public String getProviderId() {
-        return attributes.get("id").toString();
+        System.out.println("naver의 getProviderId() : " + response.get("id"));
+        return response.get("id");
     }
 
     @Override
@@ -21,16 +25,16 @@ public class NaverUserInfo implements OAuth2UserInfo {
 
     @Override
     public String getEmail() {
-        return attributes.get("email").toString();
+        return response.get("email").toString();
     }
 
     @Override
     public String getName() {
-        return attributes.get("nickname").toString();
+        return response.get("name").toString();
     }
 
     @Override
     public String getProfileImg() {
-        return attributes.get("profile_image").toString();
+        return response.get("profile_image").toString();
     }
 }

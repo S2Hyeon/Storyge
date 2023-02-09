@@ -35,6 +35,7 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
 
     @Override
     public void insertRecentDiary(Long user, Long diary) {
+
         User diaryUser = userRepository.findById(user).orElse(null);
         Diary insertDiary =diaryRepository.findById(diary).orElse(null);
 
@@ -52,10 +53,11 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
     }
 
     @Override
-    public Boolean insertReadDiary(Long diaryId) {
+    public Boolean insertReadDiary(Long userId, Long diaryId) {
 
-        User currentUser = userRepository.findById(2L).orElse(null); // 현재 user -> 변경해야 함
+        User currentUser = userRepository.findById(userId).orElse(null); // 현재 user -> 변경해야 함
         Diary nowDiary = diaryRepository.findById(diaryId).orElse(null); // 현재 읽은 diary
+
 //        User diaryUser = userRepository.findById(nowDiary.getDiaryId()).orElse(null); // 다이어리 작성한 userid
         RecentDiary diary = recentDiaryRepository.findByDiaryId(nowDiary).orElse(null); // recent diary에 있는지 확인
         if(diary==null ||(diary.getEndsAt().isBefore(LocalDateTime.now()))){ // recent diary에 존재하지 않거나 이미 24시간이 지난 diary
@@ -76,10 +78,10 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
     }
 
     @Override
-    public List<RecentDiaryResponseDto> selectAllRecentDiary() {
+    public List<RecentDiaryResponseDto> selectAllRecentDiary(Long userId) {
 //        User user = null; // 현재 로그인한 사용자
-        User user =userRepository.findById(3L).orElse(null);
-        if(followRepository.findByFollower(user).size()==0){
+        User user =userRepository.findById(userId).orElse(null);
+        if(followRepository.findAllByFollower(user).size()==0){
             return null;
         }
 //        List<Follow> followList = followRepository.findByFollower(user);

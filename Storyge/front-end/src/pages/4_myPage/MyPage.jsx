@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import Api from "../../lib/customApi";
+import Api from "lib/customApi";
 
 import * as G from "./../../styles/index";
 import * as S from "./MyPage";
@@ -75,7 +74,7 @@ export default function MyPage({ setToken }) {
         //
         // console.log("으아아아", getCookie("token"));
 
-        const tmp = await Api.get("https://storyge.xyz/api/user", {
+        const tmp = await Api.get("/user", {
           headers: {
             Authorization: getCookie("token"),
           },

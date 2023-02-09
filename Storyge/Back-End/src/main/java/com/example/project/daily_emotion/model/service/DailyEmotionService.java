@@ -4,7 +4,7 @@ import com.example.project.daily_emotion.model.dto.DailyEmotionDto;
 import com.example.project.daily_emotion.model.entity.DailyEmotion;
 
 import java.time.LocalDate;
-import java.util.Map;
+import java.util.List;
 
 public interface DailyEmotionService {
 
@@ -14,13 +14,12 @@ public interface DailyEmotionService {
     //R
     DailyEmotion selectDailyEmotion(Long userId, LocalDate date);
 
-    Map<Integer, String> selectDailyEmotions(String nickname, String stringDate);
+    List<DailyEmotionDto> selectDailyEmotions(Long userId, String stringDate);
 
     //U
     void updateDailyEmotion (Long userId, LocalDate date, String emoticonName);
 
     //D
-
     void deleteDailyEmotion();
 
     // DB-> 서버

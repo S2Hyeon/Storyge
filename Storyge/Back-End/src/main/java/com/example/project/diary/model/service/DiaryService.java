@@ -16,19 +16,19 @@ public interface DiaryService {
     //R
 
     DiaryDto selectOneDiary(Long diaryId);
-    List<DiaryDto> selectDailyDiaries(String nickname, String stringDate);
+    List<DiaryDto> selectDailyDiaries(Long userId, String stringDate);
 
-    int selectDiaryCount(long userId);
+    int selectDiaryCount(Long userId);
 
     List<EmotionStatistic> selectEmotionStatistic(String period, String stringDate, Long userId);
 
     //U
-    boolean updateDiary (DiaryUpdateParam param);
+    boolean updateDiary (Long userId, DiaryUpdateParam param);
 
-    boolean updateScope(long diaryId, int scope);
+    boolean updateScope(Long userId, Long diaryId, int scope);
 
     //D
-    boolean deleteDiary(Long diaryId);
+    boolean deleteDiary(Long userId, Long diaryId);
 
     // DB-> 서버
     default DiaryDto toDto(Diary diary){
@@ -38,23 +38,24 @@ public interface DiaryService {
                 .emoticonName(diary.getEmoticonName())
                 .diaryContent(diary.getDiaryContent())
                 .scope(diary.getScope())
-                .update_cnt(diary.getUpdateCnt())
+                .updateCnt(diary.getUpdateCnt())
                 .analizedResult(diary.getAnalizedResult())
                 .createdAt(diary.getCreatedAt().toLocalDate())
                 .build();
     }
 
     //서버 -> DB
-//    default Diary toEntity(DiaryDto diaryDto){
-//        return new Diary().builder()
-//                .user(diaryDto.getUserId())
-//                .emoticonName(diaryDto.getEmoticonName())
-//                .diaryContent(diaryDto.getDiaryContent())
-//                .scope(diaryDto.getScope())
-//                .update_cnt(diaryDto.getUpdate_cnt())
-//                .analizedResult(diaryDto.getAnalizedResult())
-//                .build();
-//    }
+    default Diary toEntity(DiaryDto diaryDto){
+        return Diary.builder()
+                .userId(diaryDto.getUserId())
+                .emoticonName(diaryDto.getEmoticonName())
+                .diaryContent(diaryDto.getDiaryContent())
+                .scope(diaryDto.getScope())
+                .updateCnt(diaryDto.getUpdateCnt())
+                .analizedResult(diaryDto.getAnalizedResult())
+//                .createdAt(diaryDto.getCreatedAt())
+                .build();
+    }
 
     default DailyEmotionDto toDailyEmotionDto(DiaryDto diaryDto) {
         return DailyEmotionDto.builder()

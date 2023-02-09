@@ -15,7 +15,7 @@ public class DiaryUpdateParam {
     private String emoticonName;
 
     private String diaryContent;
-    private int scope;
+    private Integer scope;
     private String analizedResult;
 
 }

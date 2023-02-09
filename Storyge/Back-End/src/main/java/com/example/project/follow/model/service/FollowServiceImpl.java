@@ -81,7 +81,7 @@ public class FollowServiceImpl implements FollowService {
         }
 
         // 대기 상태에서 삭제
-        followWaitRepository.deleteByFollowingAndUserId(follower.getUserId(), userId);
+        followWaitRepository.deleteByFollowingAndUserId(userId,follower.getUserId());
 
         // follow table에 insert (팔로우 수락)
         followRepository.save(Follow.builder()
@@ -159,7 +159,6 @@ public class FollowServiceImpl implements FollowService {
         for (Follow follow : followingList) {
 
             User user = userRepository.findById(follow.getFollower()).orElse(null);
-            System.out.println(user.getUserId()+"12313123123");
             // 팔로워인 사람들 userId, 프로필 사진, nickname 반환
             followerUserList.add(FollowUserInfoDto.builder()
                     .userId(user.getUserId())

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 import * as G from "./../../styles/index";
 import * as S from "./MyPage";
 import ProfileBox from "./../../components/profileBox/ProfileBox.jsx";
 import { useNavigate } from "react-router-dom";
 import { BsPersonCircle } from "react-icons/bs";
-import { removeCookie } from "./../../utils/Cookies";
+import { getCookie, removeCookie } from "./../../utils/Cookies";
 
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -53,6 +55,45 @@ export default function MyPage({ setToken }) {
     ) {
     }
   }
+
+  const [userData, setUserData] = useState({
+    profile: "",
+    nickname: "",
+    follower: "",
+    following: "",
+  });
+
+  //처음 렌더링이 될 때만 실행
+  useEffect(() => {
+    async function getUserData() {
+      try {
+        alert("마이페이지");
+        // setUserData(
+        //   await axios.get("https://storyge.xyz/api/user", {
+        //     headers: {
+        //       Authorization: getCookie("token"),
+        //     },
+        //   })
+        // );
+
+        //
+        const tmp = await axios.get("https://storyge.xyz/api/user", {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        });
+        console.log(tmp);
+
+        //
+
+        console.log("마이페이지");
+        console.log(userData);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getUserData();
+  }, []);
 
   return (
     <G.BodyContainer>

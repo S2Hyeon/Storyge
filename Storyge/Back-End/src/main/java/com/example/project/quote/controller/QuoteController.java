@@ -21,7 +21,6 @@ public class QuoteController {
     @GetMapping("/quote")
     public ResponseEntity<QuoteDto> selectOneQuote(){
 
-
         QuoteDto quoteDto = quoteService.selectOneQuote().orElseThrow();
         return new ResponseEntity<>(quoteDto, HttpStatus.OK);
     }

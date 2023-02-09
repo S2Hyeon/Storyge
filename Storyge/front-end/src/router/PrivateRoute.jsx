@@ -19,17 +19,16 @@ const Toast = MySwal.mixin({
 });
 
 const PrivateRoute = ({ authenticated, component: Component }) => {
-  return authenticated ? (
-    Component
-  ) : (
-    <Navigate
-      to="/login"
-      {...Toast.fire({
-        icon: "warning",
-        title: "로그인이 필요한 페이지입니다.",
-      })}
-    ></Navigate>
-  );
+  return authenticated
+    ? Component
+    : // <Navigate
+      //   to="/login"
+      //   {...Toast.fire({
+      //     icon: "warning",
+      //     title: "로그인이 필요한 페이지입니다.",
+      //   })}
+      // ></Navigate>
+      Component;
 };
 
 export default PrivateRoute;

@@ -38,7 +38,7 @@ public class RecentDiaryController {
 
         List<RecentDiaryResponseDto> recentDiaryList = recentDiaryService.selectAllRecentDiary(userId);
         if(recentDiaryList==null){
-            return new ResponseEntity<>("팔로잉 없음", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("팔로잉 없음", HttpStatus.OK);
         }
 
         return new ResponseEntity<>(recentDiaryList, HttpStatus.OK);

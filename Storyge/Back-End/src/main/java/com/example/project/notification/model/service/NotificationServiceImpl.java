@@ -135,7 +135,7 @@ public class NotificationServiceImpl implements NotificationService {
         List<NotificationReponseDto> notificationList = new ArrayList<>();
         for(Notification noti:notifications){
 
-            User user = userRepository.findById(noti.getUserId().getUserId()).orElse(null);
+            User user = userRepository.findById(noti.getFollow().getUserId()).orElse(null);
             String type = noti.getNotiType();
             if(type.equals("REVIEW")){
                 notificationList.add(NotificationReponseDto.builder()

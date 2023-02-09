@@ -11,6 +11,7 @@ export const Rectangle = styled.textarea`
   border-radius: 20px;
   padding: 20px;
   font-size: 18px;
+  outline-color: transparent; //textarea onfocus 됐을 때 보더 없앰
 `;
 
 export const Text = styled.div`

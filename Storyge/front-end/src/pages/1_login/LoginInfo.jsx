@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import * as S from "./Loginstyle.js";
 import ProfileImgBox from "./../../components/profileBox/ProfileImgBox";
 import Box from "@mui/material/Box";
@@ -7,7 +8,16 @@ import RegisterBtn from "./../../components/button/RegisterBtn";
 
 export default function LoginInfo() {
   const [content, setContent] = useState("");
+  const [initData, setInitData] = useState("");
   const len = `${content.length} / 8`;
+
+  useEffect(() => {
+    axios
+      .get("/user")
+      .then((response) => setInitData(response.data))
+      .then(console.log(initData))
+      .catch((error) => console.log(error));
+  }, []);
 
   function onChange(e) {
     setContent(e.target.value);
@@ -37,7 +47,9 @@ export default function LoginInfo() {
           helperText={len}
           autoFocus={true}
           onChange={onChange}
-        />
+        >
+          {initData.nickname}
+        </TextField>
       </Box>
       <RegisterBtn />
     </S.Login>

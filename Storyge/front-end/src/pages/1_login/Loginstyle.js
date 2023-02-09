@@ -4,14 +4,14 @@ import "../../styles/index";
 export const Login = styled.div`
   display: flex;
   justify-content: center;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   min-height: 100vh;
   margin: 20px;
 `;
 
 export const LoginText = styled.h2`
-  margin-bottom: 40px;
+  margin-bottom: 60px;
   font-family: "S-CoreDream-6Bold";
   color: var(--color-black);
 `;
@@ -22,29 +22,19 @@ export const LoginInfoText = styled.h2`
   color: var(--color-black);
 `;
 
-export const Naver = styled.div`
-  width: 80%;
-  height: 60px;
-  margin-bottom: 20px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-image: url("https://t1.daumcdn.net/cfile/tistory/99580C465C3D7D130C?original");
+export const NaverImg = styled.img`
+  width: 350px;
+  object-fit: scale-down;
+`;
+export const GoogleImg = styled.img`
+  width: 350px;
+  object-fit: scale-down;
+`;
+export const KakaoImg = styled.img`
+  width: 350px;
+  object-fit: scale-down;
 `;
 
-export const Kakao = styled.div`
-  width: 80%;
-  height: 60px;
-  margin-bottom: 20px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-image: url("https://t1.daumcdn.net/cfile/tistory/99BEE8465C3D7D1214?original");
-`;
-
-export const Google = styled.div`
-  width: 80%;
-  height: 60px;
-  margin-bottom: 20px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-image: url("https://t1.daumcdn.net/cfile/tistory/998689465C3D7D1217?original");
+export const LinkBtn = styled.a`
+  margin-bottom: 50px;
 `;

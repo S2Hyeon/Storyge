@@ -81,7 +81,7 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
     public List<RecentDiaryResponseDto> selectAllRecentDiary(Long userId) {
 //        User user = null; // 현재 로그인한 사용자
         User user =userRepository.findById(userId).orElse(null);
-        if(followRepository.findAllByFollower(user).size()==0){
+        if(followRepository.findAllByFollower(userId).size()==0){
             return null;
         }
 //        List<Follow> followList = followRepository.findByFollower(user);

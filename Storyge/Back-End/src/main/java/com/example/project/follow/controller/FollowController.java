@@ -1,5 +1,6 @@
 package com.example.project.follow.controller;
 
+import com.example.project.follow.model.dto.FollowUserInfoDto;
 import com.example.project.follow.model.dto.UserIdDto;
 import com.example.project.follow.model.service.FollowService;
 import com.example.project.user.model.dto.UserDto;
@@ -69,12 +70,12 @@ public class FollowController {
     @ApiOperation(value = "팔로우 신청 대기 목록",
             notes = "나에게 팔로우 신청을 한 사람들의 목록 조회")
     @GetMapping("/follow-wait")
-    public ResponseEntity<List<UserDto>> selectAllFollowWait(HttpServletRequest request){
+    public ResponseEntity<List<FollowUserInfoDto>> selectAllFollowWait(HttpServletRequest request){
 
         String token = request.getHeader(TOKEN_HEADER);
         Long userId = jwtUtil.getUserId(token);
 
-        List<UserDto> followWaitList = followService.selectAllFollowWait(userId);
+        List<FollowUserInfoDto> followWaitList = followService.selectAllFollowWait(userId);
         return new ResponseEntity<>(followWaitList, HttpStatus.OK);
     }
 
@@ -83,12 +84,12 @@ public class FollowController {
     @ApiOperation(value = "내 팔로잉 목록",
             notes = "내가 팔로우 하는 사람들의 목록 조회")
     @GetMapping("/following")
-    public ResponseEntity<List<UserDto>> selectAllFollowing(HttpServletRequest request){
+    public ResponseEntity<List<FollowUserInfoDto>> selectAllFollowing(HttpServletRequest request){
 
         String token = request.getHeader(TOKEN_HEADER);
         Long userId = jwtUtil.getUserId(token);
 
-        List<UserDto> followingList = followService.selectAllFollowing(userId);
+        List<FollowUserInfoDto> followingList = followService.selectAllFollowing(userId);
         return new ResponseEntity<>(followingList, HttpStatus.OK);
     }
 
@@ -96,13 +97,13 @@ public class FollowController {
     @ApiOperation(value = "내 팔로워 목록",
             notes = "나를 팔로우 하는 사람들의 목록 조회")
     @GetMapping("/follower")
-    public ResponseEntity<List<UserDto>> selectAllFollower(HttpServletRequest request){
+    public ResponseEntity<List<FollowUserInfoDto>> selectAllFollower(HttpServletRequest request){
 
 
         String token = request.getHeader(TOKEN_HEADER);
         Long userId = jwtUtil.getUserId(token);
 
-        List<UserDto> followerList = followService.selectAllFollower(userId);
+        List<FollowUserInfoDto> followerList = followService.selectAllFollower(userId);
         return new ResponseEntity<>(followerList, HttpStatus.OK);
     }
 

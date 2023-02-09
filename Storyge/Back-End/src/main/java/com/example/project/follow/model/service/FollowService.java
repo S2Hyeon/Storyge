@@ -1,5 +1,6 @@
 package com.example.project.follow.model.service;
 
+import com.example.project.follow.model.dto.FollowUserInfoDto;
 import com.example.project.follow.model.dto.UserIdDto;
 import com.example.project.user.model.dto.UserDto;
 
@@ -14,13 +15,13 @@ public interface FollowService {
     Boolean insertFollower(Long userId, UserIdDto follower);
 
     // 팔로우 대기 목록
-    List<UserDto> selectAllFollowWait(Long userId);
+    List<FollowUserInfoDto> selectAllFollowWait(Long userId);
 
     //팔로잉 목록
-    List<UserDto> selectAllFollowing(Long userId);
+    List<FollowUserInfoDto> selectAllFollowing(Long userId);
 
     //팔로워 목록
-    List<UserDto> selectAllFollower(Long userId);
+    List<FollowUserInfoDto> selectAllFollower(Long userId);
 
     //팔로우 대기 삭제
     Boolean deleteFollowWait(Long userId, Long follow);

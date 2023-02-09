@@ -11,9 +11,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FollowInfoDto {
+public class FollowUserInfoDto {
 
-    private Long followId;
-    private UserDto userDto;
+    private Long userId;
+    private String profileImg;
+    private String nickname;
 
 }

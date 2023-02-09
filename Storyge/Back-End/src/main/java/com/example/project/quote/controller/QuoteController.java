@@ -1,7 +1,6 @@
 package com.example.project.quote.controller;
 
 import com.example.project.quote.model.dto.QuoteDto;
-import com.example.project.quote.model.scheduler.QuoteScheduler;
 import com.example.project.quote.model.service.QuoteService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"하루 글귀 API"})
 public class QuoteController {
     private final QuoteService quoteService;
-    private final QuoteScheduler quoteScheduler = new QuoteScheduler();
-    private long quoteId = quoteScheduler.selectQuoteId();
+//    private long quoteId = quoteScheduler.selectQuoteId();
 
     //글귀 1개 가져오기
     @GetMapping("/quote")
@@ -26,8 +24,10 @@ public class QuoteController {
 
 //        long quoteId = (long)(Math.random()*35);
 //        long quoteId = 21; //db에 넣고 결정할 것
+//        System.out.println("aaa"+quoteId);
+//        long quoteId = 23L;
 
-        QuoteDto quoteDto = quoteService.selectOneQuote(quoteId).orElseThrow();
+        QuoteDto quoteDto = quoteService.selectOneQuote().orElseThrow();
         return new ResponseEntity<>(quoteDto, HttpStatus.OK);
     }
 

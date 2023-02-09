@@ -1,7 +1,9 @@
 package com.example.project.diary.model.repository;
 
 import com.example.project.diary.model.dto.DailyEmotionStatistic;
+import com.example.project.diary.model.dto.EmotionStatistic;
 import com.example.project.diary.model.dto.QDailyEmotionStatistic;
+import com.example.project.diary.model.dto.QEmotionStatistic;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -36,5 +38,32 @@ public class DiaryCustomRepositoryImpl implements DiaryCustomRepository {
                 .fetch();
 
         return dailyEmotionStatisticDto.get(0);
+    }
+
+    @Override
+    public List<EmotionStatistic> emotionStatistic(String period, LocalDate date, Long userId) {
+
+        JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
+        LocalDateTime from;
+        LocalDateTime to;
+
+        if(period.equals("month")) {
+            from = date.withDayOfMonth(1).atStartOfDay();
+            to = LocalDateTime.of(date.withDayOfMonth(date.lengthOfMonth()), LocalTime.MAX);
+        }
+        else if(period.equals("year")) {
+            from = date.withDayOfYear(1).atStartOfDay();
+            to = LocalDateTime.of(date.withDayOfYear(date.lengthOfYear()), LocalTime.MAX);
+        }
+        else {
+            return null;
+        }
+
+        return jpaQueryFactory
+                .select(new QEmotionStatistic(diary.emoticonName, diary.emoticonName.count()))
+                .from(diary)
+                .where(diary.user.userId.eq(userId), diary.createdAt.between(from, to))
+                .groupBy(diary.emoticonName)
+                .fetch();
     }
 }

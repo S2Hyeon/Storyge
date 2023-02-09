@@ -28,7 +28,7 @@ public class RecentDiaryController {
     private final JwtUtil jwtUtil;
 
     @GetMapping("/recent")
-    @ApiOperation(value = "팔로잉 최근 다이어리(스토리)", notes = "팔로잉들의 가장 최근 일기 중, 공개이면서 읽지 않은 일기 목록 반환")
+    @ApiOperation(value = "팔로잉 최근 다이어리(스토리)", notes = "팔로잉들의 가장 최근 일기 중, 공개이면서 읽지 않은 일기 목록 최신순으로 반환(최대 20개)")
     public ResponseEntity<List<RecentDiaryResponseDto>> selectAllRecentDiary(HttpServletRequest request) {
 
         String token = request.getHeader(TOKEN_HEADER);

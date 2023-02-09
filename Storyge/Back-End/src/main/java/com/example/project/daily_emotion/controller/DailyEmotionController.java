@@ -20,7 +20,6 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_HEADER;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin
 @Api(tags = {"캘린더 API"})
 public class DailyEmotionController {
     private final DailyEmotionService dailyEmotionService;

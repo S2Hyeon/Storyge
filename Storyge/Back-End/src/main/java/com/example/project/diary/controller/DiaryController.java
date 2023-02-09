@@ -22,7 +22,6 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_HEADER;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin
 @Api(tags = {"다이어리 API"})
 public class DiaryController {
     private final DiaryService diaryService;

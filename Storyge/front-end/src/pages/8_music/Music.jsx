@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import * as G from "../../styles";
 import * as S from "./Music.js";
 import { OpenAI } from "../../openai/OpenAI";
+import MusicResult from "./MusicResult"
 // import { reject } from "q";
 // import { resolve } from "path";
 
@@ -10,10 +11,11 @@ export default function Music() {
   const movePage = useNavigate();
   const [result, setResult] = useState("분석전");
   const [content, setContent] = useState("");
+  const [link, setLink] = useState(false)
 
-  function gomusicresult() {
-    movePage("/musicresult");
-  }
+  // function gomusicresult() {
+  //   movePage("/musicresult");
+  // }
   return (
     <G.BodyContainer>
       <S.Rectangle
@@ -33,6 +35,7 @@ export default function Music() {
         <S.Text>분석하기</S.Text>
       </G.longBtnDefault>
       <div>{result}</div>
+      {/* {link && <MusicResult link={}/>} */}
     </G.BodyContainer>
   );
 }

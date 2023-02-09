@@ -18,14 +18,14 @@ export const kakaoLogin = async (code) => {
           sameSite: "strict",
         });
       }
-      // window.location.href = `http://localhost:3000/`; // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
-      window.location.href = `http://storyge.xyz/`; // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+      window.location.href = `http://localhost:3000/`; // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+      // window.location.href = `http://storyge.xyz/`; // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
     })
     .catch((err) => {
       console.log("소셜로그인 에러", err);
       window.alert("로그인에 실패하였습니다.");
-      // window.location.href = `http://localhost:3000/login`; // 로그인 실패하면 로그인화면으로 돌려보냄
-      window.location.href = `http://storyge.xyz/login`; // 로그인 실패하면 로그인화면으로 돌려보냄
+      window.location.href = `http://localhost:3000/login`; // 로그인 실패하면 로그인화면으로 돌려보냄
+      // window.location.href = `http://storyge.xyz/login`; // 로그인 실패하면 로그인화면으로 돌려보냄
     });
 };
 

@@ -18,16 +18,15 @@ const Toast = MySwal.mixin({
 });
 
 const PublicRoute = ({ authenticated, component: Component }) => {
-  return authenticated ? (
-    <Navigate
-      to="/"
-      {...Toast.fire({
-        icon: "warning",
-        title: "이미 로그인되었습니다.",
-      })}
-    ></Navigate>
-  ) : (
-    Component
-  );
+  return authenticated
+    ? // <Navigate
+      //   to="/"
+      //   {...Toast.fire({
+      //     icon: "warning",
+      //     title: "이미 로그인되었습니다.",
+      //   })}
+      // ></Navigate>
+      Component
+    : Component;
 };
 export default PublicRoute;

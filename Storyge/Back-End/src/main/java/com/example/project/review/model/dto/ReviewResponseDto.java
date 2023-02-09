@@ -13,11 +13,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReviewResponseDto {
-    Long reviewId;
-    Long userId;
-    String nickname;
-    String profileImg;
-    String reviewContent;
+    private Long reviewId;
+    private Long userId;
+    private String nickname;
+    private String profileImg;
+    private String reviewContent;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm", timezone = "Asia/Seoul")
-    LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 }

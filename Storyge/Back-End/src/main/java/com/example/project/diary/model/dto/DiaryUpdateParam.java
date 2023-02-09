@@ -16,7 +16,6 @@ public class DiaryUpdateParam {
 
     private String diaryContent;
     private int scope;
-    private int update_cnt;
     private String analizedResult;
 
 }

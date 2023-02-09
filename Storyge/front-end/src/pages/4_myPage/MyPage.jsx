@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 import * as G from "./../../styles/index";
 import * as S from "./MyPage";
 import ProfileBox from "./../../components/profileBox/ProfileBox.jsx";
@@ -53,6 +55,29 @@ export default function MyPage({ setToken }) {
     ) {
     }
   }
+
+  const [userData, setUserData] = useState({
+    profile: "",
+    nickname: "",
+    follower: "",
+    following: "",
+  });
+
+  //처음 렌더링이 될 때만 실행
+  useEffect(() => {
+    // async await 함수를 사용
+    async function getUserData() {
+      try {
+        setUserData(await axios.get("/user"));
+        console.log(userData);
+      } catch {
+        // 오류 발생시 실행
+        alert("마이데이터 못 가져옴!!!");
+      }
+    }
+
+    getUserData();
+  }, [userData]);
 
   return (
     <G.BodyContainer>

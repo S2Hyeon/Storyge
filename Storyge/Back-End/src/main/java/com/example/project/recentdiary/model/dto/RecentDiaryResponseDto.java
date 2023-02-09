@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RecentDiaryResponseDto {
 
-    Long diaryId;
+    private Long diaryId;
 //    Long userId;
-    String nickname;
-    String profileImg;
+    private String nickname;
+    private String profileImg;
 
 }

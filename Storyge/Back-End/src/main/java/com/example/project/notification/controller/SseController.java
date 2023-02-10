@@ -27,7 +27,12 @@ public class SseController {
     private final JwtUtil jwtUtil;
 
 
-    @ApiOperation(value = "실시간 알림 서버", notes = "토큰 보유시에만 /sub 서버를 구독해야 함...!")
+    @ApiOperation(value = "실시간 알림 서버", notes = "토큰 보유시에 /sub 서버를 구독해야 함\n"+
+    "SSE 사용\n" + "프론트 측에서는 EventSource 객체 이용해서 메세지 받으면 된다고 함\n"+
+    "전달되는 메세지: \n"+
+    "연결시 name -> connect\n"+
+    "모든 알림의 name -> notification\n" +
+    "알림 각각의 data -> 신청: follow wait, 수락: follow accept,댓글:review")
     @GetMapping("/sub")
     public SseEmitter subscribe(HttpServletRequest request){
         //현재 로그인한 user 값(pk)

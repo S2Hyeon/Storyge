@@ -41,7 +41,7 @@ public interface DiaryService {
                 .scope(diary.getScope())
                 .updateCnt(diary.getUpdateCnt())
                 .analizedResult(diary.getAnalizedResult())
-                .createdAt(diary.getCreatedAt().toLocalDate())
+                .createdAt(diary.getCreatedAt())
                 .build();
     }
 
@@ -52,9 +52,7 @@ public interface DiaryService {
                 .emoticonName(diaryDto.getEmoticonName())
                 .diaryContent(diaryDto.getDiaryContent())
                 .scope(diaryDto.getScope())
-//                .updateCnt(diaryDto.getUpdateCnt())
                 .analizedResult(diaryDto.getAnalizedResult())
-//                .createdAt(diaryDto.getCreatedAt())
                 .build();
     }
 
@@ -62,7 +60,7 @@ public interface DiaryService {
         return DailyEmotionDto.builder()
                 .userId(diaryDto.getUserId())
                 .emoticonName(diaryDto.getEmoticonName())
-                .createdAt(diaryDto.getCreatedAt())
+                .createdAt(diaryDto.getCreatedAt().toLocalDate())
                 .build();
     }
 }

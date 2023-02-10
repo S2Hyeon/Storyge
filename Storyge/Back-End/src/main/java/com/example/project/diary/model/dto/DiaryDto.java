@@ -1,14 +1,12 @@
 package com.example.project.diary.model.dto;
 
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -30,5 +28,5 @@ public class DiaryDto {
 
     private String analizedResult;
     @ApiModelProperty(example = "작성날짜 ex) 2023-02-07")
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 }

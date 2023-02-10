@@ -5,6 +5,7 @@ import com.example.project.daily_emotion.model.entity.DailyEmotion;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface DailyEmotionService {
 
@@ -12,15 +13,15 @@ public interface DailyEmotionService {
     boolean insertDailyEmotion(DailyEmotionDto dailyEmotionDto);
 
     //R
-    DailyEmotion selectDailyEmotion(Long userId, LocalDate date);
+    Optional<DailyEmotion> selectOneDailyEmotion(Long userId, LocalDate date);
 
-    List<DailyEmotionDto> selectDailyEmotions(Long userId, String stringDate);
+    List<DailyEmotionDto> selectAllDailyEmotion(Long userId, String stringDate);
 
     //U
     void updateDailyEmotion(Long userId, LocalDate date, String emoticonName);
 
     //D
-    boolean deleteDailyEmotion(Long userId, String stringDate);
+    void deleteDailyEmotion(Long userId, LocalDate date);
 
     // DB-> 서버
     default DailyEmotionDto toDto(DailyEmotion dailyEmotion) {

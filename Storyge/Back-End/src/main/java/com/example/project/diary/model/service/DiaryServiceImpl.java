@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -63,20 +62,20 @@ public class DiaryServiceImpl implements DiaryService {
         // To DO : 문장 분석 결과 가져오기
         diaryDto.setAnalizedResult("문장 분석 결과 테스트");
 
+        diaryDto.setCreatedAt(LocalDateTime.now());
         Diary diary = toEntity(diaryDto);
-        diary.setCreatedAt(LocalDateTime.now());
         diaryRepository.save(diary);
 
         recentDiaryService.insertRecentDiary(user.getUserId(), diary.getDiaryId()); // 최근 다이어리 저장
 
 
         long userId = diaryDto.getUserId();
-        LocalDate date = diaryDto.getCreatedAt();
+        LocalDate date = diaryDto.getCreatedAt().toLocalDate();
 
         // 오늘 평균 감정 있는지 확인
-        DailyEmotion dailyEmotion = dailyEmotionService.selectDailyEmotion(userId, date);
+        Optional<DailyEmotion> dailyEmotion = dailyEmotionService.selectOneDailyEmotion(userId, date);
 
-        if (dailyEmotion == null) {
+        if (dailyEmotion.isPresent()) {
             return dailyEmotionService.insertDailyEmotion(toDailyEmotionDto(diaryDto));
         } else {  // 평균 감정 있다면 오늘 일기 모두 가져온 뒤 평균 재계산 후 수정
             DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date).orElseThrow();
@@ -145,8 +144,6 @@ public class DiaryServiceImpl implements DiaryService {
                 if (dailyEmotionStatistic.isPresent())
                     dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.get().getEmoticonName());
 
-//                else
-
             }
 
             diary.updateDiary(param.getEmoticonName(),
@@ -181,14 +178,13 @@ public class DiaryServiceImpl implements DiaryService {
         }
         diaryRepository.deleteById(diaryId);
 
-        LocalDate date = diaryDto.getCreatedAt();
+        LocalDate date = diaryDto.getCreatedAt().toLocalDate();
         Optional<DailyEmotionStatistic> dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
 
         if (dailyEmotionStatistic.isPresent())
             dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.get().getEmoticonName());
         else {
-            ///여기 수정해야함/////////////////////////////////////////////////////////////////////////////////////
-            dailyEmotionService.deleteDailyEmotion(userId, date.format(DateTimeFormatter.ISO_DATE));
+            dailyEmotionService.deleteDailyEmotion(userId, date);
         }
         return true;
     }

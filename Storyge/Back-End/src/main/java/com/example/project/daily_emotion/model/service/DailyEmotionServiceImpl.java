@@ -28,7 +28,7 @@ public class DailyEmotionServiceImpl implements DailyEmotionService {
             return false;
         }
         DailyEmotion dailyEmotion = DailyEmotion.builder()
-                .user(user)
+                .userId(user.getUserId())
                 .dailyId(dailyEmotionDto.getDailyId())
                 .emoticonName(dailyEmotionDto.getEmoticonName())
                 .createdAt(dailyEmotionDto.getCreatedAt())

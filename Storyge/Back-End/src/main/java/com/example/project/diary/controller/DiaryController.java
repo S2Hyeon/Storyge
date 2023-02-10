@@ -44,7 +44,7 @@ public class DiaryController {
         return new ResponseEntity<>(FAIL, HttpStatus.BAD_REQUEST);
     }
 
-    @ApiOperation(value = "일기 읽기", notes = "일기 1개를 선택한다")
+    @ApiOperation(value = "일기 1개 조회", notes = "일기 상세페이지에 들어갈 일기 하나를 조회한다 \ndiaryId : 1")
     @GetMapping("/diary/detail/{diaryId}")
     public ResponseEntity<?> selectOneDiary(@PathVariable Long diaryId, HttpServletRequest request){
 
@@ -60,7 +60,8 @@ public class DiaryController {
         return new ResponseEntity<>(diaryDto, HttpStatus.OK);
     }
 
-    @GetMapping("/diary/daily/{date}")@ApiOperation(value = "일별 일기 목록", notes = "선택한 날짜의 일기들을 가져온다")
+    @ApiOperation(value = "일별 일기 목록(본인)", notes = "선택한 날짜의 본인 일기들을 가져온다 \ndate : 2023-02-07")
+    @GetMapping("/diary/daily/{date}")
     public ResponseEntity<?> selectMyDailyDiaries(@PathVariable("date") String stringDate, HttpServletRequest request) {
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
         List<DiaryDto> diaryDtoList = diaryService.selectDailyDiaries(userId, stringDate);
@@ -70,6 +71,7 @@ public class DiaryController {
         return new ResponseEntity<>(diaryDtoList, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "일별 일기 목록(타인)", notes = "선택한 날짜의 타인 일기들을 가져온다 \nuserId : 4 \ndate : 2023-02-07")
     @GetMapping("/diary/daily/{date}/{userId}")
     public ResponseEntity<?> selectDailyDiaries(@PathVariable Long userId, @PathVariable("date") String stringDate){
         List<DiaryDto> diaryDtoList = diaryService.selectDailyDiaries(userId, stringDate);
@@ -79,7 +81,7 @@ public class DiaryController {
         return new ResponseEntity<>(diaryDtoList, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "일기 개수", notes = "오늘 하루동안 작성한 일기 개수 반환")
+    @ApiOperation(value = "오늘 일기 작성 횟수", notes = "오늘 하루동안 작성한 일기 개수 반환")
     @GetMapping("/diary/count")
     public ResponseEntity<?> selectDiaryCount(HttpServletRequest request) {
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
@@ -90,19 +92,21 @@ public class DiaryController {
         return new ResponseEntity<>(diaryCnt, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "본인의 년/월별 감정 통계", notes = "본인의 년/월별 감정 통계를 가져온다.\nperiod : (month or year) \ndate : 2023-02-07")
     @GetMapping("/diary/statistic/{period}/{date}")
     public ResponseEntity<?> selectMyEmotionStatistic(@PathVariable String period,
-                                                    @PathVariable("date") String stringDate,
-                                                    HttpServletRequest request){
+                                                      @PathVariable("date") String stringDate,
+                                                      HttpServletRequest request){
 
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
         List<EmotionStatistic> emotionStatisticList = diaryService.selectEmotionStatistic(period, stringDate, userId);
         if(emotionStatisticList == null) {
-           return new ResponseEntity<>(FAIL, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(FAIL, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(emotionStatisticList, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "타인의 년/월별 감정 통계", notes = "타인의 년/월별 감정 통계를 가져온다.\nperiod : (month => 월별, year => 년별) \ndate : 2023-02-07 \nuserId : 4")
     @GetMapping("/diary/statistic/{period}/{date}/{userId}")
     public ResponseEntity<?> selectEmotionStatistic(@PathVariable String period,
                                                     @PathVariable("date") String stringDate,
@@ -115,6 +119,7 @@ public class DiaryController {
         return new ResponseEntity<>(emotionStatisticList, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "일기 수정", notes = "일기를 수정한다. 일기 수정 횟수가 0인 경우에만 가능하다")
     @PutMapping("/diary")
     public ResponseEntity<String> updateDiary(DiaryUpdateParam param, HttpServletRequest request){
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
@@ -124,7 +129,7 @@ public class DiaryController {
         else return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation(value = "일기 공개 여부 변경", notes = "일기 공개 여부를 변경한다 - 1: 공개, 0: 비공개 ")
+    @ApiOperation(value = "일기 공개 여부 변경", notes = "일기 공개 여부를 변경한다\n diaryId : 1 \n scope : (1 => 공개, 0 => 비공개) ")
     @PutMapping("/diary/scope/{diaryId}/{scope}")
     public ResponseEntity<String> updateScope(@PathVariable Long diaryId, @PathVariable Integer scope, HttpServletRequest request) {
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
@@ -134,7 +139,7 @@ public class DiaryController {
         else return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation(value = "일기 삭제", notes = "선택한 일기를 삭제한다")
+    @ApiOperation(value = "일기 삭제", notes = "선택한 일기를 삭제한다 \n diaryId : 1")
     @DeleteMapping("/diary")
     public ResponseEntity<String> deleteDiary(Long diaryId, HttpServletRequest request){
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));

@@ -16,6 +16,7 @@ public interface DiaryService {
     //R
 
     DiaryDto selectOneDiary(Long diaryId);
+
     List<DiaryDto> selectDailyDiaries(Long userId, String stringDate);
 
     int selectDiaryCount(Long userId);
@@ -23,7 +24,7 @@ public interface DiaryService {
     List<EmotionStatistic> selectEmotionStatistic(String period, String stringDate, Long userId);
 
     //U
-    boolean updateDiary (Long userId, DiaryUpdateParam param);
+    boolean updateDiary(Long userId, DiaryUpdateParam param);
 
     boolean updateScope(Long userId, Long diaryId, int scope);
 
@@ -31,7 +32,7 @@ public interface DiaryService {
     boolean deleteDiary(Long userId, Long diaryId);
 
     // DB-> 서버
-    default DiaryDto toDto(Diary diary){
+    default DiaryDto toDto(Diary diary) {
         return DiaryDto.builder()
                 .diaryId(diary.getDiaryId())
                 .userId(diary.getUser().getUserId())
@@ -45,13 +46,13 @@ public interface DiaryService {
     }
 
     //서버 -> DB
-    default Diary toEntity(DiaryDto diaryDto){
+    default Diary toEntity(DiaryDto diaryDto) {
         return Diary.builder()
                 .userId(diaryDto.getUserId())
                 .emoticonName(diaryDto.getEmoticonName())
                 .diaryContent(diaryDto.getDiaryContent())
                 .scope(diaryDto.getScope())
-                .updateCnt(diaryDto.getUpdateCnt())
+//                .updateCnt(diaryDto.getUpdateCnt())
                 .analizedResult(diaryDto.getAnalizedResult())
 //                .createdAt(diaryDto.getCreatedAt())
                 .build();

@@ -47,7 +47,6 @@ public class UserController {
     @ApiOperation(value = "다른 유저 정보 불러오기", notes = "다른 유저의 이름, 프로필, 팔로워/팔로잉 수 정보")
     @GetMapping("/user/{userId}")
     public ResponseEntity<UserDto> selectOtherUser(@PathVariable Long userId) {
-
         return new ResponseEntity<>(userService.selectOneUser(userId), HttpStatus.OK);
     }
 }

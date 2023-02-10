@@ -17,13 +17,13 @@ public interface DailyEmotionService {
     List<DailyEmotionDto> selectDailyEmotions(Long userId, String stringDate);
 
     //U
-    void updateDailyEmotion (Long userId, LocalDate date, String emoticonName);
+    void updateDailyEmotion(Long userId, LocalDate date, String emoticonName);
 
     //D
-    void deleteDailyEmotion();
+    boolean deleteDailyEmotion(Long userId, String stringDate);
 
     // DB-> 서버
-    default DailyEmotionDto toDto(DailyEmotion dailyEmotion){
+    default DailyEmotionDto toDto(DailyEmotion dailyEmotion) {
         return DailyEmotionDto.builder()
                 .dailyId(dailyEmotion.getDailyId())
                 .userId(dailyEmotion.getUser().getUserId())
@@ -33,7 +33,7 @@ public interface DailyEmotionService {
     }
 
     //서버 -> DB
-    default DailyEmotion toEntity(DailyEmotionDto dailyEmotionDto){
+    default DailyEmotion toEntity(DailyEmotionDto dailyEmotionDto) {
         return DailyEmotion.builder()
                 .dailyId(dailyEmotionDto.getDailyId())
                 .emoticonName(dailyEmotionDto.getEmoticonName())

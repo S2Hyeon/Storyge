@@ -8,10 +8,9 @@ import com.example.project.diary.model.dto.DiaryUpdateParam;
 import com.example.project.diary.model.dto.EmotionStatistic;
 import com.example.project.diary.model.entity.Diary;
 import com.example.project.diary.model.entity.DiaryCount;
+import com.example.project.diary.model.repository.DiaryCountRepository;
 import com.example.project.diary.model.repository.DiaryCustomRepository;
 import com.example.project.diary.model.repository.DiaryRepository;
-import com.example.project.diary.model.repository.DiaryCountRepository;
-import com.example.project.recentdiary.model.entity.RecentDiary;
 import com.example.project.recentdiary.model.service.RecentDiaryService;
 import com.example.project.user.model.entity.User;
 import com.example.project.user.model.repository.UserRepository;
@@ -22,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class DiaryServiceImpl implements DiaryService{
+public class DiaryServiceImpl implements DiaryService {
 
     private final DiaryRepository diaryRepository;
     private final DiaryCustomRepository diaryCustomRepository;
@@ -43,17 +43,17 @@ public class DiaryServiceImpl implements DiaryService{
     @Override
     public boolean insertDiary(DiaryDto diaryDto) {
         User user = userRepository.findById(diaryDto.getUserId()).orElse(null);
-        if(user == null) {
+        if (user == null) {
             return false;
         }
-        
+
         // 오늘 작성한 일기 개수 확인
         DiaryCount diaryCount = diaryCountRepository.findById(user.getUserId()).orElse(null);
-        if(diaryCount == null) {
+        if (diaryCount == null) {
             return false;
         }
         int currentCount = diaryCount.getDiaryCnt();
-        if(currentCount >= 24) { // 제한개수(24개)를 넘어서면 false 리턴
+        if (currentCount >= 24) { // 제한개수(24개)를 넘어서면 false 리턴
             return false;
         }
 
@@ -76,11 +76,10 @@ public class DiaryServiceImpl implements DiaryService{
         // 오늘 평균 감정 있는지 확인
         DailyEmotion dailyEmotion = dailyEmotionService.selectDailyEmotion(userId, date);
 
-        if(dailyEmotion == null) {
+        if (dailyEmotion == null) {
             return dailyEmotionService.insertDailyEmotion(toDailyEmotionDto(diaryDto));
-        }
-        else {  // 평균 감정 있다면 오늘 일기 모두 가져온 뒤 평균 재계산 후 수정
-            DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
+        } else {  // 평균 감정 있다면 오늘 일기 모두 가져온 뒤 평균 재계산 후 수정
+            DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date).orElseThrow();
             dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.getEmoticonName());
         }
         return true;
@@ -95,7 +94,7 @@ public class DiaryServiceImpl implements DiaryService{
 
     public List<DiaryDto> selectDailyDiaries(Long userId, String stringDate) {
         User user = userRepository.findById(userId).orElse(null);
-        if(user == null) {
+        if (user == null) {
             return null;
         }
         LocalDate date = LocalDate.parse(stringDate);
@@ -107,12 +106,12 @@ public class DiaryServiceImpl implements DiaryService{
 
     public int selectDiaryCount(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
-        if(user == null) {
+        if (user == null) {
             return -1;
         }
 
         DiaryCount diaryCount = diaryCountRepository.findById(user.getUserId()).orElse(null);
-        if(diaryCount == null) {
+        if (diaryCount == null) {
             return -1;
         }
 
@@ -134,15 +133,20 @@ public class DiaryServiceImpl implements DiaryService{
     @Override
     public boolean updateDiary(Long userId, DiaryUpdateParam param) {
         Diary diary = diaryRepository.findById(param.getDiaryId()).orElse(null);
-        if(diary == null || userId != diary.getUserId()) {
+        if (diary == null || userId != diary.getUserId()) {
             return false;
         }
 
-        if(diary.getUpdateCnt() == 0) {
-            if(!param.getEmoticonName().equals(diary.getEmoticonName())) {
+        if (diary.getUpdateCnt() == 0) {
+            if (!param.getEmoticonName().equals(diary.getEmoticonName())) {
                 LocalDate date = diary.getCreatedAt().toLocalDate();
-                DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
-                dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.getEmoticonName());
+                Optional<DailyEmotionStatistic> dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
+
+                if (dailyEmotionStatistic.isPresent())
+                    dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.get().getEmoticonName());
+
+//                else
+
             }
 
             diary.updateDiary(param.getEmoticonName(),
@@ -159,7 +163,7 @@ public class DiaryServiceImpl implements DiaryService{
 
     public boolean updateScope(Long userId, Long diaryId, int scope) {
         Diary diary = diaryRepository.findById(diaryId).orElse(null);
-        if(diary == null || userId != diary.getUserId()) {
+        if (diary == null || userId != diary.getUserId()) {
             return false;
         }
 
@@ -169,18 +173,23 @@ public class DiaryServiceImpl implements DiaryService{
     }
 
 
-
     @Override
     public boolean deleteDiary(Long userId, Long diaryId) {
         DiaryDto diaryDto = selectOneDiary(diaryId);
-        if(diaryDto == null || userId != diaryDto.getUserId()) {
+        if (diaryDto == null || userId != diaryDto.getUserId()) {
             return false;
         }
         diaryRepository.deleteById(diaryId);
 
         LocalDate date = diaryDto.getCreatedAt();
-        DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
-        dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.getEmoticonName());
+        Optional<DailyEmotionStatistic> dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
+
+        if (dailyEmotionStatistic.isPresent())
+            dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.get().getEmoticonName());
+        else {
+            ///여기 수정해야함/////////////////////////////////////////////////////////////////////////////////////
+            dailyEmotionService.deleteDailyEmotion(userId, date.format(DateTimeFormatter.ISO_DATE));
+        }
         return true;
     }
 }

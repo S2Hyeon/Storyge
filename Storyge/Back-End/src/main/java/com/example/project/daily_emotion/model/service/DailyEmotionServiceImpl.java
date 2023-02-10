@@ -24,17 +24,10 @@ public class DailyEmotionServiceImpl implements DailyEmotionService {
     @Override
     public boolean insertDailyEmotion(DailyEmotionDto dailyEmotionDto) {
         User user = userRepository.findById(dailyEmotionDto.getUserId()).orElse(null);
-        if(user == null) {
+        if (user == null) {
             return false;
         }
-        DailyEmotion dailyEmotion = DailyEmotion.builder()
-                .userId(user.getUserId())
-                .dailyId(dailyEmotionDto.getDailyId())
-                .emoticonName(dailyEmotionDto.getEmoticonName())
-                .createdAt(dailyEmotionDto.getCreatedAt())
-                .build();
-        dailyEmotionRepository.save(dailyEmotion);
-
+        dailyEmotionRepository.save(toEntity(dailyEmotionDto));
         return true;
     }
 
@@ -53,7 +46,7 @@ public class DailyEmotionServiceImpl implements DailyEmotionService {
     public List<DailyEmotionDto> selectDailyEmotions(Long userId, String stringDate) {
         List<DailyEmotionDto> dailyEmotionDtoList = null;
         User user = userRepository.findById(userId).orElse(null);
-        if(user == null) {
+        if (user == null) {
             return null;
         }
 
@@ -63,10 +56,10 @@ public class DailyEmotionServiceImpl implements DailyEmotionService {
         // 조회결과 리스트로 받아오기
         List<DailyEmotion> dailyEmotions = dailyEmotionRepository.findAllByUser_UserIdAndCreatedAtBetween(userId, firstOfMonth, lastOfMonth);
 
-        if(!dailyEmotions.isEmpty()) {
-            // DTO 변환
+        // DTO 변환
+        if (!dailyEmotions.isEmpty())
             dailyEmotionDtoList = dailyEmotions.stream().map(this::toDto).collect(Collectors.toList());
-        }
+
 
         return dailyEmotionDtoList;
     }
@@ -78,7 +71,7 @@ public class DailyEmotionServiceImpl implements DailyEmotionService {
     }
 
     @Override
-    public void deleteDailyEmotion() {
-
+    public boolean deleteDailyEmotion(Long userId, String stringDate) {
+        return false;
     }
 }

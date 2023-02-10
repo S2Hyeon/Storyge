@@ -2,6 +2,7 @@ package com.example.project.daily_emotion.model.entity;
 
 import com.example.project.user.model.entity.User;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicInsert
 @Builder
 @Getter
 @Setter

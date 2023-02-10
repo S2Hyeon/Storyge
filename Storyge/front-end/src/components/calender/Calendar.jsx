@@ -47,9 +47,12 @@ function CustomCalendar(props) {
       formatDay={(locale, date) => dayjs(date).format("D")}
       onClickDay={(date) => goDiaryList(date)}
       tileContent={({ date }) => {
-        let chosenData = monthEmotion.find(
-          ({ createdAt }) => createdAt === dayjs(date).format("YYYY-MM-DD")
-        );
+        let chosenData;
+        if (monthEmotion.length !== 0) {
+          chosenData = monthEmotion.find(
+            ({ createdAt }) => createdAt === dayjs(date).format("YYYY-MM-DD")
+          );
+        }
 
         //해당 일자에 데이터가 있다면 그 감정을 props로 넘김
         if (chosenData != null) {

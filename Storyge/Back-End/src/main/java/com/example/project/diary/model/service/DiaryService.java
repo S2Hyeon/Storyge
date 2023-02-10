@@ -17,7 +17,7 @@ public interface DiaryService {
 
     DiaryDto selectOneDiary(Long diaryId);
 
-    List<DiaryDto> selectDailyDiaries(Long userId, String stringDate);
+    List<DiaryDto> selectAllDailyDiary(Long userId, String stringDate);
 
     int selectDiaryCount(Long userId);
 

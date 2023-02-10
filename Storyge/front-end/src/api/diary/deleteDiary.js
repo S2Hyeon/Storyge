@@ -2,7 +2,7 @@ import axios from "axios";
 
 export async function postDiary({ analysis, content, emotion, userId }) {
   axios({
-    method: "post",
+    method: "delete",
     url: "http://storyge.xyz:8080/diary",
     params: {
       "analizedResult": analysis,

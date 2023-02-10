@@ -1,23 +1,64 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import * as S from "./AlarmStyle";
-import newAlarmData from "./newAlarmData.js";
+import { getCookie } from "./../../utils/Cookies";
+import Api from "lib/customApi";
 
-export default function alarm() {
+export default function Alarm() {
+  const [userData, setUserData] = useState([]);
+
+  //처음 렌더링이 될 때만 실행
+  useEffect(() => {
+    async function getUserData() {
+      try {
+        const response = await Api.get("/notification", {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        });
+        setUserData(response.data);
+        console.log("알림페이지 : 알림 데이터");
+        console.log(userData);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getUserData();
+  }, []);
+
   return (
-    <div>
-      <S.Container>
+    <S.Container>
+      {userData && (
         <S.List>
-          {newAlarmData.map((alarm) => {
-              return <S.Alarm key={alarm.id}>
-                <S.Img profile={alarm.imgUrl}></S.Img>
-                <S.Text>{alarm.name}님 팔로우 요청을 보냈습니다.</S.Text>
-              </S.Alarm>;
+          {userData.map((alarm, key) => {
+            if (alarm.notiType === "WAIT") {
+              return (
+                <S.Alarm key={key}>
+                  <S.Img profile={alarm.profileImg}></S.Img>
+                  <S.Text>
+                    {alarm.nickname}님이 팔로우 요청을 보냈습니다.
+                  </S.Text>
+                </S.Alarm>
+              );
+            } else if (alarm.notiType === "REVIEW") {
+              return (
+                <S.Alarm key={key}>
+                  <S.Img profile={alarm.profileImg}></S.Img>
+                  <S.Text>{alarm.nickname}님이 댓글을 달았습니다.</S.Text>
+                </S.Alarm>
+              );
+            } else if (alarm.notiType === "FOLLOW") {
+              return (
+                <S.Alarm key={key}>
+                  <S.Img profile={alarm.profileImg}></S.Img>
+                  <S.Text>
+                    {alarm.nickname}님이 팔로우 요청을 수락했습니다.
+                  </S.Text>
+                </S.Alarm>
+              );
+            }
           })}
         </S.List>
-
-      </S.Container>
-
-    </div>
+      )}
+    </S.Container>
   );
 }
-

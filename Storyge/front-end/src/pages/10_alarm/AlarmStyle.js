@@ -17,7 +17,6 @@ export const List = styled.div`
   flex-direction: column;
 `;
 
-
 export const Img = styled.div`
   height: 40px;
   width: 40px;
@@ -27,7 +26,7 @@ export const Img = styled.div`
   margin: 0px 20px 0px 20px;
 `;
 
-export const Text = styled.p`
+export const Text = styled.div`
   font-family: "S-CoreDream-5Medium";
   font-size: 14px;
   justify-content: center;

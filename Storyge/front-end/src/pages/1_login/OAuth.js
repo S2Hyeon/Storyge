@@ -1,7 +1,7 @@
 // OAuth.js 라는 컴포넌트를 따로 생성하여 관리하였음
 
-const CUR_URL = "localhost:3000";
-// const CUR_URL = "storyge.xyz";
+// const CUR_URL = "localhost:3000";
+const CUR_URL = "storyge.xyz";
 
 const KAKAO_CLIENT_ID = "dd18f3127a0437b4a57b38e093cdcb7b";
 const KAKAO_REDIRECT_URI = `http://${CUR_URL}/oauth/callback/kakao`;

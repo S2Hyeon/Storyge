@@ -7,7 +7,7 @@ import com.example.project.user.model.entity.User;
 public interface UserService {
 
     //유저 정보 수정
-    void updateUser(UserUpdateParam param);
+    void updateUser(Long userId, UserUpdateParam param);
 
     UserDto selectOneUser(Long userId);
 

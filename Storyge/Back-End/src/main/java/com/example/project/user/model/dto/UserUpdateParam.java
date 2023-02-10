@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserUpdateParam {
-    private Long userId;
     private String nickname;
     private String profile;
 }

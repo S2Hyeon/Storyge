@@ -7,16 +7,19 @@ import com.example.project.user.model.entity.User;
 import com.example.project.user.model.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final FollowRepository followRepository;
 
     @Override
-    public void updateUser(UserUpdateParam param) {
-        User user = userRepository.findById(param.getUserId()).orElseThrow();
+    public void updateUser(Long userId, UserUpdateParam param) {
+        User user = userRepository.findById(userId).orElseThrow();
         user.update(param.getNickname(), param.getProfile());
     }
 

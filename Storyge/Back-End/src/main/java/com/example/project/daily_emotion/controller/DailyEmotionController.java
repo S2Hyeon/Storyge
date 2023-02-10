@@ -28,7 +28,7 @@ public class DailyEmotionController {
     private static final String SUCCESS = "Success";
     private static final String FAIL = "Fail";
 
-    @ApiOperation(value = "한달 감정 가져오기", notes = "조회하려는 달의 일별 감정을 가져온다 (날짜: 감정)")
+    @ApiOperation(value = "본인 캘린더 일일 감정 조회", notes = "캘린더에 들어갈 본인의 일일 감정을 조회한다\ndate : yyyy-mm-dd")
     @GetMapping("/daily/{date}")
     public ResponseEntity<?> selectMyDailyEmotion(@PathVariable("date") String stringDate, HttpServletRequest request){
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
@@ -39,6 +39,7 @@ public class DailyEmotionController {
         return new ResponseEntity<>(dailyEmotionDtoList, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "타인 캘린더 일일 감정 조회", notes = "캘린더에 들어갈 타인의 일일 감정을 조회한다\ndate : yyyy-mm-dd\nuserId : 4")
     @GetMapping("/daily/{date}/{userId}")
     public ResponseEntity<?> selectDailyEmotion(@PathVariable("date") String stringDate, @PathVariable Long userId){
         List<DailyEmotionDto> dailyEmotionDtoList = dailyEmotionService.selectDailyEmotions(userId, stringDate);

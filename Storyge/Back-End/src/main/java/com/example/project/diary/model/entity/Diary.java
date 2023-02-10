@@ -28,8 +28,8 @@ public class Diary {
     private String emoticonName;
 
     private String diaryContent;
-    private int scope;
-    private int updateCnt;
+    private Integer scope;
+    private Integer updateCnt;
     private String analizedResult;
 
     private LocalDateTime createdAt;

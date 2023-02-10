@@ -33,25 +33,29 @@ public class ReviewServiceImpl implements ReviewService{
     @Override
     public void insertReview(Long userId, ReviewRequsetDto reviewDto) {
 
-        User user =userRepository.findById(userId).orElse(null);
-        Diary diary = diaryRepository.findById(reviewDto.getDiaryId()).orElse(null);
+//        User user =userRepository.findById(userId).orElse(null); // 댓글 작성한 사람
+
+        Long diaryId = reviewDto.getDiaryId();
+        Diary diary = diaryRepository.findById(diaryId).orElse(null);
 
         Review review = Review.builder()
                 .reviewContent(reviewDto.getReviewContent())
-                .diaryId(diary)
-                .userId(user)
+                .diaryId(diaryId)
+                .userId(userId)
                 .build();
         reviewRepository.save(review);
 
-        User diaryUser = userRepository.findById(diary.getUser().getUserId()).orElse(null);
+        // 댓글을 입력한 일기의 작성자 가져오기
+        User diaryUser = userRepository.findById(diary.getUserId()).orElse(null);
 
-        // 댓글 입력한 사람이 나라면 알림 안감
-        if(diaryUser.getUserId()!=user.getUserId()) {
+
+        // 내가 내 다이어리에 댓글을 달면 알림이 가지 않는다
+        if(diary.getUserId()!=userId) { // 다른 사람이라면
             // 알림 센터에 추가
             notificationService.insertReviewNotification(NotificationReviewDto.builder()
-                    .userId(diaryUser.getUserId())
-                    .follow(user.getUserId())
-                    .diaryId(diary.getDiaryId())
+                    .userId(diary.getUserId()) // 다이어리 작성자에게 알림이 간다
+                    .follow(userId)
+                    .diaryId(diaryId)
                     .build());
         }
 
@@ -61,14 +65,13 @@ public class ReviewServiceImpl implements ReviewService{
     @Override
     public List<ReviewResponseDto> selectAllReview(Long diaryId) {
 
-        Diary diary = diaryRepository.findById(diaryId).orElse(null);
         // 해당 다이어리에 해당하는 댓글 목록 받아옴
         // 시간 순으로 오름차순 정렬
-        List<Review> reviewList = reviewRepository.findAllByDiaryIdOrderByCreatedAt(diary);
+        List<Review> reviewList = reviewRepository.findAllByDiaryIdOrderByCreatedAt(diaryId);
         List<ReviewResponseDto> reviewResponseList = new ArrayList<>();
         for(Review review: reviewList){
 
-            User user = review.getUserId();
+            User user = review.getUser();
 
             reviewResponseList.add(ReviewResponseDto.builder()
                     .reviewId(review.getReviewId()) // 댓글 id
@@ -91,7 +94,7 @@ public class ReviewServiceImpl implements ReviewService{
         Long reviewId = reviewUpdateParam.getReviewId(); //현재 작성한 댓글의 번호
         Review review = reviewRepository.findById(reviewId).orElse(null); //댓글 정보 select
 
-        Long reviewUser = review.getUserId().getUserId(); // 댓글 작성자 가져오기
+        Long reviewUser = review.getUserId(); // 댓글 작성자 가져오기
         if(reviewUser==userId){ // 같다면 수정
             review.updateReview(reviewUpdateParam.getReviewContent()); // 같다면 수정하기
             return true;
@@ -105,7 +108,7 @@ public class ReviewServiceImpl implements ReviewService{
 
         //작성자와 현재 삭제하려는 사람이 일치하는지 확인해야 한다
         Review review = reviewRepository.findById(reviewId).orElse(null);
-        Long reviewUser = review.getUserId().getUserId(); // 댓글 작성한 사람 아이디
+        Long reviewUser = review.getUserId(); // 댓글 작성한 사람 아이디
 
         if(userId==reviewUser){ // 같다면 삭제
             reviewRepository.deleteById(reviewId);

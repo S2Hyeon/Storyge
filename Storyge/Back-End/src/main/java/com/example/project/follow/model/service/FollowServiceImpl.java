@@ -133,11 +133,8 @@ public class FollowServiceImpl implements FollowService {
             User user = follow.getUser(); // 상대방
 
             // 나에게 팔로우 신청을 한 사람들 userId, 프로필 사진, nickname 반환
-            followWaitUserList.add(FollowUserInfoDto.builder()
-                    .userId(user.getUserId())
-                    .profileImg(user.getProfileImg())
-                    .nickname(user.getNickname())
-                    .build());
+
+            followWaitUserList.add(UserToFollowUserInfoDto(user));
         }
 
         return followWaitUserList;
@@ -161,11 +158,7 @@ public class FollowServiceImpl implements FollowService {
             User user = follow.getFollowingUsers();
 
             // 팔로우중인 사람들 userId, 프로필 사진, nickname 반환
-            followerUserList.add(FollowUserInfoDto.builder()
-                    .userId(user.getUserId())
-                    .nickname(user.getNickname())
-                    .profileImg(user.getProfileImg())
-                    .build());
+            followerUserList.add(UserToFollowUserInfoDto(user));
         }
 
         return followerUserList;
@@ -190,11 +183,7 @@ public class FollowServiceImpl implements FollowService {
             User user = follow.getFollowerUsers();
 
             // 팔로워인 사람들 userId, 프로필 사진, nickname 반환
-            followerUserList.add(FollowUserInfoDto.builder()
-                    .userId(user.getUserId())
-                    .nickname(user.getNickname())
-                    .profileImg(user.getProfileImg())
-                    .build());
+            followerUserList.add(UserToFollowUserInfoDto(user));
         }
 
 
@@ -212,6 +201,7 @@ public class FollowServiceImpl implements FollowService {
             following이 내가 되어야 하고 
             userId가 나에게 신청을 한 사람, 즉 신청 내역에서 삭제할 사람의 번호가 되어야 한다
          */
+
         if(userId==null || follow==null){
             return false;
         }

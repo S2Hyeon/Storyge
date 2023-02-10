@@ -39,6 +39,7 @@ public class UserController {
     }
 
     //내 정보 불러오기 -> 이름, 프로필, 팔로워/팔로잉 수
+    @ApiOperation(value = "본인 정보 불러오기", notes = "본인의 이름, 프로필, 팔로워/팔로잉 수 정보")
     @GetMapping("/user")
     public ResponseEntity<UserDto> selectOneUser(HttpServletRequest request) {
         System.out.println("request getcookie: " + request.getCookies());
@@ -49,6 +50,7 @@ public class UserController {
     }
 
     //상대 정보 불러오기 -> 이름, 프로필, 팔로워/팔로잉 수
+    @ApiOperation(value = "다른 유저 정보 불러오기", notes = "다른 유저의 이름, 프로필, 팔로워/팔로잉 수 정보")
     @GetMapping("/user/{userId}")
     public ResponseEntity<UserDto> selectOtherUser(@PathVariable Long userId) {
 

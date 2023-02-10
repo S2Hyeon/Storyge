@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.project.user.model.jwt.JwtProperties.TOKEN_HEADER;
 
@@ -51,9 +52,9 @@ public class DiaryController {
         String token = request.getHeader(TOKEN_HEADER);
         Long userId=jwtUtil.getUserId(token);
 
-        DiaryDto diaryDto = diaryService.selectOneDiary(diaryId);
+        Optional<DiaryDto> diaryDto = diaryService.selectOneDiary(diaryId);
 
-        if(diaryDto == null) {
+        if(diaryDto.isEmpty()) {
             return new ResponseEntity<>(FAIL, HttpStatus.NOT_FOUND);
         }
         recentDiaryService.insertReadDiary(userId, diaryId);

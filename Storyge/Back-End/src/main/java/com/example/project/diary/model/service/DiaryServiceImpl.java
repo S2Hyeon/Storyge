@@ -86,9 +86,9 @@ public class DiaryServiceImpl implements DiaryService {
 
 
     @Override
-    public DiaryDto selectOneDiary(Long diaryId) {
+    public Optional<DiaryDto> selectOneDiary(Long diaryId) {
         Optional<Diary> diary = diaryRepository.findById(diaryId);
-        return diary.map(this::toDto).orElse(null);
+        return diary.map(this::toDto);
     }
 
     public List<DiaryDto> selectAllDailyDiary(Long userId, String stringDate) {
@@ -172,13 +172,13 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public boolean deleteDiary(Long userId, Long diaryId) {
-        DiaryDto diaryDto = selectOneDiary(diaryId);
-        if (diaryDto == null || userId != diaryDto.getUserId()) {
+        Optional<DiaryDto> diaryDto = selectOneDiary(diaryId);
+        if (diaryDto.isEmpty() || userId != diaryDto.get().getUserId()) {
             return false;
         }
         diaryRepository.deleteById(diaryId);
 
-        LocalDate date = diaryDto.getCreatedAt().toLocalDate();
+        LocalDate date = diaryDto.get().getCreatedAt().toLocalDate();
         Optional<DailyEmotionStatistic> dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
 
         if (dailyEmotionStatistic.isPresent())

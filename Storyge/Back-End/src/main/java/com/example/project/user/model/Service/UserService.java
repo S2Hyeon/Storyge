@@ -15,6 +15,7 @@ public interface UserService {
         return UserDto.builder()
                 .userId(user.getUserId())
                 .email(user.getEmail())
+                .nickname(user.getNickname())
                 .profileImg(user.getProfileImg()).build();
 
     }

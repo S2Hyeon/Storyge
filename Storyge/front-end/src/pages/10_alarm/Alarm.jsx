@@ -1,23 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import * as S from "./AlarmStyle";
-import newAlarmData from "./newAlarmData.js";
+import { getCookie } from "./../../utils/Cookies";
+import Api from "lib/customApi";
 
-export default function alarm() {
-  return (
-    <div>
-      <S.Container>
-        <S.List>
-          {newAlarmData.map((alarm) => {
-              return <S.Alarm key={alarm.id}>
-                <S.Img profile={alarm.imgUrl}></S.Img>
-                <S.Text>{alarm.name}님 팔로우 요청을 보냈습니다.</S.Text>
-              </S.Alarm>;
-          })}
-        </S.List>
+export default function Alarm() {
+  const [userData, setUserData] = useState({});
 
-      </S.Container>
+  //처음 렌더링이 될 때만 실행
+  useEffect(() => {
+    async function getUserData() {
+      try {
+        const response = await Api.get("/notification", {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        });
+        console.log("알림페이지");
+        console.log(response.data);
+        setUserData(response.data);
+        console.log(userData);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getUserData();
+  }, []);
 
-    </div>
-  );
+  return <></>;
 }
-

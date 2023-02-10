@@ -8,6 +8,7 @@ import CustomCalendar from "../../components/calender/Calendar";
 import PieChart from "../../components/chart/PieChart";
 import { getCookie } from "./../../utils/Cookies";
 import { getQuote } from "api/quote/getQuote";
+import { getRecentDiary } from "api/recentDiary/getRecentDiary";
 
 function Main() {
   // 로그인 여부 확인 : 쿠기 값 가져오기
@@ -19,11 +20,9 @@ function Main() {
   const movePage = useNavigate();
 
   let [diary, setDiary] = useState(true);
-  // let [chartData, setChartData] = useState(pieChartData);
 
   //새로 업데이트 된 글로 이동!
   function goUpdatedDiary(id, userId) {
-    // console.log(id, userId);
     movePage("/otherdiarydetail", { state: { id: id, userId: userId } });
   }
 
@@ -32,9 +31,18 @@ function Main() {
     setDiary(!diary);
   }
 
+  //내가 팔로잉하는 사람의 업데이트 내용 받기 api
+  const [recentDiaryData, setRecentDiaryData] = useState();
+  useEffect(() => {
+    async function getAndSetRecentDiaryData() {
+      const response = await getRecentDiary();
+      setRecentDiaryData(response);
+    }
+    getAndSetRecentDiaryData();
+  }, []);
+
   //하루 글귀 받아오기 api
   const [quoteData, setQuoteData] = useState();
-
   useEffect(() => {
     async function getAndSetQuoteData() {
       const response = await getQuote();
@@ -45,21 +53,26 @@ function Main() {
 
   return (
     <S.All>
-      <S.NewDiary>
-        {newDiaryData.map((diary) => {
-          return (
-            <S.Profile
-              profile={diary.imgUrl}
-              key={diary.id}
-              onClick={() => goUpdatedDiary(diary.id, diary.userId)}
-            />
-          );
-        })}
-      </S.NewDiary>
+      {recentDiaryData && (
+        <S.NewDiary>
+          {recentDiaryData.map((recentDiary, index) => {
+            return (
+              <S.Profile
+                key={index}
+                profile={recentDiary.profileImg}
+                onClick={() =>
+                  goUpdatedDiary(recentDiary.diaryId, recentDiary.userId)
+                }
+              />
+            );
+          })}
+        </S.NewDiary>
+      )}
+
       <G.BodyContainer top="0" bottom="70px" color="true">
         <S.CalendarContainer>
           <S.CalendarBox>
-            {diary ? <CustomCalendar /> : <PieChart />}
+            {diary ? <CustomCalendar userId={-100} /> : <PieChart />}
           </S.CalendarBox>
           <S.CalendarToggle onClick={() => switchBox()}>
             <S.ToggleOne>

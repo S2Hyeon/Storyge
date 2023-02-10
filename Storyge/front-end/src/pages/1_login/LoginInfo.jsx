@@ -27,7 +27,7 @@ export default function LoginInfo() {
   }
 
   function onSubmit() {
-    alert('추가 정보 등록');
+    alert("추가 정보 등록");
     console.log(content);
   }
 
@@ -55,7 +55,7 @@ export default function LoginInfo() {
           {initData.nickname}
         </TextField>
       </Box>
-      <S.SubmitBtn onClick={onSubmit} >등록</S.SubmitBtn>
+      <S.SubmitBtn onClick={onSubmit}>등록</S.SubmitBtn>
     </S.Login>
   );
 }

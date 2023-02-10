@@ -43,8 +43,6 @@ function Main() {
     getAndSetQuoteData();
   }, []);
 
-  const tmp = "하\n잉";
-
   return (
     <S.All>
       <S.NewDiary>

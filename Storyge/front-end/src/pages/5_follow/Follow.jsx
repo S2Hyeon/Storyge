@@ -13,7 +13,6 @@ export default function Follow() {
   return (
     <G.BodyContainer>
       <SearchBar />
-
       <S.Box>
         <B.Follower
           followAlarm={followAlarm}

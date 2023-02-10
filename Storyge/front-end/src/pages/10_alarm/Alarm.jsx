@@ -4,7 +4,7 @@ import { getCookie } from "./../../utils/Cookies";
 import Api from "lib/customApi";
 
 export default function Alarm() {
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState([]);
 
   //처음 렌더링이 될 때만 실행
   useEffect(() => {
@@ -15,9 +15,8 @@ export default function Alarm() {
             Authorization: getCookie("token"),
           },
         });
-        console.log("알림페이지");
-        console.log(response.data);
         setUserData(response.data);
+        console.log("알림페이지 : 알림 데이터");
         console.log(userData);
       } catch (err) {
         console.log(err);
@@ -26,5 +25,40 @@ export default function Alarm() {
     getUserData();
   }, []);
 
-  return <></>;
+  return (
+    <S.Container>
+      {userData && (
+        <S.List>
+          {userData.map((alarm, key) => {
+            if (alarm.notiType === "WAIT") {
+              return (
+                <S.Alarm key={key}>
+                  <S.Img profile={alarm.profileImg}></S.Img>
+                  <S.Text>
+                    {alarm.nickname}님이 팔로우 요청을 보냈습니다.
+                  </S.Text>
+                </S.Alarm>
+              );
+            } else if (alarm.notiType === "REVIEW") {
+              return (
+                <S.Alarm key={key}>
+                  <S.Img profile={alarm.profileImg}></S.Img>
+                  <S.Text>{alarm.nickname}님이 댓글을 달았습니다.</S.Text>
+                </S.Alarm>
+              );
+            } else if (alarm.notiType === "FOLLOW") {
+              return (
+                <S.Alarm key={key}>
+                  <S.Img profile={alarm.profileImg}></S.Img>
+                  <S.Text>
+                    {alarm.nickname}님이 팔로우 요청을 수락했습니다.
+                  </S.Text>
+                </S.Alarm>
+              );
+            }
+          })}
+        </S.List>
+      )}
+    </S.Container>
+  );
 }

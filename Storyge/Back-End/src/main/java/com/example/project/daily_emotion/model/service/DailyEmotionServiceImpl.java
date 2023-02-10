@@ -24,8 +24,8 @@ public class DailyEmotionServiceImpl implements DailyEmotionService {
 
     @Override
     public boolean insertDailyEmotion(DailyEmotionDto dailyEmotionDto) {
-        User user = userRepository.findById(dailyEmotionDto.getUserId()).orElse(null);
-        if (user == null) {
+        Optional<User> optionalUser = userRepository.findById(dailyEmotionDto.getUserId());
+        if (optionalUser.isEmpty()) {
             return false;
         }
         dailyEmotionRepository.save(toEntity(dailyEmotionDto));
@@ -46,8 +46,8 @@ public class DailyEmotionServiceImpl implements DailyEmotionService {
     @Override
     public List<DailyEmotionDto> selectAllDailyEmotion(Long userId, String stringDate) {
         List<DailyEmotionDto> dailyEmotionDtoList = null;
-        User user = userRepository.findById(userId).orElse(null);
-        if (user == null) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
             return null;
         }
 

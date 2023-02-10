@@ -7,6 +7,7 @@ import com.example.project.diary.model.dto.EmotionStatistic;
 import com.example.project.diary.model.entity.Diary;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DiaryService {
 
@@ -15,7 +16,7 @@ public interface DiaryService {
 
     //R
 
-    DiaryDto selectOneDiary(Long diaryId);
+    Optional<DiaryDto> selectOneDiary(Long diaryId);
 
     List<DiaryDto> selectAllDailyDiary(Long userId, String stringDate);
 

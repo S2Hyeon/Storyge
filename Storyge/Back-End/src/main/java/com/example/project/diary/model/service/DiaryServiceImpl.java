@@ -41,16 +41,19 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public boolean insertDiary(DiaryDto diaryDto) {
-        User user = userRepository.findById(diaryDto.getUserId()).orElse(null);
-        if (user == null) {
+        Optional<User> optionalUser = userRepository.findById(diaryDto.getUserId());
+        if (optionalUser.isEmpty()) {
             return false;
         }
 
+        User user = optionalUser.get();
         // 오늘 작성한 일기 개수 확인
-        DiaryCount diaryCount = diaryCountRepository.findById(user.getUserId()).orElse(null);
-        if (diaryCount == null) {
+        Optional<DiaryCount> optionalDiaryCount = diaryCountRepository.findById(user.getUserId());
+        if (optionalDiaryCount.isEmpty()) {
             return false;
         }
+        DiaryCount diaryCount = optionalDiaryCount.get();
+
         int currentCount = diaryCount.getDiaryCnt();
         if (currentCount >= 24) { // 제한개수(24개)를 넘어서면 false 리턴
             return false;
@@ -86,16 +89,17 @@ public class DiaryServiceImpl implements DiaryService {
 
 
     @Override
-    public DiaryDto selectOneDiary(Long diaryId) {
+    public Optional<DiaryDto> selectOneDiary(Long diaryId) {
         Optional<Diary> diary = diaryRepository.findById(diaryId);
-        return diary.map(this::toDto).orElse(null);
+        return diary.map(this::toDto);
     }
 
     public List<DiaryDto> selectAllDailyDiary(Long userId, String stringDate) {
-        User user = userRepository.findById(userId).orElse(null);
-        if (user == null) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
             return null;
         }
+
         LocalDate date = LocalDate.parse(stringDate);
         LocalDateTime startTimeOfDay = date.atStartOfDay();
         LocalDateTime endTimeOfDay = LocalDateTime.of(date, LocalTime.MAX).withNano(0);
@@ -104,17 +108,19 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     public int selectDiaryCount(Long userId) {
-        User user = userRepository.findById(userId).orElse(null);
-        if (user == null) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
             return -1;
         }
 
-        DiaryCount diaryCount = diaryCountRepository.findById(user.getUserId()).orElse(null);
-        if (diaryCount == null) {
+        User user = optionalUser.get();
+
+        Optional<DiaryCount> optionalDiaryCount = diaryCountRepository.findById(user.getUserId());
+        if (optionalDiaryCount.isEmpty()) {
             return -1;
         }
 
-        return diaryCount.getDiaryCnt();
+        return optionalDiaryCount.get().getDiaryCnt();
 
     }
 
@@ -131,10 +137,12 @@ public class DiaryServiceImpl implements DiaryService {
      */
     @Override
     public boolean updateDiary(Long userId, DiaryUpdateParam param) {
-        Diary diary = diaryRepository.findById(param.getDiaryId()).orElse(null);
-        if (diary == null || userId != diary.getUserId()) {
+        Optional<Diary> optionalDiary = diaryRepository.findById(param.getDiaryId());
+        if (optionalDiary.isEmpty() || userId != optionalDiary.get().getUserId()) {
             return false;
         }
+
+        Diary diary = optionalDiary.get();
 
         if (diary.getUpdateCnt() == 0) {
             if (!param.getEmoticonName().equals(diary.getEmoticonName())) {
@@ -159,12 +167,12 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     public boolean updateScope(Long userId, Long diaryId, int scope) {
-        Diary diary = diaryRepository.findById(diaryId).orElse(null);
-        if (diary == null || userId != diary.getUserId()) {
+        Optional<Diary> optionalDiary = diaryRepository.findById(diaryId);
+        if (optionalDiary.isEmpty() || userId != optionalDiary.get().getUserId()) {
             return false;
         }
 
-        diary.updateScope(scope);
+        optionalDiary.get().updateScope(scope);
 
         return true;
     }
@@ -172,13 +180,13 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public boolean deleteDiary(Long userId, Long diaryId) {
-        DiaryDto diaryDto = selectOneDiary(diaryId);
-        if (diaryDto == null || userId != diaryDto.getUserId()) {
+        Optional<DiaryDto> diaryDto = selectOneDiary(diaryId);
+        if (diaryDto.isEmpty() || userId != diaryDto.get().getUserId()) {
             return false;
         }
         diaryRepository.deleteById(diaryId);
 
-        LocalDate date = diaryDto.getCreatedAt().toLocalDate();
+        LocalDate date = diaryDto.get().getCreatedAt().toLocalDate();
         Optional<DailyEmotionStatistic> dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
 
         if (dailyEmotionStatistic.isPresent())

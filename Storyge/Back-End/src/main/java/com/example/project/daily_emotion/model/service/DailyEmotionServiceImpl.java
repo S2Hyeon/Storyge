@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,17 +25,10 @@ public class DailyEmotionServiceImpl implements DailyEmotionService {
     @Override
     public boolean insertDailyEmotion(DailyEmotionDto dailyEmotionDto) {
         User user = userRepository.findById(dailyEmotionDto.getUserId()).orElse(null);
-        if(user == null) {
+        if (user == null) {
             return false;
         }
-        DailyEmotion dailyEmotion = DailyEmotion.builder()
-                .userId(user.getUserId())
-                .dailyId(dailyEmotionDto.getDailyId())
-                .emoticonName(dailyEmotionDto.getEmoticonName())
-                .createdAt(dailyEmotionDto.getCreatedAt())
-                .build();
-        dailyEmotionRepository.save(dailyEmotion);
-
+        dailyEmotionRepository.save(toEntity(dailyEmotionDto));
         return true;
     }
 
@@ -42,18 +36,18 @@ public class DailyEmotionServiceImpl implements DailyEmotionService {
     해당 날짜 일기가 있는지 확인하기 위한 조회
      */
     @Override
-    public DailyEmotion selectDailyEmotion(Long userId, LocalDate date) {
-        return dailyEmotionRepository.findByUser_UserIdAndCreatedAt(userId, date).orElse(null);
+    public Optional<DailyEmotion> selectOneDailyEmotion(Long userId, LocalDate date) {
+        return dailyEmotionRepository.findByUser_UserIdAndCreatedAt(userId, date);
     }
 
     /*
     캘린더 조회할 때 일별 감정통계 조회
      */
     @Override
-    public List<DailyEmotionDto> selectDailyEmotions(Long userId, String stringDate) {
+    public List<DailyEmotionDto> selectAllDailyEmotion(Long userId, String stringDate) {
         List<DailyEmotionDto> dailyEmotionDtoList = null;
         User user = userRepository.findById(userId).orElse(null);
-        if(user == null) {
+        if (user == null) {
             return null;
         }
 
@@ -63,22 +57,29 @@ public class DailyEmotionServiceImpl implements DailyEmotionService {
         // 조회결과 리스트로 받아오기
         List<DailyEmotion> dailyEmotions = dailyEmotionRepository.findAllByUser_UserIdAndCreatedAtBetween(userId, firstOfMonth, lastOfMonth);
 
-        if(!dailyEmotions.isEmpty()) {
-            // DTO 변환
+        // DTO 변환
+        if (!dailyEmotions.isEmpty())
             dailyEmotionDtoList = dailyEmotions.stream().map(this::toDto).collect(Collectors.toList());
-        }
+
 
         return dailyEmotionDtoList;
     }
 
     @Override
     public void updateDailyEmotion(Long userId, LocalDate date, String emoticonName) {
-        DailyEmotion dailyEmotion = selectDailyEmotion(userId, date);
-        dailyEmotion.updateDailyEmotion(emoticonName);
+        Optional<DailyEmotion> dailyEmotion = selectOneDailyEmotion(userId, date);
+        if(dailyEmotion.isPresent()) {
+            dailyEmotion.get().updateDailyEmotion(emoticonName);
+        }
+
     }
 
     @Override
-    public void deleteDailyEmotion() {
-
+    public void deleteDailyEmotion(Long userId, LocalDate date) {
+        Optional<DailyEmotion> dailyEmotion = selectOneDailyEmotion(userId, date);
+        if(dailyEmotion.isPresent()) {
+            Long dailyId = dailyEmotion.get().getDailyId();
+            dailyEmotionRepository.deleteById(dailyId);
+        }
     }
 }

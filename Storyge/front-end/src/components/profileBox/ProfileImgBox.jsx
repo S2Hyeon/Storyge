@@ -1,8 +1,10 @@
 import React from 'react';
 import ImageUploader from 'react-image-upload'
 import 'react-image-upload/dist/index.css'
+import { AiTwotoneCamera } from "react-icons/ai";
+import * as S from "./../profileBox/ProfileImgBoxStyle";
 
-export default function ProfileBoxImg() {
+export default function ProfileBoxImg(props) {
     function getImageFileObject(imageFile) {
         console.log({ imageFile })
       }
@@ -10,14 +12,15 @@ export default function ProfileBoxImg() {
         console.log({ file })
       }
     return (
-        <div className="ComponentBox">
-            {/* 파일 삭제 버튼 수정 예정 */}
-            <ImageUploader
-                style={{ height: 150, width: 150, borderColor: 'gray', borderRadius: '50%'}}
-                onFileAdded={(img) => getImageFileObject(img)}
-                onFileRemoved={(img) => runAfterImageDelete(img)}
-            />
-        </div>
+        <>
+            <S.Box >
+                <S.Img src={props.profileImg} />
+
+                <S.Btn>
+                    <AiTwotoneCamera />
+                </S.Btn>
+            </S.Box>
+        </>
     );
 }
 

@@ -56,29 +56,26 @@ export default function MyPage({ setToken }) {
     }
   }
 
-  const [userData, setUserData] = useState({
-    profileImg: '',
-    nickname: '',
-    follower: '',
-    following: '',
-  });
+  const [userData, setUserData] = useState({});
 
   //처음 렌더링이 될 때만 실행
   useEffect(() => {
     async function getUserData() {
       try {
-        alert("마이페이지");
-        const data = await axios.get("https://storyge.xyz/api/user", {
+        // alert("마이페이지");
+        // const data = await axios.get("https://storyge.xyz/api/user", {
+        const response = await Api.get("/user", {
           headers: {
             Authorization: getCookie("token"),
           },
         });
         console.log("마이페이지");
-        setUserData(data);
+        console.log(response.data);
+        setUserData(response.data);
         console.log(userData);
-        console.log('프로필 이미지 : ' + userData.data.profileImg);
-        // console.log('닉네임 : ' + userData.data.nickname); 
-        // console.log('팔로워 : ' + userData.data.follower); 
+        console.log("프로필 이미지 : " + userData.profileImg);
+        // console.log('닉네임 : ' + userData.data.nickname);
+        // console.log('팔로워 : ' + userData.data.follower);
       } catch (err) {
         console.log(err);
       }
@@ -88,7 +85,15 @@ export default function MyPage({ setToken }) {
 
   return (
     <G.BodyContainer>
-      <ProfileBox profileImg={ userData.data.profileImg} nickname={userData.data.nickname } follower={userData.data.follower } following={ userData.data.following} />
+      {userData && (
+        <ProfileBox
+          profileImg={userData.profileImg}
+          nickname={userData.nickname}
+          follower={userData.follower}
+          following={userData.following}
+        />
+      )}
+
       <S.Menu onClick={gomodifyprofile}>
         <BsPersonCircle
           style={{ color: "#ACCEBC", width: "30px", height: "30px" }}

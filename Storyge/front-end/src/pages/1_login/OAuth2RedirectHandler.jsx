@@ -4,6 +4,7 @@
 import React, { useEffect } from "react";
 import { kakaoLogin, googleLogin, naverLogin } from "api/user/login";
 import Spinner from "./../../components/spinner/Spinner";
+import * as S from "pages/1_login/Loginstyle";
 
 const OAuth2RedirectHandler = (props) => {
   // 인가코드
@@ -21,7 +22,11 @@ const OAuth2RedirectHandler = (props) => {
     }
   }, []);
 
-  return <S.Login><Spinner /></S.Login>;
+  return (
+    <S.Login>
+      <Spinner />
+    </S.Login>
+  );
 };
 
 export default OAuth2RedirectHandler;

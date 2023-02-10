@@ -2,7 +2,9 @@ package com.example.project.follow.model.service;
 
 import com.example.project.follow.model.dto.FollowUserInfoDto;
 import com.example.project.follow.model.dto.UserIdDto;
+import com.example.project.follow.model.entity.Follow;
 import com.example.project.user.model.dto.UserDto;
+import com.example.project.user.model.entity.User;
 
 import java.util.List;
 
@@ -31,6 +33,15 @@ public interface FollowService {
 
     //팔로우 삭제
     Boolean deleteFollower(Long userId, Long follow);
+
+    //User->FollowUserInfoDto
+    default FollowUserInfoDto UserToFollowUserInfoDto(User user){
+        return FollowUserInfoDto.builder()
+                .userId(user.getUserId())
+                .nickname(user.getNickname())
+                .profileImg(user.getProfileImg())
+                .build();
+    }
 
 
 }

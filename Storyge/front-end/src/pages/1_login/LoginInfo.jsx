@@ -4,7 +4,6 @@ import * as S from "./Loginstyle.js";
 import ProfileImgBox from "./../../components/profileBox/ProfileImgBox";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import RegisterBtn from "./../../components/button/RegisterBtn";
 
 export default function LoginInfo() {
   const [content, setContent] = useState("");
@@ -25,6 +24,11 @@ export default function LoginInfo() {
       alert("닉네임은 8자 이내로 작성해주세요.");
       setContent(content.substr(0, 8));
     }
+  }
+
+  function onSubmit() {
+    alert('추가 정보 등록');
+    console.log(content);
   }
 
   return (
@@ -51,7 +55,7 @@ export default function LoginInfo() {
           {initData.nickname}
         </TextField>
       </Box>
-      <RegisterBtn />
+      <S.SubmitBtn onClick={onSubmit} >등록</S.SubmitBtn>
     </S.Login>
   );
 }

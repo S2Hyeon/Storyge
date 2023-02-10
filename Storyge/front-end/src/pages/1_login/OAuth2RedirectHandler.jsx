@@ -2,6 +2,7 @@
 // OAuth2RedirectHandeler.js
 
 import React, { useEffect } from "react";
+import * as S from "./Loginstyle";
 import {
   kakaoLogin,
   googleLogin,
@@ -25,7 +26,7 @@ const OAuth2RedirectHandler = (props) => {
     }
   }, []);
 
-  return <Spinner />;
+  return <S.Login><Spinner /></S.Login>;
 };
 
 export default OAuth2RedirectHandler;

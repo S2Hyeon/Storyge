@@ -17,7 +17,7 @@ const Loading = ({ loading }) => {
         color="#ACCEBC"
         loading={loading}
         cssOverride={override}
-        size={30}
+        size={20}
       />
     </div>
   );

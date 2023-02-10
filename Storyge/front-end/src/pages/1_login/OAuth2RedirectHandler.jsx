@@ -21,7 +21,7 @@ const OAuth2RedirectHandler = (props) => {
     }
   }, []);
 
-  return <Spinner />;
+  return <S.Login><Spinner /></S.Login>;
 };
 
 export default OAuth2RedirectHandler;

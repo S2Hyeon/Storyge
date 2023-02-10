@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 
 import static com.example.project.user.model.jwt.JwtProperties.TOKEN_HEADER;
 
@@ -20,8 +19,8 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_HEADER;
 @RequiredArgsConstructor
 @Api(tags = {"사용자 관련 API"})
 public class UserController {
-    private final String SUCCESS = "success";
-    private final String FAIL = "fail";
+    private static final String SUCCESS = "success";
+    //    private final String FAIL = "fail";
     private final UserService userService;
     private final JwtUtil jwtUtil;
 
@@ -30,11 +29,7 @@ public class UserController {
     public ResponseEntity<?> updateUserInfo(HttpServletRequest request, @RequestBody UserUpdateParam param) {
 
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
-
-        if (Objects.equals(userId, param.getUserId())) {
-            userService.updateUser(param);
-        }
-
+        userService.updateUser(userId, param);
         return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
     }
 
@@ -42,7 +37,6 @@ public class UserController {
     @ApiOperation(value = "본인 정보 불러오기", notes = "본인의 이름, 프로필, 팔로워/팔로잉 수 정보")
     @GetMapping("/user")
     public ResponseEntity<UserDto> selectOneUser(HttpServletRequest request) {
-        System.out.println("request getcookie: " + request.getCookies());
         System.out.println("request header: " + request.getHeader(TOKEN_HEADER));
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
         System.out.println("userId: " + userId);

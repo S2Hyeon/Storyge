@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
     private final FollowRepository followRepository;
 
     @Override
-    public void updateUser(UserUpdateParam param) {
-        User user = userRepository.findById(param.getUserId()).orElseThrow();
+    public void updateUser(Long userId, UserUpdateParam param) {
+        User user = userRepository.findById(userId).orElseThrow();
         user.update(param.getNickname(), param.getProfile());
     }
 

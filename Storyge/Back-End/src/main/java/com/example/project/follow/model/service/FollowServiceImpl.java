@@ -259,5 +259,10 @@ public class FollowServiceImpl implements FollowService {
         return true;
 
     }
+
+    public Boolean checkFollow(Long myId, Long userId) {
+        Follow follow = followRepository.findByFollowingAndFollower(userId, myId);
+        return follow != null;
+    }
 }
 

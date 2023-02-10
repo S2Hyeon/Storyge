@@ -33,10 +33,10 @@ public class DiaryServiceImpl implements DiaryService{
 
     private final DiaryRepository diaryRepository;
     private final DiaryCustomRepository diaryCustomRepository;
-    private final DailyEmotionService dailyEmotionService;
     private final UserRepository userRepository;
 
     private final DiaryCountRepository diaryCountRepository;
+    private final DailyEmotionService dailyEmotionService;
     private final RecentDiaryService recentDiaryService;
 
 

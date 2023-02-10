@@ -4,12 +4,16 @@ import * as G from "../../../styles/index";
 import * as S from "./DiaryListStyle";
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
 import { useLocation, useNavigate } from "react-router";
+import dayjs from "dayjs";
 
 export default function DiaryList() {
   const location = useLocation();
   const movePage = useNavigate();
 
+  //넘어온 날짜 값
   const [dateInfo, setDateInfo] = useState(location.state.date);
+
+  
 
   function goDiaryDetail(id) {
     movePage("/diary", { state: { id: id } });

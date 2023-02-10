@@ -1,13 +1,13 @@
 import axios from "axios";
 import { setCookie } from "utils/Cookies";
 
-const ServerURL = "localhost:8080";
-const localURL = "localhost:3030";
+const LOCAL_URL = "localhost:3000";
+const SERVER_URL = "storyge.xyz";
+const CUR_URL = LOCAL_URL;
 
 export const kakaoLogin = async (code) => {
   axios({
     method: "GET",
-    // url: `http://localhost:8080/api/oauth/callback/kakao?code=${code}&state=kakao&prompt=none`,
     url: `https://storyge.xyz/api/oauth/callback/kakao?code=${code}&state=kakao&prompt=none`,
   })
     .then((res) => {
@@ -17,25 +17,20 @@ export const kakaoLogin = async (code) => {
           path: "/", // 모든 페이지에서 쿠키 접근 가능
           sameSite: "strict",
         });
-        // axios.defaults.headers.common[
-        //   "Authorization"
-        // ] = `Bearer ${res.data.accessToken}`;
       }
-      window.location.href = `http://localhost:3000/`; // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
-      // window.location.href = `http://storyge.xyz/`; // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+      window.location.href = `http://${CUR_URL}/`; // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
     })
     .catch((err) => {
       console.log("소셜로그인 에러", err);
       window.alert("로그인에 실패하였습니다.");
-      // window.location.href = `http://localhost:3000/login`; // 로그인 실패하면 로그인화면으로 돌려보냄
-      // window.location.href = `http://storyge.xyz/login`; // 로그인 실패하면 로그인화면으로 돌려보냄
+      window.location.href = `http://${CUR_URL}/login`; // 로그인 실패하면 로그인화면으로 돌려보냄
     });
 };
 
 export const googleLogin = async (code) => {
   axios({
     method: "GET",
-    url: `http://${ServerURL}/oauth/callback/google?code=${code}&state=google`,
+    url: `http://storyge.xyz/oauth/callback/google?code=${code}&state=google`,
   })
     .then((res) => {
       console.log("구글 로그인 성공");
@@ -55,43 +50,39 @@ export const googleLogin = async (code) => {
         localStorage.setItem("accessToken", ACCESS_TOKEN);
         localStorage.setItem("expirationTime", EXPIRATION_TIME);
 
-        setCookie("accessToken", `Bearer ${ACCESS_TOKEN}`, {
+        setCookie("token", `Bearer ${ACCESS_TOKEN}`, {
           path: "/", // 모든 페이지에서 쿠키 접근 가능
           sameSite: "strict",
         });
       }
-      window.location.href = `http://localhost:3000/`;
-      // window.location.href = `http://storyge.xyz/`;
+      window.location.href = `http://${CUR_URL}/`;
     })
     .catch((err) => {
       console.log("소셜로그인 에러", err);
       window.alert("로그인에 실패하였습니다.");
-      window.location.href = `http://localhost:3000/login`;
-      // window.location.href = `http://storyge.xyz/login`;
+      window.location.href = `http://${CUR_URL}/login`;
     });
 };
 
 export const naverLogin = async (code) => {
   axios({
     method: "GET",
-    url: `http://${ServerURL}/oauth/callback/naver?code=${code}&state=naver`,
+    url: `http://storyge.xyz/oauth/callback/naver?code=${code}&state=naver`,
   })
     .then((res) => {
       console.log(res);
       if (res.data.accessToken) {
         // 쿠키에 access-token 저장
-        setCookie("token", `${res.data.accessToken}`, {
+        setCookie("token", `Bearer ${res.data.accessToken}`, {
           path: "/", // 모든 페이지에서 쿠키 접근 가능
           sameSite: "strict",
         });
       }
-      window.location.href = `http://localhost:3000/`;
-      // window.location.href = `http://storyge.xyz/`;
+      window.location.href = `http://${CUR_URL}/`;
     })
     .catch((err) => {
       console.log("소셜로그인 에러", err);
       window.alert("로그인에 실패하였습니다.");
-      window.location.href = `http://localhost:3000/login`;
-      // window.location.href = `http://storyge.xyz/login`;
+      window.location.href = `http://${CUR_URL}/login`;
     });
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import Api from "lib/customApi";
 
 import * as G from "./../../styles/index";
 import * as S from "./MyPage";

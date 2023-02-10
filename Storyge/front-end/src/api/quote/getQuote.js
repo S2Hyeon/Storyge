@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 import Api from "lib/customApi";
 
 export async function getQuote() {

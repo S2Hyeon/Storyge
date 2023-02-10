@@ -4,12 +4,11 @@ import com.example.project.diary.model.dto.DiaryDto;
 import com.example.project.diary.model.dto.DiaryUpdateParam;
 import com.example.project.diary.model.dto.EmotionStatistic;
 import com.example.project.diary.model.service.DiaryService;
+import com.example.project.follow.model.service.FollowService;
 import com.example.project.recentdiary.model.service.RecentDiaryService;
-import com.example.project.user.model.jwt.JwtProperties;
 import com.example.project.user.model.jwt.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +25,7 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_HEADER;
 public class DiaryController {
     private final DiaryService diaryService;
     private final RecentDiaryService recentDiaryService;
+    private final FollowService followService;
     private final JwtUtil jwtUtil;
     private static final String SUCCESS = "Success";
     private static final String FAIL = "Fail";
@@ -62,9 +62,9 @@ public class DiaryController {
 
     @ApiOperation(value = "일별 일기 목록(본인)", notes = "선택한 날짜의 본인 일기들을 가져온다 \ndate : 2023-02-07")
     @GetMapping("/diary/daily/{date}")
-    public ResponseEntity<?> selectMyDailyDiaries(@PathVariable("date") String stringDate, HttpServletRequest request) {
+    public ResponseEntity<?> selectAllMyDailyDiary(@PathVariable("date") String stringDate, HttpServletRequest request) {
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
-        List<DiaryDto> diaryDtoList = diaryService.selectDailyDiaries(userId, stringDate);
+        List<DiaryDto> diaryDtoList = diaryService.selectAllDailyDiary(userId, stringDate);
         if(diaryDtoList == null) {
             return new ResponseEntity<>(FAIL,HttpStatus.NOT_FOUND);
         }
@@ -73,8 +73,13 @@ public class DiaryController {
 
     @ApiOperation(value = "일별 일기 목록(타인)", notes = "선택한 날짜의 타인 일기들을 가져온다 \nuserId : 4 \ndate : 2023-02-07")
     @GetMapping("/diary/daily/{date}/{userId}")
-    public ResponseEntity<?> selectDailyDiaries(@PathVariable Long userId, @PathVariable("date") String stringDate){
-        List<DiaryDto> diaryDtoList = diaryService.selectDailyDiaries(userId, stringDate);
+    public ResponseEntity<?> selectAllDailyDiary(@PathVariable Long userId, @PathVariable("date") String stringDate, HttpServletRequest request){
+        Long myId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
+        if(!followService.checkFollow(myId, userId)) {
+            return new ResponseEntity<>(FAIL, HttpStatus.NOT_FOUND);
+        }
+
+        List<DiaryDto> diaryDtoList = diaryService.selectAllDailyDiary(userId, stringDate);
         if(diaryDtoList == null) {
             return new ResponseEntity<>(FAIL,HttpStatus.NOT_FOUND);
         }
@@ -110,7 +115,12 @@ public class DiaryController {
     @GetMapping("/diary/statistic/{period}/{date}/{userId}")
     public ResponseEntity<?> selectEmotionStatistic(@PathVariable String period,
                                                     @PathVariable("date") String stringDate,
-                                                    @PathVariable Long userId){
+                                                    @PathVariable Long userId,
+                                                    HttpServletRequest request){
+        Long myId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
+        if(!followService.checkFollow(myId, userId)) {
+            return new ResponseEntity<>(FAIL, HttpStatus.NOT_FOUND);
+        }
 
         List<EmotionStatistic> emotionStatisticList = diaryService.selectEmotionStatistic(period, stringDate, userId);
         if(emotionStatisticList == null) {

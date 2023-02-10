@@ -91,7 +91,7 @@ public class DiaryServiceImpl implements DiaryService {
         return diary.map(this::toDto).orElse(null);
     }
 
-    public List<DiaryDto> selectDailyDiaries(Long userId, String stringDate) {
+    public List<DiaryDto> selectAllDailyDiary(Long userId, String stringDate) {
         User user = userRepository.findById(userId).orElse(null);
         if (user == null) {
             return null;

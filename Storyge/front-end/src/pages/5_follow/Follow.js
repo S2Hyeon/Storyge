@@ -12,6 +12,13 @@ export const Box = styled.div`
   margin-top: 20px;
 `;
 
+export const AllBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+`;
+
 export const LineText = styled.div`
   display: flex;
   flex-basis: 100%;
@@ -44,7 +51,6 @@ export const LineText = styled.div`
 `;
 
 export const List = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
 `;
@@ -61,14 +67,15 @@ export const Img = styled.div`
   background-image: url(${(props) => props.profile});
   background-size: cover;
   border-radius: 50%;
-  margin: 0px 20px 0px 20px;
+  margin-right: 3%;
 `;
 
 export const Text = styled.div`
   font-family: "S-CoreDream-4Regular";
   font-size: 14px;
   color: var(--color-black);
-  width: 40%;
+  margin: auto;
+  text-align: left;
 `;
 
 export const FollowBtn = styled.button`
@@ -84,5 +91,5 @@ export const BtnBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: auto;
+  width: 20%;
 `;

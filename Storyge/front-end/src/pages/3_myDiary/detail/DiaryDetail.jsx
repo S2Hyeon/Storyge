@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
+import { AiOutlineDelete } from "react-icons/ai";
 import { useLocation } from "react-router";
 
 import * as S from "./DiaryDetailStyle";
@@ -7,13 +8,16 @@ import * as G from "styles/index";
 
 import Emoji from "components/emoji/Emoji";
 import { getMyDiaryDetail } from "api/diary/getMyDiaryDetail";
+import { getUserId } from "api/user/getUserId";
 import { getComment } from "api/comment/getComment";
 import dayjs from "dayjs";
 import { postComment } from "api/comment/postComment";
+import { deleteReview } from "api/comment/deleteComment";
 
 export default function DiaryDetail() {
   const location = useLocation();
 
+  const [userNumber, setUserNumber] = useState("");
   const [isChecked, setIsChecked] = useState(true);
   const [diaryId] = useState(location.state.diaryId); //글 번호
   console.log("현재 글번호: ", diaryId);
@@ -21,12 +25,22 @@ export default function DiaryDetail() {
   //다이어리 세부 내용 가져오기
   const [myDiaryDetailData, setMyDiaryDetailData] = useState();
   useEffect(() => {
+    async function getMyUserId() {
+      const response = await getUserId();
+      console.log("유저 번호")
+      console.log(response.userId);
+      setUserNumber(response.userId);
+      console.log("유저 번호 : " + userNumber);
+    }
+
     async function getAndSetMyDiaryDetail() {
       const response = await getMyDiaryDetail(diaryId);
       console.log(response);
       setMyDiaryDetailData(response);
       console.log(myDiaryDetailData);
     }
+
+    getMyUserId();
     getAndSetMyDiaryDetail();
   }, []);
 
@@ -64,6 +78,13 @@ export default function DiaryDetail() {
       setCommentInputData("");
       setChangedCount(changedCount + 1);
     }
+  }
+
+
+  async function deleteComment(reviewId, e) {
+    await deleteReview(reviewId);
+    console.log("댓글 삭제 완료");
+    setChangedCount(changedCount + 1);
   }
 
   return (
@@ -128,6 +149,9 @@ export default function DiaryDetail() {
                 <S.CommentName>{comment.nickname}</S.CommentName>
                 <S.CommentTime>{comment.createdAt}</S.CommentTime>
               </S.CommentNameTime>
+              {comment.userId == userNumber ? <AiOutlineDelete onClick={(e) => {
+                    deleteComment(comment.reviewId, e);
+                  }} /> : ""}
             </S.CommentInfo>
             <S.CommentContent>{comment.reviewContent}</S.CommentContent>
           </S.CommentBox>

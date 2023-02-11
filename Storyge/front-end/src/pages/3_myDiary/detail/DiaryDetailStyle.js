@@ -156,6 +156,7 @@ export const CommentInfo = styled.div`
 export const CommentNameTime = styled.div`
   // border: 1px solid blue;
   font-size: 14px;
+  margin-right: 43%;
 `;
 
 export const CommentName = styled.div`

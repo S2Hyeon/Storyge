@@ -9,7 +9,7 @@ import java.util.List;
 public interface ReviewService {
 
     void insertReview(Long userId, ReviewRequsetDto reviewDto);
-    List<ReviewResponseDto> selectAllReview(Long diaryId);
+    List<ReviewResponseDto> selectAllReview(Long userId, Long diaryId);
     Boolean updateReview(Long userId, ReviewUpdateParam reviewUpdateParam);
     Boolean deleteReview(Long userId, Long reviewId);
 

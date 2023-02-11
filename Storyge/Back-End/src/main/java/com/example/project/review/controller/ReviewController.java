@@ -43,8 +43,12 @@ public class ReviewController {
     // 다이어리에 해당하는 댓글 조회
     @ApiOperation(value = "댓글 목록 조회", notes = "diaryId를 통해 그 diary에 해당하는 댓글 목록을 조회한다")
     @GetMapping("/review/{diaryId}")
-    public ResponseEntity<List<ReviewResponseDto>> selectAllReview(@PathVariable @ApiParam(value = "댓글 조회할 다이어리의 id(pk)", example = "0") Long diaryId){
-        List<ReviewResponseDto> reviewList = reviewService.selectAllReview(diaryId);
+    public ResponseEntity<List<ReviewResponseDto>> selectAllReview(HttpServletRequest request, @PathVariable @ApiParam(value = "댓글 조회할 다이어리의 id(pk)", example = "0") Long diaryId){
+
+        String token = request.getHeader(TOKEN_HEADER);
+        Long userId = jwtUtil.getUserId(token);
+
+        List<ReviewResponseDto> reviewList = reviewService.selectAllReview(userId, diaryId);
         return new ResponseEntity<>(reviewList, HttpStatus.OK);
     }
 

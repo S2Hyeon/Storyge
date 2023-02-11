@@ -1,6 +1,7 @@
 package com.example.project.user.controller;
 
 import com.example.project.user.model.Service.UserService;
+import com.example.project.user.model.dto.SearchParam;
 import com.example.project.user.model.dto.UserDto;
 import com.example.project.user.model.dto.UserUpdateParam;
 import com.example.project.user.model.jwt.JwtUtil;
@@ -49,4 +50,11 @@ public class UserController {
     public ResponseEntity<UserDto> selectOtherUser(@PathVariable Long userId) {
         return new ResponseEntity<>(userService.selectOneUser(userId), HttpStatus.OK);
     }
+
+    @ApiOperation(value = "사용자를 닉네임으로 검색한다")
+    @PostMapping("/user/search")
+    public ResponseEntity<?> searchUser(SearchParam param){
+        return new ResponseEntity<>(userService.searchUser(param), HttpStatus.OK);
+    }
+
 }

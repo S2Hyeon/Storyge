@@ -190,6 +190,13 @@ public class FollowServiceImpl implements FollowService {
         return followerUserList;
     }
 
+    // 팔로잉 확인
+    @Override
+    public Boolean checkFollow(Long myId, Long userId) {
+        Follow follow = followRepository.findByFollowingAndFollower(userId, myId);
+        return follow != null;
+    }
+
     //팔로우 거절(대기 상태 삭제)
     @Override
     public Boolean deleteFollowWait(Long userId, Long follow) {
@@ -260,9 +267,6 @@ public class FollowServiceImpl implements FollowService {
 
     }
 
-    public Boolean checkFollow(Long myId, Long userId) {
-        Follow follow = followRepository.findByFollowingAndFollower(userId, myId);
-        return follow != null;
-    }
+
 }
 

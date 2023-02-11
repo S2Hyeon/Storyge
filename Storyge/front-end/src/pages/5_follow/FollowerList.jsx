@@ -101,7 +101,7 @@ export default function FollowerList() {
   };
 
   function goOtherPage(id, e) {
-    movePage("/otherpage");
+    movePage("/otherpage", { state: { otherId: id } });
   }
 
   return (
@@ -111,9 +111,14 @@ export default function FollowerList() {
         {newList.map((list) => {
           return (
             <S.Profile key={list.userId}>
-              <S.Img profile={list.profileImg}></S.Img>
-              <S.Text>{list.nickname}</S.Text>
-
+              <S.AllBox
+                onClick={(e) => {
+                  goOtherPage(list.userId, e);
+                }}
+              >
+                <S.Img profile={list.profileImg}></S.Img>
+                <S.Text>{list.nickname}</S.Text>
+              </S.AllBox>
               {deleteFollow ? (
                 <S.BtnBox>
                   <S.FollowBtn
@@ -148,9 +153,11 @@ export default function FollowerList() {
         {followerList.map((follower) => {
           return (
             <S.Profile key={follower.userId}>
-              <S.AllBox onClick={(e) => {
-                      goOtherPage(follower.userId, e);
-                    }}>
+              <S.AllBox
+                onClick={(e) => {
+                  goOtherPage(follower.userId, e);
+                }}
+              >
                 <S.Img profile={follower.profileImg}></S.Img>
                 <S.Text>{follower.nickname}</S.Text>
               </S.AllBox>

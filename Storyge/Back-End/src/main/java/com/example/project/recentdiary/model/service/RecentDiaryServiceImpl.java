@@ -84,26 +84,8 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
         if(followRepository.findAllByFollower(userId).size()==0){
             return null;
         }
-//        List<Follow> followList = followRepository.findByFollower(user);
-//        List<RecentDiaryResponseDto> recentDiaryList = new ArrayList<>();
-//        int i=0;
-//        for(Follow follow:followList){
-//            RecentDiary recentDiary = recentDiaryRepository.findByUserId(follow.getFollowing()).orElse(null);
-//            if(recentDiary.getCreatedAt().plusHours(24).compareTo(LocalDateTime.now())>0){
-//                recentDiaryRepository.delete(recentDiary);
-//            }
-//            else{
-//                recendDiaryList.add(RecentDiaryResponseDto.builder()
-//                        .diaryId(recentDiary.getDiaryId().getDiaryId())
-//                        .nickname(recentDiary.getUserId().getNickname())
-//                        .profileImg(recentDiary.getUserId().getProfileImg())
-//                        .build());
-//            }
-//
-//        }
-
-
-        List<RecentDiary> recentDiaryList = recentDiaryCustomRepository.selectAllRecentDiaryByFollowing(user);
+        
+        List<RecentDiary> recentDiaryList = recentDiaryCustomRepository.selectAllRecentDiaryByFollowing(user); // 팔로우 하는 사용자의 recentdiary 찾기
         List<RecentDiaryResponseDto> recentDiaryDtoList = new ArrayList<>();
         int i=0;
         for(RecentDiary recentDiary : recentDiaryList){

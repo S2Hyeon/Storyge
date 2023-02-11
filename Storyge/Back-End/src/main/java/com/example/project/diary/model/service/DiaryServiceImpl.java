@@ -11,6 +11,7 @@ import com.example.project.diary.model.entity.DiaryCount;
 import com.example.project.diary.model.repository.DiaryCountRepository;
 import com.example.project.diary.model.repository.DiaryCustomRepository;
 import com.example.project.diary.model.repository.DiaryRepository;
+import com.example.project.recentdiary.model.repository.RecentDiaryRepository;
 import com.example.project.recentdiary.model.service.RecentDiaryService;
 import com.example.project.user.model.entity.User;
 import com.example.project.user.model.repository.UserRepository;
@@ -33,6 +34,7 @@ public class DiaryServiceImpl implements DiaryService {
     private final DiaryRepository diaryRepository;
     private final DiaryCustomRepository diaryCustomRepository;
     private final UserRepository userRepository;
+    private final RecentDiaryRepository recentDiaryRepository;
 
     private final DiaryCountRepository diaryCountRepository;
     private final DailyEmotionService dailyEmotionService;
@@ -173,6 +175,17 @@ public class DiaryServiceImpl implements DiaryService {
         }
 
         optionalDiary.get().updateScope(scope);
+
+        if(recentDiaryRepository.findByDiaryId(optionalDiary.get())!=null){ // 만약 recentdiary에 있다면
+            if(scope==0){ // 비공개로 바꿨으면
+                recentDiaryRepository.deleteByDiaryId(optionalDiary.get()); // 지우기
+            }
+        }
+        else{ // 없고
+            if(optionalDiary.get().getCreatedAt().plusHours(24).isAfter(LocalDateTime.now())){ // 공개 다이어리라면
+                recentDiaryService.insertReadDiary(userId, diaryId); // recentdiary에 추가
+            }
+        }
 
         return true;
     }

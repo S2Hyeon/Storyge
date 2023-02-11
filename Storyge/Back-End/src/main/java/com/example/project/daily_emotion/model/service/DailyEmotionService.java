@@ -27,7 +27,7 @@ public interface DailyEmotionService {
     default DailyEmotionDto toDto(DailyEmotion dailyEmotion) {
         return DailyEmotionDto.builder()
                 .dailyId(dailyEmotion.getDailyId())
-                .userId(dailyEmotion.getUser().getUserId())
+                .userId(dailyEmotion.getUserId())
                 .emoticonName(dailyEmotion.getEmoticonName())
                 .createdAt(dailyEmotion.getCreatedAt())
                 .build();
@@ -37,6 +37,7 @@ public interface DailyEmotionService {
     default DailyEmotion toEntity(DailyEmotionDto dailyEmotionDto) {
         return DailyEmotion.builder()
                 .dailyId(dailyEmotionDto.getDailyId())
+                .userId(dailyEmotionDto.getUserId())
                 .emoticonName(dailyEmotionDto.getEmoticonName())
                 .createdAt(dailyEmotionDto.getCreatedAt())
                 .build();

@@ -1,6 +1,7 @@
 package com.example.project.diary.controller;
 
-import com.example.project.diary.model.dto.DiaryDto;
+import com.example.project.diary.model.dto.DiaryRequestDto;
+import com.example.project.diary.model.dto.DiaryResponseDto;
 import com.example.project.diary.model.dto.DiaryUpdateParam;
 import com.example.project.diary.model.dto.EmotionStatistic;
 import com.example.project.diary.model.service.DiaryService;
@@ -34,12 +35,11 @@ public class DiaryController {
 
     @ApiOperation(value = "일기 작성", notes = "일기 작성하기")
     @PostMapping("/diary")
-    public ResponseEntity<String> insertDiary(@RequestBody DiaryDto diaryDto, HttpServletRequest request){
+    public ResponseEntity<String> insertDiary(@RequestBody DiaryRequestDto diaryRequestDto, HttpServletRequest request){
 
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
-        diaryDto.setUserId(userId);
 
-        if(diaryService.insertDiary(diaryDto)) {
+        if(diaryService.insertDiary(userId, diaryRequestDto)) {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
         return new ResponseEntity<>(FAIL, HttpStatus.BAD_REQUEST);
@@ -52,24 +52,24 @@ public class DiaryController {
         String token = request.getHeader(TOKEN_HEADER);
         Long userId=jwtUtil.getUserId(token);
 
-        Optional<DiaryDto> diaryDto = diaryService.selectOneDiary(diaryId);
+        Optional<DiaryResponseDto> diaryResponseDto = diaryService.selectOneDiary(diaryId);
 
-        if(diaryDto.isEmpty()) {
+        if(diaryResponseDto.isEmpty()) {
             return new ResponseEntity<>(FAIL, HttpStatus.NOT_FOUND);
         }
         recentDiaryService.insertReadDiary(userId, diaryId);
-        return new ResponseEntity<>(diaryDto, HttpStatus.OK);
+        return new ResponseEntity<>(diaryResponseDto, HttpStatus.OK);
     }
 
     @ApiOperation(value = "일별 일기 목록(본인)", notes = "선택한 날짜의 본인 일기들을 가져온다 \ndate : 2023-02-07")
     @GetMapping("/diary/daily/{date}")
     public ResponseEntity<?> selectAllMyDailyDiary(@PathVariable("date") String stringDate, HttpServletRequest request) {
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
-        List<DiaryDto> diaryDtoList = diaryService.selectAllDailyDiary(userId, stringDate);
-        if(diaryDtoList == null) {
+        List<DiaryResponseDto> diaryResponseDtoList = diaryService.selectAllDailyDiary(userId, stringDate);
+        if(diaryResponseDtoList == null) {
             return new ResponseEntity<>(FAIL,HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(diaryDtoList, HttpStatus.OK);
+        return new ResponseEntity<>(diaryResponseDtoList, HttpStatus.OK);
     }
 
     @ApiOperation(value = "일별 일기 목록(타인)", notes = "선택한 날짜의 타인 일기들을 가져온다 \nuserId : 4 \ndate : 2023-02-07")
@@ -80,11 +80,11 @@ public class DiaryController {
             return new ResponseEntity<>(FAIL, HttpStatus.NOT_FOUND);
         }
 
-        List<DiaryDto> diaryDtoList = diaryService.selectAllDailyDiary(userId, stringDate);
-        if(diaryDtoList == null) {
+        List<DiaryResponseDto> diaryResponseDtoList = diaryService.selectAllDailyDiary(userId, stringDate);
+        if(diaryResponseDtoList == null) {
             return new ResponseEntity<>(FAIL,HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(diaryDtoList, HttpStatus.OK);
+        return new ResponseEntity<>(diaryResponseDtoList, HttpStatus.OK);
     }
 
     @ApiOperation(value = "오늘 일기 작성 횟수", notes = "오늘 하루동안 작성한 일기 개수 반환")

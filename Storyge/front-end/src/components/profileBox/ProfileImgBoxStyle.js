@@ -1,14 +1,17 @@
 import styled from "styled-components";
 
-export const Box = styled.div`
+export const Box = styled.label`
 
+`;
+export const Input = styled.input`
+display: none;
 `;
 
 export const Img = styled.img`
     height: 150px;
     width: 150px; 
     border-radius: 50%;
-
+    object-fit: scale-down;
 `;
 
 export const Btn = styled.div`

@@ -43,7 +43,7 @@ public class DailyEmotionController {
     public ResponseEntity<?> selectDailyEmotion(@PathVariable("date") String stringDate, @PathVariable Long userId, HttpServletRequest request){
         Long myId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
         if(!followService.checkFollow(myId, userId)) {
-            return new ResponseEntity<>(FAIL, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
         }
 
         List<DailyEmotionDto> dailyEmotionDtoList = dailyEmotionService.selectAllDailyEmotion(userId, stringDate);

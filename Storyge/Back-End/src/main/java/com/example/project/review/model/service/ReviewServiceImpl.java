@@ -63,7 +63,7 @@ public class ReviewServiceImpl implements ReviewService{
 
     // 댓글 가져오기
     @Override
-    public List<ReviewResponseDto> selectAllReview(Long diaryId) {
+    public List<ReviewResponseDto> selectAllReview(Long userId, Long diaryId) {
 
         // 해당 다이어리에 해당하는 댓글 목록 받아옴
         // 시간 순으로 오름차순 정렬
@@ -72,11 +72,13 @@ public class ReviewServiceImpl implements ReviewService{
         for(Review review: reviewList){
 
             User user = review.getUser();
+            Boolean isMe = (userId==user.getUserId()) ? true: false;
 
             reviewResponseList.add(ReviewResponseDto.builder()
                     .reviewId(review.getReviewId()) // 댓글 id
                     .reviewContent(review.getReviewContent()) // 댓글 내용
                     .userId(user.getUserId()) // 댓글 작성한 사람 id
+                    .isMe(isMe) // 나인지 확인한다
                     .nickname(user.getNickname()) // 댓글 작성한 사람 닉네임
                     .profileImg(user.getProfileImg()) // 댓글 작성한 사람 프로필 이미지
                     .createdAt(review.getCreatedAt()) // 댓글 작성 시간 yy.MM.dd HH:mm

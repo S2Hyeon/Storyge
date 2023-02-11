@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import * as S from "./Loginstyle.js";
-import ProfileImgBox from "./../../components/profileBox/ProfileImgBox";
+import LoginProfileBoxImg from "./../../components/profileBox/LoginProfileImgBox.jsx";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
@@ -33,8 +33,8 @@ export default function LoginInfo() {
 
   return (
     <S.Login>
-      <S.LoginInfoText>Set your Nickname</S.LoginInfoText>
-      <ProfileImgBox />
+      <S.LoginInfoText>Set your Information</S.LoginInfoText>
+      <LoginProfileBoxImg />
       <Box
         className="box"
         component="form"

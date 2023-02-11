@@ -22,7 +22,7 @@ export const LoginText = styled.h2`
 `;
 
 export const LoginInfoText = styled.h2`
-  margin-bottom: 10px;
+  margin-bottom: 20%;
   font-family: "S-CoreDream-6Bold";
   color: var(--color-black);
 `;

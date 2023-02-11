@@ -1,18 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import data from "./DiaryListData";
 import * as G from "../../../styles/index";
 import * as S from "./DiaryListStyle";
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
 import { useLocation, useNavigate } from "react-router";
+import { getMyDiaryList } from "api/diary/getMyDiaryList";
+import Emoji from "components/emoji/Emoji";
+import dayjs from "dayjs";
 
 export default function DiaryList() {
   const location = useLocation();
   const movePage = useNavigate();
 
+  //넘어온 날짜 값
   const [dateInfo, setDateInfo] = useState(location.state.date);
 
-  function goDiaryDetail(id) {
-    movePage("/diary", { state: { id: id } });
+  //해당 날짜의 내 일기 목록들
+  const [myDiaryListData, setMyDiaryListData] = useState([]);
+
+  console.log("선택한 날짜: ", dayjs(dateInfo).format("YYYY-MM-DD"));
+
+  useEffect(() => {
+    async function getAndSetMyDiaryList() {
+      const response = await getMyDiaryList(
+        dayjs(dateInfo).format("YYYY-MM-DD")
+      );
+      console.log(response);
+      setMyDiaryListData(response);
+    }
+    getAndSetMyDiaryList();
+  }, [dateInfo]);
+
+  //내 일기 상세 조회 페이지로 이동
+  function goDiaryDetail(diaryId) {
+    movePage("/diary", { state: { diaryId: diaryId } });
   }
 
   //년월일 표시
@@ -31,7 +52,7 @@ export default function DiaryList() {
     );
   };
 
-  //일자
+  //일자 증가
   const increaseDate = () => {
     setDateInfo(
       new Date(
@@ -55,17 +76,21 @@ export default function DiaryList() {
       </S.DateContainer>
 
       {/* 리스트 부분 */}
-      {data.map((data) => {
-        return (
-          <S.ListBox key={data.id} onClick={() => goDiaryDetail(data.id)}>
-            <S.Emotion emotion={data.img} />
-            <S.TimeSummaryContainer>
-              <S.Time>{data.time}</S.Time>
-              <S.Summary>{data.content}</S.Summary>
-            </S.TimeSummaryContainer>
-          </S.ListBox>
-        );
-      })}
+      {myDiaryListData.length === 0 ? (
+        <div>이 날의 작성된 일기가 없어요!</div>
+      ) : (
+        myDiaryListData.map((data, index) => {
+          return (
+            <S.ListBox key={index} onClick={() => goDiaryDetail(data.diaryId)}>
+              <Emoji emotion={data.emoticonName} thisWidth="13%" />
+              <S.TimeSummaryContainer>
+                <S.Time>{dayjs(data.createdAt).format("HH:mm")}</S.Time>
+                <S.Summary>{data.diaryContent}</S.Summary>
+              </S.TimeSummaryContainer>
+            </S.ListBox>
+          );
+        })
+      )}
     </G.BodyContainer>
   );
 }

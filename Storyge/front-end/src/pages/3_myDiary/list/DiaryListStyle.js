@@ -43,7 +43,7 @@ export const Emotion = styled.div`
 `;
 
 export const TimeSummaryContainer = styled.div`
-  margin: 5px;
+  margin: 5px 5px 5px 12px;
   width: 80%;
 `;
 

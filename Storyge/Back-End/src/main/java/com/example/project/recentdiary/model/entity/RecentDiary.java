@@ -35,7 +35,7 @@ public class RecentDiary {
 
     @PrePersist
     private void createdAt(){
-        endsAt = LocalDateTime.now().plusHours(24);
+        endsAt = diaryId.getCreatedAt().plusHours(24);
     }
 
 }

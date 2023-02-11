@@ -2,13 +2,11 @@ import dayjs from "dayjs";
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "./Calendar.css"; // css import
-import datas from "./CalendarData";
 import Emoji from "components/emoji/Emoji";
 import { useNavigate } from "react-router";
 import { getMyCalendar } from "api/calendar/getMyCalendar";
 
 function CustomCalendar(props) {
-  const [emotionData] = useState(datas);
   const movePage = useNavigate();
 
   //-100 이라면 자기 자신이 보는 것. 그 외에는 다른 사용자의 userId

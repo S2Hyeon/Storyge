@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import data from "./DiaryListData";
 import * as G from "../../../styles/index";
 import * as S from "./DiaryListStyle";
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";

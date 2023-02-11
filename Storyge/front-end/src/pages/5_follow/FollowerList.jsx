@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import * as S from "./Follow.js";
 import { getCookie } from "./../../utils/Cookies";
 import Api from "lib/customApi";
+import { useNavigate } from "react-router-dom";
 
 export default function FollowerList() {
   const [deleteFollow, setdeleteFollow] = useState(true);
   const [followerList, setFollowerList] = useState([]);
   const [newList, setNewList] = useState([]);
+
+  const movePage = useNavigate();
 
   //처음 렌더링이 될 때만 실행
   useEffect(() => {
@@ -97,6 +100,10 @@ export default function FollowerList() {
     }
   };
 
+  function goOtherPage(id, e) {
+    movePage("/otherpage");
+  }
+
   return (
     <S.Container>
       <S.LineText>New</S.LineText>
@@ -141,8 +148,12 @@ export default function FollowerList() {
         {followerList.map((follower) => {
           return (
             <S.Profile key={follower.userId}>
-              <S.Img profile={follower.profileImg}></S.Img>
-              <S.Text>{follower.nickname}</S.Text>
+              <S.AllBox onClick={(e) => {
+                      goOtherPage(follower.userId, e);
+                    }}>
+                <S.Img profile={follower.profileImg}></S.Img>
+                <S.Text>{follower.nickname}</S.Text>
+              </S.AllBox>
               <S.BtnBox>
                 <S.FollowBtn
                   borderColor="var(--color-warning)"

@@ -1,9 +1,9 @@
 import React, {useState, useRef} from "react";
 import "react-image-upload/dist/index.css";
 import { AiTwotoneCamera } from "react-icons/ai";
-import * as S from "./../profileBox/ProfileImgBoxStyle";
+import * as S from "./ProfileImgBoxStyle";
 
-export default function ProfileBoxImg(props) {
+export default function LoginProfileBoxImg() {
 
   const [imgFile, setImgFile] = useState("");
   const imgRef = useRef();
@@ -23,8 +23,7 @@ export default function ProfileBoxImg(props) {
       <S.Box className="signup-profileImg-label" htmlFor="profileImg">
         <S.Input className="signup-profileImg-input" type="file" accept="image/*"
           id="profileImg" onChange={saveImgFile} ref={imgRef} />
-        <S.Img src={imgFile  ? imgFile  : props.profileImg} alt="프로필 이미지"/>
-
+        <S.Img src={imgFile  ? imgFile  : 'https://imhannah.me/common/img/default_profile.png'} alt="프로필 이미지"/>
         <S.Btn>
           <AiTwotoneCamera />
         </S.Btn>

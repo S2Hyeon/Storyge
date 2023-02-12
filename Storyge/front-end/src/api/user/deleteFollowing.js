@@ -1,14 +1,13 @@
 import Api from "lib/customApi";
 import { getCookie } from "utils/Cookies";
 
-export async function getIsFollowing(otherUserId) {
+export async function deleteFollowing(otherUserId) {
   try {
-    const response = await Api.get(`/following/check/${otherUserId}`, {
+    await Api.delete(`/following/${otherUserId}`, {
       headers: {
         Authorization: getCookie("token"),
       },
     });
-    return response.data;
   } catch (error) {
     console.error(error);
   }

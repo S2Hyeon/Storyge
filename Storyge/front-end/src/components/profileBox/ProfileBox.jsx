@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./../profileBox/ProfileBoxStyle.js";
 import * as G from "styles";
-import jwt_decode from "jwt-decode";
-import { getCookie } from "utils/Cookies.js";
 import { getIsFollowing } from "api/user/getIsFollowing.js";
 import { getIsWaitingConfirm } from "api/user/getIsWaitingConfirm.js";
+import { postApplyFollow } from "api/user/postApplyFollow.js";
+import { deleteFollowing } from "api/user/deleteFollowing.js";
 
 export default function ProfileBox(props) {
+  const [isStateChanged, setIsStateChanged] = useState();
   const movePage = useNavigate();
 
   //다른 사람의 profileBox인지 확인!
@@ -18,31 +19,33 @@ export default function ProfileBox(props) {
     } else {
       setIsOtherProfileBox(false);
     }
-  });
+  }, []);
 
   //다른 사람을 팔로잉하고 있는지 확인!
   const [isFollowing, setIsFollowing] = useState();
   useEffect(() => {
     async function getAndSetIsFollowing() {
-      if (isOtherProfileBox) {
+      console.log("다른 사람 페이지인가요?: ", isOtherProfileBox);
+      if (props.otherUserId != null) {
         const response = await getIsFollowing(props.otherUserId);
         setIsFollowing(response);
       }
     }
+    console.log("내가 이 사람을 팔로잉하고 있나요?", isFollowing);
     getAndSetIsFollowing();
-  }, []);
+  }, [isStateChanged]);
 
   //이미 내가 팔로우를 신청했는지 확인!
   const [isWaitingConfirm, setIsWaitingConfirm] = useState();
   useEffect(() => {
     async function getAndSetIsWaitingConfirm() {
-      if (isOtherProfileBox) {
+      if (props.otherUserId != null) {
         const response = await getIsWaitingConfirm(props.otherUserId);
         setIsWaitingConfirm(response);
       }
     }
     getAndSetIsWaitingConfirm();
-  }, []);
+  }, [isStateChanged]);
 
   function gofollowerlist() {
     movePage("/follower");
@@ -52,9 +55,15 @@ export default function ProfileBox(props) {
     movePage("/following");
   }
 
-  function doFollow() {}
+  async function doFollow() {
+    await postApplyFollow(props.otherUserId);
+    setIsStateChanged(!isStateChanged);
+  }
 
-  function doUnfollow() {}
+  async function doUnfollow() {
+    await deleteFollowing(props.otherUserId);
+    setIsStateChanged(!isStateChanged);
+  }
 
   return (
     <S.Container>
@@ -80,9 +89,7 @@ export default function ProfileBox(props) {
         ) : (
           <G.longBtnDefault onClick={doFollow}>팔로우 하기</G.longBtnDefault>
         )
-      ) : (
-        <></>
-      )}
+      ) : null}
     </S.Container>
   );
 }

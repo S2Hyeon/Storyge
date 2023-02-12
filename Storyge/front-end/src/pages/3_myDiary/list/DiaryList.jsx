@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router";
 import { getMyDiaryList } from "api/diary/getMyDiaryList";
 import Emoji from "components/emoji/Emoji";
 import dayjs from "dayjs";
+import { getOtherDiaryList } from "api/diary/getOtherDiaryList";
 
 export default function DiaryList() {
   const location = useLocation();
@@ -15,19 +16,27 @@ export default function DiaryList() {
   const [dateInfo, setDateInfo] = useState(location.state.date);
 
   //해당 날짜의 내 일기 목록들
-  const [myDiaryListData, setMyDiaryListData] = useState([]);
+  const [diaryListData, setDiaryListData] = useState([]);
 
   console.log("선택한 날짜: ", dayjs(dateInfo).format("YYYY-MM-DD"));
 
   useEffect(() => {
-    async function getAndSetMyDiaryList() {
-      const response = await getMyDiaryList(
-        dayjs(dateInfo).format("YYYY-MM-DD")
-      );
-      console.log(response);
-      setMyDiaryListData(response);
+    async function getAndSetDiaryList() {
+      if (location.state.otherId == null) {
+        const response = await getMyDiaryList(
+          dayjs(dateInfo).format("YYYY-MM-DD")
+        );
+        setDiaryListData(response);
+      } else {
+        //다른 사람의 일기리스트라면
+        const response = await getOtherDiaryList(
+          dayjs(dateInfo).format("YYYY-MM-DD"),
+          location.state.otherId
+        );
+        setDiaryListData(response);
+      }
     }
-    getAndSetMyDiaryList();
+    getAndSetDiaryList();
   }, [dateInfo]);
 
   //내 일기 상세 조회 페이지로 이동
@@ -75,10 +84,10 @@ export default function DiaryList() {
       </S.DateContainer>
 
       {/* 리스트 부분 */}
-      {myDiaryListData.length === 0 ? (
+      {diaryListData.length === 0 ? (
         <div>이 날의 작성된 일기가 없어요!</div>
       ) : (
-        myDiaryListData.map((data, index) => {
+        diaryListData.map((data, index) => {
           return (
             <S.ListBox key={index} onClick={() => goDiaryDetail(data.diaryId)}>
               <Emoji emotion={data.emoticonName} thisWidth="13%" />

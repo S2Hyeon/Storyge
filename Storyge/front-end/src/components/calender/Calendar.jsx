@@ -5,6 +5,7 @@ import "./Calendar.css"; // css import
 import Emoji from "components/emoji/Emoji";
 import { useNavigate } from "react-router";
 import { getMyCalendar } from "api/calendar/getMyCalendar";
+import { getOtherCalendar } from "api/calendar/getOtherCalendar";
 
 function CustomCalendar(props) {
   const movePage = useNavigate();
@@ -21,7 +22,8 @@ function CustomCalendar(props) {
         const response = await getMyCalendar(month);
         setMonthEmotion(response);
       } else {
-        console.log("다른 사람 데이터 받아오기");
+        const response = await getOtherCalendar(month, userId);
+        setMonthEmotion(response);
       }
     }
     getAndSetCalendar();
@@ -34,7 +36,7 @@ function CustomCalendar(props) {
     }
     //2. 지금 달력이 다른 사용자라면 다른 사용자 일기 목록 페이지로 이동
     else {
-      movePage("/otherdiarylist", { state: { date: date, otherId: userId } });
+      movePage("/diarylist", { state: { date: date, otherId: userId } });
     }
   }
 

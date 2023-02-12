@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 100%;
   height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 `;
 
 export const Img = styled.img`
@@ -16,5 +16,10 @@ export const Img = styled.img`
 export const Oops = styled.div`
   font-family: "S-CoreDream-6Bold";
   font-size: 25px;
+  margin: 5px;
+`;
+
+export const Text = styled.div`
+  font-family: "S-CoreDream-4Regular";
   margin: 5px;
 `;

@@ -174,3 +174,18 @@ export const CommentContent = styled.div`
   // border: 1px solid purple;
   margin: 0 0 5px 0;
 `;
+
+export const Row = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const InfoBtn = styled.button`
+  background-color: ${(props) => props.color};
+  border-radius: 100px;
+  border: hidden;
+  width: 80px;
+  height: 35px;
+  font-size: 16px;
+  margin: 0 5px 0 5px;
+`;

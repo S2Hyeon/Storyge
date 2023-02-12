@@ -9,17 +9,9 @@ import { OpenAI } from "../../../openai/OpenAI";
 
 import { getCount } from "api/diary/getCount";
 
-// async function getInfo(content, setModalOpen) {
-//   const data1 = await OpenAI({ input: content, type: 1 });
-//   const data2 = await OpenAI({ input: data1[1], type: 2 });
-//   console.log(data1, data2);
-//   setModalOpen(true);
-//   return [data1[0], data2];
-// }
 export default function Creatediary() {
   const navigate = useNavigate();
   const contentRef = useRef();
-
   const [count, setCount] = useState(0);
   const [content, setContent] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
@@ -29,12 +21,12 @@ export default function Creatediary() {
   useEffect(() => {
     async function getDiaryCount() {
       const response = await getCount();
-      console.log("다이어리 작성 횟수 가져오기")
+      console.log("다이어리 작성 횟수 가져오기");
       setCount(response);
       console.log("다이어리 작성 횟수 : " + count);
     }
     getDiaryCount();
-  }, [count]) 
+  }, [count]);
 
   async function getInfo(content, setModalOpen) {
     await OpenAI({ input: content, type: 1 })
@@ -46,7 +38,7 @@ export default function Creatediary() {
             setSpinner(false);
             setModalOpen(true);
             setInfo([data1[0], data2]);
-            console.log("셋 인포는 뭔가요?")
+            console.log("셋 인포는 뭔가요?");
             console.log(info[0]);
             console.log(info[1]);
           })
@@ -80,11 +72,8 @@ export default function Creatediary() {
       } else {
         alert("하루 작성 가능한 일기를 모두 작성함");
       }
-      
     }
   }
-
-
 
   return (
     <>
@@ -116,7 +105,12 @@ export default function Creatediary() {
         </div>
       </heyhey.container>
       {modalOpen && (
-        <Modal setModalOpen={setModalOpen} diary={ content }  content={info} num={0} />
+        <Modal
+          setModalOpen={setModalOpen}
+          diary={content}
+          content={info}
+          num={0}
+        />
       )}
       {spinner && <Modal setModalOpen={setModalOpen} content={info} num={2} />}
     </>

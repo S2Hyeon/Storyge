@@ -173,7 +173,7 @@ function AppRouter() {
           }
         />
 
-        <Route path="/*" element={<ErrorPage />} />
+        <Route path="/*" element={<ErrorPage text="404"/>} />
       </Route>
     </Routes>
   );

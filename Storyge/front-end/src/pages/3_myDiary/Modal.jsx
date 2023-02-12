@@ -20,8 +20,8 @@ function Modal({ setModalOpen, diary, content, num }) {
     // // 작성된 일기와 분석 내용 서버에 전송
     async function writeDiary() {
         await postDiary(diary, content,);
-        setCommentInputData("");
-        setChangedCount(changedCount + 1);
+        // setCommentInputData("");
+        // setChangedCount(changedCount + 1);
     }
 
 

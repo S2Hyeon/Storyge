@@ -7,12 +7,14 @@ import {
 } from "../1_login/OAuth.js";
 
 import logo from "./../../assets/logo1.png";
-
+import { AnimateOnChange } from 'react-animation'
 
 export default function Login() {
   return (
     <S.Login>
-      <S.Logo src={logo}></S.Logo>
+      <AnimateOnChange durationOut="1000">
+        <S.Logo src={logo}></S.Logo>
+      </AnimateOnChange>
 
       <S.LinkBtn href={GOOGLE_AUTH_URL} onClick={() => alert("google")}>
         <S.GoogleImg

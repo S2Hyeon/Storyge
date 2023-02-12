@@ -11,8 +11,9 @@ import java.util.Optional;
 @Repository
 public interface RecentDiaryRepository extends JpaRepository<RecentDiary, Long> {
 
-    Optional<RecentDiary> findByUserId(User userId);
-    Optional<RecentDiary> findByDiaryId(Diary diary);
-    void deleteByUserId(User user);
+    Optional<RecentDiary> findByUserId(Long userId);
+    Optional<RecentDiary> findByDiaryId(Long diaryId);
+    void deleteByUserId(Long userId);
+    void deleteByDiaryId(Long diaryId);
 
 }

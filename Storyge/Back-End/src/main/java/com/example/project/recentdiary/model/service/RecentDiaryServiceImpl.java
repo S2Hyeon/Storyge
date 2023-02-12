@@ -33,87 +33,79 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
     private final DiaryRepository diaryRepository;
 
 
+    // recentdiary에 insert
     @Override
     public void insertRecentDiary(Long user, Long diary) {
+        // user: 일기 쓴 사람, diary: 쓴 다이어리 id
 
-        User diaryUser = userRepository.findById(user).orElse(null);
         Diary insertDiary =diaryRepository.findById(diary).orElse(null);
 
         if(insertDiary.getScope()==1){ // 공개일때
-            RecentDiary recent = recentDiaryRepository.findByUserId(diaryUser).orElse(null);
+            RecentDiary recent = recentDiaryRepository.findByUserId(user).orElse(null);
             if(recent!=null){
-                 recentDiaryRepository.deleteByUserId(diaryUser); // 이미 24시간 내에 작성한 일기가 있다면 삭제
+                 recentDiaryRepository.deleteByUserId(user); // 이미 24시간 내에 작성한 일기가 있다면 삭제
             }
             recentDiaryRepository.save(RecentDiary.builder()
-                    .userId(diaryUser)
-                    .diaryId(insertDiary)
+                    .userId(user)
+                    .diaryId(diary)
                     .build());
 
         }
     }
 
+    // 팔로잉의 일기를 읽는다
     @Override
     public Boolean insertReadDiary(Long userId, Long diaryId) {
 
-        User currentUser = userRepository.findById(userId).orElse(null); // 현재 user -> 변경해야 함
-        Diary nowDiary = diaryRepository.findById(diaryId).orElse(null); // 현재 읽은 diary
+        /*
+            사용자가 일기를 읽는다
+            이미 읽었는지 확인을 한다
+            만약 읽지 않았다면 read diary에 추가
+         */
 
-//        User diaryUser = userRepository.findById(nowDiary.getDiaryId()).orElse(null); // 다이어리 작성한 userid
-        RecentDiary diary = recentDiaryRepository.findByDiaryId(nowDiary).orElse(null); // recent diary에 있는지 확인
+        RecentDiary diary = recentDiaryRepository.findByDiaryId(diaryId).orElse(null); // recent diary에 있는지 확인
+
         if(diary==null ||(diary.getEndsAt().isBefore(LocalDateTime.now()))){ // recent diary에 존재하지 않거나 이미 24시간이 지난 diary
             return false;
         }
+
         else{
-            if(diary.getUserId()!=currentUser){ // 현재 user와 글 쓴 user가 다름
-                readDiaryRepository.save(ReadDiary.builder()
-                        .userId(currentUser)
-                        .recentId(diary)
-                        .build());
+            if(diary.getUserId()!=userId){ // 현재 user와 글 쓴 user가 다름
+                Long recentDiaryId = diary.getRecentId();
+
+                if(readDiaryRepository.findByUserIdAndAndRecentId(userId, recentDiaryId).isEmpty()){ // 아직 안읽었음
+                        readDiaryRepository.save(ReadDiary.builder()
+                            .userId(userId)
+                            .recentId(recentDiaryId)
+                            .build());
+                }
             }
+
             return true;
         }
-
-
-
+        
     }
-
+    
+    
+    // recent diary 가져오기
     @Override
     public List<RecentDiaryResponseDto> selectAllRecentDiary(Long userId) {
-//        User user = null; // 현재 로그인한 사용자
+
         User user =userRepository.findById(userId).orElse(null);
         if(followRepository.findAllByFollower(userId).size()==0){
             return null;
         }
-//        List<Follow> followList = followRepository.findByFollower(user);
-//        List<RecentDiaryResponseDto> recentDiaryList = new ArrayList<>();
-//        int i=0;
-//        for(Follow follow:followList){
-//            RecentDiary recentDiary = recentDiaryRepository.findByUserId(follow.getFollowing()).orElse(null);
-//            if(recentDiary.getCreatedAt().plusHours(24).compareTo(LocalDateTime.now())>0){
-//                recentDiaryRepository.delete(recentDiary);
-//            }
-//            else{
-//                recendDiaryList.add(RecentDiaryResponseDto.builder()
-//                        .diaryId(recentDiary.getDiaryId().getDiaryId())
-//                        .nickname(recentDiary.getUserId().getNickname())
-//                        .profileImg(recentDiary.getUserId().getProfileImg())
-//                        .build());
-//            }
-//
-//        }
-
-
-        List<RecentDiary> recentDiaryList = recentDiaryCustomRepository.selectAllRecentDiaryByFollowing(user);
+        
+        List<RecentDiary> recentDiaryList = recentDiaryCustomRepository.selectAllRecentDiaryByFollowing(userId); // 팔로우 하는 사용자의 recentdiary 찾기
         List<RecentDiaryResponseDto> recentDiaryDtoList = new ArrayList<>();
         int i=0;
         for(RecentDiary recentDiary : recentDiaryList){
-            RecentDiary recent = recentDiaryRepository.findById(recentDiary.getRecentId()).orElse(null);
 
-            if(readDiaryRepository.findByUserIdAndAndRecentId(user,recent)==null){
+            if(readDiaryRepository.findByUserIdAndAndRecentId(userId,recentDiary.getRecentId()).isEmpty()){
                 recentDiaryDtoList.add(RecentDiaryResponseDto.builder()
-                        .diaryId(recentDiary.getDiaryId().getDiaryId())
-                        .profileImg(recentDiary.getUserId().getProfileImg())
-                        .nickname(recentDiary.getUserId().getNickname())
+                        .diaryId(recentDiary.getDiaryId())
+                        .profileImg(recentDiary.getUser().getProfileImg())
+                        .nickname(recentDiary.getUser().getNickname())
                         .build());
                 i++;
             }

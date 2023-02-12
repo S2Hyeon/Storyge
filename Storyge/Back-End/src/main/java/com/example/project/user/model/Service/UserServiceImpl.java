@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> searchUser(SearchParam param) {
-        return userRepository.findByNicknameContaining(param.getNickname()).stream().map(this::toDto).collect(Collectors.toList());
+    public List<UserDto> searchUser(String nickname) {
+        return userRepository.findByNicknameContaining(nickname).stream().map(this::toDto).collect(Collectors.toList());
     }
 }

@@ -21,12 +21,18 @@ public class ReadDiary {
     @Column(name="read_id")
     private Long readId;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User userId;
+    @Column(name="user_id")
+    private Long userId;
 
     @ManyToOne
-    @JoinColumn(name="recent_id")
-    private RecentDiary recentId;
+    @JoinColumn(name="user_id", insertable = false, updatable = false)
+    private User user;
+
+    @Column(name="recent_id")
+    private Long recentId;
+
+    @ManyToOne
+    @JoinColumn(name="recent_id", insertable = false, updatable = false)
+    private RecentDiary recentDiary;
 
 }

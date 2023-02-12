@@ -7,7 +7,7 @@ import axios from "axios";
 // import Spinner from "../../components/spinner/Spinner";
 import ReactPlayer from "react-player";
 import Lottie from "../../api/animation/Lottie.jsx";
-import UseSpeech from "./UseSpeech.jsx"
+// import UseSpeech from "./UseSpeech.jsx"
 
 // import { reject } from "q";
 // import { resolve } from "path";
@@ -57,7 +57,6 @@ export default function Music() {
       {!youtubeOpen ? (
         <div>
           <Lottie />
-          {/* <UseSpeech /> */}
         </div>
 
       ) : (    <G.BodyContainer>

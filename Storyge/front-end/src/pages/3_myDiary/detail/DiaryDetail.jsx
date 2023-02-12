@@ -1,109 +1,109 @@
-import React, { useState, useEffect } from "react";
-import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
-import { AiOutlineDelete } from "react-icons/ai";
-import { useLocation } from "react-router";
+import React, { useState, useEffect } from 'react'
+import { BsFillCaretDownFill, BsFillCaretUpFill } from 'react-icons/bs'
+import { AiOutlineDelete } from 'react-icons/ai'
+import { useLocation } from 'react-router'
 
-import * as S from "./DiaryDetailStyle";
-import * as G from "styles/index";
+import * as S from './DiaryDetailStyle'
+import * as G from 'styles/index'
 
-import Emoji from "components/emoji/Emoji";
-import { getMyDiaryDetail } from "api/diary/getMyDiaryDetail";
-import { getUserId } from "api/user/getUserId";
-import { getComment } from "api/comment/getComment";
-import dayjs from "dayjs";
-import { postComment } from "api/comment/postComment";
-import { deleteReview } from "api/comment/deleteComment";
-import { deleteDiary } from "api/diary/deleteDiary";
-import { putDiary } from "api/diary/putDiary";
-import { useNavigate } from "react-router-dom";
+import Emoji from 'components/emoji/Emoji'
+import { getMyDiaryDetail } from 'api/diary/getMyDiaryDetail'
+import { getUserId } from 'api/user/getUserId'
+import { getComment } from 'api/comment/getComment'
+import dayjs from 'dayjs'
+import { postComment } from 'api/comment/postComment'
+import { deleteReview } from 'api/comment/deleteComment'
+import { deleteDiary } from 'api/diary/deleteDiary'
+import { putDiary } from 'api/diary/putDiary'
+import { useNavigate } from 'react-router-dom'
 
 export default function DiaryDetail() {
-  const movePage = useNavigate();
+  const movePage = useNavigate()
   async function crud(event) {
-    if (event === "delete") {
-      await deleteDiary(diaryId);
-      movePage(-1);
-    } else if (event === "put") {
-      movePage("/modifyDiary", { state: { already: myDiaryDetailData } });
+    if (event === 'delete') {
+      await deleteDiary(diaryId)
+      movePage(-1)
+    } else if (event === 'put') {
+      movePage('/modifyDiary', { state: { already: myDiaryDetailData } })
     } else {
       // await putDiary();
-      setIsOpen(!isOpen);
-      console.log(isOpen);
+      setIsOpen(!isOpen)
+      console.log(isOpen)
     }
   }
-  const location = useLocation();
+  const location = useLocation()
 
-  const [userNumber, setUserNumber] = useState("");
-  const [isChecked, setIsChecked] = useState(true);
-  const [diaryId] = useState(location.state.diaryId); //글 번호
-  console.log("현재 글번호: ", diaryId);
+  const [userNumber, setUserNumber] = useState('')
+  const [isChecked, setIsChecked] = useState(true)
+  const [diaryId] = useState(location.state.diaryId) //글 번호
+  console.log('현재 글번호: ', diaryId)
 
   //다이어리 세부 내용 가져오기
-  const [myDiaryDetailData, setMyDiaryDetailData] = useState();
+  const [myDiaryDetailData, setMyDiaryDetailData] = useState()
   const [isOpen, setIsOpen] = useState(
-    myDiaryDetailData && myDiaryDetailData.scope === 0 ? true : false
-  );
-  console.log(myDiaryDetailData);
+    myDiaryDetailData && myDiaryDetailData.scope === 0 ? true : false,
+  )
+  console.log(myDiaryDetailData)
   useEffect(() => {
     async function getMyUserId() {
-      const response = await getUserId();
-      console.log("유저 번호");
-      console.log(response.userId);
-      setUserNumber(response.userId);
-      console.log("유저 번호 : " + userNumber);
+      const response = await getUserId()
+      console.log('유저 번호')
+      console.log(response.userId)
+      setUserNumber(response.userId)
+      console.log('유저 번호 : ' + userNumber)
     }
 
     async function getAndSetMyDiaryDetail() {
-      const response = await getMyDiaryDetail(diaryId);
-      console.log(response);
-      setMyDiaryDetailData(response);
-      console.log(myDiaryDetailData);
+      const response = await getMyDiaryDetail(diaryId)
+      console.log(response)
+      setMyDiaryDetailData(response)
+      console.log(myDiaryDetailData)
     }
 
-    getMyUserId();
-    getAndSetMyDiaryDetail();
-  }, []);
+    getMyUserId()
+    getAndSetMyDiaryDetail()
+  }, [])
 
-  const [changedCount, setChangedCount] = useState(0);
+  const [changedCount, setChangedCount] = useState(0)
 
   //이 다이어리의 댓글들 가져오기
-  const [commentData, setCommentData] = useState([]);
+  const [commentData, setCommentData] = useState([])
   useEffect(() => {
     async function getAndSetCommentData() {
-      const response = await getComment(diaryId);
-      console.log(response);
-      setCommentData(response);
+      const response = await getComment(diaryId)
+      console.log(response)
+      setCommentData(response)
     }
-    getAndSetCommentData();
-  }, [changedCount]);
+    getAndSetCommentData()
+  }, [changedCount])
 
   //댓글 쓰기
-  const [commentInputData, setCommentInputData] = useState("");
+  const [commentInputData, setCommentInputData] = useState('')
   function onChangeCommentInput(e) {
-    setCommentInputData(e.target.value);
+    setCommentInputData(e.target.value)
   }
   //댓글 쓰고 엔터 쳤을때도 되게끔
   function onKeyUpCommentInput(e) {
-    if (e.key === "Enter") {
-      writeComment();
+    if (e.key === 'Enter') {
+      writeComment()
     }
   }
 
   //댓글 쓴거 서버로 보내기
   async function writeComment() {
-    if (commentInputData === "") {
-      window.alert("댓글 내용이 없습니다!");
+    if (commentInputData === '') {
+      window.alert('댓글 내용이 없습니다!')
     } else {
-      await postComment(diaryId, commentInputData);
-      setCommentInputData("");
-      setChangedCount(changedCount + 1);
+      await postComment(diaryId, commentInputData)
+      setCommentInputData('')
+      setChangedCount(changedCount + 1)
     }
   }
 
   async function deleteComment(reviewId, e) {
-    await deleteReview(reviewId);
-    console.log("댓글 삭제 완료");
-    setChangedCount(changedCount + 1);
+    await deleteReview(reviewId)
+    console.log('댓글 삭제 완료')
+    setChangedCount(changedCount + 1)
   }
 
   return (
@@ -120,7 +120,7 @@ export default function DiaryDetail() {
             <S.TimeContainer>
               {/* 맨 오른쪽에 시간, 맨 왼쪽에 수정, 삭제, 공개비공개 */}
               {myDiaryDetailData &&
-                dayjs(myDiaryDetailData.createdAt).format("YYYY.MM.DD HH:mm")}
+                dayjs(myDiaryDetailData.createdAt).format('YYYY.MM.DD HH:mm')}
             </S.TimeContainer>
             <S.Content>
               {myDiaryDetailData && myDiaryDetailData.diaryContent}
@@ -128,7 +128,7 @@ export default function DiaryDetail() {
           </S.ContentContiner>
         </S.Diary>
       </S.DiaryContainer>
-      <S.AnalyzedContainer minHeight={isChecked ? "30px" : "120px"}>
+      <S.AnalyzedContainer minHeight={isChecked ? '30px' : '120px'}>
         <S.Toggle fontSize="14px" onClick={() => setIsChecked((e) => !e)}>
           <S.ToggleBtnBox>
             {isChecked ? (
@@ -189,17 +189,17 @@ export default function DiaryDetail() {
               {comment.userId === userNumber ? (
                 <AiOutlineDelete
                   onClick={(e) => {
-                    deleteComment(comment.reviewId, e);
+                    deleteComment(comment.reviewId, e)
                   }}
                 />
               ) : (
-                ""
+                ''
               )}
             </S.CommentInfo>
             <S.CommentContent>{comment.reviewContent}</S.CommentContent>
           </S.CommentBox>
-        );
+        )
       })}
     </G.BodyContainer>
-  );
+  )
 }

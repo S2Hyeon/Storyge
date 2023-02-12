@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import { useSpeechRecognition } from 'react-speech-kit';
+import { useSpeechSynthesis } from 'react-speech-kit';
 
-export default function UseSpeech() {
+export default function useSpeech() {
   const [value, setValue] = useState('');
-  const { listen, listening, stop } = useSpeechRecognition({
-    onResult: (result) => {
-      setValue(result);
-    },
-  });
+  const { speak } = useSpeechSynthesis();
 
   return (
     <div>
@@ -15,10 +11,7 @@ export default function UseSpeech() {
         value={value}
         onChange={(event) => setValue(event.target.value)}
       />
-      <button onMouseDown={listen} onMouseUp={stop}>
-        🎤
-      </button>
-      {listening && <div>Go ahead I'm listening</div>}
+      <button onClick={() => speak({ text: value })}>Speak</button>
     </div>
   );
 }

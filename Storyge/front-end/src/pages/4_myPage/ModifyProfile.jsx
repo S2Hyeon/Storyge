@@ -6,6 +6,7 @@ import ProfileBoxImg from "./../../components/profileBox/ProfileImgBox";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { getCookie } from "./../../utils/Cookies";
+import { putUser } from "api/user/putUser";
 
 export default function ModifyProfile() {
   const [userNickname, setUserNickname] = useState("");
@@ -23,21 +24,10 @@ export default function ModifyProfile() {
 
   // 백 로직 구현되면 다시 확인
   async function onsubmit() {
-    try {
-      alert("버튼 클릭");
-      await axios.put("https://storyge.xyz/api/user", {
-        headers: {
-          Authorization: getCookie("token"),
-        },
-        params: {
-          nickname: userNickname,
-          profile: userImg,
-        },
-      });
-      console.log("put 실행");
-    } catch (err) {
-      console.log(err);
-    }
+    console.log("제출 버튼 클릭");
+    console.log("이미지 링크 : " + userImg);
+    console.log("수정된 닉네임 : " + userNickname);
+    putUser(userImg, userNickname);
   }
 
   //처음 렌더링이 될 때만 실행

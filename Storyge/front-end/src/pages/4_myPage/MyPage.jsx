@@ -7,6 +7,7 @@ import ProfileBox from "./../../components/profileBox/ProfileBox.jsx";
 import { useNavigate } from "react-router-dom";
 import { BsPersonCircle } from "react-icons/bs";
 import { getCookie, removeCookie } from "./../../utils/Cookies";
+import Chatbot from "api/chatbot/Chatbot";
 
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -101,6 +102,7 @@ export default function MyPage({ setToken }) {
         <S.Text>프로필 수정하기</S.Text>
       </S.Menu>
       <G.longBtnDefault onClick={logout}>로그아웃</G.longBtnDefault>
+        <Chatbot />
     </G.BodyContainer>
   );
 }

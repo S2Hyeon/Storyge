@@ -7,6 +7,7 @@ import axios from "axios";
 // import Spinner from "../../components/spinner/Spinner";
 import ReactPlayer from "react-player";
 import Lottie from "../../api/animation/Lottie.jsx";
+import UseSpeech from "./UseSpeech.jsx"
 
 // import { reject } from "q";
 // import { resolve } from "path";
@@ -38,6 +39,9 @@ export default function Music() {
         console.log(err);
       });
   }
+
+
+  
   return (
     <G.BodyContainer>
       <S.Rectangle
@@ -51,7 +55,11 @@ export default function Music() {
         <S.Text>분석하기</S.Text>
       </G.longBtnDefault>
       {!youtubeOpen ? (
-      <Lottie />
+        <div>
+          <Lottie />
+          {/* <UseSpeech /> */}
+        </div>
+
       ) : (    <G.BodyContainer>
         {/* Youtube Player 자동실행 */}
         <ReactPlayer

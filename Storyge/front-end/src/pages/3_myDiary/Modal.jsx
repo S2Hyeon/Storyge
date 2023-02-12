@@ -11,18 +11,29 @@ import scared from "./../../assets/emotionIcons/scared.png";
 import soso from "./../../assets/emotionIcons/soso.png";
 import surprised from "./../../assets/emotionIcons/surprised.png";
 
-function Modal({ setModalOpen, content, num }) {
+import { postDiary } from "api/diary/postDiary";
+
+function Modal({ setModalOpen, diary, content, num }) {
   const [isChecked, setIsChecked] = useState(num);
   const emotionList = [angry, aversion, happy, sad, scared, soso, surprised];
+
+    // // 작성된 일기와 분석 내용 서버에 전송
+    async function writeDiary() {
+        await postDiary(diary, content,);
+        setCommentInputData("");
+        setChangedCount(changedCount + 1);
+    }
+
 
   return (
     <S.Modal>
       {isChecked === 0 ? (
         <S.ModalItems>
+          <div>{content }</div>
           <p>우리가 분석한 감정이에요! 😍</p>
           <Emoji emotion={content[0]} thisWidth="30px" />
           <S.ModalBtnDiv>
-            <button onClick={() => setModalOpen(false)}>맞워요</button>
+            <button onClick={writeDiary}>맞워요</button>
             <button onClick={() => setIsChecked(1)}>않이요</button>
           </S.ModalBtnDiv>
         </S.ModalItems>

@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import * as S from "./MyDiaryStyle";
 import Spinner from "../../components/spinner/Spinner";
 import Emoji from "components/emoji/Emoji";
+import { useNavigate } from "react-router-dom";
 
 import { postDiary } from "api/diary/postDiary";
+import { putDiary } from "api/diary/putDiary";
 
-function Modal({ diary, content, num }) {
+function Modal({ diary, content, num, classify }) {
+  const movePage = useNavigate();
   const [reccomendEmotion, setRecommendEmotion] = useState(
     content && content[0]
   );
@@ -21,8 +24,14 @@ function Modal({ diary, content, num }) {
   ];
   // // 작성된 일기와 분석 내용 서버에 전송
   async function writeDiary() {
+    // const curDate = dayjs(new Date()).format("YYYY-MM-DD");
     console.log(diary, [reccomendEmotion, content[1]]);
-    await postDiary(diary, [reccomendEmotion, content[1]]);
+    if (classify === "create") {
+      await postDiary(diary, [reccomendEmotion, content[1]]);
+    } else {
+      await putDiary(diary, [reccomendEmotion, content[1]]);
+    }
+    movePage(`/diarylist`, { state: { date: new Date() } });
   }
 
   return (

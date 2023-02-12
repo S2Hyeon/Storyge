@@ -14,8 +14,23 @@ import dayjs from "dayjs";
 import { postComment } from "api/comment/postComment";
 import { deleteReview } from "api/comment/deleteComment";
 import { deleteDiary } from "api/diary/deleteDiary";
+import { putDiary } from "api/diary/putDiary";
+import { useNavigate } from "react-router-dom";
 
 export default function DiaryDetail() {
+  const movePage = useNavigate();
+  async function crud(event) {
+    if (event === "delete") {
+      await deleteDiary(diaryId);
+      movePage(-1);
+    } else if (event === "put") {
+      movePage("/modifyDiary", { state: { already: myDiaryDetailData } });
+    } else {
+      // await putDiary();
+      setIsOpen(!isOpen);
+      console.log(isOpen);
+    }
+  }
   const location = useLocation();
 
   const [userNumber, setUserNumber] = useState("");
@@ -25,6 +40,10 @@ export default function DiaryDetail() {
 
   //다이어리 세부 내용 가져오기
   const [myDiaryDetailData, setMyDiaryDetailData] = useState();
+  const [isOpen, setIsOpen] = useState(
+    myDiaryDetailData && myDiaryDetailData.scope === 0 ? true : false
+  );
+  console.log(myDiaryDetailData);
   useEffect(() => {
     async function getMyUserId() {
       const response = await getUserId();
@@ -130,9 +149,23 @@ export default function DiaryDetail() {
         )}
       </S.AnalyzedContainer>
       <S.Row>
-        <S.InfoBtn onClick={() => deleteDiary(diaryId)}>삭제</S.InfoBtn>
-        <S.InfoBtn>수정</S.InfoBtn>
-        <S.InfoBtn>공개</S.InfoBtn>
+        <S.InfoBtn onClick={(e) => crud(e.target.value)} value="delete">
+          삭제
+        </S.InfoBtn>
+        {myDiaryDetailData && myDiaryDetailData.updateCnt === 0 ? (
+          <S.InfoBtn onClick={(e) => crud(e.target.value)} value="put">
+            수정
+          </S.InfoBtn>
+        ) : null}
+        {isOpen ? (
+          <S.InfoBtn onClick={(e) => crud(e.target.value)} value="theOther">
+            공개
+          </S.InfoBtn>
+        ) : (
+          <S.InfoBtn onClick={(e) => crud(e.target.value)} value="theOther">
+            비공개
+          </S.InfoBtn>
+        )}
       </S.Row>
       <S.CommentWriteBox>
         <S.CommentWrite

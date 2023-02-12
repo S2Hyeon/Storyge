@@ -1,19 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Clock from "react-live-clock";
 import Modal from "../Modal";
-import * as heyhey from "./DiaryCreateStyle";
+import * as heyhey from "./DiaryModifyStyle";
 import * as G from "../../../styles/index";
 import Toggle from "../Toggle";
 import { OpenAI } from "../../../openai/OpenAI";
 
 import { getCount } from "api/diary/getCount";
 
-export default function Creatediary() {
+export default function Modifydiary() {
+  const location = useLocation();
+  const [already] = useState(location.state.already);
   const navigate = useNavigate();
   const contentRef = useRef();
   const [count, setCount] = useState(0);
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(already.diaryContent);
   const [modalOpen, setModalOpen] = useState(false);
   const [info, setInfo] = useState(["emotion", "comment"]);
   const [spinner, setSpinner] = useState(false);
@@ -89,7 +91,9 @@ export default function Creatediary() {
             onChange={onChange}
           />
           <heyhey.CardFoot height="30px" backgroundColor="var(--color-white)">
-            <heyhey.CountDiary>{content.length} / 100</heyhey.CountDiary>
+            <heyhey.CountDiary>
+              {content && content.length} / 100
+            </heyhey.CountDiary>
             <Toggle />
           </heyhey.CardFoot>
         </heyhey.card>
@@ -110,7 +114,7 @@ export default function Creatediary() {
           diary={content}
           content={info}
           num={0}
-          classify="create"
+          classify="modify"
         />
       )}
       {spinner && <Modal setModalOpen={setModalOpen} content={info} num={2} />}

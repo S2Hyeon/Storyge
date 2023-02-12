@@ -2,6 +2,15 @@ import { Configuration, OpenAIApi } from "openai";
 
 export const OpenAI = async ({ input, type }) => {
   let result = "";
+  const emotionList = [
+    "angry",
+    "aversion",
+    "happy",
+    "sad",
+    "scared",
+    "soso",
+    "surprised",
+  ];
 
   const configuration = new Configuration({
     apiKey: process.env.REACT_APP_OPENAI_API_KEY,
@@ -86,8 +95,13 @@ export const OpenAI = async ({ input, type }) => {
     let e = d[0].trim();
 
     // result return
-    const emotion = e.toLowerCase();
+    let emotion = e.toLowerCase();
     const comment = b.split(": ")[1];
+    emotionList.map((target) => {
+      if (emotion.includes(target)) {
+        emotion = target;
+      }
+    });
 
     return [emotion, comment];
   } else {

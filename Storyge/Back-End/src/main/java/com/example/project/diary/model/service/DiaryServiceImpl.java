@@ -2,10 +2,7 @@ package com.example.project.diary.model.service;
 
 import com.example.project.daily_emotion.model.entity.DailyEmotion;
 import com.example.project.daily_emotion.model.service.DailyEmotionService;
-import com.example.project.diary.model.dto.DailyEmotionStatistic;
-import com.example.project.diary.model.dto.DiaryDto;
-import com.example.project.diary.model.dto.DiaryUpdateParam;
-import com.example.project.diary.model.dto.EmotionStatistic;
+import com.example.project.diary.model.dto.*;
 import com.example.project.diary.model.entity.Diary;
 import com.example.project.diary.model.entity.DiaryCount;
 import com.example.project.diary.model.repository.DiaryCountRepository;
@@ -42,8 +39,8 @@ public class DiaryServiceImpl implements DiaryService {
 
 
     @Override
-    public boolean insertDiary(DiaryDto diaryDto) {
-        Optional<User> optionalUser = userRepository.findById(diaryDto.getUserId());
+    public boolean insertDiary(Long userId, DiaryRequestDto diaryRequestDto) {
+        Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isEmpty()) {
             return false;
         }
@@ -64,24 +61,21 @@ public class DiaryServiceImpl implements DiaryService {
         // 일기 작성 개수 증가
         diaryCount.updateCount(currentCount + 1);
 
-        // To DO : 문장 분석 결과 가져오기
-        diaryDto.setAnalizedResult("문장 분석 결과 테스트");
-
-        diaryDto.setCreatedAt(LocalDateTime.now());
-        Diary diary = toEntity(diaryDto);
+        Diary diary = toEntity(diaryRequestDto);
+        diary.setUserId(userId);
+        diary.setCreatedAt(LocalDateTime.now());
         diaryRepository.save(diary);
 
         recentDiaryService.insertRecentDiary(user.getUserId(), diary.getDiaryId()); // 최근 다이어리 저장
 
-
-        long userId = diaryDto.getUserId();
-        LocalDate date = diaryDto.getCreatedAt().toLocalDate();
+        LocalDate date = diary.getCreatedAt().toLocalDate();
 
         // 오늘 평균 감정 있는지 확인
         Optional<DailyEmotion> dailyEmotion = dailyEmotionService.selectOneDailyEmotion(userId, date);
 
-        if (dailyEmotion.isPresent()) {
-            return dailyEmotionService.insertDailyEmotion(toDailyEmotionDto(diaryDto));
+        // 평균 감정 없다면 바로 등록
+        if (dailyEmotion.isEmpty()) {
+            return dailyEmotionService.insertDailyEmotion(toDailyEmotionDto(diary));
         } else {  // 평균 감정 있다면 오늘 일기 모두 가져온 뒤 평균 재계산 후 수정
             DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date).orElseThrow();
             dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.getEmoticonName());
@@ -91,12 +85,12 @@ public class DiaryServiceImpl implements DiaryService {
 
 
     @Override
-    public Optional<DiaryDto> selectOneDiary(Long diaryId) {
+    public Optional<DiaryResponseDto> selectOneDiary(Long diaryId) {
         Optional<Diary> diary = diaryRepository.findById(diaryId);
-        return diary.map(this::toDto);
+        return diary.map(this::toResponseDto);
     }
 
-    public List<DiaryDto> selectAllDailyDiary(Long userId, String stringDate) {
+    public List<DiaryResponseDto> selectAllDailyDiary(Long userId, String stringDate) {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isEmpty()) {
             return null;
@@ -106,7 +100,7 @@ public class DiaryServiceImpl implements DiaryService {
         LocalDateTime startTimeOfDay = date.atStartOfDay();
         LocalDateTime endTimeOfDay = LocalDateTime.of(date, LocalTime.MAX).withNano(0);
         List<Diary> diaryList = diaryRepository.findAllByUser_UserIdAndCreatedAtBetween(userId, startTimeOfDay, endTimeOfDay);
-        return diaryList.stream().map(this::toDto).collect(Collectors.toList());
+        return diaryList.stream().map(this::toResponseDto).collect(Collectors.toList());
     }
 
     public int selectDiaryCount(Long userId) {
@@ -193,13 +187,13 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public boolean deleteDiary(Long userId, Long diaryId) {
-        Optional<DiaryDto> diaryDto = selectOneDiary(diaryId);
-        if (diaryDto.isEmpty() || userId != diaryDto.get().getUserId()) {
+        Optional<DiaryResponseDto> diaryResponseDto = selectOneDiary(diaryId);
+        if (diaryResponseDto.isEmpty() || userId != diaryResponseDto.get().getUserId()) {
             return false;
         }
         diaryRepository.deleteById(diaryId);
 
-        LocalDate date = diaryDto.get().getCreatedAt().toLocalDate();
+        LocalDate date = diaryResponseDto.get().getCreatedAt().toLocalDate();
         Optional<DailyEmotionStatistic> dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
 
         if (dailyEmotionStatistic.isPresent())

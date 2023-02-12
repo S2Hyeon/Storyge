@@ -1,7 +1,8 @@
 package com.example.project.diary.model.service;
 
 import com.example.project.daily_emotion.model.dto.DailyEmotionDto;
-import com.example.project.diary.model.dto.DiaryDto;
+import com.example.project.diary.model.dto.DiaryRequestDto;
+import com.example.project.diary.model.dto.DiaryResponseDto;
 import com.example.project.diary.model.dto.DiaryUpdateParam;
 import com.example.project.diary.model.dto.EmotionStatistic;
 import com.example.project.diary.model.entity.Diary;
@@ -12,13 +13,13 @@ import java.util.Optional;
 public interface DiaryService {
 
     //C
-    boolean insertDiary(DiaryDto diaryDto);
+    boolean insertDiary(Long userId, DiaryRequestDto diaryDto);
 
     //R
 
-    Optional<DiaryDto> selectOneDiary(Long diaryId);
+    Optional<DiaryResponseDto> selectOneDiary(Long diaryId);
 
-    List<DiaryDto> selectAllDailyDiary(Long userId, String stringDate);
+    List<DiaryResponseDto> selectAllDailyDiary(Long userId, String stringDate);
 
     int selectDiaryCount(Long userId);
 
@@ -33,8 +34,8 @@ public interface DiaryService {
     boolean deleteDiary(Long userId, Long diaryId);
 
     // DB-> 서버
-    default DiaryDto toDto(Diary diary) {
-        return DiaryDto.builder()
+    default DiaryResponseDto toResponseDto(Diary diary) {
+        return DiaryResponseDto.builder()
                 .diaryId(diary.getDiaryId())
                 .userId(diary.getUser().getUserId())
                 .emoticonName(diary.getEmoticonName())
@@ -47,21 +48,20 @@ public interface DiaryService {
     }
 
     //서버 -> DB
-    default Diary toEntity(DiaryDto diaryDto) {
+    default Diary toEntity(DiaryRequestDto diaryRequestDto) {
         return Diary.builder()
-                .userId(diaryDto.getUserId())
-                .emoticonName(diaryDto.getEmoticonName())
-                .diaryContent(diaryDto.getDiaryContent())
-                .scope(diaryDto.getScope())
-                .analizedResult(diaryDto.getAnalizedResult())
+                .emoticonName(diaryRequestDto.getEmoticonName())
+                .diaryContent(diaryRequestDto.getDiaryContent())
+                .scope(diaryRequestDto.getScope())
+                .analizedResult(diaryRequestDto.getAnalizedResult())
                 .build();
     }
 
-    default DailyEmotionDto toDailyEmotionDto(DiaryDto diaryDto) {
+    default DailyEmotionDto toDailyEmotionDto(Diary diary) {
         return DailyEmotionDto.builder()
-                .userId(diaryDto.getUserId())
-                .emoticonName(diaryDto.getEmoticonName())
-                .createdAt(diaryDto.getCreatedAt().toLocalDate())
+                .userId(diary.getUserId())
+                .emoticonName(diary.getEmoticonName())
+                .createdAt(diary.getCreatedAt().toLocalDate())
                 .build();
     }
 }

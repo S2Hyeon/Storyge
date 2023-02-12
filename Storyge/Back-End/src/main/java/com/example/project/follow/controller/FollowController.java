@@ -34,34 +34,34 @@ public class FollowController {
     //팔로우 신청하기
     @ApiOperation(value = "팔로우 신청", notes = "상대방에게 팔로우 신청을 보낸다")
     @PostMapping("/follow-wait")
-    public ResponseEntity insertFollowWait(HttpServletRequest request, @RequestBody @ApiParam(value = "신청할 사용자의 userId(pk)")  UserIdDto userIdDto){
+    public ResponseEntity<String> insertFollowWait(HttpServletRequest request, @RequestBody @ApiParam(value = "신청할 사용자의 userId(pk)")  UserIdDto userIdDto){
 
         String token = request.getHeader(TOKEN_HEADER);
         Long userId = jwtUtil.getUserId(token);
 
         if(followService.insertFollowWait(userId, userIdDto)){ // 신청 성공
-            return new ResponseEntity(SUCCESS, HttpStatus.OK);
+            return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
         else{
             // 신청 실패
             // -> 신청하려는 상대가 존재하지 않거나 이미 팔로우 신청 중이거나 팔로우 중
-            return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
         }
     }
 
     //팔로우 수락
     @ApiOperation(value = "팔로우 수락", notes = "나에게 들어온 팔로우를 수락한다")
     @PostMapping("/follow")
-    public ResponseEntity insertFollower(HttpServletRequest request, @RequestBody @ApiParam(value = "수락할 사용자의 userId(pk)") UserIdDto userIdDto){
+    public ResponseEntity<String> insertFollower(HttpServletRequest request, @RequestBody @ApiParam(value = "수락할 사용자의 userId(pk)") UserIdDto userIdDto){
 
         String token = request.getHeader(TOKEN_HEADER);
         Long userId = jwtUtil.getUserId(token);
 
         if(followService.insertFollower(userId, userIdDto)){
-            return new ResponseEntity(SUCCESS, HttpStatus.OK);
+            return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
         else{
-            return new ResponseEntity(FAIL, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
         }
 
     }
@@ -105,6 +105,18 @@ public class FollowController {
 
         List<FollowUserInfoDto> followerList = followService.selectAllFollower(userId);
         return new ResponseEntity<>(followerList, HttpStatus.OK);
+    }
+
+    // 팔로잉 확인
+    @ApiOperation(value = "팔로잉 확인", notes = "내가 상대방을 팔로잉하는중인지 확인")
+    @GetMapping("following/check/{userId}")
+    public ResponseEntity<Boolean> checkFollow(HttpServletRequest request, @PathVariable Long userId) {
+
+        String token = request.getHeader(TOKEN_HEADER);
+        Long myId = jwtUtil.getUserId(token);
+
+        Boolean result = followService.checkFollow(myId, userId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     //팔로우 대기 삭제
@@ -160,12 +172,6 @@ public class FollowController {
             return new ResponseEntity<>(FAIL,HttpStatus.NO_CONTENT);
         }
     }
-
-
-
-
-
-
 
 
 }

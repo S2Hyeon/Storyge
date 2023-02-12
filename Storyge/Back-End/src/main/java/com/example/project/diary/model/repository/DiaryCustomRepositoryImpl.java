@@ -31,6 +31,7 @@ public class DiaryCustomRepositoryImpl implements DiaryCustomRepository {
         LocalDateTime from = date.atStartOfDay();
         LocalDateTime to = LocalDateTime.of(date, LocalTime.MAX).withNano(0);
 
+
 //        List<DailyEmotionStatistic> dailyEmotionStatisticDto = jpaQueryFactory
 //                .select(new QDailyEmotionStatistic(diary.emoticonName, diary.emoticonName.count(), diary.createdAt.max()))
 //                .from(diary)
@@ -41,14 +42,14 @@ public class DiaryCustomRepositoryImpl implements DiaryCustomRepository {
 //                .fetch();
 
 //        return dailyEmotionStatisticDto.get(0);
-        return Optional.ofNullable((DailyEmotionStatistic) jpaQueryFactory
+        return Optional.ofNullable(jpaQueryFactory
                 .select(new QDailyEmotionStatistic(diary.emoticonName, diary.emoticonName.count(), diary.createdAt.max()))
                 .from(diary)
-                .where(diary.user.userId.eq(userId), diary.createdAt.between(from, to))
+                .where(diary.userId.eq(userId), diary.createdAt.between(from, to))
                 .groupBy(diary.emoticonName)
                 .orderBy(diary.emoticonName.count().desc(), diary.createdAt.max().desc())
                 .limit(1)
-                .fetch());
+                .fetchOne());
     }
 
     @Override

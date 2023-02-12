@@ -13,6 +13,7 @@ import { getComment } from "api/comment/getComment";
 import dayjs from "dayjs";
 import { postComment } from "api/comment/postComment";
 import { deleteReview } from "api/comment/deleteComment";
+import { deleteDiary } from "api/diary/deleteDiary";
 
 export default function DiaryDetail() {
   const location = useLocation();
@@ -27,7 +28,7 @@ export default function DiaryDetail() {
   useEffect(() => {
     async function getMyUserId() {
       const response = await getUserId();
-      console.log("유저 번호")
+      console.log("유저 번호");
       console.log(response.userId);
       setUserNumber(response.userId);
       console.log("유저 번호 : " + userNumber);
@@ -64,7 +65,7 @@ export default function DiaryDetail() {
   }
   //댓글 쓰고 엔터 쳤을때도 되게끔
   function onKeyUpCommentInput(e) {
-    if (e.key == "Enter") {
+    if (e.key === "Enter") {
       writeComment();
     }
   }
@@ -79,7 +80,6 @@ export default function DiaryDetail() {
       setChangedCount(changedCount + 1);
     }
   }
-
 
   async function deleteComment(reviewId, e) {
     await deleteReview(reviewId);
@@ -129,7 +129,11 @@ export default function DiaryDetail() {
           </S.Analyzed>
         )}
       </S.AnalyzedContainer>
-
+      <S.Row>
+        <S.InfoBtn onClick={() => deleteDiary(diaryId)}>삭제</S.InfoBtn>
+        <S.InfoBtn>수정</S.InfoBtn>
+        <S.InfoBtn>공개</S.InfoBtn>
+      </S.Row>
       <S.CommentWriteBox>
         <S.CommentWrite
           placeholder="댓글 쓰기"
@@ -149,9 +153,15 @@ export default function DiaryDetail() {
                 <S.CommentName>{comment.nickname}</S.CommentName>
                 <S.CommentTime>{comment.createdAt}</S.CommentTime>
               </S.CommentNameTime>
-              {comment.userId == userNumber ? <AiOutlineDelete onClick={(e) => {
+              {comment.userId === userNumber ? (
+                <AiOutlineDelete
+                  onClick={(e) => {
                     deleteComment(comment.reviewId, e);
-                  }} /> : ""}
+                  }}
+                />
+              ) : (
+                ""
+              )}
             </S.CommentInfo>
             <S.CommentContent>{comment.reviewContent}</S.CommentContent>
           </S.CommentBox>

@@ -151,8 +151,8 @@ public class DiaryController {
     }
 
     @ApiOperation(value = "일기 삭제", notes = "선택한 일기를 삭제한다 \n diaryId : 1")
-    @DeleteMapping("/diary")
-    public ResponseEntity<String> deleteDiary(Long diaryId, HttpServletRequest request){
+    @DeleteMapping("/diary/{diaryId}")
+    public ResponseEntity<String> deleteDiary(@PathVariable Long diaryId, HttpServletRequest request){
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
         if(diaryService.deleteDiary(userId, diaryId)) {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);

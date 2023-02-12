@@ -1,14 +1,13 @@
 import Api from "lib/customApi";
 import { getCookie } from "utils/Cookies";
 
-export async function getOtherCalendar(month, userId) {
+export async function getOtherDiaryList(date, otherUserId) {
   try {
-    const response = await Api.get(`/daily/${month}/${userId}`, {
+    const response = await Api.get(`/diary/daily/${date}/${otherUserId}`, {
       headers: {
         Authorization: getCookie("token"),
       },
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);

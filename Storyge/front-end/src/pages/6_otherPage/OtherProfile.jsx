@@ -11,8 +11,6 @@ import { getOtherUserData } from "api/user/getOtherUserData";
 import { getCookie } from "utils/Cookies";
 
 function OtherPage() {
-  
-
   // console.log("현재 클릭한 페이지 유저의 id: ", props.userId);
   let [diary, setDiary] = useState(true);
 
@@ -49,7 +47,7 @@ function OtherPage() {
 
         <S.CalendarContainer>
           <S.CalendarBox>
-            {diary ? <CustomCalendar /> : <PieChart />}
+            {diary ? <CustomCalendar userId={otherUserId} /> : <PieChart />}
           </S.CalendarBox>
           <S.CalendarToggle onClick={() => switchBox()}>
             <S.ToggleOne>

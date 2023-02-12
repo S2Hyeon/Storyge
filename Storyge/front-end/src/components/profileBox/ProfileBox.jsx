@@ -5,6 +5,7 @@ import * as G from "styles";
 import { getIsFollowing } from "api/user/getIsFollowing.js";
 import { getIsWaitingConfirm } from "api/user/getIsWaitingConfirm.js";
 import { postApplyFollow } from "api/user/postApplyFollow.js";
+import { deleteFollowing } from "api/user/deleteFollowing.js";
 
 export default function ProfileBox(props) {
   const [isStateChanged, setIsStateChanged] = useState();
@@ -59,7 +60,8 @@ export default function ProfileBox(props) {
     setIsStateChanged(!isStateChanged);
   }
 
-  function doUnfollow() {
+  async function doUnfollow() {
+    await deleteFollowing(props.otherUserId);
     setIsStateChanged(!isStateChanged);
   }
 

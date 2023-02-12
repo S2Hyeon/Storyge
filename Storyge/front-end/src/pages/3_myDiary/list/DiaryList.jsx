@@ -7,10 +7,13 @@ import { getMyDiaryList } from "api/diary/getMyDiaryList";
 import Emoji from "components/emoji/Emoji";
 import dayjs from "dayjs";
 import { getOtherDiaryList } from "api/diary/getOtherDiaryList";
+import { TbLock } from "react-icons/tb";
 
 export default function DiaryList() {
   const location = useLocation();
   const movePage = useNavigate();
+  const otherUserId = location.state.otherId;
+  console.log(otherUserId);
 
   //넘어온 날짜 값
   const [dateInfo, setDateInfo] = useState(location.state.date);
@@ -22,7 +25,7 @@ export default function DiaryList() {
 
   useEffect(() => {
     async function getAndSetDiaryList() {
-      if (location.state.otherId == null) {
+      if (otherUserId == null) {
         const response = await getMyDiaryList(
           dayjs(dateInfo).format("YYYY-MM-DD")
         );
@@ -31,7 +34,7 @@ export default function DiaryList() {
         //다른 사람의 일기리스트라면
         const response = await getOtherDiaryList(
           dayjs(dateInfo).format("YYYY-MM-DD"),
-          location.state.otherId
+          otherUserId
         );
         setDiaryListData(response);
       }
@@ -45,9 +48,8 @@ export default function DiaryList() {
   }
 
   //년월일 표시
-  const headDate = `${dateInfo.getFullYear()}.${
-    dateInfo.getMonth() + 1
-  }.${dateInfo.getDate()}`;
+  const headDate = `${dateInfo.getFullYear()}.${dateInfo.getMonth() +
+    1}.${dateInfo.getDate()}`;
 
   //일자 감소
   const decreaseDate = () => {
@@ -70,6 +72,22 @@ export default function DiaryList() {
       )
     );
   };
+
+  let showDiaryData = []; //실제로 보여줄 일기 목록들
+  //다른 사람의 일기라면
+  if (otherUserId != null) {
+    diaryListData.map((data) => {
+      //보여줄 리스트에 공개되어있는것만 넣기
+      if (data.scope === 1) showDiaryData.push(data);
+    });
+  }
+  //나의 일기라면
+  else {
+    //그냥 다 넣기
+    showDiaryData = diaryListData;
+  }
+  console.log(showDiaryData);
+
   return (
     // 날짜 표시 및 날짜이동 부분
     <G.BodyContainer>
@@ -82,17 +100,20 @@ export default function DiaryList() {
           <TbChevronRight color="var(--color-primary)" />
         </S.ArrowBtn>
       </S.DateContainer>
+      {/* 나의 일기를 보는거라면 (otherUserId가 Null임)*/}
 
-      {/* 리스트 부분 */}
-      {diaryListData.length === 0 ? (
-        <div>이 날의 작성된 일기가 없어요!</div>
+      {showDiaryData.length === 0 ? (
+        <div>보여드릴 일기가 없어요 🥲</div>
       ) : (
-        diaryListData.map((data, index) => {
+        showDiaryData.map((data, index) => {
           return (
             <S.ListBox key={index} onClick={() => goDiaryDetail(data.diaryId)}>
               <Emoji emotion={data.emoticonName} thisWidth="13%" />
               <S.TimeSummaryContainer>
-                <S.Time>{dayjs(data.createdAt).format("HH:mm")}</S.Time>
+                <S.Time>
+                  {dayjs(data.createdAt).format("HH:mm")}{" "}
+                  {data.scope === 0 ? <TbLock /> : null}
+                </S.Time>
                 <S.Summary>{data.diaryContent}</S.Summary>
               </S.TimeSummaryContainer>
             </S.ListBox>

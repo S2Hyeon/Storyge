@@ -6,3 +6,5 @@ export const Title = styled.div`
   font-size: 24px;
   margin: 0 0 20px 0;
 `;
+
+export const SelectBox = styled.select``;

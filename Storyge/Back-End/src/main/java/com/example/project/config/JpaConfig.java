@@ -68,7 +68,7 @@ public class JpaConfig {
 
     @Bean
     public DiaryService diaryService() {
-        return new DiaryServiceImpl(diaryRepository, diaryCustomRepository, userRepository, diaryCountRepository, dailyEmotionService(), recentDiaryService());
+        return new DiaryServiceImpl(diaryRepository, diaryCustomRepository, userRepository, recentDiaryRepository, diaryCountRepository, dailyEmotionService(), recentDiaryService());
     }
 
     @Bean

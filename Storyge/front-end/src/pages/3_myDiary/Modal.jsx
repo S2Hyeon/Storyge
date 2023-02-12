@@ -17,19 +17,18 @@ function Modal({ setModalOpen, diary, content, num }) {
   const [isChecked, setIsChecked] = useState(num);
   const emotionList = [angry, aversion, happy, sad, scared, soso, surprised];
 
-    // // 작성된 일기와 분석 내용 서버에 전송
-    async function writeDiary() {
-        await postDiary(diary, content,);
-        setCommentInputData("");
-        setChangedCount(changedCount + 1);
-    }
-
+  // // 작성된 일기와 분석 내용 서버에 전송
+  async function writeDiary() {
+    await postDiary(diary, content);
+    // setCommentInputData(""); //임시 주석: 태현
+    // setChangedCount(changedCount + 1); //임시주석: 태현
+  }
 
   return (
     <S.Modal>
       {isChecked === 0 ? (
         <S.ModalItems>
-          <div>{content }</div>
+          <div>{content}</div>
           <p>우리가 분석한 감정이에요! 😍</p>
           <Emoji emotion={content[0]} thisWidth="30px" />
           <S.ModalBtnDiv>

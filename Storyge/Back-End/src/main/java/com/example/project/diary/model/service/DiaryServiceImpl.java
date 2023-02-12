@@ -39,23 +39,23 @@ public class DiaryServiceImpl implements DiaryService {
 
 
     @Override
-    public boolean insertDiary(Long userId, DiaryRequestDto diaryRequestDto) {
+    public Optional<Long> insertDiary(Long userId, DiaryRequestDto diaryRequestDto) {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isEmpty()) {
-            return false;
+            return Optional.empty();
         }
 
         User user = optionalUser.get();
         // 오늘 작성한 일기 개수 확인
         Optional<DiaryCount> optionalDiaryCount = diaryCountRepository.findById(user.getUserId());
         if (optionalDiaryCount.isEmpty()) {
-            return false;
+            return Optional.empty();
         }
         DiaryCount diaryCount = optionalDiaryCount.get();
 
         int currentCount = diaryCount.getDiaryCnt();
         if (currentCount >= 24) { // 제한개수(24개)를 넘어서면 false 리턴
-            return false;
+            return Optional.empty();
         }
 
         // 일기 작성 개수 증가
@@ -75,12 +75,14 @@ public class DiaryServiceImpl implements DiaryService {
 
         // 평균 감정 없다면 바로 등록
         if (dailyEmotion.isEmpty()) {
-            return dailyEmotionService.insertDailyEmotion(toDailyEmotionDto(diary));
+            // 일일 감정 평균에 등록 실패 시 empty를 리턴
+            if(!dailyEmotionService.insertDailyEmotion(toDailyEmotionDto(diary)))
+                return Optional.empty();
         } else {  // 평균 감정 있다면 오늘 일기 모두 가져온 뒤 평균 재계산 후 수정
             DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date).orElseThrow();
             dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.getEmoticonName());
         }
-        return true;
+        return Optional.of(diary.getDiaryId());
     }
 
 

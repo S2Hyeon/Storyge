@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface DiaryService {
 
     //C
-    boolean insertDiary(Long userId, DiaryRequestDto diaryDto);
+    Optional<Long> insertDiary(Long userId, DiaryRequestDto diaryDto);
 
     //R
 

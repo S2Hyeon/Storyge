@@ -35,12 +35,13 @@ public class DiaryController {
 
     @ApiOperation(value = "일기 작성", notes = "일기 작성하기")
     @PostMapping("/diary")
-    public ResponseEntity<String> insertDiary(@RequestBody DiaryRequestDto diaryRequestDto, HttpServletRequest request){
+    public ResponseEntity<?> insertDiary(@RequestBody DiaryRequestDto diaryRequestDto, HttpServletRequest request){
 
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
-        if(diaryService.insertDiary(userId, diaryRequestDto)) {
-            return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
+        Optional<Long> optionalDiaryId = diaryService.insertDiary(userId, diaryRequestDto);
+        if(optionalDiaryId.isPresent()) {
+            return new ResponseEntity<>(optionalDiaryId.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(FAIL, HttpStatus.BAD_REQUEST);
     }

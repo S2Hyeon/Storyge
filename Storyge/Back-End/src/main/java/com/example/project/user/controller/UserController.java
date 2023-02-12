@@ -52,9 +52,9 @@ public class UserController {
     }
 
     @ApiOperation(value = "사용자를 닉네임으로 검색한다")
-    @PostMapping("/user/search")
-    public ResponseEntity<?> searchUser(SearchParam param){
-        return new ResponseEntity<>(userService.searchUser(param), HttpStatus.OK);
+    @GetMapping("/user/search/{nickname}")
+    public ResponseEntity<?> searchUser(@PathVariable String nickname){
+        return new ResponseEntity<>(userService.searchUser(nickname), HttpStatus.OK);
     }
 
 }

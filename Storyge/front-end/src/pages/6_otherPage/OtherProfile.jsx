@@ -8,8 +8,11 @@ import { BsCircleFill } from "react-icons/bs";
 import CustomCalendar from "../../components/calender/Calendar";
 import PieChart from "../../components/chart/PieChart";
 import { getOtherUserData } from "api/user/getOtherUserData";
+import { getCookie } from "utils/Cookies";
 
 function OtherPage() {
+  
+
   // console.log("현재 클릭한 페이지 유저의 id: ", props.userId);
   let [diary, setDiary] = useState(true);
 
@@ -36,7 +39,6 @@ function OtherPage() {
       <G.BodyContainer>
         {otherUserData && (
           <ProfileBox
-            myUserId="45"
             otherUserId={otherUserId}
             profileImg={otherUserData.profileImg}
             nickname={otherUserData.nickname}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as S from "./AlarmStyle";
+import * as G from "styles";
 import { getCookie } from "./../../utils/Cookies";
 import Api from "lib/customApi";
 
@@ -26,7 +27,7 @@ export default function Alarm() {
   }, []);
 
   return (
-    <S.Container>
+    <G.BodyContainer>
       {userData && (
         <S.List>
           {userData.map((alarm, key) => {
@@ -59,6 +60,6 @@ export default function Alarm() {
           })}
         </S.List>
       )}
-    </S.Container>
+    </G.BodyContainer>
   );
 }

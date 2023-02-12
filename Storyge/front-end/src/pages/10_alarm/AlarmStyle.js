@@ -1,14 +1,9 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  width: 100%;
-  margin-top: 80px;
-`;
-
 export const Alarm = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin: 15px 0px;
 `;
 
 export const List = styled.div`

@@ -170,9 +170,9 @@ public class DiaryServiceImpl implements DiaryService {
 
         optionalDiary.get().updateScope(scope);
 
-        if(recentDiaryRepository.findByDiaryId(optionalDiary.get()).isPresent()){ // 만약 recentdiary에 있다면
+        if(recentDiaryRepository.findByDiaryId(optionalDiary.get().getDiaryId()).isPresent()){ // 만약 recentdiary에 있다면
             if(scope==0){ // 비공개로 바꿨으면
-                recentDiaryRepository.deleteByDiaryId(optionalDiary.get()); // 지우기
+                recentDiaryRepository.deleteByDiaryId(optionalDiary.get().getDiaryId()); // 지우기
             }
         }
         else{ // 없고

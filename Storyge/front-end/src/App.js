@@ -6,6 +6,8 @@ import { debounce } from 'lodash';
 import Size from 'pages/0_intro/Size.jsx';
 
 function App() {
+  const [isConnected, setIsConnected] = useState(false);
+
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight
@@ -27,12 +29,20 @@ function App() {
     }
   }, []);
 
+  const handleConnection = debounce(() => {
+    setIsConnected(window.navigator.onLine);
+  }, 1000);
+
+  useEffect(() => {
+    handleConnection();
+  }, [isConnected]);
 
   return (
     <div className="App">
-      <BrowserRouter>
+      {isConnected ?       <BrowserRouter>
         {(windowSize.width < 440 && windowSize.height < 900) ? <AppRouter /> : <Size width={ window.width} height={ window.height} />}
-      </BrowserRouter>
+      </BrowserRouter> : <div>연결 끊김</div>}
+
     </div>
   );
 }

@@ -5,6 +5,7 @@ import Api from "lib/customApi";
 import { useNavigate } from "react-router-dom";
 
 export default function FollowerList() {
+  const [flag, setFlag] = useState(false);
   const [deleteFollow, setdeleteFollow] = useState(true);
   const [followerList, setFollowerList] = useState([]);
   const [newList, setNewList] = useState([]);
@@ -46,7 +47,7 @@ export default function FollowerList() {
     }
     getFollowerList();
     getNewList();
-  }, []);
+  }, [flag]);
 
   const deleteFollowWait = async (id, e) => {
     try {
@@ -73,6 +74,7 @@ export default function FollowerList() {
       });
       console.log("팔로워 삭제");
       console.log(id); // error
+      setFlag(!flag);
       e.preventDefault();
     } catch (err) {
       console.log(err);
@@ -94,6 +96,7 @@ export default function FollowerList() {
       );
       console.log(id);
       console.log("팔로우 등록");
+      setFlag(!flag);
       e.preventDefault();
     } catch (err) {
       console.log(err);

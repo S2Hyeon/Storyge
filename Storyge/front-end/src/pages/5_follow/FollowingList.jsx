@@ -7,6 +7,7 @@ import Api from "lib/customApi";
 export default function FollowingList() {
   const movePage = useNavigate();
 
+  const [flag, setFlag] = useState(false);
   const [followingList, setFollowingList] = useState([]);
 
   //처음 렌더링이 될 때만 실행
@@ -27,7 +28,7 @@ export default function FollowingList() {
       }
     }
     getFollowingList();
-  }, []);
+  }, [flag]);
 
   const deleteFollowing = async (id, e) => {
     try {
@@ -38,6 +39,7 @@ export default function FollowingList() {
       });
       console.log("팔로잉 삭제");
       console.log(id); // error
+      setFlag(!flag);
       e.preventDefault();
     } catch (err) {
       console.log(err);

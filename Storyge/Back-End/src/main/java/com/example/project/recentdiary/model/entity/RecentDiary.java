@@ -41,9 +41,4 @@ public class RecentDiary {
     @Column(name="ends_at")
     private LocalDateTime endsAt;
 
-    @PrePersist
-    private void createdAt(){
-        endsAt = diary.getCreatedAt().plusHours(24);
-    }
-
 }

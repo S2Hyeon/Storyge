@@ -48,6 +48,7 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
             recentDiaryRepository.save(RecentDiary.builder()
                     .userId(user)
                     .diaryId(diary)
+                    .endsAt(insertDiary.getCreatedAt().plusHours(24))
                     .build());
 
         }

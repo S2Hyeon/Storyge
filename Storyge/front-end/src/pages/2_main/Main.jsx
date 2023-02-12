@@ -91,7 +91,11 @@ function Main() {
       <G.BodyContainer top="0" bottom="70px" color="true">
         <S.CalendarContainer>
           <S.CalendarBox>
-            {diary ? <CustomCalendar userId={-100} /> : <PieChart />}
+            {diary ? (
+              <CustomCalendar userId={-100} />
+            ) : (
+              <PieChart userId={-100} />
+            )}
           </S.CalendarBox>
           <S.CalendarToggle onClick={() => switchBox()}>
             <S.ToggleOne>

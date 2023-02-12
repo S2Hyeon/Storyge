@@ -47,7 +47,11 @@ function OtherPage() {
 
         <S.CalendarContainer>
           <S.CalendarBox>
-            {diary ? <CustomCalendar userId={otherUserId} /> : <PieChart />}
+            {diary ? (
+              <CustomCalendar userId={otherUserId} />
+            ) : (
+              <PieChart userId={otherUserId} />
+            )}
           </S.CalendarBox>
           <S.CalendarToggle onClick={() => switchBox()}>
             <S.ToggleOne>

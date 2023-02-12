@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import * as S from "./../searchbar/SearchBar.js";
 import resultData from "./SearchBarData";
+import { debounce } from 'lodash';
+import { getUserSearch } from "api/user/getUserSearch";
 
 export default function SearchBar() {
   let [keyword, setKeyword] = useState("");
   let [focus, setFocus] = useState(false);
+  let [result, setResult] = useState([]);
 
   function onKeyUpKeyword(e) {
     setKeyword(e.target.value);
@@ -14,6 +17,23 @@ export default function SearchBar() {
   function changeAutoSearchContainer() {
     setFocus(!focus);
   }
+
+  function getSearchResult() {
+    console.log("검색 시작1 : " + keyword);
+    // debounce(() => {
+      async function userSearch() {
+        console.log("검색 시작 : " + keyword);
+        const response = await getUserSearch(keyword);
+        setResult(response);
+      }
+      userSearch();
+    // }, 300)
+  }
+
+  useEffect(() => {
+    getSearchResult();
+  }, [keyword]);
+
 
   return (
     <>

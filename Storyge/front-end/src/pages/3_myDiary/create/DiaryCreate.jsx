@@ -4,7 +4,8 @@ import Clock from "react-live-clock";
 import Modal from "../Modal";
 import * as heyhey from "./DiaryCreateStyle";
 import * as G from "../../../styles/index";
-import Toggle from "../Toggle";
+// import Toggle from "../Toggle";
+import Toggle from "react-toggle";
 import { OpenAI } from "../../../openai/OpenAI";
 
 import { getCount } from "api/diary/getCount";
@@ -90,7 +91,8 @@ export default function Creatediary() {
           />
           <heyhey.CardFoot height="30px" backgroundColor="var(--color-white)">
             <heyhey.CountDiary>{content.length} / 100</heyhey.CountDiary>
-            <Toggle />
+            {/* <Toggle /> 내일 혼내줄 예정*/}
+            <Toggle defaultChecked={true} onChange={console.log("TEst")} />
           </heyhey.CardFoot>
         </heyhey.card>
         <div>

@@ -17,6 +17,14 @@ export const NewDiary = styled.div`
   }
 `;
 
+export const NoNewDiary = styled.div`
+  margin: 60px 0 0 0;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  font-family: "S-CoreDream-5Medium";
+`;
+
 export const Profile = styled.div`
   height: 70px;
   width: 70px;

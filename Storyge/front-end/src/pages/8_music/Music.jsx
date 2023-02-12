@@ -2,10 +2,11 @@ import React, { useState, Suspense } from "react";
 import * as G from "../../styles";
 import * as S from "./Music.js";
 import { OpenAI } from "../../openai/OpenAI";
-import MusicResult from "./MusicResult";
+// import MusicResult from "./MusicResult";
 import axios from "axios";
-import Spinner from "../../components/spinner/Spinner"
+// import Spinner from "../../components/spinner/Spinner";
 import ReactPlayer from "react-player";
+import Lottie from "../../api/animation/Lottie.jsx";
 
 // import { reject } from "q";
 // import { resolve } from "path";
@@ -50,7 +51,7 @@ export default function Music() {
         <S.Text>분석하기</S.Text>
       </G.longBtnDefault>
       {!youtubeOpen ? (
-      <Spinner />
+      <Lottie />
       ) : (    <G.BodyContainer>
         {/* Youtube Player 자동실행 */}
         <ReactPlayer

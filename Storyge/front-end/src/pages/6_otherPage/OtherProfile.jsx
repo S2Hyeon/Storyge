@@ -8,10 +8,8 @@ import { BsCircleFill } from "react-icons/bs";
 import CustomCalendar from "../../components/calender/Calendar";
 import PieChart from "../../components/chart/PieChart";
 import { getOtherUserData } from "api/user/getOtherUserData";
-import { getCookie } from "utils/Cookies";
 
 function OtherPage() {
-  
 
   // console.log("현재 클릭한 페이지 유저의 id: ", props.userId);
   let [diary, setDiary] = useState(true);
@@ -31,6 +29,7 @@ function OtherPage() {
       setOtherUserData(response);
     }
     getAndSetOtherUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //1. 내가 팔로우하고 있다면 달력

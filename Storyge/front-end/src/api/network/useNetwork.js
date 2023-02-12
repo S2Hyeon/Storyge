@@ -14,6 +14,7 @@ const useNetwork = (onChange) => {
         window.removeEventListener("online", handleChange);
         window.removeEventListener("offline", handleChange);
       };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return status;
   };

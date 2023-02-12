@@ -28,6 +28,7 @@ function App() {
     return () => { // cleanup 
       window.removeEventListener('resize', handleResize);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleConnection = debounce(() => {
@@ -36,6 +37,7 @@ function App() {
 
   useEffect(() => {
     handleConnection();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);
 
   return (

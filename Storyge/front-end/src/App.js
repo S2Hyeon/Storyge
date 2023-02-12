@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import AppRouter from "./router/AppRouter";
 import { debounce } from 'lodash';
 import Size from 'pages/0_intro/Size.jsx';
+import ErrorPage from 'pages/9_errorPage/ErrorPage';
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
@@ -41,7 +42,7 @@ function App() {
     <div className="App">
       {isConnected ?       <BrowserRouter>
         {(windowSize.width < 440 && windowSize.height < 900) ? <AppRouter /> : <Size width={ window.width} height={ window.height} />}
-      </BrowserRouter> : <div>연결 끊김</div>}
+      </BrowserRouter> : <ErrorPage text="network"/>}
 
     </div>
   );

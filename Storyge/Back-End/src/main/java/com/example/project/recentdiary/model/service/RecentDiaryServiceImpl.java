@@ -64,8 +64,7 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
          */
 
         RecentDiary diary = recentDiaryRepository.findByDiaryId(diaryId).orElse(null); // recent diary에 있는지 확인
-        System.out.println("dddd"+diary.getUserId());
-        System.out.println("dddd"+userId);
+
         if(diary==null ||(diary.getEndsAt().isBefore(LocalDateTime.now()))){ // recent diary에 존재하지 않거나 이미 24시간이 지난 diary
             return false;
         }
@@ -73,9 +72,7 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
         else{
             if(diary.getUserId()!=userId){ // 현재 user와 글 쓴 user가 다름
                 Long recentDiaryId = diary.getRecentId();
-                System.out.println("recentid "+recentDiaryId);
-                System.out.println("useriddd "+userId);
-                System.out.println("rererer "+readDiaryRepository.findByUserIdAndAndRecentId(userId, recentDiaryId).isEmpty());
+
                 if(readDiaryRepository.findByUserIdAndAndRecentId(userId, recentDiaryId).isEmpty()){ // 아직 안읽었음
                         readDiaryRepository.save(ReadDiary.builder()
                             .userId(userId)

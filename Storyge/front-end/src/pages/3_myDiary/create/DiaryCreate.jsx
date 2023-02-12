@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Clock from "react-live-clock";
 import Modal from "../Modal";
@@ -6,6 +6,8 @@ import * as heyhey from "./DiaryCreateStyle";
 import * as G from "../../../styles/index";
 import Toggle from "../Toggle";
 import { OpenAI } from "../../../openai/OpenAI";
+
+import { getCount } from "api/diary/getCount";
 
 // async function getInfo(content, setModalOpen) {
 //   const data1 = await OpenAI({ input: content, type: 1 });
@@ -17,10 +19,23 @@ import { OpenAI } from "../../../openai/OpenAI";
 export default function Creatediary() {
   const navigate = useNavigate();
   const contentRef = useRef();
+
+  const [count, setCount] = useState(0);
   const [content, setContent] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [info, setInfo] = useState(["emotion", "comment"]);
   const [spinner, setSpinner] = useState(false);
+
+  useEffect(() => {
+    async function getDiaryCount() {
+      const response = await getCount();
+      console.log("다이어리 작성 횟수 가져오기")
+      setCount(response);
+      console.log("다이어리 작성 횟수 : " + count);
+    }
+    getDiaryCount();
+  }, [count]) 
+
   async function getInfo(content, setModalOpen) {
     await OpenAI({ input: content, type: 1 })
       .then((data1) => {
@@ -31,6 +46,9 @@ export default function Creatediary() {
             setSpinner(false);
             setModalOpen(true);
             setInfo([data1[0], data2]);
+            console.log("셋 인포는 뭔가요?")
+            console.log(info[0]);
+            console.log(info[1]);
           })
           .catch((err) => {
             console.log(err);
@@ -53,12 +71,21 @@ export default function Creatediary() {
       alert("일기를 작성하세요~");
     } else if (content.length > 100) {
     } else {
-      setSpinner(true);
-      const test = await getInfo(content, setModalOpen);
-      // console.log(test);
-      setInfo(test);
+      // 일기를 작성 할 수 있는 횟수 검사
+      if (count < 24) {
+        setSpinner(true);
+        const test = await getInfo(content, setModalOpen);
+        // console.log(test);
+        setInfo(test);
+      } else {
+        alert("하루 작성 가능한 일기를 모두 작성함");
+      }
+      
     }
   }
+
+
+
   return (
     <>
       <heyhey.container>
@@ -89,7 +116,7 @@ export default function Creatediary() {
         </div>
       </heyhey.container>
       {modalOpen && (
-        <Modal setModalOpen={setModalOpen} content={info} num={0} />
+        <Modal setModalOpen={setModalOpen} diary={ content }  content={info} num={0} />
       )}
       {spinner && <Modal setModalOpen={setModalOpen} content={info} num={2} />}
     </>

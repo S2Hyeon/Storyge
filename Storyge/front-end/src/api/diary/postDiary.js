@@ -1,24 +1,27 @@
-import axios from "axios";
+import Api from "lib/customApi";
+import { getCookie } from "utils/Cookies";
 
-export async function postDiary({ analysis, content, emotion, userId }) {
-  axios({
-    method: "post",
-    url: "http://storyge.xyz:8080/diary",
-    params: {
-      "analizedResult": analysis,
-      "createdAt": "2023-02-10",
-      "diaryContent": content,
-      "diaryId": 0,
-      "emoticonName": emotion,
-      "scope": 0,
-      "updateCnt":0,
-      "userId": userId,
-    }
-  })
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+export async function postDiary(diary, content) {
+  try {
+    await Api.post(
+      "/diary",
+      {
+        analizedResult: content[1],
+        diaryContent: diary,
+        diaryId: 0,
+        emoticonName: content[0],
+        scope: 0,
+        updateCnt: 0,
+        userId: 0
+      },
+      {
+        headers: {
+          Authorization: getCookie("token"),
+        },
+      }
+    );
+  } catch (error) {
+    console.error(error);
+  }
 }
+

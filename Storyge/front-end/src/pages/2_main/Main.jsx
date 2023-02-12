@@ -8,7 +8,8 @@ import PieChart from "../../components/chart/PieChart";
 import { getCookie } from "./../../utils/Cookies";
 import { getQuote } from "api/quote/getQuote";
 import { getRecentDiary } from "api/recentDiary/getRecentDiary";
-import { EventSourcePolyfill } from "event-source-polyfill";
+import dayjs from "dayjs";
+// import { EventSourcePolyfill } from "event-source-polyfill";
 
 function Main() {
   // //실시간 알림 test/////////////////////////////////
@@ -42,8 +43,8 @@ function Main() {
   let [diary, setDiary] = useState(true);
 
   //새로 업데이트 된 글로 이동!
-  function goUpdatedDiary(id, userId) {
-    movePage("/otherdiarydetail", { state: { id: id, userId: userId } });
+  function goUpdatedDiary(diaryId) {
+    movePage("/diary", { state: { diaryId: diaryId } });
   }
 
   //달력 보일건지 통계 보일건지 전환하는 함수
@@ -71,6 +72,31 @@ function Main() {
     getAndSetQuoteData();
   }, []);
 
+  function TypeSelectBox() {
+    return (
+      <S.SelectBox>
+        <option key="month" defaultValue="month">
+          월별
+        </option>
+        <option key="year" value="year">
+          연도별
+        </option>
+        <option></option>
+      </S.SelectBox>
+    );
+  }
+
+
+  function Do() {
+    
+  }
+
+  function YearSelectBox() {
+    return <S.SelectBox>
+
+    </S.SelectBox>;
+  }
+
   return (
     <S.All>
       {recentDiaryData && (
@@ -80,9 +106,7 @@ function Main() {
               <S.Profile
                 key={index}
                 profile={recentDiary.profileImg}
-                onClick={() =>
-                  goUpdatedDiary(recentDiary.diaryId, recentDiary.userId)
-                }
+                onClick={() => goUpdatedDiary(recentDiary.diaryId)}
               />
             );
           })}
@@ -92,7 +116,15 @@ function Main() {
       <G.BodyContainer top="0" bottom="70px" color="true">
         <S.CalendarContainer>
           <S.CalendarBox>
-            {diary ? <CustomCalendar userId={-100} /> : <PieChart />}
+            {diary ? (
+              <CustomCalendar userId={-100} />
+            ) : (
+              <>
+                <PieChart />
+                <TypeSelectBox />
+                <YearSelectBox />
+              </>
+            )}
           </S.CalendarBox>
           <S.CalendarToggle onClick={() => switchBox()}>
             <S.ToggleOne>

@@ -93,3 +93,7 @@ export const WiseFrom = styled.div`
   color: #b8b8d2;
   padding-top: 10px;
 `;
+
+export const SelectBox = styled.select`
+  
+`;

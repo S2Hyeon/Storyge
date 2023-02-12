@@ -103,7 +103,7 @@ export default function DiaryList() {
       {/* 나의 일기를 보는거라면 (otherUserId가 Null임)*/}
 
       {showDiaryData.length === 0 ? (
-        <div>보여드릴 일기가 없어요 🥲</div>
+        <S.NoDiaryList>보여드릴 일기가 없어요 🥲</S.NoDiaryList>
       ) : (
         showDiaryData.map((data, index) => {
           return (

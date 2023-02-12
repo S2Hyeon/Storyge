@@ -62,7 +62,7 @@ export const CalendarBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-item: center;
-  padding: 20px 0;
+  padding: 20px 5px;
 `;
 
 export const CalendarToggle = styled.div`

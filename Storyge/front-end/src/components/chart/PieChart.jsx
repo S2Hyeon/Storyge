@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as S from "./PieChartStyle";
 import {
   Chart as ChartJS,
@@ -8,6 +8,8 @@ import {
   // plugins,
 } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+import Select from "react-select";
+import dayjs from "dayjs";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -49,10 +51,20 @@ const options = {
 };
 
 function PieChart() {
+  const [typeValue, setTypeValue] = useState();
+  const [yearValue, setYearValue] = useState();
+  const [monthValue, setMonthValue] = useState();
+
+  let years = [];
+  for (let y = Number(dayjs(new Date()).format("YYYY")); y >= 2022; y--) {
+    years.push(y);
+  }
+
   return (
     <>
       <S.Title>감정 통계 그래프</S.Title>
       <Doughnut data={data} options={options} />
+      <Select onChange={(e) => setYearValue}></Select>
     </>
   );
 }

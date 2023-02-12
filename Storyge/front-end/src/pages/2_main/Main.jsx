@@ -72,31 +72,6 @@ function Main() {
     getAndSetQuoteData();
   }, []);
 
-  function TypeSelectBox() {
-    return (
-      <S.SelectBox>
-        <option key="month" defaultValue="month">
-          월별
-        </option>
-        <option key="year" value="year">
-          연도별
-        </option>
-        <option></option>
-      </S.SelectBox>
-    );
-  }
-
-
-  function Do() {
-    
-  }
-
-  function YearSelectBox() {
-    return <S.SelectBox>
-
-    </S.SelectBox>;
-  }
-
   return (
     <S.All>
       {recentDiaryData && (
@@ -116,15 +91,7 @@ function Main() {
       <G.BodyContainer top="0" bottom="70px" color="true">
         <S.CalendarContainer>
           <S.CalendarBox>
-            {diary ? (
-              <CustomCalendar userId={-100} />
-            ) : (
-              <>
-                <PieChart />
-                <TypeSelectBox />
-                <YearSelectBox />
-              </>
-            )}
+            {diary ? <CustomCalendar userId={-100} /> : <PieChart />}
           </S.CalendarBox>
           <S.CalendarToggle onClick={() => switchBox()}>
             <S.ToggleOne>

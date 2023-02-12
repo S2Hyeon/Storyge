@@ -1,23 +1,19 @@
-import Api from 'lib/customApi'
-import { getCookie } from 'utils/Cookies'
+import Api from "lib/customApi";
+import { getCookie } from "utils/Cookies";
 
 export async function getUserSearch(keyword) {
+  if (keyword !== "") {
     try {
-    console.log('Get : ' + keyword)
-    const response = await Api.get(
-      `/user/search`,
-      {
-        nickname: keyword,
-      },
-      {
+      const response = await Api.get(`/user/search/${keyword}`, {
         headers: {
-          Authorization: getCookie('token'),
+          Authorization: getCookie("token"),
         },
-      },
-    )
-    console.log('Get2 : ' + keyword)
-    return response.data
-  } catch (error) {
-    console.error(error)
+      });
+      // console.log(response.data);
+      // console.log(response.data.length);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

@@ -1,14 +1,9 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  width: 100%;
-  margin-top: 80px;
-`;
-
 export const Alarm = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin: 15px 0px;
 `;
 
 export const List = styled.div`
@@ -16,7 +11,6 @@ export const List = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
 
 export const Img = styled.div`
   height: 40px;
@@ -27,10 +21,15 @@ export const Img = styled.div`
   margin: 0px 20px 0px 20px;
 `;
 
-export const Text = styled.p`
-  font-family: "S-CoreDream-5Medium";
+export const Text = styled.div`
+  font-family: "S-CoreDream-3Light";
   font-size: 14px;
   justify-content: center;
   align-items: center;
   color: black;
+`;
+
+export const BoldText = styled.text`
+  font-family: "S-CoreDream-5Medium";
+  font-size: 14px;
 `;

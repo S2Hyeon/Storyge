@@ -47,14 +47,31 @@ export const ModalBtnDiv = styled.div`
   margin: 20px;
 `;
 
-export const EmotionBtn = styled.div`
-  height: 30px;
-  width: 30px;
-  background-image: url(${(props) => props.emotion});
-  background-size: cover;
-  border-radius: 100px;
+export const EmotionBtn = styled.button`
+  display: flex;
+  height: 25px;
+  width: 25px;
+  background-color: var(--color-white);
+  border-radius: 100%;
   flex: 0 0 auto;
-  margin: 0 10px 0 0;
+  justify-content: center;
+  align-items: center;
+  border: hidden;
+  margin: 5px;
+`;
+
+export const test = styled.button`
+  display: flex;
+  height: 25px;
+  width: 25px;
+  background-color: var(--color-white);
+  border-radius: 100%;
+  flex: 0 0 auto;
+  justify-content: center;
+  align-items: center;
+  border: hidden;
+  box-shadow: 0 0 10px #03e9f4, 0 0 20px #03e9f4;
+  margin: 5px;
 `;
 
 export const Emotion = styled.div`

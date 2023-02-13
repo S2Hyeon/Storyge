@@ -1,22 +1,30 @@
 import styled from "styled-components";
 
-export const Box = styled.div`
+export const Container = styled.div`
   // border: 1px solid blue;
 
   width: 100%;
-  height: 98px;
+  min-height: 98px;
   top: 121px;
   left: 22px;
 
-  padding: 0px 10px;
+  padding: 10px;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #d2d9d2;
   justify-content: space-around;
   border-radius: 10px;
   margin: 20px 0 10px 0;
+`;
+
+export const Box = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
 `;
 
 export const Img = styled.img`
@@ -48,3 +56,7 @@ export const FollowNumber = styled.div`
   font-family: "S-CoreDream-4Regular";
   font-size: 16px;
 `;
+
+export const FollowBtn = styled.button``;
+
+export const UnfollowBtn = styled.button``;

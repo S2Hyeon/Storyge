@@ -16,6 +16,7 @@ export const longBtnDefault = styled.button`
   font-size: 18px;
   border: hidden;
   margin-top: 10px;
+  color: var(--color-white);
 `;
 
 export const longBtnDisabled = styled.button`
@@ -31,13 +32,15 @@ export const longBtnDisabled = styled.button`
 
 export const longBtnBorder = styled.button`
   border: hidden;
-  background-color: var(--color-white);
+  // background-color: var(--color-white);
+  background-color: transparent;
   border-radius: 100px;
   height: 48px;
   width: 100%;
   font-size: 18px;
   border: 3px solid var(--color-primary);
   margin-top: 10px;
+  color: var(--color-black);
 `;
 
 export const profileBox = styled.div``;

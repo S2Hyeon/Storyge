@@ -17,6 +17,14 @@ export const NewDiary = styled.div`
   }
 `;
 
+export const NoNewDiary = styled.div`
+  margin: 60px 0 0 0;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  font-family: "S-CoreDream-5Medium";
+`;
+
 export const Profile = styled.div`
   height: 70px;
   width: 70px;
@@ -54,7 +62,7 @@ export const CalendarBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-item: center;
-  padding: 20px 0;
+  padding: 20px 5px;
 `;
 
 export const CalendarToggle = styled.div`
@@ -86,6 +94,7 @@ export const WiseBox = styled.div`
 export const Wise = styled.div`
   padding-top: 25px;
   line-height: 130%;
+  white-space: pre-wrap;
 `;
 
 export const WiseFrom = styled.div`

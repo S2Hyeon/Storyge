@@ -21,6 +21,15 @@ export const ArrowBtn = styled.div`
   width: 10%;
 `;
 
+export const NoDiaryList = styled.div`
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "S-CoreDream-6Bold";
+`;
+
 //리스트 요소
 export const ListBox = styled.div`
   border-color: transparent transparent var(--color-primary);
@@ -43,7 +52,7 @@ export const Emotion = styled.div`
 `;
 
 export const TimeSummaryContainer = styled.div`
-  margin: 5px;
+  margin: 5px 5px 5px 12px;
   width: 80%;
 `;
 

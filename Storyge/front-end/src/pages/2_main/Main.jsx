@@ -1,23 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./MainStyle";
 import * as G from "../../styles";
-import newDiaryData from "./NewDiaryData";
-// import pieChartData from "./PieChartData";
 import { BsCircleFill } from "react-icons/bs";
 import CustomCalendar from "../../components/calender/Calendar";
 import PieChart from "../../components/chart/PieChart";
+import { getCookie } from "./../../utils/Cookies";
+import { getQuote } from "api/quote/getQuote";
+import { getRecentDiary } from "api/recentDiary/getRecentDiary";
+import dayjs from "dayjs";
+// import { EventSourcePolyfill } from "event-source-polyfill";
 
 function Main() {
+  // //실시간 알림 test/////////////////////////////////
+  // const [newAlert, setNewAlert] = useState(false);
+
+  // const eventSource = new EventSourcePolyfill("https://storyge.xyz/api/sub", {
+  //   headers: {
+  //     Authorization: getCookie("token"),
+  //   },
+  // });
+
+  // eventSource.onmessage = (event) => {
+  //   const data = JSON.parse(event.data);
+  //   console.log(">>>>>>", data);
+  // };
+  // eventSource.onerror = (error) => {
+  //   eventSource.close();
+  // };
+
+  // console.log(newAlert);
+  // //////////////////////////////////////////////////////
+
+  // 로그인 여부 확인 : 쿠기 값 가져오기
+  useEffect(() => {
+    const ACCESS_TOKEN = getCookie("token");
+    console.log("메인 실행되면 액세스 토큰 받아옴" + ACCESS_TOKEN);
+  }, []);
+
   const movePage = useNavigate();
 
   let [diary, setDiary] = useState(true);
-  // let [chartData, setChartData] = useState(pieChartData);
 
   //새로 업데이트 된 글로 이동!
-  function goUpdatedDiary(id, userId) {
-    // console.log(id, userId);
-    movePage("/otherdiarydetail", { state: { id: id, userId: userId } });
+  function goUpdatedDiary(diaryId) {
+    movePage("/diary", { state: { diaryId: diaryId } });
   }
 
   //달력 보일건지 통계 보일건지 전환하는 함수
@@ -25,23 +52,55 @@ function Main() {
     setDiary(!diary);
   }
 
+  //내가 팔로잉하는 사람의 업데이트 내용 받기 api
+  const [recentDiaryData, setRecentDiaryData] = useState([]);
+  useEffect(() => {
+    async function getAndSetRecentDiaryData() {
+      const response = await getRecentDiary();
+      setRecentDiaryData(response);
+    }
+    getAndSetRecentDiaryData();
+  }, []);
+
+  //하루 글귀 받아오기 api
+  const [quoteData, setQuoteData] = useState();
+  useEffect(() => {
+    async function getAndSetQuoteData() {
+      const response = await getQuote();
+      setQuoteData(response);
+    }
+    getAndSetQuoteData();
+  }, []);
+
   return (
     <S.All>
-      <S.NewDiary>
-        {newDiaryData.map((diary) => {
-          return (
-            <S.Profile
-              profile={diary.imgUrl}
-              key={diary.id}
-              onClick={() => goUpdatedDiary(diary.id, diary.userId)}
-            />
-          );
-        })}
-      </S.NewDiary>
+      {recentDiaryData.length > 0 ? (
+        <S.NewDiary>
+          {recentDiaryData.map((recentDiary, index) => {
+            return (
+              <S.Profile
+                key={index}
+                profile={recentDiary.profileImg}
+                onClick={() => goUpdatedDiary(recentDiary.diaryId)}
+              />
+            );
+          })}
+        </S.NewDiary>
+      ) : (
+        <S.NoNewDiary>
+          아무것도 없어요
+          <br />뭘 띄워야할까
+        </S.NoNewDiary>
+      )}
+
       <G.BodyContainer top="0" bottom="70px" color="true">
         <S.CalendarContainer>
           <S.CalendarBox>
-            {diary ? <CustomCalendar /> : <PieChart />}
+            {diary ? (
+              <CustomCalendar userId={-100} />
+            ) : (
+              <PieChart userId={-100} />
+            )}
           </S.CalendarBox>
           <S.CalendarToggle onClick={() => switchBox()}>
             <S.ToggleOne>
@@ -78,13 +137,10 @@ function Main() {
             </S.ToggleOne>
           </S.CalendarToggle>
         </S.CalendarContainer>
+
         <S.WiseBox>
-          <S.Wise>
-            우리가 출발한 곳은 선택할 수 없지만,
-            <br />
-            그곳에서 어딜 향해 갈지는 선택할 수 있어.
-          </S.Wise>
-          <S.WiseFrom>영화 &lt;월 플라워&gt; 중</S.WiseFrom>
+          <S.Wise>{quoteData && quoteData.quoteContent}</S.Wise>
+          <S.WiseFrom>{quoteData && quoteData.quoteSource}</S.WiseFrom>
         </S.WiseBox>
       </G.BodyContainer>
     </S.All>

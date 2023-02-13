@@ -3,15 +3,21 @@ package com.example.project.follow.model.repository;
 import com.example.project.follow.model.entity.Follow;
 import com.example.project.user.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface FollowRepository extends JpaRepository<Follow, Long> {
-    List<Follow> findByFollower(User follower);
-    List<Follow> findByFollowing(User following);
+    List<Follow> findAllByFollower(User follower);
+
+    List<Follow> findAllByFollowing(User following);
+
     Follow findByFollowingAndFollower(User following, User follower);
+
     void deleteByFollowingAndFollower(User following, User follower);
 
+    //팔로잉 수 찾기
+    Long countAllByFollower(Long userId);
+
+    //팔로워 수 찾기
+    Long countAllByFollowing(Long userId);
 }

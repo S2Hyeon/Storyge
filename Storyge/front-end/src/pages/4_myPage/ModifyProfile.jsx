@@ -1,38 +1,77 @@
-import React, {useState} from 'react';
-import * as G from './../../styles/index';
-import ProfileBoxImg from './../../components/profileBox/ProfileImgBox';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+import * as S from "./ModifyProfile";
+import ProfileBoxImg from "./../../components/profileBox/ProfileImgBox";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import RegisterBtn from "./../../components/button/RegisterBtn";
+import { getCookie } from "./../../utils/Cookies";
+import { putUser } from "api/user/putUser";
 
 export default function ModifyProfile() {
-  const [content, setContent] = useState("");
-  const len = `${content.length} / 8`;
+  const [userNickname, setUserNickname] = useState("");
+  const [userImg, setUserImg] = useState("");
+
+  const len = `${userNickname.length} / 8`;
 
   function onChange(e) {
-    setContent(e.target.value);
-    if (content.length >= 8) {
+    setUserNickname(e.target.value);
+    if (userNickname.length >= 8) {
       alert("닉네임은 8자 이내로 작성해주세요.");
-      setContent(content.substr(0, 8));
+      setUserNickname(userNickname.substr(0, 8));
     }
   }
 
+  // 백 로직 구현되면 다시 확인
+  async function onsubmit() {
+    console.log("제출 버튼 클릭");
+    console.log("이미지 링크 : " + userImg);
+    console.log("수정된 닉네임 : " + userNickname);
+    putUser(userImg, userNickname);
+  }
+
+  //처음 렌더링이 될 때만 실행
+  useEffect(() => {
+    async function getUserData() {
+      try {
+        const response = await axios.get("https://storyge.xyz/api/user", {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        });
+        console.log("수정페이지로 이동");
+        console.log(response.data);
+        setUserImg(response.data.profileImg);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getUserData();
+  }, []);
+
   return (
-    <G.BodyContainer>
-      <ProfileBoxImg />
+    <S.BodyContainer>
+      <S.Text>프로필 수정</S.Text>
+      {userImg && <ProfileBoxImg profileImg={userImg} />}
       <Box
-          className="box"
-          component="form"
-          sx={{
-            "& > :not(style)": { m: 1, width: "25ch" },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField id="standard-basic" label="NickName" variant="standard" helperText={len} autoFocus={true} onChange={onChange}/>
-        </Box>
-        <RegisterBtn />
-    </G.BodyContainer>
+        className="box"
+        component="form"
+        sx={{
+          "& > :not(style)": { m: 1, width: "25ch" },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField
+          id="standard-basic"
+          label="NickName"
+          variant="standard"
+          helperText={len}
+          autoFocus={true}
+          onChange={onChange}
+        />
+      </Box>
+      <S.SubmitBtn onClick={onsubmit}>버튼</S.SubmitBtn>
+    </S.BodyContainer>
   );
 }
-

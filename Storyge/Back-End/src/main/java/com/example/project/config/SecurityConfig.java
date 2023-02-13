@@ -54,7 +54,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/swagger-ui/**", "/swagger-resources/", "/**", "/favicon.ico").permitAll()
-                .antMatchers("/users/login", "/user", "/users/duplicate", "/users/sign-up").permitAll()
+                .antMatchers("/users/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
 //                .authorizeRequests(authorize -> authorize.anyRequest().authenticated())

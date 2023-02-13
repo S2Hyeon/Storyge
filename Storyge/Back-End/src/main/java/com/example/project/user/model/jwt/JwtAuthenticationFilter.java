@@ -9,6 +9,8 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+import static com.example.project.user.model.jwt.JwtProperties.TOKEN_HEADER;
+
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends GenericFilter {
 
@@ -18,7 +20,7 @@ public class JwtAuthenticationFilter extends GenericFilter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         String token = resolveToken((HttpServletRequest) request);
 
-        if (token != null && tokenProvider.validateToken(token)) {
+        if (token != null && !tokenProvider.validateToken(token)) {
             Authentication authentication = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
@@ -26,7 +28,7 @@ public class JwtAuthenticationFilter extends GenericFilter {
     }
 
     private String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("token");
+        String bearerToken = request.getHeader(TOKEN_HEADER);
 
         System.out.println("bearerToken: " + bearerToken);
 

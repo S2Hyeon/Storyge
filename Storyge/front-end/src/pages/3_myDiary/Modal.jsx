@@ -1,60 +1,74 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import * as S from "./MyDiaryStyle";
-import { OpenAI } from "../../openai/OpenAI";
 import Spinner from "../../components/spinner/Spinner";
+import Emoji from "components/emoji/Emoji";
+import { useNavigate } from "react-router-dom";
 
-import angry from "./../../assets/emotionIcons/angry.png";
-import aversion from "./../../assets/emotionIcons/aversion.png";
-import happy from "./../../assets/emotionIcons/happy.png";
-import sad from "./../../assets/emotionIcons/sad.png";
-import scared from "./../../assets/emotionIcons/scared.png";
-import soso from "./../../assets/emotionIcons/soso.png";
-import surprised from "./../../assets/emotionIcons/surprised.png";
+import { postDiary } from "api/diary/postDiary";
+import { putDiary } from "api/diary/putDiary";
 
-function Modal({ setModalOpen, content }) {
-  // const [isChecked, setIsChecked] = useState(true);
-  const [isChecked, setIsChecked] = useState(2);
-  const emotionList = [angry, aversion, happy, sad, scared, soso, surprised];
-  const [result, setResult] = useState("");
-
-  // setResult(OpenAI({ input: content, type: 1 }));
-
-  useEffect(() => {
-    setResult(OpenAI({ input: content, type: 1 }));
-  }, []);
-
-  // useEffect(() => {
-  //   console.log(result);
-  //   if (result) {
-  //     setIsChecked(0);
-  //   }
-  // }, [result]);
-
-  setTimeout(() => {
-    setIsChecked(0);
-    console.log(result);
-  }, 3000);
+function Modal({ diary, content, num, classify }) {
+  const movePage = useNavigate();
+  const [reccomendEmotion, setRecommendEmotion] = useState(
+    content && content[0]
+  );
+  const [isChecked, setIsChecked] = useState(num);
+  const emotionList = [
+    "angry",
+    "aversion",
+    "happy",
+    "sad",
+    "scared",
+    "soso",
+    "surprised",
+  ];
+  // // 작성된 일기와 분석 내용 서버에 전송
+  async function writeDiary() {
+    // const curDate = dayjs(new Date()).format("YYYY-MM-DD");
+    console.log(diary, [reccomendEmotion, content[1]]);
+    if (classify === "create") {
+      await postDiary(diary, [reccomendEmotion, content[1]]);
+    } else {
+      await putDiary(diary, [reccomendEmotion, content[1]]);
+    }
+    movePage(`/diarylist`, { state: { date: new Date() } });
+  }
 
   return (
     <S.Modal>
       {isChecked === 0 ? (
         <S.ModalItems>
           <p>우리가 분석한 감정이에요! 😍</p>
+          <Emoji emotion={content[0]} thisWidth="30px" />
           <S.ModalBtnDiv>
-            <button onClick={() => setModalOpen(false)}>맞워요</button>
+            <button onClick={writeDiary}>맞워요</button>
             <button onClick={() => setIsChecked(1)}>않이요</button>
           </S.ModalBtnDiv>
         </S.ModalItems>
       ) : isChecked === 1 ? (
         <S.ModalItems>
-          <p>그럼 니가 골라보던가 흥 😍</p>
+          <p>그럼 니가 골라보던가 흥 😡</p>
           <S.Row>
             {emotionList.map((emotion) => {
-              return <S.EmotionBtn emotion={emotion} key={emotion} />;
+              return (
+                <div key={emotion}>
+                  {emotion === reccomendEmotion ? (
+                    <S.test onClick={(e) => setRecommendEmotion(e.target.alt)}>
+                      <Emoji emotion={emotion} thisWidth="30px" />
+                    </S.test>
+                  ) : (
+                    <S.EmotionBtn
+                      onClick={(e) => setRecommendEmotion(e.target.alt)}
+                    >
+                      <Emoji emotion={emotion} thisWidth="30px" />
+                    </S.EmotionBtn>
+                  )}
+                </div>
+              );
             })}
           </S.Row>
           <S.ModalBtnDiv>
-            <button onClick={() => setModalOpen(false)}>확인</button>
+            <button onClick={writeDiary}>확인</button>
           </S.ModalBtnDiv>
         </S.ModalItems>
       ) : isChecked === 2 ? (

@@ -101,16 +101,16 @@ export default function Creatediary() {
               checked={checked}
               offColor="#c0bcbc"
               onColor="#accebc"
-              uncheckedIcon={
-                <heyhey.Test>
-                  <GrUnlock color="#ffffff" />
-                </heyhey.Test>
-              }
-              checkedIcon={
-                <heyhey.Test>
-                  <GrLock color="#ffffff" />
-                </heyhey.Test>
-              }
+              // uncheckedIcon={
+              //   <heyhey.Test>
+              //     <GrUnlock color="#ffffff" />
+              //   </heyhey.Test>
+              // }
+              // checkedIcon={
+              //   <heyhey.Test>
+              //     <GrLock color="#ffffff" />
+              //   </heyhey.Test>
+              // }
             />
           </heyhey.CardFoot>
         </heyhey.card>

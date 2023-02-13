@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import Api from "lib/customApi";
 
 import * as G from "./../../styles/index";
 import * as S from "./MyPage";
@@ -7,6 +7,7 @@ import ProfileBox from "./../../components/profileBox/ProfileBox.jsx";
 import { useNavigate } from "react-router-dom";
 import { BsPersonCircle } from "react-icons/bs";
 import { getCookie, removeCookie } from "./../../utils/Cookies";
+import Chatbot from "api/chatbot/Chatbot";
 
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -56,38 +57,26 @@ export default function MyPage({ setToken }) {
     }
   }
 
-  const [userData, setUserData] = useState({
-    profile: "",
-    nickname: "",
-    follower: "",
-    following: "",
-  });
+  const [userData, setUserData] = useState({});
 
   //처음 렌더링이 될 때만 실행
   useEffect(() => {
     async function getUserData() {
       try {
-        alert("마이페이지");
-        // setUserData(
-        //   await axios.get("https://storyge.xyz/api/user", {
-        //     headers: {
-        //       Authorization: getCookie("token"),
-        //     },
-        //   })
-        // );
-
-        //
-        const tmp = await axios.get("https://storyge.xyz/api/user", {
+        // alert("마이페이지");
+        // const data = await axios.get("https://storyge.xyz/api/user", {
+        const response = await Api.get("/user", {
           headers: {
             Authorization: getCookie("token"),
           },
         });
-        console.log(tmp);
-
-        //
-
         console.log("마이페이지");
+        console.log(response.data);
+        setUserData(response.data);
         console.log(userData);
+        console.log("프로필 이미지 : " + userData.profileImg);
+        // console.log('닉네임 : ' + userData.data.nickname);
+        // console.log('팔로워 : ' + userData.data.follower);
       } catch (err) {
         console.log(err);
       }
@@ -97,7 +86,15 @@ export default function MyPage({ setToken }) {
 
   return (
     <G.BodyContainer>
-      <ProfileBox />
+      {userData && (
+        <ProfileBox
+          profileImg={userData.profileImg}
+          nickname={userData.nickname}
+          follower={userData.follower}
+          following={userData.following}
+        />
+      )}
+
       <S.Menu onClick={gomodifyprofile}>
         <BsPersonCircle
           style={{ color: "#ACCEBC", width: "30px", height: "30px" }}
@@ -105,6 +102,7 @@ export default function MyPage({ setToken }) {
         <S.Text>프로필 수정하기</S.Text>
       </S.Menu>
       <G.longBtnDefault onClick={logout}>로그아웃</G.longBtnDefault>
+        <Chatbot />
     </G.BodyContainer>
   );
 }

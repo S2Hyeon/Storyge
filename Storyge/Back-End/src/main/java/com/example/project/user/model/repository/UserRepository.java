@@ -14,7 +14,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
 
-    List<User> findByNicknameContaining(String nickname);
+    List<User> findByNicknameContainingAndNicknameNotLike(String nickname, String myNickname);
 
 //    Oprional
 }

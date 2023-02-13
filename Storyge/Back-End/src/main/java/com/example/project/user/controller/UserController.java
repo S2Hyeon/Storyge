@@ -60,8 +60,10 @@ public class UserController {
 
     @ApiOperation(value = "사용자를 닉네임으로 검색한다")
     @GetMapping("/user/search/{nickname}")
-    public ResponseEntity<?> searchUser(@PathVariable String nickname) {
-        return new ResponseEntity<>(userService.searchUser(nickname), HttpStatus.OK);
+    public ResponseEntity<?> searchUser(HttpServletRequest request, @PathVariable String nickname) {
+        Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
+
+        return new ResponseEntity<>(userService.searchUser(nickname, userId), HttpStatus.OK);
     }
 
 }

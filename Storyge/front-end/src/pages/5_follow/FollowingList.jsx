@@ -1,21 +1,78 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as S from "./Follow.js";
-import newProfileData from "./../2_main/NewDiaryData";
+import { getCookie } from "./../../utils/Cookies";
+import Api from "lib/customApi";
 
 export default function FollowingList() {
+  const movePage = useNavigate();
+
+  const [flag, setFlag] = useState(false);
+  const [followingList, setFollowingList] = useState([]);
+
+  //처음 렌더링이 될 때만 실행
+  useEffect(() => {
+    async function getFollowingList() {
+      try {
+        const response = await Api.get("/following", {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        });
+        console.log(response.data);
+        setFollowingList(response.data);
+        console.log("팔로잉 리스트");
+        console.log(followingList);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getFollowingList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [flag]);
+
+  const deleteFollowing = async (id, e) => {
+    try {
+      await Api.delete(`/following/${id}`, {
+        headers: {
+          Authorization: getCookie("token"),
+        },
+      });
+      console.log("팔로잉 삭제");
+      console.log(id); // error
+      setFlag(!flag);
+      e.preventDefault();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  function goOtherPage(id, e) {
+    movePage("/otherpage", { state: { otherId: id } });
+  }
+
   return (
     <S.Container>
       <S.LineText>ALL</S.LineText>
       <S.List>
-        {newProfileData.map((profile) => {
+        {followingList.map((list) => {
           return (
-            <S.Profile key={profile.id}>
-              <S.Img profile={profile.imgUrl}></S.Img>
-              <S.Text>{profile.name}</S.Text>
+            <S.Profile key={list.userId}>
+              <S.AllBox
+                onClick={(e) => {
+                  goOtherPage(list.userId, e);
+                }}
+              >
+                <S.Img profile={list.profileImg}></S.Img>
+                <S.Text>{list.nickname}</S.Text>
+              </S.AllBox>
               <S.BtnBox>
                 <S.FollowBtn
                   borderColor="var(--color-primary)"
                   color="var(--color-primary)"
+                  onClick={(e) => {
+                    deleteFollowing(list.userId, e);
+                  }}
                 >
                   팔로잉
                 </S.FollowBtn>

@@ -51,14 +51,26 @@
 :root {
   /* 색상 */
   --color-primary: #accebc;
+  /* --color-primary: #84b9c0; */
   --color-background: #eaf2ea;
+  /* --color-background: #fcfee6; */
   --color-warning: #ff7272;
   --color-darkgrey: #c0bcbc;
   --color-lightgrey: #f6f6f6;
   --color-grey: #eeefec;
+  --color-grey-light: #7f8074;
+  --color-grey-dark: #3f403a;
   --color-black: #222222;
   --color-white: #ffffff;
   --color-naver: #03c75a;
+  --color-yellow-light: #fcfee6;
+  --color-yellow-dark: #ffe697;
+  --color-green-light: #84b9c0;
+  --color-green-dark: #48767b;
+  --color-green-dark2: #2b7799;
+  --color-blue-light: #c5d7f2;
+  --color-red: #e26559;
+  --color-brown-dark: #8b7574;
 
   /* Font */
 

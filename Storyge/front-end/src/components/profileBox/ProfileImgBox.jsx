@@ -1,23 +1,34 @@
-import React from 'react';
-import ImageUploader from 'react-image-upload'
-import 'react-image-upload/dist/index.css'
+import React, {useState, useRef} from "react";
+import "react-image-upload/dist/index.css";
+import { AiTwotoneCamera } from "react-icons/ai";
+import * as S from "./../profileBox/ProfileImgBoxStyle";
 
-export default function ProfileBoxImg() {
-    function getImageFileObject(imageFile) {
-        console.log({ imageFile })
-      }
-      function runAfterImageDelete(file) {
-        console.log({ file })
-      }
-    return (
-        <div className="ComponentBox">
-            {/* 파일 삭제 버튼 수정 예정 */}
-            <ImageUploader
-                style={{ height: 150, width: 150, borderColor: 'gray', borderRadius: '50%'}}
-                onFileAdded={(img) => getImageFileObject(img)}
-                onFileRemoved={(img) => runAfterImageDelete(img)}
-            />
-        </div>
-    );
+export default function ProfileBoxImg(props) {
+
+  const [imgFile, setImgFile] = useState("");
+  const imgRef = useRef();
+  
+  // 이미지 업로드 input의 onChange
+  const saveImgFile = () => {
+    const file = imgRef.current.files[0];
+    const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+          setImgFile(reader.result);
+      };
+  };
+
+  return (
+    <>
+      <S.Box className="signup-profileImg-label" htmlFor="profileImg">
+        <S.Input className="signup-profileImg-input" type="file" accept="image/*"
+          id="profileImg" onChange={saveImgFile} ref={imgRef} />
+        <S.Img src={imgFile  ? imgFile  : props.profileImg} alt="프로필 이미지"/>
+
+        <S.Btn>
+          <AiTwotoneCamera />
+        </S.Btn>
+      </S.Box>
+    </>
+  );
 }
-

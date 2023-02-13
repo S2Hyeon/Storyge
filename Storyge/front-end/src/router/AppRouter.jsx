@@ -14,6 +14,7 @@ import Music from "../pages/8_music/Music.jsx";
 import MusicResult from "../pages/8_music/MusicResult.jsx";
 import ErrorPage from "../pages/9_errorPage/ErrorPage";
 
+import Modifydiary from "pages/3_myDiary/modify/DiaryModify";
 import Creatediary from "pages/3_myDiary/create/DiaryCreate";
 // import Diarylist from "../pages/3_myDiary/Diarylist";
 import Diarylist from "pages/3_myDiary/list/DiaryList";
@@ -100,6 +101,12 @@ function AppRouter() {
           }
         />
         <Route
+          path="modifyDiary"
+          element={
+            <PrivateRoute component={<Modifydiary />} authenticated={token} />
+          }
+        />
+        <Route
           path="diarylist"
           element={
             <PrivateRoute component={<Diarylist />} authenticated={token} />
@@ -173,7 +180,7 @@ function AppRouter() {
           }
         />
 
-        <Route path="/*" element={<ErrorPage />} />
+        <Route path="/*" element={<ErrorPage text="404" />} />
       </Route>
     </Routes>
   );

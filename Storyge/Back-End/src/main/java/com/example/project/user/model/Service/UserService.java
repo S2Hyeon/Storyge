@@ -15,7 +15,7 @@ public interface UserService {
     UserDto selectOneUser(Long userId);
 
     // 사용자 검색
-    List<UserDto> searchUser(String nickname);
+    List<UserDto> searchUser(String nickname, Long userId);
 
     default UserDto toDto(User user) {
         return UserDto.builder()

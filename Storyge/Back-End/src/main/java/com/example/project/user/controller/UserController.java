@@ -37,6 +37,7 @@ public class UserController {
     public ResponseEntity<?> updateUserInfo(HttpServletRequest request, @RequestParam(value = "image") MultipartFile multipartFile, @RequestParam(value = "nickname") String nickname) throws IOException {
 
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
+        //프로필 경로 s3에 업로드 후 올려주기
         String url = fileService.upload(multipartFile, "profile");
         userService.updateUser(userId, nickname, url);
         return new ResponseEntity<>(SUCCESS, HttpStatus.OK);

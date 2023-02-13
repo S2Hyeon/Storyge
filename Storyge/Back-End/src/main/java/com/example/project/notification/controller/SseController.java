@@ -42,11 +42,12 @@ public class SseController {
         //현재 로그인한 user 값(pk)
         String token = request.getHeader(TOKEN_HEADER);
         Long userId = jwtUtil.getUserId(token);
+        System.out.println("");
 
         // 현재 클라이언트를 위한 SseEmitter 생성
         SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
         try{
-            sseEmitter.send(SseEmitter.event().name("connect")); // 연결
+            sseEmitter.send(SseEmitter.event().name("connect").data("connected")); // 연결
         }catch (IOException e){
             e.printStackTrace();
         }

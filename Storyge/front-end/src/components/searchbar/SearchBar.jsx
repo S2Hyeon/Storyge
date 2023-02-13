@@ -5,6 +5,7 @@ import data2 from "./SearchBarData";
 
 import { debounce } from "lodash";
 import { getUserSearch } from "api/user/getUserSearch";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchBar() {
   let [keyword, setKeyword] = useState("");
@@ -28,12 +29,20 @@ export default function SearchBar() {
   }, [keyword]);
   //keyword의 길이 변화로 api를 호출하니까 가짜 를 입력할때 가ㅉ가 되었을때 검색을 시도함 그래서 안될듯 ㅠㅠ
 
+  const movePage = useNavigate();
+  function goOtherPage(id) {
+    movePage("/otherpage", { state: { otherId: id } });
+  }
+
   const ShowResultData = () => {
     if (resultData && resultData.length !== 0) {
       console.log(resultData);
       return resultData.map((result) => {
         return (
-          <S.AutoSearchData key={result.userId}>
+          <S.AutoSearchData
+            key={result.userId}
+            onMouseDown={() => goOtherPage(result.userId)}
+          >
             <S.ProfileImg imgUrl={result.profileImg} />
             <div>{result.nickname}</div>
           </S.AutoSearchData>

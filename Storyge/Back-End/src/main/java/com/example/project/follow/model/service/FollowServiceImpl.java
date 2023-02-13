@@ -36,24 +36,22 @@ public class FollowServiceImpl implements FollowService {
             following(followingUserId): 상대 - 내가 신청을 보낼 사람
             db: following이 신청하려는 상대 userId가 현재 신청하는 사람(나)가 되어야 한다
          */
-        
+
         Long followingUserId = following.getUserId(); // 팔로우 신청을 보낼 사람의 userId
-        
+
         User followingUser = userRepository.findById(followingUserId).orElse(null); // 팔로우 신청할 사람
 
-        if(followingUser==null){
+        if (followingUser == null) {
             return false;
         }
 
         FollowWait checkExist = followWaitRepository.findByFollowingAndAndUserId(followingUserId, userId); // 이미 신청 내역이 존재하는지 확인
         if (checkExist != null) { // 존재하면 false 반환
             return false;
-        }
-        else{ // 신청 내역이 존재하지 않으면
-            if(followRepository.findByFollowingAndFollower(followingUserId, userId)!=null){ // 팔로우 중인지 확인
+        } else { // 신청 내역이 존재하지 않으면
+            if (followRepository.findByFollowingAndFollower(followingUserId, userId) != null) { // 팔로우 중인지 확인
                 return false; // 팔로우 중이면 false 반환
-            }
-            else{// 신청 상태도 아니고 팔로우 중도 아니라면 팔로우 신청 보냄
+            } else {// 신청 상태도 아니고 팔로우 중도 아니라면 팔로우 신청 보냄
                 followWaitRepository.save(FollowWait.builder()
                         .userId(userId)
                         .following(followingUserId)
@@ -95,7 +93,7 @@ public class FollowServiceImpl implements FollowService {
         }
 
         // 대기 상태에서 삭제
-        followWaitRepository.deleteByFollowingAndUserId(userId,followerUserId);
+        followWaitRepository.deleteByFollowingAndUserId(userId, followerUserId);
 
         // follow table에 insert (팔로우 수락)
         followRepository.save(Follow.builder()
@@ -122,13 +120,13 @@ public class FollowServiceImpl implements FollowService {
             내가 following에 있는 데이터들의 리스트
             userId에는 나에게 신청을 건 상대가 있다
          */
-        
-        
+
+
         // 나에게 팔로우 신청을 건 사람들을 찾는다
         List<FollowWait> followWaitList = followWaitRepository.findAllByFollowing(userId); // 팔로우 대기중인 사람들 목록 가져오기
         List<FollowUserInfoDto> followWaitUserList = new ArrayList<>(); // 신청한 사람들의 정보를 찾아서 담음
 
-        for(FollowWait follow : followWaitList){
+        for (FollowWait follow : followWaitList) {
 
             User user = follow.getUser(); // 상대방
 
@@ -153,7 +151,7 @@ public class FollowServiceImpl implements FollowService {
         List<Follow> followingList = followRepository.findAllByFollower(userId); //내 팔로잉 목록 가져오기
         List<FollowUserInfoDto> followerUserList = new ArrayList<>(); // 팔로잉들의 정보만 찾아서 담기
 
-        for(Follow follow : followingList){
+        for (Follow follow : followingList) {
 
             User user = follow.getFollowingUsers();
 
@@ -197,6 +195,12 @@ public class FollowServiceImpl implements FollowService {
         return follow != null;
     }
 
+    //팔로우 대기 상태 확인
+    @Override
+    public Boolean checkFollowWait(Long userId, Long otherId) {
+        return followWaitRepository.findByFollowingAndAndUserId(otherId, userId) != null;
+    }
+
     //팔로우 거절(대기 상태 삭제)
     @Override
     public Boolean deleteFollowWait(Long userId, Long follow) {
@@ -204,12 +208,12 @@ public class FollowServiceImpl implements FollowService {
             userId : 나
             follow: 삭제할 사람
             db: 신청한 사람이 userId 신청 받은 사람이 following
-            삭제 하기 위해서는 deleteByFollowingAndUserId에서 
-            following이 내가 되어야 하고 
+            삭제 하기 위해서는 deleteByFollowingAndUserId에서
+            following이 내가 되어야 하고
             userId가 나에게 신청을 한 사람, 즉 신청 내역에서 삭제할 사람의 번호가 되어야 한다
          */
 
-        if(userId==null || follow==null){
+        if (userId == null || follow == null) {
             return false;
         }
 
@@ -229,11 +233,11 @@ public class FollowServiceImpl implements FollowService {
 
         User selectFollowing = userRepository.findById(follow).orElse(null); // 지우려는 상대: following
 
-        if(selectFollowing==null){
+        if (selectFollowing == null) {
             return false;
         }
 
-        if(followRepository.findByFollowingAndFollower(follow,userId)==null){ // 만약 팔로우 중이 아니거나 상대가 먼저 삭제 해버림
+        if (followRepository.findByFollowingAndFollower(follow, userId) == null) { // 만약 팔로우 중이 아니거나 상대가 먼저 삭제 해버림
             return false;
         }
 
@@ -253,11 +257,11 @@ public class FollowServiceImpl implements FollowService {
 
         User selectFollower = userRepository.findById(follow).orElse(null); // 지우려는 상대: follower
 
-        if(selectFollower==null){
+        if (selectFollower == null) {
             return false;
         }
 
-        if(followRepository.findByFollowingAndFollower(userId, follow)==null){ // 팔로워가 아니거나 상대가 먼저 언팔로우
+        if (followRepository.findByFollowingAndFollower(userId, follow) == null) { // 팔로워가 아니거나 상대가 먼저 언팔로우
             return false;
         }
 

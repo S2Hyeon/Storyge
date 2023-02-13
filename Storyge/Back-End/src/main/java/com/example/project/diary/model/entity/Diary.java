@@ -2,6 +2,7 @@ package com.example.project.diary.model.entity;
 
 import com.example.project.user.model.entity.User;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicInsert
 @Builder
 @Getter
 @Setter
@@ -18,15 +20,18 @@ public class Diary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long diaryId;
 
+    @Column(name = "user_id")
+    private Long userId;
+
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
     private String emoticonName;
 
     private String diaryContent;
-    private int scope;
-    private int updateCnt;
+    private Integer scope;
+    private Integer updateCnt;
     private String analizedResult;
 
     private LocalDateTime createdAt;

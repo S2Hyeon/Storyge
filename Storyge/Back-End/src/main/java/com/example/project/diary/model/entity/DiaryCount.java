@@ -2,12 +2,14 @@ package com.example.project.diary.model.entity;
 
 import com.example.project.user.model.entity.User;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicInsert
 @Builder
 @Getter
 @Setter

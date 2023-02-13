@@ -2,15 +2,14 @@ package com.example.project.diary.model.service;
 
 import com.example.project.daily_emotion.model.entity.DailyEmotion;
 import com.example.project.daily_emotion.model.service.DailyEmotionService;
-import com.example.project.diary.model.dto.DailyEmotionStatistic;
-import com.example.project.diary.model.dto.DiaryDto;
-import com.example.project.diary.model.dto.DiaryUpdateParam;
-import com.example.project.diary.model.dto.EmotionStatistic;
+import com.example.project.diary.model.dto.*;
 import com.example.project.diary.model.entity.Diary;
 import com.example.project.diary.model.entity.DiaryCount;
+import com.example.project.diary.model.repository.DiaryCountRepository;
 import com.example.project.diary.model.repository.DiaryCustomRepository;
 import com.example.project.diary.model.repository.DiaryRepository;
-import com.example.project.diary.model.repository.DiaryCountRepository;
+import com.example.project.recentdiary.model.repository.RecentDiaryRepository;
+import com.example.project.recentdiary.model.service.RecentDiaryService;
 import com.example.project.user.model.entity.User;
 import com.example.project.user.model.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,96 +26,99 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class DiaryServiceImpl implements DiaryService{
+public class DiaryServiceImpl implements DiaryService {
 
     private final DiaryRepository diaryRepository;
     private final DiaryCustomRepository diaryCustomRepository;
-    private final DailyEmotionService dailyEmotionService;
     private final UserRepository userRepository;
+    private final RecentDiaryRepository recentDiaryRepository;
 
     private final DiaryCountRepository diaryCountRepository;
+    private final DailyEmotionService dailyEmotionService;
+    private final RecentDiaryService recentDiaryService;
+
 
     @Override
-    public boolean insertDiary(DiaryDto diaryDto) {
-        User user = userRepository.findById(diaryDto.getUserId()).orElse(null);
-        if(user == null) {
-            return false;
+    public Optional<Long> insertDiary(Long userId, DiaryRequestDto diaryRequestDto) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
+            return Optional.empty();
         }
-        
+
+        User user = optionalUser.get();
         // 오늘 작성한 일기 개수 확인
-        DiaryCount diaryCount = diaryCountRepository.findById(user.getUserId()).orElse(null);
-        if(diaryCount == null) {
-            return false;
+        Optional<DiaryCount> optionalDiaryCount = diaryCountRepository.findById(user.getUserId());
+        if (optionalDiaryCount.isEmpty()) {
+            return Optional.empty();
         }
+        DiaryCount diaryCount = optionalDiaryCount.get();
+
         int currentCount = diaryCount.getDiaryCnt();
-        if(currentCount >= 24) { // 제한개수(24개)를 넘어서면 false 리턴
-            return false;
+        if (currentCount >= 24) { // 제한개수(24개)를 넘어서면 false 리턴
+            return Optional.empty();
         }
 
         // 일기 작성 개수 증가
         diaryCount.updateCount(currentCount + 1);
 
-        // To DO : 문장 분석 결과 가져오기
-        diaryDto.setAnalizedResult("문장 분석 결과 테스트");
-
-        Diary diary = Diary.builder()
-                .user(user)
-                .emoticonName(diaryDto.getEmoticonName())
-                .diaryContent(diaryDto.getDiaryContent())
-                .scope(diaryDto.getScope())
-                .updateCnt(diaryDto.getUpdate_cnt())
-                .analizedResult(diaryDto.getAnalizedResult())
-                .createdAt(LocalDateTime.now())
-                .build();
+        Diary diary = toEntity(diaryRequestDto);
+        diary.setUserId(userId);
+        diary.setCreatedAt(LocalDateTime.now());
         diaryRepository.save(diary);
 
-        long userId = diaryDto.getUserId();
-        LocalDate date = diaryDto.getCreatedAt();
+        recentDiaryService.insertRecentDiary(user.getUserId(), diary.getDiaryId()); // 최근 다이어리 저장
+
+        LocalDate date = diary.getCreatedAt().toLocalDate();
 
         // 오늘 평균 감정 있는지 확인
-        DailyEmotion dailyEmotion = dailyEmotionService.selectDailyEmotion(userId, date);
+        Optional<DailyEmotion> dailyEmotion = dailyEmotionService.selectOneDailyEmotion(userId, date);
 
-        if(dailyEmotion == null) {
-            return dailyEmotionService.insertDailyEmotion(toDailyEmotionDto(diaryDto));
-        }
-        else {  // 평균 감정 있다면 오늘 일기 모두 가져온 뒤 평균 재계산 후 수정
-            DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
+        // 평균 감정 없다면 바로 등록
+        if (dailyEmotion.isEmpty()) {
+            // 일일 감정 평균에 등록 실패 시 empty를 리턴
+            if(!dailyEmotionService.insertDailyEmotion(toDailyEmotionDto(diary)))
+                return Optional.empty();
+        } else {  // 평균 감정 있다면 오늘 일기 모두 가져온 뒤 평균 재계산 후 수정
+            DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date).orElseThrow();
             dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.getEmoticonName());
         }
-        return true;
+        return Optional.of(diary.getDiaryId());
     }
 
 
     @Override
-    public DiaryDto selectOneDiary(Long diaryId) {
+    public Optional<DiaryResponseDto> selectOneDiary(Long diaryId) {
         Optional<Diary> diary = diaryRepository.findById(diaryId);
-        return diary.map(this::toDto).orElse(null);
+        return diary.map(this::toResponseDto);
     }
 
-    public List<DiaryDto> selectDailyDiaries(String nickname, String stringDate) {
-        User user = userRepository.findByNickname(nickname).orElse(null);
-        if(user == null) {
+    public List<DiaryResponseDto> selectAllDailyDiary(Long userId, String stringDate) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
             return null;
         }
+
         LocalDate date = LocalDate.parse(stringDate);
         LocalDateTime startTimeOfDay = date.atStartOfDay();
         LocalDateTime endTimeOfDay = LocalDateTime.of(date, LocalTime.MAX).withNano(0);
-        List<Diary> diaryList = diaryRepository.findAllByUser_UserIdAndCreatedAtBetween(user.getUserId(), startTimeOfDay, endTimeOfDay);
-        return diaryList.stream().map(this::toDto).collect(Collectors.toList());
+        List<Diary> diaryList = diaryRepository.findAllByUser_UserIdAndCreatedAtBetween(userId, startTimeOfDay, endTimeOfDay);
+        return diaryList.stream().map(this::toResponseDto).collect(Collectors.toList());
     }
 
-    public int selectDiaryCount(long userId) {
-        User user = userRepository.findById(userId).orElse(null);
-        if(user == null) {
+    public int selectDiaryCount(Long userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
             return -1;
         }
 
-        DiaryCount diaryCount = diaryCountRepository.findById(user.getUserId()).orElse(null);
-        if(diaryCount == null) {
+        User user = optionalUser.get();
+
+        Optional<DiaryCount> optionalDiaryCount = diaryCountRepository.findById(user.getUserId());
+        if (optionalDiaryCount.isEmpty()) {
             return -1;
         }
 
-        return diaryCount.getDiaryCnt();
+        return optionalDiaryCount.get().getDiaryCnt();
 
     }
 
@@ -132,18 +134,22 @@ public class DiaryServiceImpl implements DiaryService{
     수정을 진행한다.
      */
     @Override
-    public boolean updateDiary(DiaryUpdateParam param) {
-        Diary diary = diaryRepository.findById(param.getDiaryId()).orElse(null);
-        if(diary == null) {
+    public boolean updateDiary(Long userId, DiaryUpdateParam param) {
+        Optional<Diary> optionalDiary = diaryRepository.findById(param.getDiaryId());
+        if (optionalDiary.isEmpty() || userId != optionalDiary.get().getUserId()) {
             return false;
         }
 
-        if(diary.getUpdateCnt() == 0) {
-            if(!param.getEmoticonName().equals(diary.getEmoticonName())) {
-                long userId = diary.getUser().getUserId();
+        Diary diary = optionalDiary.get();
+
+        if (diary.getUpdateCnt() == 0) {
+            if (!param.getEmoticonName().equals(diary.getEmoticonName())) {
                 LocalDate date = diary.getCreatedAt().toLocalDate();
-                DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
-                dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.getEmoticonName());
+                Optional<DailyEmotionStatistic> dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
+
+                if (dailyEmotionStatistic.isPresent())
+                    dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.get().getEmoticonName());
+
             }
 
             diary.updateDiary(param.getEmoticonName(),
@@ -158,30 +164,45 @@ public class DiaryServiceImpl implements DiaryService{
         return false;
     }
 
-    public boolean updateScope(long diaryId, int scope) {
-        Diary diary = diaryRepository.findById(diaryId).orElse(null);
-        if(diary == null) {
+    public boolean updateScope(Long userId, Long diaryId, int scope) {
+        Optional<Diary> optionalDiary = diaryRepository.findById(diaryId);
+        if (optionalDiary.isEmpty() || userId != optionalDiary.get().getUserId()) {
             return false;
         }
 
-        diary.updateScope(scope);
+        optionalDiary.get().updateScope(scope);
+
+        if(recentDiaryRepository.findByDiaryId(optionalDiary.get().getDiaryId()).isPresent()){ // 만약 recentdiary에 있다면
+            if(scope==0){ // 비공개로 바꿨으면
+                recentDiaryRepository.deleteByDiaryId(optionalDiary.get().getDiaryId()); // 지우기
+            }
+        }
+        else{ // 없고
+            if(optionalDiary.get().getCreatedAt().plusHours(24).isAfter(LocalDateTime.now())){ // 공개 다이어리라면
+                recentDiaryService.insertRecentDiary(userId, diaryId); // recentdiary에 추가
+            }
+        }
 
         return true;
     }
 
 
-
     @Override
-    public boolean deleteDiary(Long diaryId) {
-        DiaryDto diaryDto = selectOneDiary(diaryId);
-        if(diaryDto == null) {
+    public boolean deleteDiary(Long userId, Long diaryId) {
+        Optional<DiaryResponseDto> diaryResponseDto = selectOneDiary(diaryId);
+        if (diaryResponseDto.isEmpty() || userId != diaryResponseDto.get().getUserId()) {
             return false;
         }
         diaryRepository.deleteById(diaryId);
-        long userId = diaryDto.getUserId();
-        LocalDate date = diaryDto.getCreatedAt();
-        DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
-        dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.getEmoticonName());
+
+        LocalDate date = diaryResponseDto.get().getCreatedAt().toLocalDate();
+        Optional<DailyEmotionStatistic> dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
+
+        if (dailyEmotionStatistic.isPresent())
+            dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.get().getEmoticonName());
+        else {
+            dailyEmotionService.deleteDailyEmotion(userId, date);
+        }
         return true;
     }
 }

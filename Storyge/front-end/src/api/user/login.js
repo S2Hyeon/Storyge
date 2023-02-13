@@ -1,8 +1,8 @@
 import axios from "axios";
 import { setCookie } from "utils/Cookies";
 
-const CUR_URL = "localhost:3000";
-// const CUR_URL = "storyge.xyz";
+// const CUR_URL = "localhost:3000";
+const CUR_URL = "storyge.xyz";
 
 export const kakaoLogin = async (code) => {
   axios({

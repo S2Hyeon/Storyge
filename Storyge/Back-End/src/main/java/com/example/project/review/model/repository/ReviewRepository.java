@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    List<Review> findAllByDiaryIdOrderByCreatedAt(Diary diaryId);
+    List<Review> findAllByDiaryIdOrderByCreatedAt(Long diaryId);
 
 }

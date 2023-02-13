@@ -8,7 +8,7 @@ export async function getOtherUserData(otherUserId) {
         Authorization: getCookie("token"),
       },
     });
-    console.log(response.data);
+    // console.log(">>>>>>>>>", response.data);
     return response.data;
   } catch (error) {
     console.error(error);

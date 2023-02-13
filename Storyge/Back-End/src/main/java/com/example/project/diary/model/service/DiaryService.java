@@ -1,66 +1,67 @@
 package com.example.project.diary.model.service;
 
 import com.example.project.daily_emotion.model.dto.DailyEmotionDto;
-import com.example.project.diary.model.dto.DiaryDto;
+import com.example.project.diary.model.dto.DiaryRequestDto;
+import com.example.project.diary.model.dto.DiaryResponseDto;
 import com.example.project.diary.model.dto.DiaryUpdateParam;
 import com.example.project.diary.model.dto.EmotionStatistic;
 import com.example.project.diary.model.entity.Diary;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DiaryService {
 
     //C
-    boolean insertDiary(DiaryDto diaryDto);
+    Optional<Long> insertDiary(Long userId, DiaryRequestDto diaryDto);
 
     //R
 
-    DiaryDto selectOneDiary(Long diaryId);
-    List<DiaryDto> selectDailyDiaries(String nickname, String stringDate);
+    Optional<DiaryResponseDto> selectOneDiary(Long diaryId);
 
-    int selectDiaryCount(long userId);
+    List<DiaryResponseDto> selectAllDailyDiary(Long userId, String stringDate);
+
+    int selectDiaryCount(Long userId);
 
     List<EmotionStatistic> selectEmotionStatistic(String period, String stringDate, Long userId);
 
     //U
-    boolean updateDiary (DiaryUpdateParam param);
+    boolean updateDiary(Long userId, DiaryUpdateParam param);
 
-    boolean updateScope(long diaryId, int scope);
+    boolean updateScope(Long userId, Long diaryId, int scope);
 
     //D
-    boolean deleteDiary(Long diaryId);
+    boolean deleteDiary(Long userId, Long diaryId);
 
     // DB-> 서버
-    default DiaryDto toDto(Diary diary){
-        return DiaryDto.builder()
+    default DiaryResponseDto toResponseDto(Diary diary) {
+        return DiaryResponseDto.builder()
                 .diaryId(diary.getDiaryId())
                 .userId(diary.getUser().getUserId())
                 .emoticonName(diary.getEmoticonName())
                 .diaryContent(diary.getDiaryContent())
                 .scope(diary.getScope())
-                .update_cnt(diary.getUpdateCnt())
+                .updateCnt(diary.getUpdateCnt())
                 .analizedResult(diary.getAnalizedResult())
-                .createdAt(diary.getCreatedAt().toLocalDate())
+                .createdAt(diary.getCreatedAt())
                 .build();
     }
 
     //서버 -> DB
-//    default Diary toEntity(DiaryDto diaryDto){
-//        return new Diary().builder()
-//                .user(diaryDto.getUserId())
-//                .emoticonName(diaryDto.getEmoticonName())
-//                .diaryContent(diaryDto.getDiaryContent())
-//                .scope(diaryDto.getScope())
-//                .update_cnt(diaryDto.getUpdate_cnt())
-//                .analizedResult(diaryDto.getAnalizedResult())
-//                .build();
-//    }
+    default Diary toEntity(DiaryRequestDto diaryRequestDto) {
+        return Diary.builder()
+                .emoticonName(diaryRequestDto.getEmoticonName())
+                .diaryContent(diaryRequestDto.getDiaryContent())
+                .scope(diaryRequestDto.getScope())
+                .analizedResult(diaryRequestDto.getAnalizedResult())
+                .build();
+    }
 
-    default DailyEmotionDto toDailyEmotionDto(DiaryDto diaryDto) {
+    default DailyEmotionDto toDailyEmotionDto(Diary diary) {
         return DailyEmotionDto.builder()
-                .userId(diaryDto.getUserId())
-                .emoticonName(diaryDto.getEmoticonName())
-                .createdAt(diaryDto.getCreatedAt())
+                .userId(diary.getUserId())
+                .emoticonName(diary.getEmoticonName())
+                .createdAt(diary.getCreatedAt().toLocalDate())
                 .build();
     }
 }

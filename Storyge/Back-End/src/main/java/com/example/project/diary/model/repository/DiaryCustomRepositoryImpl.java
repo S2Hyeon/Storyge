@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.project.diary.model.entity.QDiary.diary;
 
@@ -21,23 +22,34 @@ import static com.example.project.diary.model.entity.QDiary.diary;
 public class DiaryCustomRepositoryImpl implements DiaryCustomRepository {
 
     private final EntityManager em;
+
     @Override
-    public DailyEmotionStatistic dailyEmotionStatistic(Long userId, LocalDate date) {
+    public Optional<DailyEmotionStatistic> dailyEmotionStatistic(Long userId, LocalDate date) {
 
 
         JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
         LocalDateTime from = date.atStartOfDay();
         LocalDateTime to = LocalDateTime.of(date, LocalTime.MAX).withNano(0);
 
-        List<DailyEmotionStatistic> dailyEmotionStatisticDto = jpaQueryFactory
+
+//        List<DailyEmotionStatistic> dailyEmotionStatisticDto = jpaQueryFactory
+//                .select(new QDailyEmotionStatistic(diary.emoticonName, diary.emoticonName.count(), diary.createdAt.max()))
+//                .from(diary)
+//                .where(diary.user.userId.eq(userId), diary.createdAt.between(from, to))
+//                .groupBy(diary.emoticonName)
+//                .orderBy(diary.emoticonName.count().desc(), diary.createdAt.max().desc())
+//                .limit(1)
+//                .fetch();
+
+//        return dailyEmotionStatisticDto.get(0);
+        return Optional.ofNullable(jpaQueryFactory
                 .select(new QDailyEmotionStatistic(diary.emoticonName, diary.emoticonName.count(), diary.createdAt.max()))
                 .from(diary)
-                .where(diary.user.userId.eq(userId), diary.createdAt.between(from, to))
+                .where(diary.userId.eq(userId), diary.createdAt.between(from, to))
                 .groupBy(diary.emoticonName)
                 .orderBy(diary.emoticonName.count().desc(), diary.createdAt.max().desc())
-                .fetch();
-
-        return dailyEmotionStatisticDto.get(0);
+                .limit(1)
+                .fetchOne());
     }
 
     @Override
@@ -47,15 +59,13 @@ public class DiaryCustomRepositoryImpl implements DiaryCustomRepository {
         LocalDateTime from;
         LocalDateTime to;
 
-        if(period.equals("month")) {
+        if (period.equals("month")) {
             from = date.withDayOfMonth(1).atStartOfDay();
             to = LocalDateTime.of(date.withDayOfMonth(date.lengthOfMonth()), LocalTime.MAX);
-        }
-        else if(period.equals("year")) {
+        } else if (period.equals("year")) {
             from = date.withDayOfYear(1).atStartOfDay();
             to = LocalDateTime.of(date.withDayOfYear(date.lengthOfYear()), LocalTime.MAX);
-        }
-        else {
+        } else {
             return null;
         }
 

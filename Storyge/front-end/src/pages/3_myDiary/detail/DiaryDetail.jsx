@@ -38,12 +38,10 @@ export default function DiaryDetail() {
   const [userNumber, setUserNumber] = useState("");
   const [isChecked, setIsChecked] = useState(true);
   const [diaryId] = useState(location.state.diaryId); //글 번호
-
   //다이어리 세부 내용 가져오기
   const [myDiaryDetailData, setMyDiaryDetailData] = useState();
-  const [isOpen, setIsOpen] = useState(
-    myDiaryDetailData && myDiaryDetailData.scope === 0 ? true : false
-  );
+  const [isOpen, setIsOpen] = useState(location.state.scope); // 공개여부;
+  console.log("isOpen 0이면 비공개, 1이면 공개", isOpen);
   useEffect(() => {
     async function getMyUserId() {
       const response = await getUserId();
@@ -66,9 +64,14 @@ export default function DiaryDetail() {
 
   const [changedCount, setChangedCount] = useState(0);
 
-  const handleChange = (nextChecked) => {
-    setIsOpen(nextChecked);
-    putDiaryScope(diaryId, isOpen ? 0 : 1);
+  const handleChange = () => {
+    if (isOpen === 1) {
+      putDiaryScope(diaryId, 0);
+      setIsOpen(0);
+    } else {
+      putDiaryScope(diaryId, 1);
+      setIsOpen(1);
+    }
   };
 
   //이 다이어리의 댓글들 가져오기
@@ -162,7 +165,10 @@ export default function DiaryDetail() {
             수정
           </S.InfoBtn>
         ) : null}
-        <Switch
+        <S.InfoBtn onClick={handleChange}>
+          {isOpen === 0 ? "공개" : "비공개"}
+        </S.InfoBtn>
+        {/* <Switch
           onChange={handleChange}
           checked={isOpen}
           offColor="#c0bcbc"
@@ -177,7 +183,7 @@ export default function DiaryDetail() {
               <GrLock color="#ffffff" />
             </S.Test>
           }
-        />
+        /> */}
       </S.Row>
       <S.CommentWriteBox>
         <S.CommentWrite

@@ -43,8 +43,8 @@ export default function DiaryList() {
   }, [dateInfo]);
 
   //내 일기 상세 조회 페이지로 이동
-  function goDiaryDetail(diaryId) {
-    movePage("/diary", { state: { diaryId: diaryId } });
+  function goDiaryDetail(diaryId, scope) {
+    movePage("/diary", { state: { diaryId: diaryId, scope: scope } });
   }
 
   //년월일 표시
@@ -107,7 +107,10 @@ export default function DiaryList() {
       ) : (
         showDiaryData.map((data, index) => {
           return (
-            <S.ListBox key={index} onClick={() => goDiaryDetail(data.diaryId)}>
+            <S.ListBox
+              key={index}
+              onClick={() => goDiaryDetail(data.diaryId, data.scope)}
+            >
               <Emoji emotion={data.emoticonName} thisWidth="13%" />
               <S.TimeSummaryContainer>
                 <S.Time>

@@ -12,7 +12,7 @@ export const Login = styled.div`
 
 export const Logo = styled.img`
   width: 100%;
-  margin-bottom: 45%;
+  margin-bottom: 5%;
 `;
 
 export const LoginText = styled.h2`
@@ -45,14 +45,14 @@ export const LinkBtn = styled.a`
 `;
 
 export const SubmitBtn = styled.div`
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 200px;
   height: 40px;
   border-radius: 12px;
   border: 0;
-  background-color: #ACCEBC;
+  background-color: #accebc;
   font-family: "S-CoreDream-4Regular";
   color: var(--color-white);
 `;

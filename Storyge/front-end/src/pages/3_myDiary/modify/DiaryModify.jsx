@@ -72,14 +72,10 @@ export default function Modifydiary() {
     } else if (content.length > 100) {
     } else {
       // 일기를 작성 할 수 있는 횟수 검사
-      if (count < 24) {
-        setSpinner(true);
-        const test = await getInfo(content, setModalOpen);
-        // console.log(test);
-        setInfo(test);
-      } else {
-        alert("하루 작성 가능한 일기를 모두 작성함");
-      }
+      setSpinner(true);
+      const test = await getInfo(content, setModalOpen);
+      // console.log(test);
+      setInfo(test);
     }
   }
 

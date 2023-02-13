@@ -43,7 +43,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> searchUser(String nickname) {
-        return userRepository.findByNicknameContaining(nickname).stream().map(this::toDto).collect(Collectors.toList());
+    public List<UserDto> searchUser(String nickname, Long userId) {
+        String myNickname = userRepository.findById(userId).get().getNickname();
+
+        return userRepository.findByNicknameContainingAndNicknameNotLike(nickname, myNickname).stream().map(this::toDto).collect(Collectors.toList());
     }
 }

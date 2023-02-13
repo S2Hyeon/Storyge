@@ -168,22 +168,6 @@ export default function DiaryDetail() {
         <S.InfoBtn onClick={handleChange}>
           {isOpen === 0 ? "공개" : "비공개"}
         </S.InfoBtn>
-        {/* <Switch
-          onChange={handleChange}
-          checked={isOpen}
-          offColor="#c0bcbc"
-          onColor="#accebc"
-          uncheckedIcon={
-            <S.Test>
-              <GrUnlock color="#ffffff" />
-            </S.Test>
-          }
-          checkedIcon={
-            <S.Test>
-              <GrLock color="#ffffff" />
-            </S.Test>
-          }
-        /> */}
       </S.Row>
       <S.CommentWriteBox>
         <S.CommentWrite

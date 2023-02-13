@@ -178,6 +178,8 @@ export const CommentContent = styled.div`
 export const Row = styled.div`
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  margin: 10px 0 0 0;
 `;
 
 export const InfoBtn = styled.button`
@@ -188,4 +190,8 @@ export const InfoBtn = styled.button`
   height: 35px;
   font-size: 16px;
   margin: 0 5px 0 5px;
+`;
+
+export const Test = styled.div`
+  margin: 0 0 0 7px;
 `;

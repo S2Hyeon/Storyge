@@ -103,16 +103,14 @@ export default function Creatediary() {
               onColor="#accebc"
               uncheckedIcon={
                 <heyhey.Test>
-                  <GrUnlock />
+                  <GrUnlock color="#ffffff" />
                 </heyhey.Test>
               }
               checkedIcon={
                 <heyhey.Test>
-                  <GrLock />
+                  <GrLock color="#ffffff" />
                 </heyhey.Test>
               }
-              // className="react-switch"
-              // id="icon-switch"
             />
           </heyhey.CardFoot>
         </heyhey.card>
@@ -134,6 +132,7 @@ export default function Creatediary() {
           content={info}
           num={0}
           classify="create"
+          scope={checked ? 0 : 1}
         />
       )}
       {spinner && <Modal setModalOpen={setModalOpen} content={info} num={2} />}

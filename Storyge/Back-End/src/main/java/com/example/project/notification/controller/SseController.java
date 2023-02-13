@@ -47,7 +47,7 @@ public class SseController {
         // 현재 클라이언트를 위한 SseEmitter 생성
         SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
         try{
-            sseEmitter.send(SseEmitter.event().name("connect").data("제발")); // 연결
+            sseEmitter.send(SseEmitter.event().name("connect").data("connected")); // 연결
         }catch (IOException e){
             e.printStackTrace();
         }

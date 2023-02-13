@@ -110,46 +110,49 @@ export default function FollowerList() {
 
   return (
     <S.Container>
-      <S.LineText>New</S.LineText>
+      {newList != null && newList.length > 0 ? (
+        <S.LineText>New</S.LineText>
+      ) : null}
       <S.List>
-        {newList.map((list) => {
-          return (
-            <S.Profile key={list.userId}>
-              <S.AllBox
-                onClick={(e) => {
-                  goOtherPage(list.userId, e);
-                }}
-              >
-                <S.Img profile={list.profileImg}></S.Img>
-                <S.Text>{list.nickname}</S.Text>
-              </S.AllBox>
-              {deleteFollow ? (
-                <S.BtnBox>
-                  <S.FollowBtn
-                    borderColor="var(--color-primary)"
-                    color="var(--color-primary)"
-                    onClick={(e) => {
-                      acceptFollow(list.userId, e);
-                    }}
-                  >
-                    확인
-                  </S.FollowBtn>
-                  <S.FollowBtn
-                    borderColor="var(--color-warning)"
-                    color="var(--color-warning)"
-                    onClick={(e) => {
-                      deleteFollowWait(list.userId, e);
-                    }}
-                  >
-                    삭제
-                  </S.FollowBtn>
-                </S.BtnBox>
-              ) : (
-                <S.Text>요청 거절됨</S.Text>
-              )}
-            </S.Profile>
-          );
-        })}
+        {newList &&
+          newList.map((list) => {
+            return (
+              <S.Profile key={list.userId}>
+                <S.AllBox
+                  onClick={(e) => {
+                    goOtherPage(list.userId, e);
+                  }}
+                >
+                  <S.Img profile={list.profileImg}></S.Img>
+                  <S.Text>{list.nickname}</S.Text>
+                </S.AllBox>
+                {deleteFollow ? (
+                  <S.BtnBox>
+                    <S.FollowBtn
+                      borderColor="var(--color-primary)"
+                      color="var(--color-primary)"
+                      onClick={(e) => {
+                        acceptFollow(list.userId, e);
+                      }}
+                    >
+                      확인
+                    </S.FollowBtn>
+                    <S.FollowBtn
+                      borderColor="var(--color-warning)"
+                      color="var(--color-warning)"
+                      onClick={(e) => {
+                        deleteFollowWait(list.userId, e);
+                      }}
+                    >
+                      삭제
+                    </S.FollowBtn>
+                  </S.BtnBox>
+                ) : (
+                  <S.Text>요청 거절됨</S.Text>
+                )}
+              </S.Profile>
+            );
+          })}
       </S.List>
 
       <S.LineText>ALL</S.LineText>

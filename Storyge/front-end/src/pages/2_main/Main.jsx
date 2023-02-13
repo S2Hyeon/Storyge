@@ -8,17 +8,20 @@ import PieChart from "../../components/chart/PieChart";
 import { getCookie } from "./../../utils/Cookies";
 import { getQuote } from "api/quote/getQuote";
 import { getRecentDiary } from "api/recentDiary/getRecentDiary";
-import dayjs from "dayjs";
 // import { EventSourcePolyfill } from "event-source-polyfill";
 
 function Main() {
-  // //실시간 알림 test/////////////////////////////////
-  // const [newAlert, setNewAlert] = useState(false);
+  // // //실시간 알림 test/////////////////////////////////
+  // const [newAlert, setNewAlert] = useState();
 
   // const eventSource = new EventSourcePolyfill("https://storyge.xyz/api/sub", {
   //   headers: {
   //     Authorization: getCookie("token"),
   //   },
+  // });
+  // eventSource.addEventListener("notification", function(event) {
+  //   let msg = event.data;
+  //   alert(msg);
   // });
 
   // eventSource.onmessage = (event) => {
@@ -31,6 +34,26 @@ function Main() {
 
   // console.log(newAlert);
   // //////////////////////////////////////////////////////
+
+  // // Test2////////////////////////////////////////
+  // let subscribeUrl = "http://storyge.xyz/api/sub";
+
+  // $(document).ready(function() {
+  //   if (getCookie("token") != null) {
+  //     let token = sessionStorage.getItem("mytoken");
+  //     let eventSource = new EventSource(subscribeUrl + "?token=" + token);
+
+  //     eventSource.addEventListener("notification", function(event) {
+  //       let message = event.data;
+  //       alert(message);
+  //     });
+
+  //     eventSource.addEventListener("error", function(event) {
+  //       eventSource.close();
+  //     });
+  //   }
+  // });
+  ////////////////////////////////////////////////
 
   // 로그인 여부 확인 : 쿠기 값 가져오기
   useEffect(() => {

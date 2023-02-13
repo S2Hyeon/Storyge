@@ -8,9 +8,9 @@ import {
   // plugins,
 } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import Select from "react-select";
+// import Select from "react-select";
 import dayjs from "dayjs";
-import { type } from "@testing-library/user-event/dist/type";
+// import { type } from "@testing-library/user-event/dist/type";
 import { getStatistic } from "api/statistic/getStatistic";
 
 ChartJS.register(ArcElement, Tooltip, Legend);

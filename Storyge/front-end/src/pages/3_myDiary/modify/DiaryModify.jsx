@@ -4,8 +4,9 @@ import Clock from "react-live-clock";
 import Modal from "../Modal";
 import * as heyhey from "./DiaryModifyStyle";
 import * as G from "../../../styles/index";
-import Toggle from "../Toggle";
 import { OpenAI } from "../../../openai/OpenAI";
+import Switch from "react-switch";
+import { GrLock, GrUnlock } from "react-icons/gr";
 
 import { getCount } from "api/diary/getCount";
 
@@ -16,10 +17,15 @@ export default function Modifydiary() {
   const contentRef = useRef();
   const [count, setCount] = useState(0);
   const [content, setContent] = useState(already.diaryContent);
+  const [diaryId] = useState(already.diaryId);
   const [modalOpen, setModalOpen] = useState(false);
   const [info, setInfo] = useState(["emotion", "comment"]);
   const [spinner, setSpinner] = useState(false);
-
+  const [checked, setChecked] = useState(already.scope === 0 ? true : false);
+  const handleChange = (nextChecked) => {
+    setChecked(nextChecked);
+    console.log(checked);
+  };
   useEffect(() => {
     async function getDiaryCount() {
       const response = await getCount();
@@ -94,7 +100,22 @@ export default function Modifydiary() {
             <heyhey.CountDiary>
               {content && content.length} / 100
             </heyhey.CountDiary>
-            <Toggle />
+            <Switch
+              onChange={handleChange}
+              checked={checked}
+              offColor="#c0bcbc"
+              onColor="#accebc"
+              uncheckedIcon={
+                <heyhey.Test>
+                  <GrUnlock color="#ffffff" />
+                </heyhey.Test>
+              }
+              checkedIcon={
+                <heyhey.Test>
+                  <GrLock color="#ffffff" />
+                </heyhey.Test>
+              }
+            />
           </heyhey.CardFoot>
         </heyhey.card>
         <div>
@@ -114,7 +135,9 @@ export default function Modifydiary() {
           diary={content}
           content={info}
           num={0}
+          diaryId={diaryId}
           classify="modify"
+          scope={checked ? 0 : 1}
         />
       )}
       {spinner && <Modal setModalOpen={setModalOpen} content={info} num={2} />}

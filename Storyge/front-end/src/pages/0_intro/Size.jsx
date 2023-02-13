@@ -1,6 +1,6 @@
 import React from "react";
-import * as S from "./SizeStyle.js"
-import logo from "./../../assets/logo1.png"
+import * as S from "./SizeStyle.js";
+import logo from "./../../assets/logo1.png";
 
 export default function Size(props) {
   return (

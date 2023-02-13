@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import * as S from "./../profileBox/ProfileBoxStyle.js";
 import * as G from "styles";
 import { getIsFollowing } from "api/user/getIsFollowing.js";
-import { getIsWaitingConfirm } from "api/user/getIsWaitingConfirm.js";
 import { postApplyFollow } from "api/user/postApplyFollow.js";
 import { deleteFollowing } from "api/user/deleteFollowing.js";
+import { getOtherUserData } from "api/user/getOtherUserData.js";
 
 export default function ProfileBox(props) {
   const [isStateChanged, setIsStateChanged] = useState();
@@ -35,16 +35,18 @@ export default function ProfileBox(props) {
     getAndSetIsFollowing();
   }, [isStateChanged]);
 
-  //이미 내가 팔로우를 신청했는지 확인!
-  const [isWaitingConfirm, setIsWaitingConfirm] = useState();
+  //이미 내가 팔로우를 신청했는지 여부
+  const [isWaitingConfirm, setIsWaitingConfirm] = useState(
+    props.isAlreadyApply
+  );
   useEffect(() => {
-    async function getAndSetIsWaitingConfirm() {
-      if (props.otherUserId != null) {
-        const response = await getIsWaitingConfirm(props.otherUserId);
-        setIsWaitingConfirm(response);
+    if (props.otherUserId != null) {
+      async function getAndSetIsWaitingConfirm() {
+        const response = await getOtherUserData(props.otherUserId);
+        setIsWaitingConfirm(response.scope);
       }
+      getAndSetIsWaitingConfirm();
     }
-    getAndSetIsWaitingConfirm();
   }, [isStateChanged]);
 
   function gofollowerlist() {

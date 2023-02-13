@@ -1,30 +1,39 @@
-import React, {useState, useRef} from "react";
+import React, { useState, useRef } from "react";
 import "react-image-upload/dist/index.css";
 import { AiTwotoneCamera } from "react-icons/ai";
 import * as S from "./../profileBox/ProfileImgBoxStyle";
 
-export default function ProfileBoxImg(props) {
-
+export default function ProfileBoxImg({ profileImg, modifyFormData }) {
   const [imgFile, setImgFile] = useState("");
   const imgRef = useRef();
-  
+
   // 이미지 업로드 input의 onChange
   const saveImgFile = () => {
     const file = imgRef.current.files[0];
     const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-          setImgFile(reader.result);
-      };
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImgFile(reader.result);
+    };
+
+    const formData = new FormData();
+    formData.append("image", file);
+    console.log(file);
+    modifyFormData(file); // file? 넣는게 맞나?
   };
 
   return (
     <>
       <S.Box className="signup-profileImg-label" htmlFor="profileImg">
-        <S.Input className="signup-profileImg-input" type="file" accept="image/*"
-          id="profileImg" onChange={saveImgFile} ref={imgRef} />
-        <S.Img src={imgFile  ? imgFile  : props.profileImg} alt="프로필 이미지"/>
-
+        <S.Input
+          className="signup-profileImg-input"
+          type="file"
+          accept="image/*"
+          id="profileImg"
+          onChange={saveImgFile}
+          ref={imgRef}
+        />
+        <S.Img src={imgFile ? imgFile : profileImg} alt="프로필 이미지" />
         <S.Btn>
           <AiTwotoneCamera />
         </S.Btn>

@@ -43,3 +43,7 @@ export const CardFoot = styled.div`
 export const CountDiary = styled.div`
   margin: 0 0 0 10px;
 `;
+
+export const Test = styled.div`
+  margin: 0 0 0 7px;
+`;

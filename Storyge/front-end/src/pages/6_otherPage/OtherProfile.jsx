@@ -24,13 +24,14 @@ function OtherPage() {
 
   //다른 사람 정보 가져오기
   const [otherUserData, setOtherUserData] = useState({});
+  const [isAlreadyApply, setIsAlreadyApply] = useState(false);
   useEffect(() => {
     async function getAndSetOtherUserData() {
       const response = await getOtherUserData(otherUserId);
-      setOtherUserData(response);
+      setOtherUserData(response.user);
+      setIsAlreadyApply(response.scope);
     }
     getAndSetOtherUserData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //내가 팔로우 하고 있는지 확인
@@ -53,6 +54,7 @@ function OtherPage() {
             nickname={otherUserData.nickname}
             follower={otherUserData.follower}
             following={otherUserData.following}
+            isAlreadyApply={isAlreadyApply}
           />
         )}
 

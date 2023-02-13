@@ -19,11 +19,4 @@ public interface QuoteService {
     }
 
 
-//    default Quote toEntity(QuoteDto quoteDto){
-//        return new Quote().builder()
-//                .quteId(quoteDto.getQuoteId())
-//                .quoteContent((quoteDto.getQuoteContent()))
-//                .build();
-//    }
-
 }

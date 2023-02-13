@@ -40,7 +40,6 @@ public class CustomOAuth2AuthorizationRequestRepository<T extends OAuth2Authoriz
         uriVariables.put("baseScheme", (scheme != null) ? scheme : "");
         String host = uriComponents.getHost();
         uriVariables.put("baseHost", (host != null) ? host : "");
-        // following logic is based on HierarchicalUriComponents#toUriString()
         int port = uriComponents.getPort();
         uriVariables.put("basePort", (port == -1) ? "" : ":" + port);
         String path = uriComponents.getPath();
@@ -85,7 +84,6 @@ public class CustomOAuth2AuthorizationRequestRepository<T extends OAuth2Authoriz
 
         System.out.println("ClientRegistration : " + clientRegistration);
 
-//        String redirectUri = "http://localhost:3000/oauth/callback/"+registrationId;
         String redirectUri = expandRedirectUri(request, clientRegistration);
         OAuth2AuthorizationRequest build = builder.clientId(clientRegistration.getClientId())
                 .authorizationUri(clientRegistration.getProviderDetails().getAuthorizationUri())

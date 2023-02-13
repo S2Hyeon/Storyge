@@ -22,20 +22,23 @@ public class RecentDiary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recent_id")
     private Long recentId;
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User userId;
+
+    @Column(name="user_id")
+    private Long userId;
+
 
     @ManyToOne
-    @JoinColumn(name="diary_id")
-    private Diary diaryId;
+    @JoinColumn(name="user_id", insertable = false, updatable = false)
+    private User user;
+
+    @Column(name="diary_id")
+    private Long diaryId;
+
+    @ManyToOne
+    @JoinColumn(name="diary_id", insertable = false, updatable = false)
+    private Diary diary;
 
     @Column(name="ends_at")
     private LocalDateTime endsAt;
-
-    @PrePersist
-    private void createdAt(){
-        endsAt = LocalDateTime.now().plusHours(24);
-    }
 
 }

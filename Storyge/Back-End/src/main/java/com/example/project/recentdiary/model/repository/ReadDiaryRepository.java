@@ -6,8 +6,10 @@ import com.example.project.user.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ReadDiaryRepository extends JpaRepository<ReadDiary, Long> {
-    ReadDiary findByRecentId(RecentDiary recentDiary);
-    ReadDiary findByUserIdAndAndRecentId(User userId, RecentDiary recentId);
+    ReadDiary findByRecentId(Long recentId);
+    Optional<ReadDiary> findByUserIdAndAndRecentId(Long userId, Long recentId);
 }

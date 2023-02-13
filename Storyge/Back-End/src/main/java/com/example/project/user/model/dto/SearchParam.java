@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserUpdateParam {
+public class SearchParam {
     private String nickname;
-    private String profile;
 }

@@ -20,12 +20,20 @@ public class FollowWait {
     @Column(name = "waiting_id")
     private Long waitingId;
 
-    @ManyToOne
-    @JoinColumn(name="following")
-    private User following;
+
+    @Column(name = "following")
+    private Long following;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
-    private User userId;
+    @JoinColumn(name="following", insertable = false,updatable = false)
+    private User followWaitUser;
+
+    @Column(name = "user_id")
+    private Long userId;
+
+
+    @ManyToOne
+    @JoinColumn(name="user_id", insertable = false,updatable = false)
+    private User user;
 
 }

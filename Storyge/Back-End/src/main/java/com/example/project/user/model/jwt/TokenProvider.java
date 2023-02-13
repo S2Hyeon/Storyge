@@ -58,12 +58,18 @@ public class TokenProvider {
                 .compact();
 
         // Refresh Token 생성
-        //이미 있는 유저라면 있는 토큰 보내주기
+        //이미 토큰이 있는 유저라면 있는 토큰 보내주기
         //없다면 생성해서 보내주고 DB 저장
         String refreshToken;
-        if (user.isPresent())
-            refreshToken = String.valueOf(tokenRepository.findByUserId(user.get().getUserId()));
-        else {
+        boolean check;
+        Optional<Token> restoreToken = tokenRepository.findByUserId(user.get().getUserId());
+        if (restoreToken.isPresent()) {
+            System.out.println("refreshToken이 이미 존재하는 유저입니다.");
+            refreshToken = String.valueOf(restoreToken);
+            check = true;
+        } else {
+            System.out.println("refreshToken이 없는 유저입니다.");
+            check = false;
             refreshToken = Jwts.builder()
                     .setExpiration(new Date(now + JwtProperties.REFRESH_TOKEN_TIME))
                     .claim("userId", user.get().getUserId())
@@ -85,6 +91,7 @@ public class TokenProvider {
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .refreshTokenExpirationTime(JwtProperties.REFRESH_TOKEN_TIME)
+                .isUser(check)
                 .build();
     }
 
@@ -117,6 +124,9 @@ public class TokenProvider {
             log.info("Invalid JWT Token", e);
         } catch (ExpiredJwtException e) {
             log.info("Expired JWT Token", e);
+            //토큰이 유효기간이 다 되었을 경우 재생성해서 보내주기
+
+
         } catch (UnsupportedJwtException e) {
             log.info("Unsupported JWT Token", e);
         } catch (IllegalArgumentException e) {

@@ -1,6 +1,5 @@
 package com.example.project.user.model.repository;
 
-import com.example.project.user.model.dto.UserDto;
 import com.example.project.user.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,7 +13,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
 
-    List<User> findByNicknameContaining(String nickname);
+    List<User> findByNicknameContainingAndNicknameNotLike(String nickname, String myNickname);
 
-//    Oprional
 }

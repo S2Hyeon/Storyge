@@ -1,6 +1,5 @@
 package com.example.project.user.model.Service;
 
-import com.example.project.user.model.dto.SearchParam;
 import com.example.project.user.model.dto.UserDto;
 import com.example.project.user.model.dto.UserUpdateParam;
 import com.example.project.user.model.entity.User;
@@ -15,7 +14,9 @@ public interface UserService {
     UserDto selectOneUser(Long userId);
 
     // 사용자 검색
-    List<UserDto> searchUser(String nickname);
+    List<UserDto> searchUser(String nickname, Long userId);
+
+    boolean checkNickname(String nickname);
 
     default UserDto toDto(User user) {
         return UserDto.builder()

@@ -11,6 +11,7 @@ import { putUser } from "api/user/putUser";
 export default function ModifyProfile() {
   const [userNickname, setUserNickname] = useState("");
   const [userImg, setUserImg] = useState("");
+  const [userFile, setUserFile] = useState();
 
   const len = `${userNickname.length} / 8`;
 
@@ -22,12 +23,17 @@ export default function ModifyProfile() {
     }
   }
 
+  useEffect(() => {
+    console.log("수정됨");
+    console.log(userFile);
+  }, [userFile]);
+
   // 백 로직 구현되면 다시 확인
   async function onsubmit() {
     console.log("제출 버튼 클릭");
-    console.log("이미지 링크 : " + userImg);
+    console.log("이미지 파일 : " + userFile);
     console.log("수정된 닉네임 : " + userNickname);
-    putUser(userImg, userNickname);
+    putUser(userFile, userNickname);
   }
 
   //처음 렌더링이 될 때만 실행
@@ -52,7 +58,9 @@ export default function ModifyProfile() {
   return (
     <S.BodyContainer>
       <S.Text>프로필 수정</S.Text>
-      {userImg && <ProfileBoxImg profileImg={userImg} />}
+      {userImg && (
+        <ProfileBoxImg profileImg={userImg} modifyFormData={setUserFile} />
+      )}
       <Box
         className="box"
         component="form"

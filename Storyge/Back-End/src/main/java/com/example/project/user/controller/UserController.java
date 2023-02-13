@@ -66,4 +66,10 @@ public class UserController {
         return new ResponseEntity<>(userService.searchUser(nickname, userId), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "사용자를 닉네임 중복 검사")
+    @GetMapping("/user/check/{nickname}")
+    public ResponseEntity<?> checkNickname(@PathVariable String nickname) {
+        return new ResponseEntity<>(userService.checkNickname(nickname), HttpStatus.OK);
+    }
+
 }

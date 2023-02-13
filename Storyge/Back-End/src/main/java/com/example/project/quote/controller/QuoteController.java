@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class QuoteController {
     private final QuoteService quoteService;
 
-
     //글귀 1개 가져오기
     @GetMapping("/quote")
     public ResponseEntity<QuoteDto> selectOneQuote(){

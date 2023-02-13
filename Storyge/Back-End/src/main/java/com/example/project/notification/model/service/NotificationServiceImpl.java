@@ -39,20 +39,16 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public Boolean insertFollowWaitNotification(NotificationFollowDto notificationFollowDto) {
 
-        User user = userRepository.findById(notificationFollowDto.getUserId()).orElse(null); // 현재 user
-        User follow = userRepository.findById(notificationFollowDto.getFollow()).orElse(null);
+        Long notificationUser = notificationFollowDto.getUserId(); // 알림 받을 사람, 즉 팔로우 신청을 받은 사람
+        Long followUser = notificationFollowDto.getFollow(); // 팔로우 신청을 한 사람
 
-        if(user==null || follow==null){
-            return false;
-        }
 
         notificationRepository.save(Notification.builder()
-                .userId(user)
-                .follow(follow)
+                .userId(notificationUser)
+                .follow(followUser)
                 .notiType(WAIT)
                 .build());
 
-        Long notificationUser = user.getUserId(); //알림 받을 사람 id
         if(sseEmitters.containsKey(notificationUser)){
             SseEmitter sseEmitter = sseEmitters.get(notificationUser);
             try {
@@ -68,25 +64,15 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public Boolean insertFollowNotification(NotificationFollowDto notificationFollowDto) {
 
-//        if(userId!=notificationFollowDto.getFollow()){
-//            return false;
-//        }
-
-        User user = userRepository.findById(notificationFollowDto.getUserId()).orElse(null);
-        User follow = userRepository.findById(notificationFollowDto.getFollow()).orElse(null);
-
-        if(user==null || follow==null){
-            return false;
-        }
-//        User user = notificationFollowDto.getUserId();
-//        User follow = notificationFollowDto.getFollow();
+        Long notificationUserId = notificationFollowDto.getUserId(); //알림 받을 사람 id 즉 팔로우 수락이 된 사람
+        Long followUserId = notificationFollowDto.getFollow(); // 팔로우를 수락한 사람
+        
         notificationRepository.save(Notification.builder()
-                .userId(user)
-                .follow(follow)
+                .userId(notificationUserId) // 이 사람에게 알림을 보낸다
+                .follow(followUserId)
                 .notiType(FOLLOW)
                 .build());
 
-        Long notificationUserId = user.getUserId(); //알림 받을 사람 id
         if(sseEmitters.containsKey(notificationUserId)){
             SseEmitter sseEmitter = sseEmitters.get(notificationUserId);
             try {
@@ -102,18 +88,17 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public Boolean insertReviewNotification(NotificationReviewDto notificationReviewDto) {
 
-        User user = userRepository.findById(notificationReviewDto.getUserId()).orElse(null);
-        User follow = userRepository.findById(notificationReviewDto.getFollow()).orElse(null);
-        Diary diary = diaryRepository.findById(notificationReviewDto.getDiaryId()).orElse(null);
+        Long notificationUserId = notificationReviewDto.getUserId(); //알림 받을 사람 id, 다이어리 쓴 사람
+        Long followUserId = notificationReviewDto.getFollow(); // 댓글 단 사람
+        Long diaryId = notificationReviewDto.getDiaryId();// 댓글이 달린 다이어리 아이디
 
         notificationRepository.save(Notification.builder()
-                .userId(user)
-                .follow(follow)
+                .userId(notificationUserId)
+                .follow(followUserId)
                 .notiType(REVIEW)
-                .diaryId(diary)
+                .diaryId(diaryId)
                 .build());
 
-        Long notificationUserId = user.getUserId(); //알림 받을 사람 id
         if(sseEmitters.containsKey(notificationUserId)){
             SseEmitter sseEmitter = sseEmitters.get(notificationUserId);
             try {
@@ -129,28 +114,30 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public List<NotificationReponseDto> selectAllNotification(Long userId) {
 
-        User currentUser = userRepository.findById(userId).orElse(null); // 현재 user 가져오기
 
-        List<Notification> notifications = notificationRepository.findTop30ByUserIdOrderByCreatedAtDesc(currentUser);
-        List<NotificationReponseDto> notificationList = new ArrayList<>();
+        List<Notification> notifications = notificationRepository.findTop30ByUserIdOrderByCreatedAtDesc(userId); // 현재 로그인한 user의 알림
+
+        List<NotificationReponseDto> notificationList = new ArrayList<>(); // 알림 목록을 담을 list
+
         for(Notification noti:notifications){
 
-            User user = userRepository.findById(noti.getFollow().getUserId()).orElse(null);
+            User followUser = noti.getFollowUser(); // 알림을 보낸사람 (팔로우를 수락했거나 팔로우를 신청했거나 댓글을 단 사람)
             String type = noti.getNotiType();
-            if(type.equals("REVIEW")){
+
+            if(type.equals("REVIEW")){ // 댓글일 때
                 notificationList.add(NotificationReponseDto.builder()
-                        .follow(noti.getFollow().getUserId())
-                        .nickname(user.getNickname())
-                        .profileImg(user.getProfileImg())
+                        .follow(noti.getFollow())
+                        .nickname(followUser.getNickname())
+                        .profileImg(followUser.getProfileImg())
                         .notiType(noti.getNotiType())
-                        .diaryId(noti.getDiaryId().getDiaryId())
+                        .diaryId(noti.getDiaryId())
                         .build());
             }
-            else{
+            else{ // 팔로우 수락, 신청일 때
                 notificationList.add(NotificationReponseDto.builder()
-                        .follow(noti.getFollow().getUserId())
-                        .nickname(user.getNickname())
-                        .profileImg(user.getProfileImg())
+                        .follow(noti.getFollow())
+                        .nickname(followUser.getNickname())
+                        .profileImg(followUser.getProfileImg())
                         .notiType(noti.getNotiType())
                         .build());
             }

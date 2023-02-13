@@ -27,12 +27,18 @@ public class FollowServiceImpl implements FollowService {
     private final UserRepository userRepository;
     private final NotificationService notificationService;
 
-    // 팔로우 대기 신청
+    // 팔로우 신청
     @Override
     public Boolean insertFollowWait(Long userId, UserIdDto following) {
-        Long followingUserId = following.getUserId();
 
-//        User currentUser = userRepository.findById(userId).orElse(null); // 나
+        /*
+            userId: 나
+            following(followingUserId): 상대 - 내가 신청을 보낼 사람
+            db: following이 신청하려는 상대 userId가 현재 신청하는 사람(나)가 되어야 한다
+         */
+        
+        Long followingUserId = following.getUserId(); // 팔로우 신청을 보낼 사람의 userId
+        
         User followingUser = userRepository.findById(followingUserId).orElse(null); // 팔로우 신청할 사람
 
         if(followingUser==null){
@@ -69,10 +75,15 @@ public class FollowServiceImpl implements FollowService {
     // 팔로우 수락
     @Override
     public Boolean insertFollower(Long userId, UserIdDto follower) {
+        
+        /*
+            userId: 나
+            follower: 상대 - 수락 하려는 상대
+            db: following이 나 follower에 상대가 들어가야 한다
+         */
 
-        Long followerUserId = follower.getUserId();
+        Long followerUserId = follower.getUserId(); // 상대방 user_id
 
-        User currentUser = userRepository.findById(userId).orElse(null); // 나
         User followerUser = userRepository.findById(followerUserId).orElse(null); // 팔로우 신청한 사람
 
         if (followerUser == null) {
@@ -106,22 +117,24 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public List<FollowUserInfoDto> selectAllFollowWait(Long userId) {
 
-//        User currentUser = userRepository.findById(userId).orElse(null); // 나
 
+        /*
+            내가 following에 있는 데이터들의 리스트
+            userId에는 나에게 신청을 건 상대가 있다
+         */
+        
+        
         // 나에게 팔로우 신청을 건 사람들을 찾는다
         List<FollowWait> followWaitList = followWaitRepository.findAllByFollowing(userId); // 팔로우 대기중인 사람들 목록 가져오기
         List<FollowUserInfoDto> followWaitUserList = new ArrayList<>(); // 신청한 사람들의 정보를 찾아서 담음
 
         for(FollowWait follow : followWaitList){
 
-            User user = follow.getUser();
+            User user = follow.getUser(); // 상대방
 
             // 나에게 팔로우 신청을 한 사람들 userId, 프로필 사진, nickname 반환
-            followWaitUserList.add(FollowUserInfoDto.builder()
-                    .userId(user.getUserId())
-                    .profileImg(user.getProfileImg())
-                    .nickname(user.getNickname())
-                    .build());
+
+            followWaitUserList.add(UserToFollowUserInfoDto(user));
         }
 
         return followWaitUserList;
@@ -131,20 +144,21 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public List<FollowUserInfoDto> selectAllFollowing(Long userId) {
 
-//        User currentUser = userRepository.findById(userId).orElse(null);
+        /*
+            내가 follower에 있는 데이터들의 리스트
+            상대방이 following에 있다
+         */
 
         //내가 팔로워인 사람들 리스트 가져오기
         List<Follow> followingList = followRepository.findAllByFollower(userId); //내 팔로잉 목록 가져오기
         List<FollowUserInfoDto> followerUserList = new ArrayList<>(); // 팔로잉들의 정보만 찾아서 담기
+
         for(Follow follow : followingList){
 
             User user = follow.getFollowingUsers();
+
             // 팔로우중인 사람들 userId, 프로필 사진, nickname 반환
-            followerUserList.add(FollowUserInfoDto.builder()
-                    .userId(user.getUserId())
-                    .nickname(user.getNickname())
-                    .profileImg(user.getProfileImg())
-                    .build());
+            followerUserList.add(UserToFollowUserInfoDto(user));
         }
 
         return followerUserList;
@@ -154,7 +168,11 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public List<FollowUserInfoDto> selectAllFollower(Long userId) {
 
-//        User currentUser = userRepository.findById(userId).orElse(null);
+        /*
+            내가 following에 있는 데이터들의 리스트
+            상대방은 follower에 있다
+            
+         */
 
         //내가 팔로잉에 있는 리스트, 나를 팔로우 하는 사람들을 찾는다
         List<Follow> followingList = followRepository.findAllByFollowing(userId);
@@ -162,42 +180,55 @@ public class FollowServiceImpl implements FollowService {
 
         for (Follow follow : followingList) {
 
-            User user = userRepository.findById(follow.getFollower()).orElse(null);
+            User user = follow.getFollowerUsers();
 
             // 팔로워인 사람들 userId, 프로필 사진, nickname 반환
-            followerUserList.add(FollowUserInfoDto.builder()
-                    .userId(user.getUserId())
-                    .nickname(user.getNickname())
-                    .profileImg(user.getProfileImg())
-                    .build());
+            followerUserList.add(UserToFollowUserInfoDto(user));
         }
-
 
 
         return followerUserList;
     }
 
+    // 팔로잉 확인
+    @Override
+    public Boolean checkFollow(Long myId, Long userId) {
+        Follow follow = followRepository.findByFollowingAndFollower(userId, myId);
+        return follow != null;
+    }
+
     //팔로우 거절(대기 상태 삭제)
     @Override
     public Boolean deleteFollowWait(Long userId, Long follow) {
+        /*
+            userId : 나
+            follow: 삭제할 사람
+            db: 신청한 사람이 userId 신청 받은 사람이 following
+            삭제 하기 위해서는 deleteByFollowingAndUserId에서 
+            following이 내가 되어야 하고 
+            userId가 나에게 신청을 한 사람, 즉 신청 내역에서 삭제할 사람의 번호가 되어야 한다
+         */
 
-//        User currentUser = userRepository.findById(userId).orElse(null); // 나
-//        User selectFollower = userRepository.findById(follow).orElse(null); // 삭제할 사람
+        if(userId==null || follow==null){
+            return false;
+        }
 
-//        if(selectFollower==null){
-//            return false;
-//        }
-//        long followingWaitUser = wait.getUserId(); //나에게 신청을 한사람
         followWaitRepository.deleteByFollowingAndUserId(userId, follow);
+
         return true;
     }
 
+    //언팔로우 하기
     @Override
     public Boolean deleteFollowing(Long userId, Long follow) {
-        //언팔로우 하기
-        //내가 follower 지우려는 상대가 following
-        User currentUser = userRepository.findById(userId).orElse(null); //나: follower
+
+        /*
+            userId: 나, follow: 상대방(내가 팔로우 하는 사람)
+            내가 follower 지우려는 상대가 following
+         */
+
         User selectFollowing = userRepository.findById(follow).orElse(null); // 지우려는 상대: following
+
         if(selectFollowing==null){
             return false;
         }
@@ -205,16 +236,21 @@ public class FollowServiceImpl implements FollowService {
         if(followRepository.findByFollowingAndFollower(follow,userId)==null){ // 만약 팔로우 중이 아니거나 상대가 먼저 삭제 해버림
             return false;
         }
-//        long following = follow.getUserId();
+
         followRepository.deleteByFollowingAndFollower(follow, userId);
+
         return true;
     }
 
+
+    //팔로워 삭제하기
     @Override
     public Boolean deleteFollower(Long userId, Long follow) {
-        //팔로워 삭제하기
-        //내가 following 지우려는 상대가 follower
-        User currentUser = userRepository.findById(userId).orElse(null); //나 : following
+
+        /*
+            내가 following 지우려는 상대가 follower
+         */
+
         User selectFollower = userRepository.findById(follow).orElse(null); // 지우려는 상대: follower
 
         if(selectFollower==null){
@@ -226,8 +262,11 @@ public class FollowServiceImpl implements FollowService {
         }
 
         followRepository.deleteByFollowingAndFollower(userId, follow);
+
         return true;
 
     }
+
+
 }
 

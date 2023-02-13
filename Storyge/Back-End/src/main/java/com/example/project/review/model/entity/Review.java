@@ -23,13 +23,19 @@ public class Review {
     @Column(name = "review_id")
     private Long reviewId;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User userId;
+    @Column(name="user_id")
+    private Long userId;
 
     @ManyToOne
-    @JoinColumn(name="diary_id")
-    private Diary diaryId;
+    @JoinColumn(name="user_id", insertable = false, updatable = false)
+    private User user;
+
+    @Column(name="diary_id")
+    private Long diaryId;
+
+    @ManyToOne
+    @JoinColumn(name="diary_id", insertable = false, updatable = false)
+    private Diary diary;
 
     @Column(name = "review_content")
     private String reviewContent;

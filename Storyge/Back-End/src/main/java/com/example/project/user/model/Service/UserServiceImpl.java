@@ -1,6 +1,7 @@
 package com.example.project.user.model.Service;
 
 import com.example.project.follow.model.repository.FollowRepository;
+import com.example.project.user.model.dto.SearchParam;
 import com.example.project.user.model.dto.UserDto;
 import com.example.project.user.model.dto.UserUpdateParam;
 import com.example.project.user.model.entity.User;
@@ -8,6 +9,9 @@ import com.example.project.user.model.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -36,5 +40,10 @@ public class UserServiceImpl implements UserService {
         user.setFollowing(following);
 
         return user;
+    }
+
+    @Override
+    public List<UserDto> searchUser(String nickname) {
+        return userRepository.findByNicknameContaining(nickname).stream().map(this::toDto).collect(Collectors.toList());
     }
 }

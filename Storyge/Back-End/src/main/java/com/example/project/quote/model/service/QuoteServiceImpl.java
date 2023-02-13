@@ -20,11 +20,13 @@ public class QuoteServiceImpl implements QuoteService{
     private final QuoteRepository quoteRepository;
     private final TodayQuoteRepository todayQuoteRepository;
 
+    // 명언 1개 가져오기
     @Override
-    public Optional<QuoteDto> selectOneQuote() {
-        TodayQuote quote = todayQuoteRepository.findById((long)1).orElse(null);
-        if(quote==null){
-            todayQuoteRepository.save(TodayQuote.builder()
+    public Optional<QuoteDto> selectOneQuote() { 
+        
+        TodayQuote quote = todayQuoteRepository.findById((long)1).orElse(null); // db에 저장되어 있는 오늘의 번호 가져오기
+        if(quote==null){ // 오늘의 번호가 없다면
+            todayQuoteRepository.save(TodayQuote.builder() // 임의로 15번 넣어줌
                     .todayId(1L)
                     .todayQuoteId(15L).build());
             quote = todayQuoteRepository.findById((long)1).orElse(null);
@@ -34,7 +36,8 @@ public class QuoteServiceImpl implements QuoteService{
 
     @Override
     public void setQuoteId(Long quoteId) {
-        todayQuoteRepository.save(TodayQuote.builder().todayId((long)1).todayQuoteId(quoteId).build());
+        //scheduler에서 난수 발생 후 quotId에 들어감
+        todayQuoteRepository.save(TodayQuote.builder().todayId((long)1).todayQuoteId(quoteId).build()); //오늘의 번호 입력
     }
 
 }

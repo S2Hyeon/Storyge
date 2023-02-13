@@ -2,6 +2,7 @@ package com.example.project.daily_emotion.controller;
 
 import com.example.project.daily_emotion.model.dto.DailyEmotionDto;
 import com.example.project.daily_emotion.model.service.DailyEmotionService;
+import com.example.project.follow.model.service.FollowService;
 import com.example.project.user.model.jwt.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,9 +23,8 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_HEADER;
 @Api(tags = {"캘린더 API"})
 public class DailyEmotionController {
     private final DailyEmotionService dailyEmotionService;
+    private final FollowService followService;
     private final JwtUtil jwtUtil;
-
-    private static final String SUCCESS = "Success";
     private static final String FAIL = "Fail";
 
     @ApiOperation(value = "본인 캘린더 일일 감정 조회", notes = "캘린더에 들어갈 본인의 일일 감정을 조회한다\ndate : yyyy-mm-dd")
@@ -40,7 +40,12 @@ public class DailyEmotionController {
 
     @ApiOperation(value = "타인 캘린더 일일 감정 조회", notes = "캘린더에 들어갈 타인의 일일 감정을 조회한다\ndate : yyyy-mm-dd\nuserId : 4")
     @GetMapping("/daily/{date}/{userId}")
-    public ResponseEntity<?> selectDailyEmotion(@PathVariable("date") String stringDate, @PathVariable Long userId){
+    public ResponseEntity<?> selectDailyEmotion(@PathVariable("date") String stringDate, @PathVariable Long userId, HttpServletRequest request){
+        Long myId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
+        if(!followService.checkFollow(myId, userId)) {
+            return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+        }
+
         List<DailyEmotionDto> dailyEmotionDtoList = dailyEmotionService.selectAllDailyEmotion(userId, stringDate);
         if(dailyEmotionDtoList == null) {
             return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);

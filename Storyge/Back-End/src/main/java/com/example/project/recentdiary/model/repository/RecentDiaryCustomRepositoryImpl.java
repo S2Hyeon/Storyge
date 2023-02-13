@@ -22,7 +22,7 @@ public class RecentDiaryCustomRepositoryImpl implements RecentDiaryCustomReposit
     private final EntityManager em;
 
     @Override
-    public List<RecentDiary> selectAllRecentDiaryByFollowing(User userId) {
+    public List<RecentDiary> selectAllRecentDiaryByFollowing(Long userId) {
 
         JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
 
@@ -31,9 +31,9 @@ public class RecentDiaryCustomRepositoryImpl implements RecentDiaryCustomReposit
                 .where(
                         (recentDiary.userId.in(
                         JPAExpressions
-                                .select(follow.followingUsers)
+                                .select(follow.following)
                                 .from(follow)
-                                .where(follow.followerUsers.eq(userId))
+                                .where(follow.follower.eq(userId))
                         )).and(recentDiary.endsAt.after(LocalDateTime.now()))
 
                 )

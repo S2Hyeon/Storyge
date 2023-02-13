@@ -21,6 +21,8 @@ public class ReviewResponseDto {
     private Long reviewId;
     @ApiModelProperty(value = "댓글을 입력한 사람의 id(pk)", example = "0")
     private Long userId;
+    @ApiModelProperty(value = "나인지 확인 나라면 true")
+    private Boolean isMe;
     @ApiModelProperty(value = "댓글을 입력한 사람의 닉네임")
     private String nickname;
     @ApiModelProperty(value = "댓글을 입력한 사람의 프로필 이미지 url")

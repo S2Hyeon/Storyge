@@ -3,7 +3,10 @@ package com.example.project.notification.controller;
 import com.example.project.user.model.jwt.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -33,8 +37,8 @@ public class SseController {
     "연결시 name -> connect\n"+
     "모든 알림의 name -> notification\n" +
     "알림 각각의 data -> 신청: follow wait, 수락: follow accept,댓글:review")
-    @GetMapping("/sub")
-    public SseEmitter subscribe(HttpServletRequest request){
+    @GetMapping(value="/sub", consumes = MediaType.ALL_VALUE, produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public ResponseEntity<SseEmitter> subscribe(HttpServletRequest request){
         //현재 로그인한 user 값(pk)
         String token = request.getHeader(TOKEN_HEADER);
         Long userId = jwtUtil.getUserId(token);
@@ -54,7 +58,7 @@ public class SseController {
         sseEmitter.onTimeout(()->sseEmitters.remove(userId));
         sseEmitter.onError((e)->sseEmitters.remove(userId));
 
-        return sseEmitter;
+        return ResponseEntity.ok(sseEmitter);
 
 
     }

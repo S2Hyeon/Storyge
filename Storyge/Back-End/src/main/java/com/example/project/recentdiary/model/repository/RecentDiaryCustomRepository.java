@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface RecentDiaryCustomRepository {
 
-    List<RecentDiary> selectAllRecentDiaryByFollowing(User userId);
+    List<RecentDiary> selectAllRecentDiaryByFollowing(Long userId);
 }

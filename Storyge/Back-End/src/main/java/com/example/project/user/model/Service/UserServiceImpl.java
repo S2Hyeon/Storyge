@@ -2,7 +2,6 @@ package com.example.project.user.model.Service;
 
 import com.example.project.follow.model.repository.FollowRepository;
 import com.example.project.user.model.dto.UserDto;
-import com.example.project.user.model.dto.UserUpdateParam;
 import com.example.project.user.model.entity.User;
 import com.example.project.user.model.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +20,9 @@ public class UserServiceImpl implements UserService {
     private final FollowRepository followRepository;
 
     @Override
-    public void updateUser(Long userId, UserUpdateParam param) {
+    public void updateUser(Long userId, String nickname, String profileUrl) {
         User user = userRepository.findById(userId).orElseThrow();
-        user.update(param.getNickname(), param.getProfile());
+        user.update(nickname, profileUrl);
     }
 
     @Override

@@ -1,5 +1,5 @@
 import React, { useState, Suspense } from "react";
-import * as G from "../../styles";
+import * as G from "styles";
 import * as S from "./Music.js";
 import { OpenAI } from "../../openai/OpenAI";
 // import MusicResult from "./MusicResult";
@@ -19,7 +19,7 @@ export default function Music() {
   // const [videoId, setVideoId] = useState();
   async function findMusic() {
     const title = await OpenAI({ input: content, type: 0 });
-    const result = title + " lylics"
+    const result = title + " lylics";
     axios({
       method: "get",
       url: "https://www.googleapis.com/youtube/v3/search?",
@@ -32,7 +32,9 @@ export default function Music() {
       .then((res) => {
         console.log(res);
         // setVideoId(res.data.items[0].id.videoId);
-        setUrl(`https://www.youtube.com/watch?v=${res.data.items[0].id.videoId}`);
+        setUrl(
+          `https://www.youtube.com/watch?v=${res.data.items[0].id.videoId}`
+        );
         setYoutubeOpen(true);
       })
       .catch((err) => {
@@ -40,8 +42,6 @@ export default function Music() {
       });
   }
 
-
-  
   return (
     <G.BodyContainer>
       <S.Rectangle
@@ -58,17 +58,18 @@ export default function Music() {
         <div>
           <Lottie />
         </div>
-
-      ) : (    <G.BodyContainer>
-        {/* Youtube Player 자동실행 */}
-        <ReactPlayer
-          url={url}
-          width="300px"
-          height="200px"
-          playing={true}
-          style={{ margin: "auto" }}
-        />
-      </G.BodyContainer>)}
+      ) : (
+        <G.BodyContainer>
+          {/* Youtube Player 자동실행 */}
+          <ReactPlayer
+            url={url}
+            width="300px"
+            height="200px"
+            playing={true}
+            style={{ margin: "auto" }}
+          />
+        </G.BodyContainer>
+      )}
     </G.BodyContainer>
   );
 }

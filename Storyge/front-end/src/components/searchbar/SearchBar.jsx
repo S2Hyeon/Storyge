@@ -32,10 +32,12 @@ export default function SearchBar() {
     if (resultData && resultData.length !== 0) {
       console.log(resultData);
       return resultData.map((result) => {
-        <S.AutoSearchData key={result.userId}>
-          <S.ProfileImg imgUrl={result.profileImg} />
-          <div>{result.nickname}</div>
-        </S.AutoSearchData>;
+        return (
+          <S.AutoSearchData key={result.userId}>
+            <S.ProfileImg imgUrl={result.profileImg} />
+            <div>{result.nickname}</div>
+          </S.AutoSearchData>
+        );
       });
     } else {
       return <S.NoKeyword>검색 결과가 없습니다.</S.NoKeyword>;

@@ -55,7 +55,7 @@ export const AutoSearchWrap = styled.div`
   border: 1px solid red;
 `;
 
-export const noKeyword = styled.div`
+export const NoKeyword = styled.div`
   height: 30px;
   display: flex;
   align-items: center;

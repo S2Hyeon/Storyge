@@ -11,14 +11,14 @@ export default function Alarm() {
   const movePage = useNavigate();
 
   function goDiaryPage(id) {
-    movePage(`/diary`, { state : {diaryId : id}});
+    movePage(`/diary`, { state: { diaryId: id } });
   }
 
   function goOtherPage(id) {
-    movePage(`/otherpage`, {state : {otherId : id}});
+    movePage(`/otherpage`, { state: { otherId: id } });
   }
 
-    function goMyFollowList() {
+  function goMyFollowList() {
     movePage("/follower");
   }
 
@@ -50,10 +50,11 @@ export default function Alarm() {
           {userData.map((alarm, key) => {
             if (alarm.notiType === "WAIT") {
               return (
-                <S.Alarm key={key} onClick={ () => goOtherPage(alarm.follow) }>
+                <S.Alarm key={key} onClick={goMyFollowList}>
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>
-                    {alarm.nickname}님이 팔로우 요청을 보냈습니다.
+                    <S.BoldText>{alarm.nickname}</S.BoldText>님이{" "}
+                    <S.BoldText>팔로우 요청</S.BoldText>을 보냈습니다.
                   </S.Text>
                 </S.Alarm>
               );
@@ -61,15 +62,19 @@ export default function Alarm() {
               return (
                 <S.Alarm key={key} onClick={() => goDiaryPage(alarm.diaryId)}>
                   <S.Img profile={alarm.profileImg}></S.Img>
-                  <S.Text>{alarm.nickname}님이 댓글을 달았습니다.</S.Text>
+                  <S.Text>
+                    <S.BoldText>{alarm.nickname}</S.BoldText>님이{" "}
+                    <S.BoldText>댓글</S.BoldText>을 달았습니다.
+                  </S.Text>
                 </S.Alarm>
               );
             } else if (alarm.notiType === "FOLLOW") {
               return (
-                <S.Alarm key={key} onClick={goMyFollowList}>
+                <S.Alarm key={key} onClick={() => goOtherPage(alarm.follow)}>
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>
-                    {alarm.nickname}님이 팔로우 요청을 수락했습니다.
+                    <S.BoldText>{alarm.nickname}</S.BoldText>님이{" "}
+                    <S.BoldText>팔로우 요청을 수락</S.BoldText>했습니다.
                   </S.Text>
                 </S.Alarm>
               );

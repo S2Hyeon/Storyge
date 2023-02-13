@@ -32,7 +32,8 @@ export const longBtnDisabled = styled.button`
 
 export const longBtnBorder = styled.button`
   border: hidden;
-  background-color: var(--color-white);
+  // background-color: var(--color-white);
+  background-color: transparent;
   border-radius: 100px;
   height: 48px;
   width: 100%;

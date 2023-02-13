@@ -53,7 +53,7 @@ function Main() {
   }
 
   //내가 팔로잉하는 사람의 업데이트 내용 받기 api
-  const [recentDiaryData, setRecentDiaryData] = useState();
+  const [recentDiaryData, setRecentDiaryData] = useState([]);
   useEffect(() => {
     async function getAndSetRecentDiaryData() {
       const response = await getRecentDiary();
@@ -74,7 +74,7 @@ function Main() {
 
   return (
     <S.All>
-      {recentDiaryData && (
+      {recentDiaryData.length > 0 ? (
         <S.NewDiary>
           {recentDiaryData.map((recentDiary, index) => {
             return (
@@ -86,12 +86,21 @@ function Main() {
             );
           })}
         </S.NewDiary>
+      ) : (
+        <S.NoNewDiary>
+          아무것도 없어요
+          <br />뭘 띄워야할까
+        </S.NoNewDiary>
       )}
 
       <G.BodyContainer top="0" bottom="70px" color="true">
         <S.CalendarContainer>
           <S.CalendarBox>
-            {diary ? <CustomCalendar userId={-100} /> : <PieChart />}
+            {diary ? (
+              <CustomCalendar userId={-100} />
+            ) : (
+              <PieChart userId={-100} />
+            )}
           </S.CalendarBox>
           <S.CalendarToggle onClick={() => switchBox()}>
             <S.ToggleOne>

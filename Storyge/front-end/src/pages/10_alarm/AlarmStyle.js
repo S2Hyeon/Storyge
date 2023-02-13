@@ -22,9 +22,14 @@ export const Img = styled.div`
 `;
 
 export const Text = styled.div`
-  font-family: "S-CoreDream-5Medium";
+  font-family: "S-CoreDream-3Light";
   font-size: 14px;
   justify-content: center;
   align-items: center;
   color: black;
+`;
+
+export const BoldText = styled.text`
+  font-family: "S-CoreDream-5Medium";
+  font-size: 14px;
 `;

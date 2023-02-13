@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import * as S from "./../searchbar/SearchBar.js";
+import data2 from "./SearchBarData";
 
 import { debounce } from "lodash";
 import { getUserSearch } from "api/user/getUserSearch";
@@ -27,21 +28,19 @@ export default function SearchBar() {
   }, [keyword]);
   //keyword의 길이 변화로 api를 호출하니까 가짜 를 입력할때 가ㅉ가 되었을때 검색을 시도함 그래서 안될듯 ㅠㅠ
 
-  function ShowResultData() {
+  const ShowResultData = () => {
     if (resultData && resultData.length !== 0) {
       console.log(resultData);
-      resultData.map((result) => {
-        return (
-          <S.AutoSearchData key={result.id}>
-            <S.ProfileImg imgUrl={result.imgUrl} />
-            <div>{result.nickname}</div>
-          </S.AutoSearchData>
-        );
+      return resultData.map((result) => {
+        <S.AutoSearchData key={result.userId}>
+          <S.ProfileImg imgUrl={result.profileImg} />
+          <div>{result.nickname}</div>
+        </S.AutoSearchData>;
       });
     } else {
       return <S.NoKeyword>검색 결과가 없습니다.</S.NoKeyword>;
     }
-  }
+  };
 
   return (
     <>

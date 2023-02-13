@@ -29,13 +29,16 @@ public interface FollowService {
     //팔로잉 삭제
     Boolean deleteFollowing(Long userId, Long follow);
 
+    //팔로우 신청 확인
+    Boolean checkFollowWait(Long userId, Long otherId);
+
     //팔로우 삭제
     Boolean deleteFollower(Long userId, Long follow);
 
     Boolean checkFollow(Long myId, Long userId);
 
     //User->FollowUserInfoDto
-    default FollowUserInfoDto UserToFollowUserInfoDto(User user){
+    default FollowUserInfoDto UserToFollowUserInfoDto(User user) {
         return FollowUserInfoDto.builder()
                 .userId(user.getUserId())
                 .nickname(user.getNickname())

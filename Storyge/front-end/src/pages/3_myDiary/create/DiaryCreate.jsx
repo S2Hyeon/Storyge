@@ -4,9 +4,9 @@ import Clock from "react-live-clock";
 import Modal from "../Modal";
 import * as heyhey from "./DiaryCreateStyle";
 import * as G from "../../../styles/index";
-// import Toggle from "../Toggle";
-import Toggle from "react-toggle";
+import Switch from "react-switch";
 import { OpenAI } from "../../../openai/OpenAI";
+import { GrLock, GrUnlock } from "react-icons/gr";
 
 import { getCount } from "api/diary/getCount";
 
@@ -18,6 +18,11 @@ export default function Creatediary() {
   const [modalOpen, setModalOpen] = useState(false);
   const [info, setInfo] = useState(["emotion", "comment"]);
   const [spinner, setSpinner] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const handleChange = (nextChecked) => {
+    setChecked(nextChecked);
+    console.log(checked);
+  };
 
   useEffect(() => {
     async function getDiaryCount() {
@@ -91,8 +96,24 @@ export default function Creatediary() {
           />
           <heyhey.CardFoot height="30px" backgroundColor="var(--color-white)">
             <heyhey.CountDiary>{content.length} / 100</heyhey.CountDiary>
-            {/* <Toggle /> 내일 혼내줄 예정*/}
-            <Toggle defaultChecked={true} onChange={console.log("TEst")} />
+            <Switch
+              onChange={handleChange}
+              checked={checked}
+              offColor="#c0bcbc"
+              onColor="#accebc"
+              uncheckedIcon={
+                <heyhey.Test>
+                  <GrUnlock />
+                </heyhey.Test>
+              }
+              checkedIcon={
+                <heyhey.Test>
+                  <GrLock />
+                </heyhey.Test>
+              }
+              // className="react-switch"
+              // id="icon-switch"
+            />
           </heyhey.CardFoot>
         </heyhey.card>
         <div>

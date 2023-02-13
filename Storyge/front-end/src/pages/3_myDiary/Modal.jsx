@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { postDiary } from "api/diary/postDiary";
 import { putDiary } from "api/diary/putDiary";
 
-function Modal({ diary, content, num, classify }) {
+function Modal({ diary, content, num, classify, diaryId }) {
   const movePage = useNavigate();
   const [reccomendEmotion, setRecommendEmotion] = useState(
     content && content[0]
@@ -29,7 +29,7 @@ function Modal({ diary, content, num, classify }) {
     if (classify === "create") {
       await postDiary(diary, [reccomendEmotion, content[1]]);
     } else {
-      await putDiary(diary, [reccomendEmotion, content[1]]);
+      await putDiary(diary, [reccomendEmotion, content[1]], diaryId);
     }
     movePage(`/diarylist`, { state: { date: new Date() } });
   }

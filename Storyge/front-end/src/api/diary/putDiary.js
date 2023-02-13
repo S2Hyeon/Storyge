@@ -1,7 +1,7 @@
 import Api from "lib/customApi";
 import { getCookie } from "utils/Cookies";
 
-export async function putDiary(diary, content) {
+export async function putDiary(diary, content, diaryId) {
   try {
     const response = await Api.put(
       "/diary",
@@ -10,6 +10,7 @@ export async function putDiary(diary, content) {
         diaryContent: diary,
         emoticonName: content[0],
         scope: 1,
+        diaryId: diaryId,
       },
       {
         headers: {

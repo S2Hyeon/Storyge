@@ -16,6 +16,7 @@ export default function Modifydiary() {
   const contentRef = useRef();
   const [count, setCount] = useState(0);
   const [content, setContent] = useState(already.diaryContent);
+  const [diaryId] = useState(already.diaryId)
   const [modalOpen, setModalOpen] = useState(false);
   const [info, setInfo] = useState(["emotion", "comment"]);
   const [spinner, setSpinner] = useState(false);
@@ -114,6 +115,7 @@ export default function Modifydiary() {
           diary={content}
           content={info}
           num={0}
+          diaryId={diaryId}
           classify="modify"
         />
       )}

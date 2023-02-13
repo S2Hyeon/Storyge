@@ -40,8 +40,12 @@ dependencies {
     //jwt
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
     implementation('com.auth0:java-jwt:4.2.1')
+
     //aws
-//    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+//    implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.228')
+//    implementation 'com.amazonaws:aws-java-sdk-s3'
+//    implementation 'commons-io:commons-io:2.6'
 
     //security & oauth2
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
@@ -58,8 +62,8 @@ dependencies {
 //    implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 //    implementation "com.querydsl:querydsl-core:${queryDslVersion}"  // 한개 더 추가!
 
-
     compileOnly 'org.projectlombok:lombok'
+    compileOnly 'org.springframework.cloud:spring-cloud-starter-aws:2.0.2.RELEAS'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'

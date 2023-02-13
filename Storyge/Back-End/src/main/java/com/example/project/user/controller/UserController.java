@@ -3,16 +3,19 @@ package com.example.project.user.controller;
 import com.example.project.follow.model.service.FollowService;
 import com.example.project.user.model.Service.UserService;
 import com.example.project.user.model.dto.UserDto;
-import com.example.project.user.model.dto.UserUpdateParam;
+import com.example.project.user.model.file.FileService;
 import com.example.project.user.model.jwt.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,14 +29,16 @@ public class UserController {
     //    private final String FAIL = "fail";
     private final UserService userService;
     private final FollowService followService;
+    private final FileService fileService;
     private final JwtUtil jwtUtil;
 
     @ApiOperation(value = "사용자 정보 수정", notes = "본인의 닉네임 또는 프로필 사진을 수정")
-    @PutMapping("/user")
-    public ResponseEntity<?> updateUserInfo(HttpServletRequest request, @RequestBody UserUpdateParam param) {
+    @PutMapping(value = "/user", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> updateUserInfo(HttpServletRequest request, @RequestParam(value = "image") MultipartFile multipartFile, @RequestParam(value = "nickname") String nickname) throws IOException {
 
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
-        userService.updateUser(userId, param);
+        String url = fileService.upload(multipartFile, "profile");
+        userService.updateUser(userId, nickname, url);
         return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
     }
 
@@ -60,8 +65,16 @@ public class UserController {
 
     @ApiOperation(value = "사용자를 닉네임으로 검색한다")
     @GetMapping("/user/search/{nickname}")
-    public ResponseEntity<?> searchUser(@PathVariable String nickname) {
-        return new ResponseEntity<>(userService.searchUser(nickname), HttpStatus.OK);
+    public ResponseEntity<?> searchUser(HttpServletRequest request, @PathVariable String nickname) {
+        Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
+
+        return new ResponseEntity<>(userService.searchUser(nickname, userId), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "사용자를 닉네임 중복 검사")
+    @GetMapping("/user/check/{nickname}")
+    public ResponseEntity<?> checkNickname(@PathVariable String nickname) {
+        return new ResponseEntity<>(userService.checkNickname(nickname), HttpStatus.OK);
     }
 
 }

@@ -133,7 +133,7 @@ public class DiaryController {
 
     @ApiOperation(value = "일기 수정", notes = "일기를 수정한다. 일기 수정 횟수가 0인 경우에만 가능하다")
     @PutMapping("/diary")
-    public ResponseEntity<String> updateDiary(DiaryUpdateParam param, HttpServletRequest request){
+    public ResponseEntity<String> updateDiary(@RequestBody DiaryUpdateParam param, HttpServletRequest request){
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
         if(diaryService.updateDiary(userId, param)) {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);

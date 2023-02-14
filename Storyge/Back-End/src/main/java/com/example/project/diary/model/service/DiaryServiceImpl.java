@@ -156,7 +156,7 @@ public class DiaryServiceImpl implements DiaryService {
                     param.getDiaryContent(),
                     param.getScope(),
                     1,
-                    param.getAnalizedResult());
+                    param.getAnalyzedResult());
 
             return true;
         }

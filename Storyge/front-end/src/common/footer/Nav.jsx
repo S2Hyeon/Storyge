@@ -19,11 +19,12 @@ function Footer(props) {
       Connection: "keep-alive",
       "X-Accel-Buffering": "no",
     },
-    heartbeatTimeout: 120000,
+    heartbeatTimeout: 1200000,
     withCredentials: true,
   });
   eventSource.addEventListener("connect", (e) => {
     const { data: receivedConnectData } = e;
+    console.log("connected?", receivedConnectData);
   });
   eventSource.addEventListener("notification", function(event) {
     const { data: receivedConnectData } = event;

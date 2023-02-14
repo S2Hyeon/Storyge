@@ -4,18 +4,35 @@ import * as S from "./Loginstyle.js";
 import LoginProfileBoxImg from "./../../components/profileBox/LoginProfileImgBox.jsx";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import { getCookie } from "./../../utils/Cookies";
+import { putUser } from "api/user/putUser";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginInfo() {
+  const movePage = useNavigate();
+
   const [content, setContent] = useState("");
   const [initData, setInitData] = useState("");
+  const [initImg, setInitImg] = useState();
   const len = `${content.length} / 8`;
 
+  //처음 렌더링이 될 때만 실행
   useEffect(() => {
-    axios
-      .get("/user")
-      .then((response) => setInitData(response.data))
-      .then(console.log(initData))
-      .catch((error) => console.log(error));
+    async function getUserData() {
+      try {
+        const response = await axios.get("https://storyge.xyz/api/user", {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        });
+        console.log("로그인 추가 정보 입력");
+        console.log(response.data);
+        setInitImg(response.data.profileImg);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getUserData();
   }, []);
 
   function onChange(e) {
@@ -25,16 +42,23 @@ export default function LoginInfo() {
       setContent(content.substr(0, 8));
     }
   }
+  function gomain() {
+    movePage("/");
+  }
 
-  function onSubmit() {
-    alert("추가 정보 등록");
-    console.log(content);
+  async function onSubmit() {
+    console.log("제출 버튼 클릭");
+    console.log("이미지 파일 : " + initImg);
+    console.log("수정된 닉네임 : " + content);
+    putUser(initImg, content);
+    alert("프로필 추가 완료");
+    gomain();
   }
 
   return (
     <S.Login>
       <S.LoginInfoText>Set your Information</S.LoginInfoText>
-      <LoginProfileBoxImg />
+      <LoginProfileBoxImg profileImg={initImg} modifyFormData={setInitImg} />
       <Box
         className="box"
         component="form"
@@ -51,9 +75,7 @@ export default function LoginInfo() {
           helperText={len}
           autoFocus={true}
           onChange={onChange}
-        >
-          {initData.nickname}
-        </TextField>
+        ></TextField>
       </Box>
       <S.SubmitBtn onClick={onSubmit}>등록</S.SubmitBtn>
     </S.Login>

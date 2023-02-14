@@ -22,10 +22,10 @@ function Main() {
   let [diary, setDiary] = useState(true);
 
   //새로 업데이트 된 글로 이동!
-  function goUpdatedDiary(diaryId, otherUserId) {
+  function goUpdatedDiary(diaryId, otherUserId, nickname) {
     console.log("toner user id ", otherUserId);
     movePage("/diary", {
-      state: { diaryId: diaryId, otherUserId: otherUserId },
+      state: { diaryId: diaryId, otherUserId: otherUserId, nickname: nickname },
     });
   }
 
@@ -65,7 +65,11 @@ function Main() {
                 key={recentDiary.userId}
                 profile={recentDiary.profileImg}
                 onClick={(e) =>
-                  goUpdatedDiary(recentDiary.diaryId, recentDiary.userId)
+                  goUpdatedDiary(
+                    recentDiary.diaryId,
+                    recentDiary.userId,
+                    recentDiary.nickname
+                  )
                 }
               />
             );

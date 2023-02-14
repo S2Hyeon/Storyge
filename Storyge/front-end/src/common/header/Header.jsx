@@ -4,18 +4,20 @@ import HeaderBackIcon from "./HeaderBackIcon";
 import * as S from "./HeaderStyle";
 import Logo from "../../assets/logo1.png";
 import { TbMusic, TbBell, TbWriting, TbUser } from "react-icons/tb";
+import { useSelector } from "react-redux";
 
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();
-  // let [title, setTitle] = useState("");
+
+  const diaryOwner = useSelector((state) => state);
+  console.log(diaryOwner);
 
   const setHeaderContent = () => {
     // 1. 메인이 아니라면 해당 페이지에 맞는 화면 제목 띄우기
     if (location.pathname === "/music") {
       return (
         <>
-          {/* <HeaderBackIcon /> */}
           <TbMusic />
           <S.TitleContainer>음악 추천</S.TitleContainer>
         </>
@@ -25,17 +27,19 @@ function Header() {
     else if (location.pathname === "/alarm") {
       return (
         <>
-          {/* <HeaderBackIcon /> */}
           <TbBell />
           <S.TitleContainer>알림</S.TitleContainer>
         </>
       );
     }
     // 3. 마이페이지
-    else if (location.pathname === "/mypage") {
+    else if (
+      location.pathname === "/mypage" ||
+      location.pathname === "/follower" ||
+      location.pathname === "/following"
+    ) {
       return (
         <>
-          {/* <HeaderBackIcon /> */}
           <TbUser />
           <S.TitleContainer>마이페이지</S.TitleContainer>
         </>
@@ -45,7 +49,6 @@ function Header() {
     else if (location.pathname === "/createDiary") {
       return (
         <>
-          {/* <HeaderBackIcon /> */}
           <TbWriting />
           <S.TitleContainer>일기 작성</S.TitleContainer>
         </>
@@ -56,7 +59,9 @@ function Header() {
       return (
         <>
           <HeaderBackIcon />
-          <S.TitleContainer>일기 목록</S.TitleContainer>
+          <S.TitleContainer>
+            {diaryOwner === "me" ? "나의 일기" : `${diaryOwner}'s diary`}
+          </S.TitleContainer>
         </>
       );
     }
@@ -65,7 +70,9 @@ function Header() {
       return (
         <>
           <HeaderBackIcon />
-          <S.TitleContainer>나의 일기</S.TitleContainer>
+          <S.TitleContainer>
+            {diaryOwner === "me" ? "나의 일기" : `${diaryOwner}'s diary`}
+          </S.TitleContainer>
         </>
       );
     }

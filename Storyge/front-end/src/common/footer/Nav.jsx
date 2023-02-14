@@ -14,10 +14,10 @@ function Footer(props) {
   const eventSource = new EventSourcePolyfill("https://storyge.xyz/api/sub", {
     headers: {
       Authorization: getCookie("token"),
-      "Content-Type": "text/event-stream",
-      "Cache-Control": "no-cache",
-      Connection: "keep-alive",
-      "X-Accel-Buffering": "no",
+      // "Content-Type": "text/event-stream",
+      // "Cache-Control": "no-cache",
+      // Connection: "keep-alive",
+      // "X-Accel-Buffering": "no",
     },
     heartbeatTimeout: 1200000,
     withCredentials: true,
@@ -89,7 +89,11 @@ function Footer(props) {
       >
         <TbUser
           size={30}
-          color={location.pathname === "/mypage" ? "#ACCEBC" : "#D9D9D9"}
+          color={
+            location.pathname === "/mypage" || location.pathname === "/follower"
+              ? "#ACCEBC"
+              : "#D9D9D9"
+          }
         />
       </S.IconContainer>
     </S.Nav>

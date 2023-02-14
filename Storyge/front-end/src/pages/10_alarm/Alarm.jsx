@@ -33,7 +33,6 @@ export default function Alarm() {
         });
         setUserData(response.data);
         console.log("알림페이지 : 알림 데이터");
-        console.log(userData);
         console.log(response.data);
       } catch (err) {
         console.log(err);

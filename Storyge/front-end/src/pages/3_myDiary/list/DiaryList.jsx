@@ -8,12 +8,20 @@ import Emoji from "components/emoji/Emoji";
 import dayjs from "dayjs";
 import { getOtherDiaryList } from "api/diary/getOtherDiaryList";
 import { TbLock } from "react-icons/tb";
+import { useDispatch } from "react-redux";
 
 export default function DiaryList() {
   const location = useLocation();
   const movePage = useNavigate();
   const otherUserId = location.state.otherId;
-  console.log(otherUserId);
+
+  //!리덕스를 이용하여 다른 사람
+  const dispatch = useDispatch();
+  if (otherUserId != null) {
+    dispatch({ type: "other", owner: location.state.nickname });
+  } else {
+    dispatch({ type: "me" });
+  }
 
   //넘어온 날짜 값
   const [dateInfo, setDateInfo] = useState(location.state.date);
@@ -45,7 +53,12 @@ export default function DiaryList() {
   //내 일기 상세 조회 페이지로 이동
   function goDiaryDetail(diaryId, scope) {
     movePage("/diary", {
-      state: { diaryId: diaryId, scope: scope, otherUserId: otherUserId },
+      state: {
+        diaryId: diaryId,
+        scope: scope,
+        otherUserId: otherUserId,
+        nickname: location.state.nickname,
+      },
     });
   }
 

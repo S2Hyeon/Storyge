@@ -7,6 +7,8 @@ import { postApplyFollow } from "api/user/postApplyFollow.js";
 import { deleteFollowing } from "api/user/deleteFollowing.js";
 import { getOtherUserData } from "api/user/getOtherUserData.js";
 
+import Swal from "sweetalert2";
+
 export default function ProfileBox(props) {
   const [isStateChanged, setIsStateChanged] = useState();
   const movePage = useNavigate();
@@ -28,6 +30,7 @@ export default function ProfileBox(props) {
       console.log("다른 사람 페이지인가요?: ", isOtherProfileBox);
       if (props.otherUserId != null) {
         const response = await getIsFollowing(props.otherUserId);
+        console.log("누구냐 넌", response);
         setIsFollowing(response);
       }
     }
@@ -63,8 +66,25 @@ export default function ProfileBox(props) {
   }
 
   async function doUnfollow() {
-    await deleteFollowing(props.otherUserId);
-    setIsStateChanged(!isStateChanged);
+    if (
+      Swal.fire({
+        text: "삭제하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          deleteFollowing(props.otherUserId);
+          // setIsStateChanged(!isStateChanged);
+          setIsFollowing(false);
+          props.test(!isFollowing);
+          // setIsFollowing(!isFollowing);
+        }
+      })
+    ) {
+    }
   }
 
   return (

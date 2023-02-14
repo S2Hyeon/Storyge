@@ -44,7 +44,9 @@ export default function DiaryList() {
 
   //내 일기 상세 조회 페이지로 이동
   function goDiaryDetail(diaryId, scope) {
-    movePage("/diary", { state: { diaryId: diaryId, scope: scope } });
+    movePage("/diary", {
+      state: { diaryId: diaryId, scope: scope, otherUserId: otherUserId },
+    });
   }
 
   //년월일 표시

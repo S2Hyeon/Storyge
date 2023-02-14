@@ -3,6 +3,7 @@ import * as S from "./Follow.js";
 import { getCookie } from "./../../utils/Cookies";
 import Api from "lib/customApi";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function FollowerList() {
   const [flag, setFlag] = useState(false);
@@ -68,15 +69,30 @@ export default function FollowerList() {
 
   const deleteFollower = async (id, e) => {
     try {
-      await Api.delete(`/follower/${id}`, {
-        headers: {
-          Authorization: getCookie("token"),
-        },
-      });
-      console.log("팔로워 삭제");
-      console.log(id); // error
-      setFlag(!flag);
-      e.preventDefault();
+      if (
+        Swal.fire({
+          text: "삭제하시겠습니까?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Api.delete(`/follower/${id}`, {
+              headers: {
+                Authorization: getCookie("token"),
+              },
+            }).then(() => {
+              console.log("팔로워 삭제");
+              console.log(id); // error
+              setFlag(!flag);
+              e.preventDefault();
+            });
+          }
+        })
+      ) {
+      }
     } catch (err) {
       console.log(err);
     }

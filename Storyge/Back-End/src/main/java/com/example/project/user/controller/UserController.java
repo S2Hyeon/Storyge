@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +33,7 @@ public class UserController {
     private final JwtUtil jwtUtil;
 
     @ApiOperation(value = "사용자 정보 수정", notes = "본인의 닉네임 또는 프로필 사진을 수정")
-    @PutMapping(value = "/user")
+    @PutMapping(value = "/user", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateUserInfo(HttpServletRequest request, @RequestPart(required = false) MultipartFile multipartFile, String nickname) throws IOException {
         System.out.println("request : " + request);
         System.out.println("header : " + request.getHeader(TOKEN_HEADER));

@@ -19,6 +19,22 @@ export const IconContainer = styled.div`
   align-items: center;
 `;
 
+export const AlertContainer = styled.div`
+  height: 40px;
+  width: 30px;
+  margin-top: 3spx;
+  margin-right: 5px;
+  display: flex;
+  justify-content: right;
+`;
+
+export const Alert = styled.div`
+  height: 5px;
+  width: 5px;
+  border-radius: 100px;
+  background-color: red;
+`;
+
 export const CenterCircle = styled.div`
   background-color: #accebc;
   height: 50px;

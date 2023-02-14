@@ -11,27 +11,6 @@ import { getRecentDiary } from "api/recentDiary/getRecentDiary";
 import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
 
 function Main() {
-  // //실시간 알림 test/////////////////////////////////
-  // const eventSource = new EventSourcePolyfill("http://localhost:8080/sub", {
-  //   headers: {
-  //     Authorization: getCookie("token"),
-  //   },
-  // });
-
-  // eventSource.addEventListener("connect", (e) => {
-  //   const { data: receivedConnectData } = e;
-  //   console.log("왜이래", receivedConnectData);
-  // });
-  // console.log("ddd");
-  // console.log(eventSource.CONNECTING);
-  // console.log(eventSource);
-  // eventSource.addEventListener("notification", function(event) {
-  //   let msg = event.data;
-  //   console.log(msg);
-  //   alert(msg);
-  // });
-  // // //////////////////////////////////////////////////////
-
   // 로그인 여부 확인 : 쿠기 값 가져오기
   useEffect(() => {
     const ACCESS_TOKEN = getCookie("token");

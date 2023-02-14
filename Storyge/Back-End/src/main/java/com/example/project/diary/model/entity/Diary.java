@@ -32,7 +32,7 @@ public class Diary {
     private String diaryContent;
     private Integer scope;
     private Integer updateCnt;
-    private String analizedResult;
+    private String analyzedResult;
 
     private LocalDateTime createdAt;
 
@@ -41,7 +41,7 @@ public class Diary {
         this.diaryContent = diaryContent;
         this.scope = scope;
         this.updateCnt = updateCnt;
-        this.analizedResult = analizedResult;
+        this.analyzedResult = analizedResult;
     }
 
     public void updateScope(int scope) {

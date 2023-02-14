@@ -22,6 +22,6 @@ public class DiaryUpdateParam {
     @ApiModelProperty(example = "공개범위 ex) 0 => 비공개, 1 => 공개")
     private Integer scope;
 
-    private String analizedResult;
+    private String analyzedResult;
 
 }

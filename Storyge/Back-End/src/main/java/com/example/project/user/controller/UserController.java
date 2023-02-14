@@ -35,6 +35,9 @@ public class UserController {
     @ApiOperation(value = "사용자 정보 수정", notes = "본인의 닉네임 또는 프로필 사진을 수정")
     @PutMapping(value = "/user", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateUserInfo(HttpServletRequest request, @RequestPart(value = "multipartFile", required = false) MultipartFile multipartFile, @RequestPart(value = "nickname") String nickname) throws IOException {
+
+        //파일이 아닌 닉네임만 넘어올 경우 생각해서 짜야함>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\
+        System.out.println("파일 : " + multipartFile.isEmpty()); // 비어 있다면 true
         System.out.println("request : " + request);
         System.out.println("header : " + request.getHeader(TOKEN_HEADER));
         System.out.println("userid : " + jwtUtil.getUserId(request.getHeader(TOKEN_HEADER)));

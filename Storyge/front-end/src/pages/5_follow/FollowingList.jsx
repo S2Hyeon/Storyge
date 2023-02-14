@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import * as S from "./Follow.js";
 import { getCookie } from "./../../utils/Cookies";
 import Api from "lib/customApi";
+import Swal from "sweetalert2";
 
 export default function FollowingList() {
   const movePage = useNavigate();
@@ -32,18 +33,33 @@ export default function FollowingList() {
   }, [flag]);
 
   const deleteFollowing = async (id, e) => {
-    try {
-      await Api.delete(`/following/${id}`, {
-        headers: {
-          Authorization: getCookie("token"),
-        },
-      });
-      console.log("팔로잉 삭제");
-      console.log(id); // error
-      setFlag(!flag);
-      e.preventDefault();
-    } catch (err) {
-      console.log(err);
+    if (
+      Swal.fire({
+        text: "언팔하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          try {
+            Api.delete(`/following/${id}`, {
+              headers: {
+                Authorization: getCookie("token"),
+              },
+            }).then(() => {
+              console.log("팔로잉 삭제");
+              console.log(id); // error
+              setFlag(!flag);
+              e.preventDefault();
+            });
+          } catch (err) {
+            console.log(err);
+          }
+        }
+      })
+    ) {
     }
   };
 
@@ -74,7 +90,7 @@ export default function FollowingList() {
                     deleteFollowing(list.userId, e);
                   }}
                 >
-                  팔로잉
+                  언팔로
                 </S.FollowBtn>
               </S.BtnBox>
             </S.Profile>

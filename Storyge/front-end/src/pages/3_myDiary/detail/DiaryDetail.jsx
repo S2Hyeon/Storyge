@@ -19,12 +19,54 @@ import { deleteDiary } from "api/diary/deleteDiary";
 import { putDiaryScope } from "api/diary/putDiaryScope";
 import { useNavigate } from "react-router-dom";
 
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal);
+
+const Toast = MySwal.mixin({
+  toast: true,
+  position: "center-center",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
+
 export default function DiaryDetail() {
   const movePage = useNavigate();
   async function crud(event) {
     if (event === "delete") {
-      await deleteDiary(diaryId);
-      movePage(-1);
+      if (
+        Swal.fire({
+          text: "삭제하시겠습니까?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Toast.fire({
+              icon: "warning",
+              title: "삭제되었습니다.",
+            });
+            deleteDiary(diaryId);
+            movePage(-1);
+          }
+        })
+      ) {
+      }
+      // if (window.confirm("ㄹㅇ?")) {
+      //   // They clicked Yes
+      //   await deleteDiary(diaryId);
+      //   movePage(-1);
+      // } else {
+      //   // They clicked no
+      // }
     } else if (event === "put") {
       movePage("/modifyDiary", { state: { already: myDiaryDetailData } });
     } else {
@@ -170,7 +212,7 @@ export default function DiaryDetail() {
         ) : null}
         {!isOther && (
           <S.InfoBtn onClick={handleChange}>
-            {isOpen === 0 ? "공개" : "비공개"}
+            {isOpen === 0 ? "비공개" : "공개"}
           </S.InfoBtn>
         )}
       </S.Row>

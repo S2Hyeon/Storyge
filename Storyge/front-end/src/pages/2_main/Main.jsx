@@ -43,8 +43,11 @@ function Main() {
   let [diary, setDiary] = useState(true);
 
   //새로 업데이트 된 글로 이동!
-  function goUpdatedDiary(diaryId) {
-    movePage("/diary", { state: { diaryId: diaryId } });
+  function goUpdatedDiary(diaryId, otherUserId) {
+    console.log("toner user id ", otherUserId);
+    movePage("/diary", {
+      state: { diaryId: diaryId, otherUserId: otherUserId },
+    });
   }
 
   //달력 보일건지 통계 보일건지 전환하는 함수
@@ -57,6 +60,7 @@ function Main() {
   useEffect(() => {
     async function getAndSetRecentDiaryData() {
       const response = await getRecentDiary();
+      console.log("응답", response);
       setRecentDiaryData(response);
     }
     getAndSetRecentDiaryData();
@@ -76,12 +80,14 @@ function Main() {
     <S.All>
       {recentDiaryData.length > 0 ? (
         <S.NewDiary>
-          {recentDiaryData.map((recentDiary, index) => {
+          {recentDiaryData.map((recentDiary) => {
             return (
               <S.Profile
-                key={index}
+                key={recentDiary.userId}
                 profile={recentDiary.profileImg}
-                onClick={() => goUpdatedDiary(recentDiary.diaryId)}
+                onClick={(e) =>
+                  goUpdatedDiary(recentDiary.diaryId, recentDiary.userId)
+                }
               />
             );
           })}

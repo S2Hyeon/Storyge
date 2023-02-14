@@ -32,6 +32,7 @@ public class Diary {
     private String diaryContent;
     private Integer scope;
     private Integer updateCnt;
+    @Column(name="analized_result")
     private String analyzedResult;
 
     private LocalDateTime createdAt;

@@ -50,7 +50,7 @@ function AppRouter() {
       <Route
         path="logininfo"
         element={
-          <PublicRoute component={<LoginInfo />} authenticated={token} />
+          <PrivateRoute component={<LoginInfo />} authenticated={token} />
         }
       />
       <Route

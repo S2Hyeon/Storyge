@@ -92,7 +92,6 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
     @Override
     public List<RecentDiaryResponseDto> selectAllRecentDiary(Long userId) {
 
-        User user =userRepository.findById(userId).orElse(null);
         if(followRepository.findAllByFollower(userId).size()==0){
             return null;
         }
@@ -105,6 +104,7 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
             if(readDiaryRepository.findByUserIdAndAndRecentId(userId,recentDiary.getRecentId()).isEmpty()){
                 recentDiaryDtoList.add(RecentDiaryResponseDto.builder()
                         .diaryId(recentDiary.getDiaryId())
+                        .userId(recentDiary.getUserId())
                         .profileImg(recentDiary.getUser().getProfileImg())
                         .nickname(recentDiary.getUser().getNickname())
                         .build());

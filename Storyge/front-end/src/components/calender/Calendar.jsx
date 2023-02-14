@@ -13,14 +13,38 @@ function CustomCalendar(props) {
   //-100 이라면 자기 자신이 보는 것. 그 외에는 다른 사용자의 userId
   const userId = props.userId;
   const [month] = useState(dayjs(new Date()).format("YYYY-MM-01")); //2023-02-01 형식으로 저장
+  const now = new Date();
+  function lastmonth() {
+    const year = now.getFullYear;
+    const num = now.getMonth;
+    if (num === 0) {
+      return `${year - 1}-12-01`;
+    } else {
+      return `${year}-${num}-01`;
+    }
+  }
 
   const [monthEmotion, setMonthEmotion] = useState([]); //해당 달의 감정들 저장
+  const [totalEmoticon, setTotalEmoticon] = useState([]);
+
 
   useEffect(() => {
     async function getAndSetCalendar() {
       if (userId < 0) {
         const response = await getMyCalendar(month);
         setMonthEmotion(response);
+        const response2 = await getMyCalendar(lastmonth);
+        setTotalEmoticon([...response2, ...response]).then(() => {
+          const i = totalEmoticon.length;
+          if (
+            ((totalEmoticon[i - 1].emoticonName ===
+              totalEmoticon[i - 2].emoticonName) ===
+              totalEmoticon[i - 3].emoticonName) ===
+            "sad"
+          ) {
+            props.setIsGloomy(true);
+          }
+        });
       } else {
         const response = await getOtherCalendar(month, userId);
         setMonthEmotion(response);

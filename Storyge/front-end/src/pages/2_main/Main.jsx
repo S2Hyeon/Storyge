@@ -9,8 +9,11 @@ import { getCookie } from "./../../utils/Cookies";
 import { getQuote } from "api/quote/getQuote";
 import { getRecentDiary } from "api/recentDiary/getRecentDiary";
 import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
+import Modal from "./Modal";
 
 function Main() {
+  const [isGloomy, setIsGloomy] = useState(false);
+
   // 로그인 여부 확인 : 쿠기 값 가져오기
   useEffect(() => {
     const ACCESS_TOKEN = getCookie("token");
@@ -64,7 +67,7 @@ function Main() {
               <S.Profile
                 key={recentDiary.userId}
                 profile={recentDiary.profileImg}
-                onClick={(e) =>
+                onClick={() =>
                   goUpdatedDiary(recentDiary.diaryId, recentDiary.userId)
                 }
               />
@@ -82,7 +85,7 @@ function Main() {
         <S.CalendarContainer>
           <S.CalendarBox>
             {diary ? (
-              <CustomCalendar userId={-100} />
+              <CustomCalendar userId={-100} setIsGloomy={setIsGloomy} />
             ) : (
               <PieChart userId={-100} />
             )}
@@ -128,6 +131,7 @@ function Main() {
           <S.WiseFrom>{quoteData && quoteData.quoteSource}</S.WiseFrom>
         </S.WiseBox>
       </G.BodyContainer>
+      {isGloomy && <Modal setIsGloomy={setIsGloomy} />}
     </S.All>
   );
 }

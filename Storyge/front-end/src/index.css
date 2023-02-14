@@ -11,3 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+button {
+  color: black;
+}
+
+div {
+  /* border: 1px solid red; */
+  box-sizing: border-box;
+}
+
+textarea {
+  box-sizing: border-box;
+  font-family: "S-CoreDream-3Light";
+}

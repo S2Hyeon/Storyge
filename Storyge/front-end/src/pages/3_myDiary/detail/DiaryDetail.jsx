@@ -41,7 +41,8 @@ export default function DiaryDetail() {
   //다이어리 세부 내용 가져오기
   const [myDiaryDetailData, setMyDiaryDetailData] = useState();
   const [isOpen, setIsOpen] = useState(location.state.scope); // 공개여부;
-  console.log("isOpen 0이면 비공개, 1이면 공개", isOpen);
+  const [isOther] = useState(location.state.otherUserId);
+
   useEffect(() => {
     async function getMyUserId() {
       const response = await getUserId();
@@ -157,17 +158,21 @@ export default function DiaryDetail() {
         )}
       </S.AnalyzedContainer>
       <S.Row>
-        <S.InfoBtn onClick={(e) => crud(e.target.value)} value="delete">
-          삭제
-        </S.InfoBtn>
-        {myDiaryDetailData && myDiaryDetailData.updateCnt === 0 ? (
+        {!isOther && (
+          <S.InfoBtn onClick={(e) => crud(e.target.value)} value="delete">
+            삭제
+          </S.InfoBtn>
+        )}
+        {!isOther && myDiaryDetailData && myDiaryDetailData.updateCnt === 0 ? (
           <S.InfoBtn onClick={(e) => crud(e.target.value)} value="put">
             수정
           </S.InfoBtn>
         ) : null}
-        <S.InfoBtn onClick={handleChange}>
-          {isOpen === 0 ? "공개" : "비공개"}
-        </S.InfoBtn>
+        {!isOther && (
+          <S.InfoBtn onClick={handleChange}>
+            {isOpen === 0 ? "공개" : "비공개"}
+          </S.InfoBtn>
+        )}
       </S.Row>
       <S.CommentWriteBox>
         <S.CommentWrite

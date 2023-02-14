@@ -35,7 +35,6 @@ export default function ModifyProfile() {
     movePage("/mypage");
   }
 
-  // 백 로직 구현되면 다시 확인
   async function onsubmit() {
     console.log("제출 버튼 클릭");
     console.log("이미지 파일 : " + userFile);

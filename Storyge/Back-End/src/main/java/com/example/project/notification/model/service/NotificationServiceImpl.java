@@ -5,6 +5,7 @@ import com.example.project.diary.model.repository.DiaryRepository;
 import com.example.project.notification.model.dto.NotificationFollowDto;
 import com.example.project.notification.model.dto.NotificationReponseDto;
 import com.example.project.notification.model.dto.NotificationReviewDto;
+import com.example.project.notification.model.dto.NotificationUpdateParam;
 import com.example.project.notification.model.entity.Notification;
 import com.example.project.notification.model.repository.NotificationRepository;
 import com.example.project.user.model.entity.User;
@@ -126,19 +127,23 @@ public class NotificationServiceImpl implements NotificationService {
 
             if(type.equals("REVIEW")){ // 댓글일 때
                 notificationList.add(NotificationReponseDto.builder()
+                        .notificationId(noti.getNotiId())
                         .follow(noti.getFollow())
                         .nickname(followUser.getNickname())
                         .profileImg(followUser.getProfileImg())
                         .notiType(noti.getNotiType())
                         .diaryId(noti.getDiaryId())
+                        .isRead(noti.getReadCheck())
                         .build());
             }
             else{ // 팔로우 수락, 신청일 때
                 notificationList.add(NotificationReponseDto.builder()
+                        .notificationId(noti.getNotiId())
                         .follow(noti.getFollow())
                         .nickname(followUser.getNickname())
                         .profileImg(followUser.getProfileImg())
                         .notiType(noti.getNotiType())
+                        .isRead(noti.getReadCheck())
                         .build());
             }
 
@@ -147,5 +152,12 @@ public class NotificationServiceImpl implements NotificationService {
 
         return notificationList;
     }
+
+    @Override
+    public void updateNotificationRead(NotificationUpdateParam updateParam) {
+        Notification notification = notificationRepository.findById(updateParam.getNotificationId()).orElse(null);
+        notification.updateRead(updateParam.getIsRead());
+    }
+
 
 }

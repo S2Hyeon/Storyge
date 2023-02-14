@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import * as S from "./ModifyProfile";
 import ProfileBoxImg from "./../../components/profileBox/ProfileImgBox";
@@ -9,6 +10,8 @@ import { getCookie } from "./../../utils/Cookies";
 import { putUser } from "api/user/putUser";
 
 export default function ModifyProfile() {
+  const movePage = useNavigate();
+
   const [userNickname, setUserNickname] = useState("");
   const [userImg, setUserImg] = useState("");
   const [userFile, setUserFile] = useState();
@@ -28,12 +31,17 @@ export default function ModifyProfile() {
     console.log(userFile);
   }, [userFile]);
 
-  // 백 로직 구현되면 다시 확인
+  function gomypage() {
+    movePage("/mypage");
+  }
+
   async function onsubmit() {
     console.log("제출 버튼 클릭");
     console.log("이미지 파일 : " + userFile);
     console.log("수정된 닉네임 : " + userNickname);
     putUser(userFile, userNickname);
+    alert("프로필 수정 완료");
+    gomypage();
   }
 
   //처음 렌더링이 될 때만 실행

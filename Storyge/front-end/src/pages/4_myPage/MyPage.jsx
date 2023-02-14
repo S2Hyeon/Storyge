@@ -63,20 +63,13 @@ export default function MyPage({ setToken }) {
   useEffect(() => {
     async function getUserData() {
       try {
-        // alert("마이페이지");
-        // const data = await axios.get("https://storyge.xyz/api/user", {
         const response = await Api.get("/user", {
           headers: {
             Authorization: getCookie("token"),
           },
         });
         console.log("마이페이지");
-        console.log(response.data);
         setUserData(response.data);
-        console.log(userData);
-        console.log("프로필 이미지 : " + userData.profileImg);
-        // console.log('닉네임 : ' + userData.data.nickname);
-        // console.log('팔로워 : ' + userData.data.follower);
       } catch (err) {
         console.log(err);
       }

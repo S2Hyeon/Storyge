@@ -55,6 +55,7 @@ function OtherPage() {
             follower={otherUserData.follower}
             following={otherUserData.following}
             isAlreadyApply={isAlreadyApply}
+            test={setIsFollowing}
           />
         )}
 

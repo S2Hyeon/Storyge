@@ -34,9 +34,6 @@ public class UserController {
     @ApiOperation(value = "사용자 정보 수정", notes = "본인의 닉네임 또는 프로필 사진을 수정")
     @PutMapping(value = "/user")
     public ResponseEntity<?> updateUserInfo(HttpServletRequest request, @RequestPart(required = false) MultipartFile multipartFile, String nickname) throws IOException {
-        System.out.println("multipartFile.getOriginalFilename(): " + multipartFile.getOriginalFilename());
-        System.out.println("multipartFile.getName(): " + multipartFile.getName());
-        System.out.println("multipartFile.getContentType(): " + multipartFile.getContentType());
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
         //프로필 경로 s3에 업로드 후 올려주기
         String url = fileService.upload(multipartFile, "profile");

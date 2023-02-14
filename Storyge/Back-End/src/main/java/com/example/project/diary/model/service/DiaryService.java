@@ -42,7 +42,7 @@ public interface DiaryService {
                 .diaryContent(diary.getDiaryContent())
                 .scope(diary.getScope())
                 .updateCnt(diary.getUpdateCnt())
-                .analizedResult(diary.getAnalizedResult())
+                .analizedResult(diary.getAnalyzedResult())
                 .createdAt(diary.getCreatedAt())
                 .build();
     }
@@ -53,7 +53,7 @@ public interface DiaryService {
                 .emoticonName(diaryRequestDto.getEmoticonName())
                 .diaryContent(diaryRequestDto.getDiaryContent())
                 .scope(diaryRequestDto.getScope())
-                .analizedResult(diaryRequestDto.getAnalizedResult())
+                .analyzedResult(diaryRequestDto.getAnalizedResult())
                 .build();
     }
 

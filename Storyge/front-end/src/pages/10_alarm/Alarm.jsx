@@ -4,6 +4,8 @@ import * as G from "styles";
 import { getCookie } from "./../../utils/Cookies";
 import Api from "lib/customApi";
 import { useNavigate } from "react-router-dom";
+import { putMakeReadAlarm } from "api/alarm/putMakeReadAlarm";
+import axios from "axios";
 
 export default function Alarm() {
   const [userData, setUserData] = useState([]);
@@ -24,16 +26,29 @@ export default function Alarm() {
 
   //처음 렌더링이 될 때만 실행
   useEffect(() => {
+    // async function getUserData() {
+    //   try {
+    //     const response = await Api.get("/notification", {
+    //       headers: {
+    //         Authorization: getCookie("token"),
+    //       },
+    //     });
+    //     setUserData(response.data);
+    //     console.log("알림페이지 : 알림 데이터");
+    //     console.log(response.data);
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
     async function getUserData() {
+      
       try {
-        const response = await Api.get("/notification", {
+        const response = await axios.get("http://localhost:8080/notification", {
           headers: {
             Authorization: getCookie("token"),
           },
         });
         setUserData(response.data);
-        console.log("알림페이지 : 알림 데이터");
-        console.log(userData);
+        console.log("알림페이지 : 알림 데이터!!!!!!!!!!!!1");
         console.log(response.data);
       } catch (err) {
         console.log(err);
@@ -43,14 +58,30 @@ export default function Alarm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //클릭했을 때 알림 배경 없애기
+  async function makeReadAlarm(notificationId, isRead) {
+    console.log("알림id: ", notificationId, " 읽음?: ", isRead);
+    if (isRead === 0) {
+      console.log("들어옴????????");
+      await putMakeReadAlarm(notificationId);
+    }
+  }
+
   return (
-    <G.BodyContainer>
+    <S.Container>
       {userData && (
         <S.List>
           {userData.map((alarm, key) => {
             if (alarm.notiType === "WAIT") {
               return (
-                <S.Alarm key={key} onClick={goMyFollowList}>
+                <S.Alarm
+                  key={key}
+                  onClick={() => {
+                    makeReadAlarm(alarm.notificationId, alarm.isRead);
+                    goMyFollowList();
+                  }}
+                  isReadColor={alarm.isRead}
+                >
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>
                     <S.BoldText>{alarm.nickname}</S.BoldText>님이{" "}
@@ -60,7 +91,14 @@ export default function Alarm() {
               );
             } else if (alarm.notiType === "REVIEW") {
               return (
-                <S.Alarm key={key} onClick={() => goDiaryPage(alarm.diaryId)}>
+                <S.Alarm
+                  key={key}
+                  onClick={() => {
+                    makeReadAlarm(alarm.notificationId, alarm.isRead);
+                    goDiaryPage(alarm.diaryId);
+                  }}
+                  isReadColor={alarm.isRead}
+                >
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>
                     <S.BoldText>{alarm.nickname}</S.BoldText>님이{" "}
@@ -70,7 +108,14 @@ export default function Alarm() {
               );
             } else if (alarm.notiType === "FOLLOW") {
               return (
-                <S.Alarm key={key} onClick={() => goOtherPage(alarm.follow)}>
+                <S.Alarm
+                  key={key}
+                  onClick={() => {
+                    makeReadAlarm(alarm.notificationId, alarm.isRead);
+                    goOtherPage(alarm.follow);
+                  }}
+                  isReadColor={alarm.isRead}
+                >
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>
                     <S.BoldText>{alarm.nickname}</S.BoldText>님이{" "}
@@ -82,6 +127,6 @@ export default function Alarm() {
           })}
         </S.List>
       )}
-    </G.BodyContainer>
+    </S.Container>
   );
 }

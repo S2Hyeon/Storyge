@@ -68,7 +68,9 @@ function CustomCalendar(props) {
     }
     //2. 지금 달력이 다른 사용자라면 다른 사용자 일기 목록 페이지로 이동
     else {
-      movePage("/diarylist", { state: { date: date, otherId: userId } });
+      movePage("/diarylist", {
+        state: { date: date, otherId: userId, nickname: props.nickname },
+      });
     }
   }
 

@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { useDispatch } from "react-redux";
 
 const MySwal = withReactContent(Swal);
 
@@ -84,6 +85,15 @@ export default function DiaryDetail() {
   const [myDiaryDetailData, setMyDiaryDetailData] = useState();
   const [isOpen, setIsOpen] = useState(location.state.scope); // 공개여부;
   const [isOther] = useState(location.state.otherUserId);
+
+  //!리덕스를 이용하여 다른 사람
+  const dispatch = useDispatch();
+  if (isOther != null) {
+    console.log(isOther);
+    dispatch({ type: "other", owner: location.state.nickname });
+  } else {
+    dispatch({ type: "me" });
+  }
 
   useEffect(() => {
     async function getMyUserId() {

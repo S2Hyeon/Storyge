@@ -5,6 +5,7 @@ import AppRouter from "./router/AppRouter";
 import { debounce } from "lodash";
 import Size from "pages/0_intro/Size.jsx";
 import ErrorPage from "pages/9_errorPage/ErrorPage";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);

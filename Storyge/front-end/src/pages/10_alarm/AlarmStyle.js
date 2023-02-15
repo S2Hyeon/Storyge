@@ -1,9 +1,17 @@
 import styled from "styled-components";
 
+export const Container = styled.div`
+  padding-top: 60px;
+  margin-bottom: 70px;
+`;
+
 export const Alarm = styled.div`
+  height: 65px;
   display: flex;
   align-items: center;
-  margin: 15px 0px;
+  padding: 0 20px;
+  background-color: ${(props) =>
+    props.isReadColor === 0 ? "var(--color-grey)" : "transparent"};
 `;
 
 export const List = styled.div`

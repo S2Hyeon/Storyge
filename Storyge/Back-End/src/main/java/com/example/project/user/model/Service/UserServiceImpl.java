@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -21,18 +22,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(Long userId, String nickname, String profileUrl) {
+        System.out.println("//////////////////////////////////////////////////////////////////////////////////");
+        System.out.println("userServiceImpl로 넘어옴");
         User user = userRepository.findById(userId).orElseThrow();
-        //만약 넘어온 프로핇만 null일 경우, 닉네임만 바꿔주기
-        if (profileUrl == null)
-            user.update(nickname, user.getProfileImg());
-            //만약 넘어온 nickname만 null일 경우, 프로필만 바꿔주기
-        else if (nickname == null)
-            user.update(user.getNickname(), profileUrl);
+        //만약 넘어온 프로필만 null일 경우, 닉네임만 바꿔주기
+        if (Objects.isNull(profileUrl)) {
+            System.out.println("프로필 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 
-            //둘다 제대로 넘어왔으면 둘다 변경
-        else
+            user.update(nickname, user.getProfileImg());
+        }
+        //만약 넘어온 nickname만 null일 경우, 프로필만 바꿔주기
+        else if (Objects.isNull(nickname)) {
+            System.out.println("닉네임 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            user.update(user.getNickname(), profileUrl);
+        }
+        //둘다 제대로 넘어왔으면 둘다 변경
+        else {
+            System.out.println("둘다 있음 바꿔버려");
             user.update(nickname, profileUrl);
+        }
     }
+
 
     @Override
     public UserDto selectOneUser(Long userId) {

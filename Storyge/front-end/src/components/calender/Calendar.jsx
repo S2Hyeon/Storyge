@@ -27,7 +27,6 @@ function CustomCalendar(props) {
   }
 
   const [monthEmotion, setMonthEmotion] = useState([]); //해당 달의 감정들 저장
-  const [totalEmoticon, setTotalEmoticon] = useState([]);
 
   useEffect(() => {
     async function getAndSetCalendar() {
@@ -35,24 +34,18 @@ function CustomCalendar(props) {
         const response = await getMyCalendar(month);
         setMonthEmotion(response);
         const response2 = await getMyCalendar(lastmonth());
-        console.log("리스폰스2", response2);
-        // setTotalEmoticon(
-        //   response2 ? [...response2, ...response] : response
-        // ).then(() => {
-        //   console.log("토탈", totalEmoticon);
-        //   const i = totalEmoticon.length;
-        //   if (totalEmoticon.length > 2) {
-        //     if (
-        //       ((totalEmoticon[i - 1].emoticonName ===
-        //         totalEmoticon[i - 2].emoticonName) ===
-        //         totalEmoticon[i - 3].emoticonName) ===
-        //       "sad"
-        //     ) {
-        //       console.log("슬프다 슬퍼");
-        //       props.setIsGloomy(true);
-        //     }
-        //   }
-        // });
+        const newArr = response2 ? [...response2, ...response] : response;
+        if (newArr.length >= 3) {
+          const i = newArr.length;
+          if (
+            newArr[i - 1].emoticonName === "sad" ||
+            newArr[i - 2].emoticonName === "sad" ||
+            newArr[i - 3].emoticonName === "sad"
+          ) {
+            console.log("슬프다 슬퍼");
+            props.setIsGloomy(true);
+          }
+        }
       } else {
         const response = await getOtherCalendar(month, userId);
         setMonthEmotion(response);

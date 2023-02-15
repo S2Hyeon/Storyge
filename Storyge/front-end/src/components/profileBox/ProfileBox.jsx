@@ -1,85 +1,80 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import * as S from "./../profileBox/ProfileBoxStyle.js";
-import * as G from "styles";
-import { getIsFollowing } from "api/user/getIsFollowing.js";
-import { postApplyFollow } from "api/user/postApplyFollow.js";
-import { deleteFollowing } from "api/user/deleteFollowing.js";
-import { getOtherUserData } from "api/user/getOtherUserData.js";
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import * as S from './../profileBox/ProfileBoxStyle.js'
+import * as G from 'styles'
+import { getIsFollowing } from 'api/user/getIsFollowing.js'
+import { postApplyFollow } from 'api/user/postApplyFollow.js'
+import { deleteFollowing } from 'api/user/deleteFollowing.js'
+import { getOtherUserData } from 'api/user/getOtherUserData.js'
 
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2'
 
 export default function ProfileBox(props) {
-  const [isStateChanged, setIsStateChanged] = useState();
-  const movePage = useNavigate();
+  const [isStateChanged, setIsStateChanged] = useState()
+  const movePage = useNavigate()
 
   //다른 사람의 profileBox인지 확인!
-  const [isOtherProfileBox, setIsOtherProfileBox] = useState();
+  const [isOtherProfileBox, setIsOtherProfileBox] = useState()
   useEffect(() => {
     if (props.otherUserId != null) {
-      setIsOtherProfileBox(true);
+      setIsOtherProfileBox(true)
     } else {
-      setIsOtherProfileBox(false);
+      setIsOtherProfileBox(false)
     }
-  }, []);
+  }, [])
 
   //다른 사람을 팔로잉하고 있는지 확인!
-  const [isFollowing, setIsFollowing] = useState();
+  const [isFollowing, setIsFollowing] = useState()
   useEffect(() => {
     async function getAndSetIsFollowing() {
-      console.log("다른 사람 페이지인가요?: ", isOtherProfileBox);
       if (props.otherUserId != null) {
-        const response = await getIsFollowing(props.otherUserId);
-        console.log("누구냐 넌", response);
-        setIsFollowing(response);
+        const response = await getIsFollowing(props.otherUserId)
+        setIsFollowing(response)
       }
     }
-    console.log("내가 이 사람을 팔로잉하고 있나요?", isFollowing);
-    getAndSetIsFollowing();
-  }, [isStateChanged]);
+    getAndSetIsFollowing()
+  }, [isStateChanged])
 
   //이미 내가 팔로우를 신청했는지 여부
-  const [isWaitingConfirm, setIsWaitingConfirm] = useState(
-    props.isAlreadyApply
-  );
+  const [isWaitingConfirm, setIsWaitingConfirm] = useState(props.isAlreadyApply)
   useEffect(() => {
     if (props.otherUserId != null) {
       async function getAndSetIsWaitingConfirm() {
-        const response = await getOtherUserData(props.otherUserId);
-        setIsWaitingConfirm(response.scope);
+        const response = await getOtherUserData(props.otherUserId)
+        setIsWaitingConfirm(response.scope)
       }
-      getAndSetIsWaitingConfirm();
+      getAndSetIsWaitingConfirm()
     }
-  }, [isStateChanged]);
+  }, [isStateChanged])
 
   function gofollowerlist() {
-    movePage("/follower");
+    movePage('/follower')
   }
 
   function gofollowinglist() {
-    movePage("/following");
+    movePage('/following')
   }
 
   async function doFollow() {
-    await postApplyFollow(props.otherUserId);
-    setIsStateChanged(!isStateChanged);
+    await postApplyFollow(props.otherUserId)
+    setIsStateChanged(!isStateChanged)
   }
 
   async function doUnfollow() {
     if (
       Swal.fire({
-        text: "삭제하시겠습니까?",
-        icon: "warning",
+        text: '삭제하시겠습니까?',
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes",
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes',
       }).then((result) => {
         if (result.isConfirmed) {
-          deleteFollowing(props.otherUserId);
+          deleteFollowing(props.otherUserId)
           // setIsStateChanged(!isStateChanged);
-          setIsFollowing(false);
-          props.test(!isFollowing);
+          setIsFollowing(false)
+          props.test(!isFollowing)
           // setIsFollowing(!isFollowing);
         }
       })
@@ -113,5 +108,5 @@ export default function ProfileBox(props) {
         )
       ) : null}
     </S.Container>
-  );
+  )
 }

@@ -36,23 +36,23 @@ function CustomCalendar(props) {
         setMonthEmotion(response);
         const response2 = await getMyCalendar(lastmonth());
         console.log("리스폰스2", response2);
-        setTotalEmoticon(
-          response2 ? [...response2, ...response] : response
-        ).then(() => {
-          console.log("토탈", totalEmoticon);
-          const i = totalEmoticon.length;
-          if (totalEmoticon.length > 2) {
-            if (
-              ((totalEmoticon[i - 1].emoticonName ===
-                totalEmoticon[i - 2].emoticonName) ===
-                totalEmoticon[i - 3].emoticonName) ===
-              "sad"
-            ) {
-              console.log("슬프다 슬퍼");
-              props.setIsGloomy(true);
-            }
-          }
-        });
+        // setTotalEmoticon(
+        //   response2 ? [...response2, ...response] : response
+        // ).then(() => {
+        //   console.log("토탈", totalEmoticon);
+        //   const i = totalEmoticon.length;
+        //   if (totalEmoticon.length > 2) {
+        //     if (
+        //       ((totalEmoticon[i - 1].emoticonName ===
+        //         totalEmoticon[i - 2].emoticonName) ===
+        //         totalEmoticon[i - 3].emoticonName) ===
+        //       "sad"
+        //     ) {
+        //       console.log("슬프다 슬퍼");
+        //       props.setIsGloomy(true);
+        //     }
+        //   }
+        // });
       } else {
         const response = await getOtherCalendar(month, userId);
         setMonthEmotion(response);

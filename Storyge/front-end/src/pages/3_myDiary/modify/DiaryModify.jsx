@@ -20,7 +20,7 @@ export default function Modifydiary() {
   const [diaryId] = useState(already.diaryId);
   const [createdAt] = useState(already.createdAt.substr(0, 10));
   const [modalOpen, setModalOpen] = useState(false);
-  const [info, setInfo] = useState(["emotion", "comment"]);
+  const [info, setInfo] = useState(["emotion", "분석 건너뜀"]);
   const [spinner, setSpinner] = useState(false);
   const [checked, setChecked] = useState(already.scope === 0 ? true : false);
   const [num, setNum] = useState(0)

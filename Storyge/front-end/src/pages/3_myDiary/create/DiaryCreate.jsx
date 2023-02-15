@@ -17,7 +17,7 @@ export default function Creatediary() {
   const [count, setCount] = useState(0);
   const [content, setContent] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-  const [info, setInfo] = useState(["emotion", "comment"]);
+  const [info, setInfo] = useState(["emotion", "분석 건너뜀"]);
   const [spinner, setSpinner] = useState(false);
   const [checked, setChecked] = useState(false);
   const [num, setNum] = useState(0)

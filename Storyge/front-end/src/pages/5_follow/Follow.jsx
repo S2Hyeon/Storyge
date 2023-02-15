@@ -7,46 +7,36 @@ import SearchBar from './../../components/searchbar/SearchBar.jsx'
 import FollowerList from './FollowerList.jsx'
 import FollowingList from './FollowingList.jsx'
 
-export default function Follow() {
-  const [check, setCheck] = useState(false)
-  const [followerAlarm, setFollowerAlarm] = useState(true)
-  const [followingAlarm, setFollowingAlarm] = useState(true)
+export default function Follow(props) {
+  const [followAlarm, setFollowAlarm] = useState(props.status)
 
   return (
     <G.BodyContainer>
       <SearchBar />
       <S.Box>
+        {/* props.status = true면, 팔로우 페이지 */}
+        {/* props.status = false면, 팔로잉 페이지 */}
+        {props.status}
         <B.Follower
           onClick={() => {
-            setCheck(true)
-            console.log(check)
+            setFollowAlarm(true)
           }}
-          followAlarm={check}
+          followAlarm={followAlarm}
         >
           <B.Text>팔로워</B.Text>
         </B.Follower>
 
         <B.Following
           onClick={() => {
-            setCheck(false)
+            setFollowAlarm(false)
           }}
-          followAlarm={check}
+          followAlarm={followAlarm}
         >
           <B.Text>팔로잉</B.Text>
         </B.Following>
       </S.Box>
 
-      {check ? (
-        followerAlarm ? (
-          <FollowerList />
-        ) : (
-          <FollowingList />
-        )
-      ) : followingAlarm ? (
-        <FollowingList />
-      ) : (
-        <FollowerList />
-      )}
+      {followAlarm ? <FollowerList /> : <FollowingList />}
     </G.BodyContainer>
   )
 }

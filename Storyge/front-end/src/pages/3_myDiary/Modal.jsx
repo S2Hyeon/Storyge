@@ -45,25 +45,22 @@ function Modal({
 
   return (
     <S.Modal>
-      <button
-        onClick={() => {
-          setModalOpen(false)
-        }}
-      >
-        X
-      </button>
       {isChecked === 0 ? (
         <S.ModalItems>
           <p>우리가 분석한 감정이에요! 😍</p>
           <Emoji emotion={content[0]} thisWidth="30px" />
           <S.ModalBtnDiv>
-            <button onClick={writeDiary}>맞워요</button>
-            <button onClick={() => setIsChecked(1)}>않이요</button>
+            <S.ModalBtn color="#84b9c0" onClick={writeDiary}>
+              <S.ModalText>맞아요</S.ModalText>
+            </S.ModalBtn>
+            <S.ModalBtn color="#cfcece" onClick={() => setIsChecked(1)}>
+              <S.ModalText>아니요</S.ModalText>
+            </S.ModalBtn>
           </S.ModalBtnDiv>
         </S.ModalItems>
       ) : isChecked === 1 ? (
         <S.ModalItems>
-          <p>그럼 니가 골라보던가 흥 😡</p>
+          <p>감정을 선택해주세요</p>
           <S.Row>
             {emotionList.map((emotion) => {
               return (
@@ -84,7 +81,9 @@ function Modal({
             })}
           </S.Row>
           <S.ModalBtnDiv>
-            <button onClick={writeDiary}>확인</button>
+            <S.ModalBtn color="var(--color-primary)" onClick={writeDiary}>
+              <S.ModalText>확인</S.ModalText>
+            </S.ModalBtn>
           </S.ModalBtnDiv>
         </S.ModalItems>
       ) : isChecked === 2 ? (

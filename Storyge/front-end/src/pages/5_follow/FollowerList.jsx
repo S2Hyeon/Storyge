@@ -4,7 +4,7 @@ import { getCookie } from "./../../utils/Cookies";
 import Api from "lib/customApi";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { CiCircleRemove, CiCircleCheck } from "react-icons/ci";
+import { MdClose, MdCheck } from "react-icons/md";
 
 export default function FollowerList() {
   const [flag, setFlag] = useState(false);
@@ -145,7 +145,7 @@ export default function FollowerList() {
                 </S.AllBox>
                 {deleteFollow ? (
                   <S.BtnBox>
-                    <CiCircleCheck
+                    <MdCheck
                       borderColor="var(--color-primary)"
                       color="var(--color-primary)"
                       size="23"
@@ -154,8 +154,8 @@ export default function FollowerList() {
                       }}
                     >
                       확인
-                    </CiCircleCheck>
-                    <CiCircleRemove
+                    </MdCheck>
+                    <MdClose
                       borderColor="var(--color-warning)"
                       color="var(--color-warning)"
                       size="23"
@@ -164,7 +164,7 @@ export default function FollowerList() {
                       }}
                     >
                       삭제
-                    </CiCircleRemove>
+                    </MdClose>
                   </S.BtnBox>
                 ) : (
                   <S.Text>요청 거절됨</S.Text>
@@ -188,7 +188,7 @@ export default function FollowerList() {
                 <S.Text>{follower.nickname}</S.Text>
               </S.AllBox>
               <S.BtnBox>
-                <CiCircleRemove
+                <MdClose
                   borderColor="var(--color-warning)"
                   color="var(--color-warning)"
                   size="23"
@@ -197,7 +197,7 @@ export default function FollowerList() {
                   }}
                 >
                   삭제
-                </CiCircleRemove>
+                </MdClose>
               </S.BtnBox>
             </S.Profile>
           );

@@ -52,7 +52,7 @@ export default function ModifyProfile() {
       putUser(userFile, userNickname);
     } else if (userFile === undefined) {
       // 닉네임 중복 검사
-      console.log("닉네임만 변경하는 경우!!!!!!");
+      console.log("닉네임만 변경하는");
       if (response === true) {
         alert("이미 존재하는 닉네임입니다.");
       } else {

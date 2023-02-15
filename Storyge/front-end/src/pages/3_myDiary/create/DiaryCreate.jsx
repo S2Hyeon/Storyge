@@ -129,11 +129,9 @@ export default function Creatediary() {
         </heyhey.card>
         <div>
           <div>
-            <G.longBtnDefault onClick={isWritten}>
-              감정분석하기 버튼
-            </G.longBtnDefault>
+            <G.longBtnDefault onClick={isWritten}>일기 작성</G.longBtnDefault>
           </div>
-          <G.longBtnBorder onClick={goback}>일단 뒤로가기 버튼</G.longBtnBorder>
+          <G.longBtnBorder onClick={goback}>취소</G.longBtnBorder>
         </div>
       </heyhey.container>
       {modalOpen && (

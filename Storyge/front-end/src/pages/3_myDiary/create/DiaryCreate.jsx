@@ -2,11 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Clock from "react-live-clock";
 import Modal from "../Modal";
-import * as heyhey from "./DiaryCreateStyle";
-import * as G from "../../../styles/index";
+import * as S from "./DiaryCreateStyle";
+import * as G from "styles/index";
 import Switch from "react-switch";
 import { OpenAI } from "../../../openai/OpenAI";
-import { GrLock, GrUnlock } from "react-icons/gr";
+
+import { BiLockAlt, BiLockOpenAlt } from "react-icons/bi";
 
 import { getCount } from "api/diary/getCount";
 
@@ -106,21 +107,34 @@ export default function Creatediary() {
 
   return (
     <>
-      <heyhey.container>
+      <S.Container>
         <h1>일기 작성 페이지</h1>
 
-        <Clock format={"작성날짜 YYYY.MM.DD 작성시간 HH:mm"} ticking={true} />
+        <S.DateContainer>
+          <div style={{ color: "var(--color-grey-light)", fontSize: "12px" }}>
+            &nbsp;작성날짜&nbsp;
+          </div>
+          <div style={{ fontFamily: "S-CoreDream-5Medium" }}>
+            <Clock format={"YYYY.MM.DD"} ticking={true} />
+          </div>
+          <div style={{ color: "var(--color-grey-light)", fontSize: "12px" }}>
+            &nbsp;작성시간&nbsp;
+          </div>
+          <div style={{ fontFamily: "S-CoreDream-5Medium" }}>
+            <Clock format={"HH:mm"} ticking={true} />
+          </div>
+        </S.DateContainer>
 
-        <heyhey.card backgroundColor="var(--color-white)">
-          <heyhey.TextBox
+        <S.card backgroundColor="var(--color-white)">
+          <S.TextBox
             type="text"
             placeholder="대충 멋진 문구로 글쓰기를 자극하라"
             ref={contentRef}
             value={content}
             onChange={onChange}
           />
-          <heyhey.CardFoot height="30px" backgroundColor="var(--color-white)">
-            <heyhey.CountDiary>{content.length} / 100</heyhey.CountDiary>
+          <S.CardFoot height="30px" backgroundColor="var(--color-white)">
+            <S.CountDiary>{content.length} / 100</S.CountDiary>
             {/* <Switch
               onChange={handleChange}
               checked={checked}
@@ -129,32 +143,40 @@ export default function Creatediary() {
             /> */}
 
             {!checked ? (
-              <GrUnlock
+              <div
+                style={{ display: "flex", marginRight: "20px" }}
                 onClick={() => {
                   setChecked(!checked);
                 }}
-              />
+              >
+                <BiLockOpenAlt font-size="20px" color />
+                <div>공개</div>
+              </div>
             ) : (
-              <GrLock
+              <div
+                style={{ display: "flex", marginRight: "20px" }}
                 onClick={() => {
                   setChecked(!checked);
                 }}
-              />
+              >
+                <BiLockAlt font-size="20px" />
+                <div>비공개</div>
+              </div>
             )}
-          </heyhey.CardFoot>
-        </heyhey.card>
+          </S.CardFoot>
+        </S.card>
         <div>
-          <heyhey.Middle>
+          <S.Middle>
             <div>오늘 남은 일기 : {24 - count}</div>
-          </heyhey.Middle>
+          </S.Middle>
           <div>
             <G.longBtnDefault onClick={isWritten}>
               감정분석하기
             </G.longBtnDefault>
           </div>
-          <G.longBtnBorder onClick={goback}>뒤로가기</G.longBtnBorder>
+          <G.longBtnBorder onClick={goback}>취소</G.longBtnBorder>
         </div>
-      </heyhey.container>
+      </S.Container>
       {modalOpen && (
         <Modal
           setModalOpen={setModalOpen}

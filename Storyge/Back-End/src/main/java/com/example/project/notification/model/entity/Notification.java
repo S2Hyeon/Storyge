@@ -47,6 +47,9 @@ public class Notification {
     @JoinColumn(name="diary_id", insertable = false, updatable = false)
     private Diary diary;
 
+    @Column(name="read_check")
+    private int readCheck;
+
     @CreatedDate
     @Column(name="created_at")
     private LocalDateTime createdAt;
@@ -55,5 +58,10 @@ public class Notification {
     private void createdAt(){
         createdAt = LocalDateTime.now();
     }
+
+    public void updateRead(int readCheck){
+        this.readCheck = readCheck;
+    }
+
 
 }

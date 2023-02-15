@@ -5,6 +5,7 @@ import com.example.project.diary.model.repository.DiaryRepository;
 import com.example.project.notification.model.dto.NotificationFollowDto;
 import com.example.project.notification.model.dto.NotificationReponseDto;
 import com.example.project.notification.model.dto.NotificationReviewDto;
+import com.example.project.notification.model.dto.NotificationUpdateParam;
 import com.example.project.notification.model.entity.Notification;
 import com.example.project.notification.model.repository.NotificationRepository;
 import com.example.project.user.model.entity.User;
@@ -52,7 +53,7 @@ public class NotificationServiceImpl implements NotificationService {
         if(sseEmitters.containsKey(notificationUser)){
             SseEmitter sseEmitter = sseEmitters.get(notificationUser);
             try {
-                sseEmitter.send(SseEmitter.event().name("notification").data("follow wait"));
+                sseEmitter.send(SseEmitter.event().reconnectTime(500).name("notification").data("follow wait"));
             }catch (Exception e){
                 sseEmitters.remove(notificationUser);
             }
@@ -76,7 +77,7 @@ public class NotificationServiceImpl implements NotificationService {
         if(sseEmitters.containsKey(notificationUserId)){
             SseEmitter sseEmitter = sseEmitters.get(notificationUserId);
             try {
-                sseEmitter.send(SseEmitter.event().name("notification").data("follow accept"));
+                sseEmitter.send(SseEmitter.event().reconnectTime(500).name("notification").data("follow accept"));
             }catch (Exception e){
                 sseEmitters.remove(notificationUserId);
             }
@@ -102,7 +103,7 @@ public class NotificationServiceImpl implements NotificationService {
         if(sseEmitters.containsKey(notificationUserId)){
             SseEmitter sseEmitter = sseEmitters.get(notificationUserId);
             try {
-                sseEmitter.send(SseEmitter.event().name("notification").data("review"));
+                sseEmitter.send(SseEmitter.event().reconnectTime(500).name("notification").data("review"));
             }catch (Exception e){
                 sseEmitters.remove(notificationUserId);
             }
@@ -126,19 +127,23 @@ public class NotificationServiceImpl implements NotificationService {
 
             if(type.equals("REVIEW")){ // 댓글일 때
                 notificationList.add(NotificationReponseDto.builder()
+                        .notificationId(noti.getNotiId())
                         .follow(noti.getFollow())
                         .nickname(followUser.getNickname())
                         .profileImg(followUser.getProfileImg())
                         .notiType(noti.getNotiType())
                         .diaryId(noti.getDiaryId())
+                        .isRead(noti.getReadCheck())
                         .build());
             }
             else{ // 팔로우 수락, 신청일 때
                 notificationList.add(NotificationReponseDto.builder()
+                        .notificationId(noti.getNotiId())
                         .follow(noti.getFollow())
                         .nickname(followUser.getNickname())
                         .profileImg(followUser.getProfileImg())
                         .notiType(noti.getNotiType())
+                        .isRead(noti.getReadCheck())
                         .build());
             }
 
@@ -147,5 +152,12 @@ public class NotificationServiceImpl implements NotificationService {
 
         return notificationList;
     }
+
+    @Override
+    public void updateNotificationRead(NotificationUpdateParam updateParam) {
+        Notification notification = notificationRepository.findById(updateParam.getNotificationId()).orElse(null);
+        notification.updateRead(updateParam.getIsRead());
+    }
+
 
 }

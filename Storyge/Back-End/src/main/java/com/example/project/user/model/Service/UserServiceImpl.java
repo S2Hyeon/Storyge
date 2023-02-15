@@ -22,7 +22,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(Long userId, String nickname, String profileUrl) {
         User user = userRepository.findById(userId).orElseThrow();
-        user.update(nickname, profileUrl);
+        //만약 넘어온 프로핇만 null일 경우, 닉네임만 바꿔주기
+        if (profileUrl == null)
+            user.update(nickname, user.getProfileImg());
+            //만약 넘어온 nickname만 null일 경우, 프로필만 바꿔주기
+        else if (nickname == null)
+            user.update(user.getNickname(), profileUrl);
+
+            //둘다 제대로 넘어왔으면 둘다 변경
+        else
+            user.update(nickname, profileUrl);
     }
 
     @Override

@@ -35,11 +35,12 @@ function CustomCalendar(props) {
         setMonthEmotion(response);
         const response2 = await getMyCalendar(lastmonth());
         const newArr = response2 ? [...response2, ...response] : response;
+        console.log("???????????:", newArr);
         if (newArr.length >= 3) {
           const i = newArr.length;
           if (
-            newArr[i - 1].emoticonName === "sad" ||
-            newArr[i - 2].emoticonName === "sad" ||
+            newArr[i - 1].emoticonName === "sad" &&
+            newArr[i - 2].emoticonName === "sad" &&
             newArr[i - 3].emoticonName === "sad"
           ) {
             console.log("슬프다 슬퍼");

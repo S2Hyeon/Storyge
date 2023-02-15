@@ -99,8 +99,10 @@ export const Toggle = styled.div`
 export const ToggleBtnBox = styled.div`
   // border: 1px solid red;
   width: 100%;
+  height: 28px;
   display: flex;
   justify-content: right;
+  align-items: center;
 `;
 
 export const Analyzed = styled.div`

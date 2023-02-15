@@ -21,9 +21,6 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_HEADER;
 @RequiredArgsConstructor
 @Api(tags = {"팔로잉의 최근 일기(스토리) API"})
 public class RecentDiaryController {
-
-    private static final String SUCCESS = "Success";
-    private static final String FAIL = "Fail";
     private final RecentDiaryService recentDiaryService;
     private final JwtUtil jwtUtil;
 

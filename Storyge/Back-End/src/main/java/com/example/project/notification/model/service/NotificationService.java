@@ -11,14 +11,16 @@ public interface NotificationService {
 
     // 팔로우 신청 알림
     Boolean insertFollowWaitNotification(NotificationFollowDto notificationFollowDto);
-//    void insertFollowWaitNotification(NotificationFollowDto notificationFollowDto);
 
     // 팔로우 수락 알림
     Boolean insertFollowNotification(NotificationFollowDto notificationFollowDto);
+
     // 댓글 알림
     Boolean insertReviewNotification(NotificationReviewDto notificationReviewDto);
+
     // 알림 목록 가져오기
     List<NotificationReponseDto> selectAllNotification(Long userId);
+
     //읽음
     void updateNotificationRead(NotificationUpdateParam updateParam);
 

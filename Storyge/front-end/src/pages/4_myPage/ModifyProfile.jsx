@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { getCookie } from "./../../utils/Cookies";
 import { putUser } from "api/user/putUser";
+import { getUserCheck } from "api/user/getUserCheck";
 
 export default function ModifyProfile() {
   const movePage = useNavigate();
@@ -36,12 +37,17 @@ export default function ModifyProfile() {
   }
 
   async function onsubmit() {
-    console.log("제출 버튼 클릭");
-    console.log("이미지 파일 : " + userFile);
-    console.log("수정된 닉네임 : " + userNickname);
-    putUser(userFile, userNickname);
-    alert("프로필 수정 완료");
-    gomypage();
+    // 닉네임 중복 검사
+    let response = await getUserCheck(userNickname);
+    if (response === true) {
+      alert("이미 존재하는 닉네임입니다.");
+    } else {
+      console.log("제출 버튼 클릭");
+      console.log("이미지 파일 : " + userFile);
+      console.log("수정된 닉네임 : " + userNickname);
+      putUser(userFile, userNickname);
+      gomypage();
+    }
   }
 
   //처음 렌더링이 될 때만 실행
@@ -65,7 +71,7 @@ export default function ModifyProfile() {
 
   return (
     <S.BodyContainer>
-      <S.Text>프로필 수정</S.Text>
+      <S.Text>프로필 설정</S.Text>
       {userImg && (
         <ProfileBoxImg profileImg={userImg} modifyFormData={setUserFile} />
       )}
@@ -87,7 +93,7 @@ export default function ModifyProfile() {
           onChange={onChange}
         />
       </Box>
-      <S.SubmitBtn onClick={onsubmit}>버튼</S.SubmitBtn>
+      <S.SubmitBtn onClick={onsubmit}>등록</S.SubmitBtn>
     </S.BodyContainer>
   );
 }

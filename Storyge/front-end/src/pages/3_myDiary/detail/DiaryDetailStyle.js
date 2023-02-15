@@ -153,25 +153,21 @@ export const CommentInfo = styled.div`
 `;
 
 export const CommentNameTime = styled.div`
-  // border: 1px solid blue;
   font-size: 14px;
   margin-right: 43%;
 `;
 
 export const CommentName = styled.div`
-  // border: 1px solid green;
   font-family: "S-CoreDream-5Medium";
 `;
 
 export const CommentTime = styled.div`
-  // border: 1px solid red;
   font-family: "S-CoreDream-3Light";
-  color: #afafaf;
+  color: var(--color-grey-dark);
 `;
 
 export const CommentContent = styled.div`
-  // border: 1px solid purple;
-  margin: 0 0 5px 0;
+  margin: 3px 0 5px 0;
 `;
 
 export const Row = styled.div`
@@ -193,4 +189,39 @@ export const InfoBtn = styled.button`
 
 export const Test = styled.div`
   margin: 0 0 0 7px;
+`;
+
+export const ModifyBtn = styled.button`
+  margin: 0 5px;
+  border: none;
+  height: 30px;
+  width: 70px;
+  border-radius: 100px;
+  background-color: var(--color-primary);
+  font-family: "S-CoreDream-4Regular";
+`;
+
+export const DeleteBtn = styled.button`
+  margin: 0 5px;
+  border: none;
+  height: 30px;
+  width: 70px;
+  border-radius: 100px;
+  background-color: var(--color-warning);
+  font-family: "S-CoreDream-4Regular";
+`;
+
+export const PublicBtn = styled.button`
+  margin: 0 5px;
+  border: none;
+  height: 30px;
+  width: 70px;
+  border-radius: 100px;
+  background-color: var(--color-grey-light);
+  font-family: "S-CoreDream-4Regular";
+`;
+
+export const DivideDiv = styled.div`
+  padding: 5px;
+  width: ${(1 / 3) * 100}%;
 `;

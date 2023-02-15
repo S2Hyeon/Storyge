@@ -6,7 +6,7 @@ const override = {
   justifyContent: "center",
   alignItems: "center",
   margin: "0 auto",
-  borderColor: "#ACCEBC",
+  borderColor: "var(--color-primary)",
   textAlign: "center",
 };
 
@@ -14,7 +14,7 @@ const Loading = ({ loading }) => {
   return (
     <div>
       <BeatLoader
-        color="#ACCEBC"
+        color="var(--color-primary)"
         loading={loading}
         cssOverride={override}
         size={20}

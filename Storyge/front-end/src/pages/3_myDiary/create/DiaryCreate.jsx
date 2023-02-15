@@ -170,7 +170,11 @@ export default function Creatediary() {
           scope={checked ? 0 : 1}
         />
       )}
-      {spinner && <Modal setModalOpen={setModalOpen} content={info} num={2} />}
+      {spinner && (
+        <Modal setModalOpen={setModalOpen} content={info} num={2}>
+          여긴가?
+        </Modal>
+      )}
     </>
   );
 }

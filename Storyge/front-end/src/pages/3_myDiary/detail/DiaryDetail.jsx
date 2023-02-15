@@ -191,23 +191,32 @@ export default function DiaryDetail() {
           </S.Analyzed>
         )}
       </S.AnalyzedContainer>
+
       <S.Row>
-        {!isOther && (
-          <S.InfoBtn onClick={(e) => crud(e.target.value)} value="delete">
-            삭제
-          </S.InfoBtn>
-        )}
         {!isOther && myDiaryDetailData && myDiaryDetailData.updateCnt === 0 ? (
-          <S.InfoBtn onClick={(e) => crud(e.target.value)} value="put">
-            수정
-          </S.InfoBtn>
-        ) : null}
-        {!isOther && (
-          <S.InfoBtn onClick={handleChange}>
-            {isOpen === 0 ? "비공개" : "공개"}
-          </S.InfoBtn>
+          <>
+            <S.DeleteBtn onClick={(e) => crud(e.target.value)} value="delete">
+              삭제
+            </S.DeleteBtn>
+            <S.ModifyBtn onClick={(e) => crud(e.target.value)} value="put">
+              수정
+            </S.ModifyBtn>
+            <S.PublicBtn onClick={handleChange}>
+              {isOpen === 0 ? "비공개" : "공개"}
+            </S.PublicBtn>
+          </>
+        ) : (
+          <>
+            <S.DeleteBtn onClick={(e) => crud(e.target.value)} value="delete">
+              삭제
+            </S.DeleteBtn>
+            <S.PublicBtn onClick={handleChange}>
+              {isOpen === 0 ? "비공개" : "공개"}
+            </S.PublicBtn>
+          </>
         )}
       </S.Row>
+
       <S.CommentWriteBox>
         <S.CommentWrite
           placeholder="댓글 쓰기"

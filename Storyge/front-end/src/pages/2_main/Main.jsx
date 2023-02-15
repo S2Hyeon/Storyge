@@ -5,16 +5,44 @@ import * as G from "../../styles";
 import { BsCircleFill } from "react-icons/bs";
 import CustomCalendar from "../../components/calender/Calendar";
 import PieChart from "../../components/chart/PieChart";
-import { getCookie } from "./../../utils/Cookies";
+import { getCookie, setCookie } from "./../../utils/Cookies";
 import { getQuote } from "api/quote/getQuote";
 import { getRecentDiary } from "api/recentDiary/getRecentDiary";
-import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
 import Modal from "./Modal";
+import dayjs from "dayjs";
 
 function Main() {
   const [isGloomy, setIsGloomy] = useState(false);
+  const [showGloomy, setShowGloomy] = useState(false);
+  const curDate = dayjs(new Date()).format("YYYY-MM-DD");
 
-  // 로그인 여부 확인 : 쿠기 값 가져오기
+  //우울하시네요 모달창 띄우는거 하루로 제한
+  useEffect(() => {
+    //14일동안 우울하다면 저장
+    if (isGloomy) {
+      if (
+        getCookie("modalDate") != null &&
+        curDate != dayjs(getCookie("modalDate")).format("YYYY-MM-DD")
+      ) {
+        let expires = new Date();
+        expires = expires.setHours(expires.getHours() + 24);
+        setCookie("modalDate", new Date());
+        setShowGloomy(true);
+      } else if (
+        getCookie("modalDate") != null &&
+        curDate == dayjs(getCookie("modalDate")).format("YYYY-MM-DD")
+      ) {
+        setShowGloomy(false);
+      } else {
+        let expires = new Date();
+        expires = expires.setHours(expires.getHours() + 24);
+        setCookie("modalDate", new Date());
+        setShowGloomy(true);
+      }
+    }
+  }, [isGloomy]);
+
+  // 로그인 여부 확인 : 쿠키 값 가져오기
   useEffect(() => {
     const ACCESS_TOKEN = getCookie("token");
     console.log("메인 실행되면 액세스 토큰 받아옴" + ACCESS_TOKEN);
@@ -135,7 +163,7 @@ function Main() {
           <S.WiseFrom>{quoteData && quoteData.quoteSource}</S.WiseFrom>
         </S.WiseBox>
       </G.BodyContainer>
-      {isGloomy && <Modal setIsGloomy={setIsGloomy} />}
+      {isGloomy && showGloomy && <Modal setIsGloomy={setIsGloomy} />}
     </S.All>
   );
 }

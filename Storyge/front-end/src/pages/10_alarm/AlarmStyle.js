@@ -35,9 +35,10 @@ export const Text = styled.div`
   justify-content: center;
   align-items: center;
   color: black;
+  display: flex;
 `;
 
-export const BoldText = styled.text`
+export const BoldText = styled.span`
   font-family: "S-CoreDream-5Medium";
   font-size: 14px;
 `;

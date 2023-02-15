@@ -26,34 +26,21 @@ export default function Alarm() {
 
   //처음 렌더링이 될 때만 실행
   useEffect(() => {
-    // async function getUserData() {
-    //   try {
-    //     const response = await Api.get("/notification", {
-    //       headers: {
-    //         Authorization: getCookie("token"),
-    //       },
-    //     });
-    //     setUserData(response.data);
-    //     console.log("알림페이지 : 알림 데이터");
-    //     console.log(response.data);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
     async function getUserData() {
-      
       try {
-        const response = await axios.get("http://localhost:8080/notification", {
+        const response = await Api.get("/notification", {
           headers: {
             Authorization: getCookie("token"),
           },
         });
         setUserData(response.data);
-        console.log("알림페이지 : 알림 데이터!!!!!!!!!!!!1");
+        console.log("알림페이지 : 알림 데이터");
         console.log(response.data);
       } catch (err) {
         console.log(err);
       }
     }
+
     getUserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -84,7 +71,7 @@ export default function Alarm() {
                 >
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>
-                    <S.BoldText>{alarm.nickname}</S.BoldText>님이{" "}
+                    <S.BoldText>{alarm.nickname}</S.BoldText>님이
                     <S.BoldText>팔로우 요청</S.BoldText>을 보냈습니다.
                   </S.Text>
                 </S.Alarm>

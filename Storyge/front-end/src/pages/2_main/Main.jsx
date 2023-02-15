@@ -67,7 +67,7 @@ function Main() {
               <S.Profile
                 key={recentDiary.userId}
                 profile={recentDiary.profileImg}
-                onClick={(e) =>
+                onClick={() =>
                   goUpdatedDiary(
                     recentDiary.diaryId,
                     recentDiary.userId,

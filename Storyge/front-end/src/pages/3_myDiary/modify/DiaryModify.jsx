@@ -6,7 +6,7 @@ import * as heyhey from "./DiaryModifyStyle";
 import * as G from "../../../styles/index";
 import { OpenAI } from "../../../openai/OpenAI";
 import Switch from "react-switch";
-import { GrLock, GrUnlock } from "react-icons/gr";
+import { BiLockAlt, BiLockOpenAlt } from "react-icons/bi";
 
 import { getCount } from "api/diary/getCount";
 
@@ -23,10 +23,8 @@ export default function Modifydiary() {
   const [info, setInfo] = useState(["emotion", "comment"]);
   const [spinner, setSpinner] = useState(false);
   const [checked, setChecked] = useState(already.scope === 0 ? true : false);
-  const handleChange = (nextChecked) => {
-    setChecked(nextChecked);
-    console.log(checked);
-  };
+  const [num, setNum] = useState(0)
+
   useEffect(() => {
     async function getDiaryCount() {
       const response = await getCount();
@@ -53,10 +51,16 @@ export default function Modifydiary() {
           })
           .catch((err) => {
             console.log(err);
+            console.log('여기서 문제2')
+            setNum(1)
+            setModalOpen(true)
           });
       })
       .catch((err) => {
         console.log(err);
+        console.log('여기서 문제1')
+        setNum(1)
+        setModalOpen(true)
       });
   }
 
@@ -97,23 +101,26 @@ export default function Modifydiary() {
             <heyhey.CountDiary>
               {content && content.length} / 100
             </heyhey.CountDiary>
-            {/* <Switch
-              onChange={handleChange}
-              checked={checked}
-              offColor="#c0bcbc"
-              onColor="#accebc"
-              uncheckedIcon={
-                <heyhey.Test>
-                  <GrUnlock color="#ffffff" />
-                </heyhey.Test>
-              }
-              checkedIcon={
-                <heyhey.Test>
-                  <GrLock color="#ffffff" />
-                </heyhey.Test>
-              }
-            /> */}
-            <button>공개/비공개</button>
+
+            {!checked ? (
+              <div
+                style={{ display: "flex", marginRight: "20px" }}
+                onClick={() => {
+                  setChecked(!checked);
+                }}
+              >
+                <BiLockOpenAlt font-size="20px" color="var(--color-primary)" />
+              </div>
+            ) : (
+              <div
+                style={{ display: "flex", marginRight: "20px" }}
+                onClick={() => {
+                  setChecked(!checked);
+                }}
+              >
+                <BiLockAlt font-size="20px" color="var(--color-warning)" />
+              </div>
+            )}
           </heyhey.CardFoot>
         </heyhey.card>
         <div>
@@ -132,7 +139,7 @@ export default function Modifydiary() {
           setModalOpen={setModalOpen}
           diary={content}
           content={info}
-          num={0}
+          num={num}
           diaryId={diaryId}
           classify="modify"
           scope={checked ? 0 : 1}

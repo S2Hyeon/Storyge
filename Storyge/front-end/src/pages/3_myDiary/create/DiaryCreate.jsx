@@ -20,10 +20,7 @@ export default function Creatediary() {
   const [info, setInfo] = useState(["emotion", "comment"]);
   const [spinner, setSpinner] = useState(false);
   const [checked, setChecked] = useState(false);
-  const handleChange = (nextChecked) => {
-    setChecked(nextChecked);
-    console.log(checked);
-  };
+  const [num, setNum] = useState(0)
 
   useEffect(() => {
     async function getDiaryCount() {
@@ -51,10 +48,16 @@ export default function Creatediary() {
           })
           .catch((err) => {
             console.log(err);
+            console.log('여기서 문제2')
+            setNum(1)
+            setModalOpen(true)
           });
       })
       .catch((err) => {
         console.log(err);
+        console.log('여기서 문제1')
+        setNum(1)
+        setModalOpen(true)
       });
   }
 
@@ -180,7 +183,7 @@ export default function Creatediary() {
           setModalOpen={setModalOpen}
           diary={content}
           content={info}
-          num={0}
+          num={num}
           classify="create"
           scope={checked ? 0 : 1}
         />

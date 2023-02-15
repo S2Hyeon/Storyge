@@ -149,8 +149,7 @@ export default function Creatediary() {
                   setChecked(!checked);
                 }}
               >
-                <BiLockOpenAlt font-size="20px" color />
-                <div>공개</div>
+                <BiLockOpenAlt font-size="20px" color="var(--color-primary)" />
               </div>
             ) : (
               <div
@@ -159,8 +158,7 @@ export default function Creatediary() {
                   setChecked(!checked);
                 }}
               >
-                <BiLockAlt font-size="20px" />
-                <div>비공개</div>
+                <BiLockAlt font-size="20px" color="var(--color-warning)" />
               </div>
             )}
           </S.CardFoot>

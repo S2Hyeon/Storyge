@@ -41,7 +41,7 @@ function Footer(props) {
       >
         <TbHome
           size={30}
-          color={location.pathname === "/" ? "#ACCEBC" : "#D9D9D9"}
+          color={location.pathname === "/" ? "var(--color-primary)" : "#D9D9D9"}
         />
       </S.IconContainer>
       <S.IconContainer
@@ -51,7 +51,9 @@ function Footer(props) {
       >
         <TbMusic
           size={30}
-          color={location.pathname === "/music" ? "#ACCEBC" : "#D9D9D9"}
+          color={
+            location.pathname === "/music" ? "var(--color-primary)" : "#D9D9D9"
+          }
         />
       </S.IconContainer>
       <S.IconContainer
@@ -73,7 +75,11 @@ function Footer(props) {
         <div style={{ position: "absolute" }}>
           <TbBell
             size={30}
-            color={location.pathname === "/alarm" ? "#ACCEBC" : "#D9D9D9"}
+            color={
+              location.pathname === "/alarm"
+                ? "var(--color-primary)"
+                : "#D9D9D9"
+            }
           />
         </div>
         {isNewAlert ? (
@@ -91,7 +97,7 @@ function Footer(props) {
           size={30}
           color={
             location.pathname === "/mypage" || location.pathname === "/follower"
-              ? "#ACCEBC"
+              ? "var(--color-primary)"
               : "#D9D9D9"
           }
         />

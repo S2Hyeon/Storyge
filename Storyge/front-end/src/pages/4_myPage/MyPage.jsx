@@ -96,13 +96,21 @@ export default function MyPage({ setToken }) {
 
       <S.Menu onClick={gomodifyprofile}>
         <BsPersonCircle
-          style={{ color: "#ACCEBC", width: "30px", height: "30px" }}
+          style={{
+            color: "var(--color-primary)",
+            width: "30px",
+            height: "30px",
+          }}
         />
         <S.Text>프로필 수정하기</S.Text>
       </S.Menu>
       <S.Menu onClick={chatbotStatus}>
         <BsQuestionCircle
-          style={{ color: "#ACCEBC", width: "30px", height: "30px" }}
+          style={{
+            color: "var(--color-primary)",
+            width: "30px",
+            height: "30px",
+          }}
         />
         <S.Text>서비스 알아보기</S.Text>
       </S.Menu>

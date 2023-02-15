@@ -92,17 +92,19 @@ function Main() {
         <S.NewDiary>
           {recentDiaryData.map((recentDiary) => {
             return (
-              <S.Profile
-                key={recentDiary.userId}
-                profile={recentDiary.profileImg}
-                onClick={() =>
-                  goUpdatedDiary(
-                    recentDiary.diaryId,
-                    recentDiary.userId,
-                    recentDiary.nickname
-                  )
-                }
-              />
+              <S.ProfileContainer>
+                <S.Profile
+                  key={recentDiary.userId}
+                  profile={recentDiary.profileImg}
+                  onClick={() =>
+                    goUpdatedDiary(
+                      recentDiary.diaryId,
+                      recentDiary.userId,
+                      recentDiary.nickname
+                    )
+                  }
+                />
+              </S.ProfileContainer>
             );
           })}
         </S.NewDiary>

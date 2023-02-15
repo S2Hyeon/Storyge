@@ -1,18 +1,17 @@
-import React from "react";
-import * as S from "./OtherDiaryDetailStyle";
-import * as G from "styles/index";
-import commentData from "./CommentData";
-import diaryData from "./DiaryData";
-import { useLocation } from "react-router-dom";
+import React from 'react'
+import * as S from './OtherDiaryDetailStyle'
+import * as G from 'styles/index'
+import commentData from './CommentData'
+import diaryData from './DiaryData'
+import { useLocation } from 'react-router-dom'
 // import analyzedData from "./AnalyzedData";
 
 // import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
 export default function OtherDiarylist() {
-  const location = useLocation();
-  const id = location.state.id; //글번호
-  const userId = location.state.userId; //글 작성자
-  console.log("글작성자ID:", id, " / 글번호: ", userId);
+  const location = useLocation()
+  const id = location.state.id //글번호
+  const userId = location.state.userId //글 작성자
 
   // const [isChecked, setIsChecked] = useState(true);
   return (
@@ -62,8 +61,8 @@ export default function OtherDiarylist() {
             </S.CommentInfo>
             <S.CommentContent>{comment.content}</S.CommentContent>
           </S.CommentBox>
-        );
+        )
       })}
     </G.BodyContainer>
-  );
+  )
 }

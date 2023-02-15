@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import * as S from "./../searchbar/SearchBar.js";
-import data2 from "./SearchBarData";
 
 import { debounce } from "lodash";
 import { getUserSearch } from "api/user/getUserSearch";
@@ -36,7 +35,6 @@ export default function SearchBar() {
 
   const ShowResultData = () => {
     if (resultData && resultData.length !== 0) {
-      console.log(resultData);
       return resultData.map((result) => {
         return (
           <S.AutoSearchData

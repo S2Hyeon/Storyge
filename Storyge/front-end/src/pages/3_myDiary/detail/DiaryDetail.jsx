@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useLocation } from "react-router";
-import Switch from "react-switch";
-import { GrLock, GrUnlock } from "react-icons/gr";
 
 import * as S from "./DiaryDetailStyle";
 import * as G from "styles/index";
@@ -66,7 +64,6 @@ export default function DiaryDetail() {
     } else {
       // await putDiary();
       setIsOpen(!isOpen);
-      console.log(isOpen);
     }
   }
   const location = useLocation();
@@ -82,7 +79,6 @@ export default function DiaryDetail() {
   //!리덕스를 이용하여 다른 사람
   const dispatch = useDispatch();
   if (isOther != null) {
-    console.log(isOther);
     dispatch({ type: "other", owner: location.state.nickname });
   } else {
     dispatch({ type: "me" });
@@ -91,17 +87,12 @@ export default function DiaryDetail() {
   useEffect(() => {
     async function getMyUserId() {
       const response = await getUserId();
-      console.log("유저 번호");
-      console.log(response.userId);
       setUserNumber(response.userId);
-      console.log("유저 번호 : " + userNumber);
     }
 
     async function getAndSetMyDiaryDetail() {
       const response = await getMyDiaryDetail(diaryId);
-      console.log(response);
       setMyDiaryDetailData(response);
-      console.log(myDiaryDetailData);
     }
 
     getMyUserId();
@@ -125,7 +116,6 @@ export default function DiaryDetail() {
   useEffect(() => {
     async function getAndSetCommentData() {
       const response = await getComment(diaryId);
-      console.log(response);
       setCommentData(response);
     }
     getAndSetCommentData();
@@ -156,7 +146,6 @@ export default function DiaryDetail() {
 
   async function deleteComment(reviewId, e) {
     await deleteReview(reviewId);
-    console.log("댓글 삭제 완료");
     setChangedCount(changedCount + 1);
   }
 
@@ -243,6 +232,7 @@ export default function DiaryDetail() {
                   onClick={(e) => {
                     deleteComment(comment.reviewId, e);
                   }}
+                  color="var(--color-warning)"
                 />
               ) : (
                 ""

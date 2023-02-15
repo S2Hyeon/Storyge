@@ -68,7 +68,6 @@ export default function MyPage({ setToken }) {
             Authorization: getCookie("token"),
           },
         });
-        console.log("마이페이지");
         setUserData(response.data);
       } catch (err) {
         console.log(err);
@@ -98,8 +97,8 @@ export default function MyPage({ setToken }) {
         <BsPersonCircle
           style={{
             color: "var(--color-primary)",
-            width: "30px",
-            height: "30px",
+            width: "18px",
+            height: "18px",
           }}
         />
         <S.Text>프로필 수정하기</S.Text>
@@ -108,8 +107,8 @@ export default function MyPage({ setToken }) {
         <BsQuestionCircle
           style={{
             color: "var(--color-primary)",
-            width: "30px",
-            height: "30px",
+            width: "18px",
+            height: "18px",
           }}
         />
         <S.Text>서비스 알아보기</S.Text>

@@ -16,7 +16,6 @@ export async function getStatistic(typeValue, yearValue, monthValue, otherId) {
           },
         }
       );
-      console.log(response.data);
       getData = response.data;
     }
     //월별 조회
@@ -29,7 +28,6 @@ export async function getStatistic(typeValue, yearValue, monthValue, otherId) {
           },
         }
       );
-      console.log(response.data);
       getData = response.data;
     }
   }
@@ -45,7 +43,6 @@ export async function getStatistic(typeValue, yearValue, monthValue, otherId) {
           },
         }
       );
-      console.log(response.data);
       getData = response.data;
     }
     //월별 조회
@@ -58,7 +55,6 @@ export async function getStatistic(typeValue, yearValue, monthValue, otherId) {
           },
         }
       );
-      console.log(response.data);
       getData = response.data;
     }
   }
@@ -80,6 +76,5 @@ export async function getStatistic(typeValue, yearValue, monthValue, otherId) {
     if (emotion != null) returnData.push(emotion.emoticonAmount);
     else returnData.push(0);
   });
-  console.log(returnData);
   return returnData;
 }

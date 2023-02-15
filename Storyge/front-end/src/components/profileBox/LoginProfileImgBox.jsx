@@ -18,8 +18,6 @@ export default function LoginProfileBoxImg({ profileImg, modifyFormData }) {
 
     const formData = new FormData();
     formData.append("multipartFile", file);
-    console.log(file);
-    console.log(">>>>>>>>>>>>");
     modifyFormData(formData);
   };
 

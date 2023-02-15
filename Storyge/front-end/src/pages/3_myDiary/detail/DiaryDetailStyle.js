@@ -11,7 +11,7 @@ export const submitBtn = styled.button`
 
 export const DiaryContainer = styled.div`
   border-radius: 20px 20px 0 0;
-  border: 3px solid #accebc;
+  border: 3px solid var(--color-primary);
   margin: 20px 0 0 0;
   width: 100%;
   background-color: var(--color-background);
@@ -62,7 +62,6 @@ export const ProfileImg = styled.div`
 `;
 
 export const TimeContainer = styled.div`
-  // border: 1px solid black;
   width: 100%;
   height: 26px;
   display: flex;
@@ -71,7 +70,6 @@ export const TimeContainer = styled.div`
 `;
 
 export const Content = styled.div`
-  // border: 1px solid pink;
   width: 100%;
   font-family: "S-CoreDream-3Light";
   font-size: 15px;
@@ -82,7 +80,7 @@ export const AnalyzedContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  border: 3px solid #accebc;
+  border: 3px solid var(--color-primary);
   background-color: var(--color-primary);
   min-height: ${(props) => props.height};
   border-radius: 0 0 20px 20px;
@@ -114,7 +112,7 @@ export const Analyzed = styled.div`
 export const CommentWriteBox = styled.div`
   // border: 1px solid red;
   border: hidden;
-  background-color: var(--color-grey);
+  background-color: var(--color-grey-light);
   border-radius: 100px;
   height: 35px;
   width: 100%;
@@ -125,7 +123,6 @@ export const CommentWriteBox = styled.div`
 `;
 
 export const CommentWrite = styled.input`
-  background-color: var(--color-grey);
   border-radius: 100px;
   border: hidden;
   font-size: 16px;

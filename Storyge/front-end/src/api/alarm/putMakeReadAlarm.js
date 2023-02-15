@@ -4,7 +4,7 @@ import { getCookie } from "utils/Cookies";
 
 export async function putMakeReadAlarm(notificationId) {
   try {
-    const response = await Api.put(
+    await Api.put(
       "/notification",
       {
         notificationId: notificationId,
@@ -16,8 +16,6 @@ export async function putMakeReadAlarm(notificationId) {
         },
       }
     );
-
-    console.log(">>>>>", response.data);
   } catch (error) {
     console.error(error);
   }

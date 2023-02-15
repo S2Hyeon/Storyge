@@ -11,7 +11,7 @@ export const Alarm = styled.div`
   align-items: center;
   padding: 0 20px;
   background-color: ${(props) =>
-    props.isReadColor === 0 ? "var(--color-grey)" : "transparent"};
+    props.isReadColor === 0 ? "var(--color-grey-light)" : "transparent"};
 `;
 
 export const List = styled.div`

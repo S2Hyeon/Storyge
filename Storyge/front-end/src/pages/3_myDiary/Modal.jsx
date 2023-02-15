@@ -33,8 +33,6 @@ function Modal({
   ];
   // // 작성된 일기와 분석 내용 서버에 전송
   async function writeDiary() {
-    // const curDate = dayjs(new Date()).format("YYYY-MM-DD");
-    console.log(diary, [reccomendEmotion, content[1]]);
     if (classify === "create") {
       await postDiary(diary, [reccomendEmotion, content[1]], scope);
       movePage(`/diarylist`, { state: { date: new Date() } });

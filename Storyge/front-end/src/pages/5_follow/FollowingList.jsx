@@ -21,10 +21,7 @@ export default function FollowingList() {
             Authorization: getCookie("token"),
           },
         });
-        console.log(response.data);
         setFollowingList(response.data);
-        console.log("팔로잉 리스트");
-        console.log(followingList);
       } catch (err) {
         console.log(err);
       }
@@ -50,8 +47,6 @@ export default function FollowingList() {
                 Authorization: getCookie("token"),
               },
             }).then(() => {
-              console.log("팔로잉 삭제");
-              console.log(id); // error
               setFlag(!flag);
               e.preventDefault();
             });

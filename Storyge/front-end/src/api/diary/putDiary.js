@@ -3,7 +3,7 @@ import { getCookie } from "utils/Cookies";
 
 export async function putDiary(diary, content, diaryId, scope) {
   try {
-    const response = await Api.put(
+    await Api.put(
       "/diary",
       {
         analyzedResult: content[1],
@@ -18,7 +18,6 @@ export async function putDiary(diary, content, diaryId, scope) {
         },
       }
     );
-    console.log(response.data);
   } catch (error) {
     console.error(error);
   }

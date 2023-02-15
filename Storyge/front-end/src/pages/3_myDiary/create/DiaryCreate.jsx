@@ -22,15 +22,12 @@ export default function Creatediary() {
   const [checked, setChecked] = useState(false);
   const handleChange = (nextChecked) => {
     setChecked(nextChecked);
-    console.log(checked);
   };
 
   useEffect(() => {
     async function getDiaryCount() {
       const response = await getCount();
-      console.log("다이어리 작성 횟수 가져오기");
       setCount(response);
-      console.log("다이어리 작성 횟수 : " + count);
     }
     getDiaryCount();
   }, [count]);
@@ -38,16 +35,11 @@ export default function Creatediary() {
   async function getInfo(content, setModalOpen) {
     await OpenAI({ input: content, type: 1 })
       .then((data1) => {
-        console.log("then 실행됨", data1);
         OpenAI({ input: data1[1], type: 2 })
           .then((data2) => {
-            console.log("번역 실행됨", data2);
             setSpinner(false);
             setModalOpen(true);
             setInfo([data1[0], data2]);
-            console.log("셋 인포는 뭔가요?");
-            console.log(info[0]);
-            console.log(info[1]);
           })
           .catch((err) => {
             console.log(err);
@@ -74,7 +66,6 @@ export default function Creatediary() {
       if (count < 24) {
         setSpinner(true);
         const test = await getInfo(content, setModalOpen);
-        // console.log(test);
         setInfo(test);
       } else {
         alert("하루 작성 가능한 일기를 모두 작성함");
@@ -111,13 +102,13 @@ export default function Creatediary() {
         <h1>일기 작성 페이지</h1>
 
         <S.DateContainer>
-          <div style={{ color: "var(--color-grey-light)", fontSize: "12px" }}>
+          <div style={{ color: "var(--color-grey-dark)", fontSize: "12px" }}>
             &nbsp;작성날짜&nbsp;
           </div>
           <div style={{ fontFamily: "S-CoreDream-5Medium" }}>
             <Clock format={"YYYY.MM.DD"} ticking={true} />
           </div>
-          <div style={{ color: "var(--color-grey-light)", fontSize: "12px" }}>
+          <div style={{ color: "var(--color-grey-dark)", fontSize: "12px" }}>
             &nbsp;작성시간&nbsp;
           </div>
           <div style={{ fontFamily: "S-CoreDream-5Medium" }}>
@@ -149,7 +140,7 @@ export default function Creatediary() {
                   setChecked(!checked);
                 }}
               >
-                <BiLockOpenAlt font-size="20px" color="var(--color-primary)" />
+                <BiLockOpenAlt fontSize="20px" color="var(--color-primary)" />
               </div>
             ) : (
               <div

@@ -25,8 +25,6 @@ import ModifyProfile from "./../pages/4_myPage/ModifyProfile.jsx";
 import Alarm from "./../pages/10_alarm/Alarm.jsx";
 import Follow from "../pages/5_follow/Follow.jsx";
 import OtherPage from "../pages/6_otherPage/OtherProfile";
-import OtherDiaryList from "pages/7_otherDiary/otherDiaryList/OtherDiaryList";
-import OtherDiaryDetail from "pages/7_otherDiary/otherDiaryDetail/OtherDiaryDetail";
 
 import OAuth2RedirectHandler from "pages/1_login/OAuth2RedirectHandler";
 // import { Pages } from "@mui/icons-material";
@@ -161,25 +159,6 @@ function AppRouter() {
             <PrivateRoute component={<OtherPage />} authenticated={token} />
           }
         />
-        <Route
-          path="otherdiarylist"
-          element={
-            <PrivateRoute
-              component={<OtherDiaryList />}
-              authenticated={token}
-            />
-          }
-        />
-        <Route
-          path="otherdiarydetail"
-          element={
-            <PrivateRoute
-              component={<OtherDiaryDetail />}
-              authenticated={token}
-            />
-          }
-        />
-
         <Route path="/*" element={<ErrorPage text="404" />} />
       </Route>
     </Routes>

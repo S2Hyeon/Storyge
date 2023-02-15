@@ -32,8 +32,6 @@ export default function Music() {
       },
     })
       .then((res) => {
-        console.log(res);
-        // setVideoId(res.data.items[0].id.videoId);
         setUrl(
           `https://www.youtube.com/watch?v=${res.data.items[0].id.videoId}`
         );

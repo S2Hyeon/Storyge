@@ -34,22 +34,17 @@ export default function Alarm() {
           },
         });
         setUserData(response.data);
-        console.log("알림페이지 : 알림 데이터");
-        console.log(response.data);
       } catch (err) {
         console.log(err);
       }
     }
 
     getUserData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //클릭했을 때 알림 배경 없애기
   async function makeReadAlarm(notificationId, isRead) {
-    console.log("알림id: ", notificationId, " 읽음?: ", isRead);
     if (isRead === 0) {
-      console.log("들어옴????????");
       await putMakeReadAlarm(notificationId);
     }
   }

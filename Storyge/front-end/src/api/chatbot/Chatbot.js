@@ -10,9 +10,7 @@ const Chatbot = () => {
   useEffect(() => {
     async function getUser() {
       const response = await getUserData();
-      console.log("닉네임 : " + response.nickname);
       setUserNickname(response.nickname);
-      console.log(userNickname);
     }
     getUser();
   }, []);

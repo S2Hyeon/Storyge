@@ -10,7 +10,6 @@ const OAuth2RedirectHandler = (props) => {
   // 인가코드
   useEffect(() => {
     let code = new URL(window.location.href).searchParams.get("code");
-    console.log(new URL(window.location.href).pathname.split("/")[3]);
     let state = new URL(window.location.href).pathname.split("/")[3];
 
     if (state === "google") {

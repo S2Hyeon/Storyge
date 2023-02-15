@@ -21,7 +21,7 @@ export const longBtnDefault = styled.button`
 `;
 
 export const longBtnDisabled = styled.button`
-  background-color: var(--color-darkgrey);
+  background-color: var(--color-grey);
   color: var(--color-white);
   border-radius: 100px;
   height: 48px;

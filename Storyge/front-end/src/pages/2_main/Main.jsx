@@ -45,7 +45,6 @@ function Main() {
   // 로그인 여부 확인 : 쿠키 값 가져오기
   useEffect(() => {
     const ACCESS_TOKEN = getCookie("token");
-    console.log("메인 실행되면 액세스 토큰 받아옴" + ACCESS_TOKEN);
   }, []);
 
   const movePage = useNavigate();
@@ -54,7 +53,6 @@ function Main() {
 
   //새로 업데이트 된 글로 이동!
   function goUpdatedDiary(diaryId, otherUserId, nickname) {
-    console.log("toner user id ", otherUserId);
     movePage("/diary", {
       state: { diaryId: diaryId, otherUserId: otherUserId, nickname: nickname },
     });
@@ -70,7 +68,6 @@ function Main() {
   useEffect(() => {
     async function getAndSetRecentDiaryData() {
       const response = await getRecentDiary();
-      console.log("응답", response);
       setRecentDiaryData(response);
     }
     getAndSetRecentDiaryData();
@@ -92,27 +89,27 @@ function Main() {
         <S.NewDiary>
           {recentDiaryData.map((recentDiary) => {
             return (
-              <S.ProfileContainer>
-                <S.Profile
-                  key={recentDiary.userId}
-                  profile={recentDiary.profileImg}
-                  onClick={() =>
-                    goUpdatedDiary(
-                      recentDiary.diaryId,
-                      recentDiary.userId,
-                      recentDiary.nickname
-                    )
-                  }
-                />
-              </S.ProfileContainer>
+              <S.NewDiaryContainer key={recentDiary.diaryId}>
+                <S.ProfileContainer>
+                  <S.Profile
+                    key={recentDiary.userId}
+                    profile={recentDiary.profileImg}
+                    onClick={() =>
+                      goUpdatedDiary(
+                        recentDiary.diaryId,
+                        recentDiary.userId,
+                        recentDiary.nickname
+                      )
+                    }
+                  />
+                </S.ProfileContainer>
+                <S.ProfileNickName>{recentDiary.nickname}</S.ProfileNickName>
+              </S.NewDiaryContainer>
             );
           })}
         </S.NewDiary>
       ) : (
-        <S.NoNewDiary>
-          아무것도 없어요
-          <br />뭘 띄워야할까
-        </S.NoNewDiary>
+        <S.NoNewDiary>팔로잉하는 사람들의 최근 일기가 없어요🥲</S.NoNewDiary>
       )}
 
       <G.BodyContainer top="0" bottom="70px" color="true">
@@ -128,11 +125,11 @@ function Main() {
             <S.ToggleOne>
               <BsCircleFill
                 size={7}
-                color={diary ? "var(--color-primary)" : "var(--color-darkgrey)"}
+                color={diary ? "var(--color-primary)" : "var(--color-grey)"}
               />
               <span
                 style={{
-                  color: diary ? "var(--color-black)" : "var(--color-darkgrey)",
+                  color: diary ? "var(--color-black)" : "var(--color-grey)",
                 }}
               >
                 {" "}
@@ -142,15 +139,11 @@ function Main() {
             <S.ToggleOne>
               <BsCircleFill
                 size={7}
-                color={
-                  !diary ? "var(--color-primary)" : "var(--color-darkgrey)"
-                }
+                color={!diary ? "var(--color-primary)" : "var(--color-grey)"}
               />
               <span
                 style={{
-                  color: !diary
-                    ? "var(--color-black)"
-                    : "var(--color-darkgrey)",
+                  color: !diary ? "var(--color-black)" : "var(--color-grey)",
                 }}
               >
                 {" "}

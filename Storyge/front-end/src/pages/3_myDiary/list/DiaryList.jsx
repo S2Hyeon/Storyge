@@ -33,8 +33,6 @@ export default function DiaryList() {
   //해당 날짜의 내 일기 목록들
   const [diaryListData, setDiaryListData] = useState([]);
 
-  console.log("선택한 날짜: ", dayjs(dateInfo).format("YYYY-MM-DD"));
-
   useEffect(() => {
     async function getAndSetDiaryList() {
       if (otherUserId == null) {
@@ -105,7 +103,6 @@ export default function DiaryList() {
     //그냥 다 넣기
     showDiaryData = diaryListData;
   }
-  console.log(showDiaryData);
 
   return (
     // 날짜 표시 및 날짜이동 부분

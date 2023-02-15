@@ -23,10 +23,7 @@ export default function FollowerList() {
             Authorization: getCookie("token"),
           },
         });
-        console.log(response.data);
         setNewList(response.data);
-        console.log("팔로우 대기");
-        console.log(newList);
       } catch (err) {
         console.log(err);
       }
@@ -39,10 +36,7 @@ export default function FollowerList() {
             Authorization: getCookie("token"),
           },
         });
-        console.log(response.data);
         setFollowerList(response.data);
-        console.log("팔로워 목록");
-        console.log(followerList);
       } catch (err) {
         console.log(err);
       }
@@ -59,9 +53,7 @@ export default function FollowerList() {
           Authorization: getCookie("token"),
         },
       });
-      console.log("팔로우 거절");
       setdeleteFollow(true);
-      console.log(id); // error
       e.preventDefault();
     } catch (err) {
       console.log(err);
@@ -85,8 +77,6 @@ export default function FollowerList() {
                 Authorization: getCookie("token"),
               },
             }).then(() => {
-              console.log("팔로워 삭제");
-              console.log(id); // error
               setFlag(!flag);
               e.preventDefault();
             });
@@ -112,8 +102,6 @@ export default function FollowerList() {
           },
         }
       );
-      console.log(id);
-      console.log("팔로우 등록");
       setFlag(!flag);
       e.preventDefault();
     } catch (err) {

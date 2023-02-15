@@ -25,8 +25,6 @@ export default function LoginInfo() {
             Authorization: getCookie("token"),
           },
         });
-        console.log("로그인 추가 정보 입력");
-        console.log(response.data);
         setInitImg(response.data.profileImg);
       } catch (err) {
         console.log(err);
@@ -47,9 +45,6 @@ export default function LoginInfo() {
   }
 
   async function onSubmit() {
-    console.log("제출 버튼 클릭");
-    console.log("이미지 파일 : " + initImg);
-    console.log("수정된 닉네임 : " + content);
     putUser(initImg, content);
     alert("프로필 추가 완료");
     gomain();

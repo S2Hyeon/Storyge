@@ -11,7 +11,6 @@ function Header() {
   const location = useLocation();
 
   const diaryOwner = useSelector((state) => state);
-  console.log(diaryOwner);
 
   const setHeaderContent = () => {
     // 1. 메인이 아니라면 해당 페이지에 맞는 화면 제목 띄우기

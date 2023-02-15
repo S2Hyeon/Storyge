@@ -24,11 +24,9 @@ function Footer(props) {
   });
   eventSource.addEventListener("connect", (e) => {
     const { data: receivedConnectData } = e;
-    console.log("connected?", receivedConnectData);
   });
   eventSource.addEventListener("notification", function(event) {
     const { data: receivedConnectData } = event;
-    console.log("noti?", receivedConnectData);
     setIsNewAlert(true);
   });
 

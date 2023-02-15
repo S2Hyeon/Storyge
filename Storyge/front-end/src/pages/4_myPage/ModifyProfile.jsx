@@ -29,21 +29,8 @@ export default function ModifyProfile() {
     }
   }
 
-  useEffect(() => {
-    console.log("수정됨");
-    console.log(userFile);
-  }, [userFile]);
-
-  function gomypage() {
-    movePage("/");
-  }
-
   async function onsubmit() {
     let response = await getUserCheck(newNickname);
-
-    console.log("수정 시작>>>>>>>>>>>>>>");
-    console.log("파일 : " + userFile);
-    console.log("닉네임 : " + newNickname);
 
     if (userFile === undefined && newNickname === "") {
       alert("수정된 정보가 없습니다.");
@@ -52,7 +39,6 @@ export default function ModifyProfile() {
       putUser(userFile, userNickname);
     } else if (userFile === undefined) {
       // 닉네임 중복 검사
-      console.log("닉네임만 변경하는");
       if (response === true) {
         alert("이미 존재하는 닉네임입니다.");
       } else {
@@ -60,7 +46,6 @@ export default function ModifyProfile() {
         putUserNickname(newNickname);
       }
     } else {
-      console.log("둘 다 변경");
       if (response === true) {
         alert("이미 존재하는 닉네임입니다.");
       } else {
@@ -79,8 +64,6 @@ export default function ModifyProfile() {
             Authorization: getCookie("token"),
           },
         });
-        console.log("수정페이지로 이동");
-        console.log(response.data);
         setUserImg(response.data.profileImg);
         setUserNickname(response.data.nickname);
       } catch (err) {

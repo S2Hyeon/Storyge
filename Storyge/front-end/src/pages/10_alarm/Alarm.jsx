@@ -51,7 +51,9 @@ export default function Alarm() {
 
   return (
     <S.Container>
-      {userData && (
+      {userData.length === 0 ? (
+        <S.NoAlarmList>보여드릴 알림이 없어요 🥲</S.NoAlarmList>
+      ) : (
         <S.List>
           {userData.map((alarm, key) => {
             if (alarm.notiType === "WAIT") {

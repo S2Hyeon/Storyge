@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import * as S from "./ModifyProfile";
@@ -8,64 +7,52 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { getCookie } from "./../../utils/Cookies";
 import { putUser } from "api/user/putUser";
-import { putUserNickname } from "api/user/putUserNickname";
 import { getUserCheck } from "api/user/getUserCheck";
+
+import Api from "lib/customApi";
 
 export default function ModifyProfile() {
   const movePage = useNavigate();
 
   const [userNickname, setUserNickname] = useState("");
-  const [newNickname, setNewNickname] = useState("");
   const [userImg, setUserImg] = useState("");
   const [userFile, setUserFile] = useState();
 
-  const len = `${newNickname.length} / 8`;
+  const len = `${userNickname.length} / 8`;
 
   function onChange(e) {
-    setNewNickname(e.target.value);
-    if (newNickname.length >= 8) {
+    setUserNickname(e.target.value);
+    if (userNickname.length >= 8) {
       alert("닉네임은 8자 이내로 작성해주세요.");
-      setNewNickname(newNickname.substr(0, 8));
+      setUserNickname(userNickname.substring(0, 8));
     }
   }
 
-  async function onsubmit() {
-    let response = await getUserCheck(newNickname);
+  function gomypage() {
+    movePage("/mypage");
+  }
 
-    if (userFile === undefined && newNickname === "") {
-      alert("수정된 정보가 없습니다.");
-    } else if (newNickname === "") {
-      // 이미지만 변경 -> 닉네임 중복 검사 X
-      putUser(userFile, userNickname);
-    } else if (userFile === undefined) {
-      // 닉네임 중복 검사
-      if (response === true) {
-        alert("이미 존재하는 닉네임입니다.");
-      } else {
-        // 닉네임만 변경
-        putUserNickname(newNickname);
-      }
+  async function onsubmit() {
+    // 닉네임 중복 검사
+    let response = await getUserCheck(userNickname);
+    if (response === true) {
+      alert("이미 존재하는 닉네임입니다.");
     } else {
-      if (response === true) {
-        alert("이미 존재하는 닉네임입니다.");
-      } else {
-        putUser(userFile, newNickname);
-      }
+      putUser(userFile, userNickname);
+      gomypage();
     }
-    // gomypage();
   }
 
   //처음 렌더링이 될 때만 실행
   useEffect(() => {
     async function getUserData() {
       try {
-        const response = await axios.get("https://storyge.xyz/api/user", {
+        const response = await Api.get("/user", {
           headers: {
             Authorization: getCookie("token"),
           },
         });
         setUserImg(response.data.profileImg);
-        setUserNickname(response.data.nickname);
       } catch (err) {
         console.log(err);
       }

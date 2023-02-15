@@ -121,6 +121,7 @@ export const Wise = styled.div`
 `;
 
 export const WiseFrom = styled.div`
-  color: #b8b8d2;
+  // color: #b8b8d2;
+  color: var(--color-grey-dark);
   padding-top: 10px;
 `;

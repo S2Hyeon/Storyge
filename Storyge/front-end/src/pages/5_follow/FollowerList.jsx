@@ -134,7 +134,6 @@ export default function FollowerList() {
                 {deleteFollow ? (
                   <S.BtnBox>
                     <MdCheck
-                      borderColor="var(--color-primary)"
                       color="var(--color-primary)"
                       size="23"
                       onClick={(e) => {
@@ -144,7 +143,6 @@ export default function FollowerList() {
                       확인
                     </MdCheck>
                     <MdClose
-                      borderColor="var(--color-warning)"
                       color="var(--color-warning)"
                       size="23"
                       onClick={(e) => {
@@ -163,34 +161,38 @@ export default function FollowerList() {
       </S.List>
 
       <S.LineText>ALL</S.LineText>
-      <S.List>
-        {followerList.map((follower) => {
-          return (
-            <S.Profile key={follower.userId}>
-              <S.AllBox
-                onClick={(e) => {
-                  goOtherPage(follower.userId, e);
-                }}
-              >
-                <S.Img profile={follower.profileImg}></S.Img>
-                <S.Text>{follower.nickname}</S.Text>
-              </S.AllBox>
-              <S.BtnBox>
-                <MdClose
-                  borderColor="var(--color-warning)"
-                  color="var(--color-warning)"
-                  size="23"
+
+      {followerList.length === 0 ? (
+        <S.NoFollow>팔로워가 없어요 🥲</S.NoFollow>
+      ) : (
+        <S.List>
+          {followerList.map((follower) => {
+            return (
+              <S.Profile key={follower.userId}>
+                <S.AllBox
                   onClick={(e) => {
-                    deleteFollower(follower.userId, e);
+                    goOtherPage(follower.userId, e);
                   }}
                 >
-                  삭제
-                </MdClose>
-              </S.BtnBox>
-            </S.Profile>
-          );
-        })}
-      </S.List>
+                  <S.Img profile={follower.profileImg}></S.Img>
+                  <S.Text>{follower.nickname}</S.Text>
+                </S.AllBox>
+                <S.BtnBox>
+                  <MdClose
+                    color="var(--color-warning)"
+                    size="23"
+                    onClick={(e) => {
+                      deleteFollower(follower.userId, e);
+                    }}
+                  >
+                    삭제
+                  </MdClose>
+                </S.BtnBox>
+              </S.Profile>
+            );
+          })}
+        </S.List>
+      )}
     </S.Container>
   );
 }

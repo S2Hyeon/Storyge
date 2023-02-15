@@ -4,6 +4,7 @@ import * as S from "./Follow.js";
 import { getCookie } from "./../../utils/Cookies";
 import Api from "lib/customApi";
 import Swal from "sweetalert2";
+import { RiUserUnfollowLine } from "react-icons/ri";
 
 export default function FollowingList() {
   const movePage = useNavigate();
@@ -83,7 +84,7 @@ export default function FollowingList() {
                 <S.Text>{list.nickname}</S.Text>
               </S.AllBox>
               <S.BtnBox>
-                <S.FollowBtn
+                {/* <S.FollowBtn
                   borderColor="var(--color-primary)"
                   color="var(--color-primary)"
                   onClick={(e) => {
@@ -91,7 +92,11 @@ export default function FollowingList() {
                   }}
                 >
                   언팔로
-                </S.FollowBtn>
+                </S.FollowBtn> */}
+                <RiUserUnfollowLine
+                  color="var(--color-warning)"
+                  font-size="20px"
+                />
               </S.BtnBox>
             </S.Profile>
           );

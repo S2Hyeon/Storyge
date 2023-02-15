@@ -97,7 +97,7 @@ export default function Modifydiary() {
             <heyhey.CountDiary>
               {content && content.length} / 100
             </heyhey.CountDiary>
-            <Switch
+            {/* <Switch
               onChange={handleChange}
               checked={checked}
               offColor="#c0bcbc"
@@ -112,7 +112,8 @@ export default function Modifydiary() {
                   <GrLock color="#ffffff" />
                 </heyhey.Test>
               }
-            />
+            /> */}
+            <button>공개/비공개</button>
           </heyhey.CardFoot>
         </heyhey.card>
         <div>

@@ -15,36 +15,44 @@ function CustomCalendar(props) {
   const [month] = useState(dayjs(new Date()).format("YYYY-MM-01")); //2023-02-01 형식으로 저장
   const now = new Date();
   function lastmonth() {
-    const year = now.getFullYear;
-    const num = now.getMonth;
+    const year = now.getFullYear();
+    const num = now.getMonth();
     if (num === 0) {
       return `${year - 1}-12-01`;
-    } else {
+    } else if (num === 10 || num === 11) {
       return `${year}-${num}-01`;
+    } else {
+      return `${year}-0${num}-01`;
     }
   }
 
   const [monthEmotion, setMonthEmotion] = useState([]); //해당 달의 감정들 저장
   const [totalEmoticon, setTotalEmoticon] = useState([]);
 
-
   useEffect(() => {
     async function getAndSetCalendar() {
       if (userId < 0) {
         const response = await getMyCalendar(month);
         setMonthEmotion(response);
-        const response2 = await getMyCalendar(lastmonth);
-        setTotalEmoticon([...response2, ...response]).then(() => {
-          const i = totalEmoticon.length;
-          if (
-            ((totalEmoticon[i - 1].emoticonName ===
-              totalEmoticon[i - 2].emoticonName) ===
-              totalEmoticon[i - 3].emoticonName) ===
-            "sad"
-          ) {
-            props.setIsGloomy(true);
-          }
-        });
+        const response2 = await getMyCalendar(lastmonth());
+        console.log("리스폰스2", response2);
+        // setTotalEmoticon(
+        //   response2 ? [...response2, ...response] : response
+        // ).then(() => {
+        //   console.log("토탈", totalEmoticon);
+        //   const i = totalEmoticon.length;
+        //   if (totalEmoticon.length > 2) {
+        //     if (
+        //       ((totalEmoticon[i - 1].emoticonName ===
+        //         totalEmoticon[i - 2].emoticonName) ===
+        //         totalEmoticon[i - 3].emoticonName) ===
+        //       "sad"
+        //     ) {
+        //       console.log("슬프다 슬퍼");
+        //       props.setIsGloomy(true);
+        //     }
+        //   }
+        // });
       } else {
         const response = await getOtherCalendar(month, userId);
         setMonthEmotion(response);

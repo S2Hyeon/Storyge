@@ -16,19 +16,19 @@ export default function Login() {
         <S.Logo src={logo}></S.Logo>
       </AnimateOnChange>
 
-      <S.LinkBtn href={GOOGLE_AUTH_URL} onClick={() => alert("google")}>
+      <S.LinkBtn href={GOOGLE_AUTH_URL}>
         <S.GoogleImg
           src="https://t1.daumcdn.net/cfile/tistory/998689465C3D7D1217?original"
           alt="naver"
         ></S.GoogleImg>
       </S.LinkBtn>
-      <S.LinkBtn href={NAVER_AUTH_URL} onClick={() => alert("naver")}>
+      <S.LinkBtn href={NAVER_AUTH_URL}>
         <S.NaverImg
           src="https://t1.daumcdn.net/cfile/tistory/99580C465C3D7D130C?original"
           alt="naver"
         ></S.NaverImg>
       </S.LinkBtn>
-      <S.LinkBtn href={KAKAO_AUTH_URL} onClick={() => alert("kakao")}>
+      <S.LinkBtn href={KAKAO_AUTH_URL}>
         <S.KakaoImg
           src="https://t1.daumcdn.net/cfile/tistory/99BEE8465C3D7D1214?original"
           alt="kakao"

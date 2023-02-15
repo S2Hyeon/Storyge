@@ -3,7 +3,7 @@
 
 import React, { useEffect } from "react";
 import { kakaoLogin, googleLogin, naverLogin } from "api/user/login";
-import Spinner from "./../../components/spinner/Spinner";
+import LockLottie from "../../api/animation/LockLottie.jsx";
 import * as S from "pages/1_login/Loginstyle";
 
 const OAuth2RedirectHandler = (props) => {
@@ -24,7 +24,7 @@ const OAuth2RedirectHandler = (props) => {
 
   return (
     <S.Login>
-      <Spinner />
+      <LockLottie />
     </S.Login>
   );
 };

@@ -50,10 +50,10 @@
 
 :root {
   /* 색상 */
-  --color-primary: #accebc;
-  /* --color-primary: #84b9c0; */
-  --color-background: #eaf2ea;
-  /* --color-background: #fcfee6; */
+  /* --color-primary: #accebc; */
+  --color-primary: #84b9c0;
+  /* --color-background: #eaf2ea; */
+  --color-background: #fcfee6;
   --color-warning: #ff7272;
   --color-darkgrey: #c0bcbc;
   --color-lightgrey: #f6f6f6;

@@ -61,13 +61,6 @@ export default function DiaryDetail() {
         })
       ) {
       }
-      // if (window.confirm("ㄹㅇ?")) {
-      //   // They clicked Yes
-      //   await deleteDiary(diaryId);
-      //   movePage(-1);
-      // } else {
-      //   // They clicked no
-      // }
     } else if (event === "put") {
       movePage("/modifyDiary", { state: { already: myDiaryDetailData } });
     } else {
@@ -193,11 +186,11 @@ export default function DiaryDetail() {
         <S.Toggle fontSize="14px" onClick={() => setIsChecked((e) => !e)}>
           <S.ToggleBtnBox>
             {isChecked ? (
-              <div>
+              <div style={{ fontFamily: "S-CoreDream-5Medium" }}>
                 이 일기의 분석 결과 보기 <BsFillCaretDownFill />
               </div>
             ) : (
-              <div>
+              <div style={{ fontFamily: "S-CoreDream-5Medium" }}>
                 이 일기의 분석 결과 닫기 <BsFillCaretUpFill />
               </div>
             )}

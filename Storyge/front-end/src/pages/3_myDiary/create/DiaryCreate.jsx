@@ -174,7 +174,7 @@ export default function Creatediary() {
               감정분석하기
             </G.longBtnDefault>
           </div>
-          <G.longBtnBorder onClick={goback}>뒤로가기</G.longBtnBorder>
+          <G.longBtnBorder onClick={goback}>취소</G.longBtnBorder>
         </div>
       </S.Container>
       {modalOpen && (

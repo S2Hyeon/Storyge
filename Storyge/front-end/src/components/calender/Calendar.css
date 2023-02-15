@@ -1,7 +1,7 @@
 .react-calendar {
   width: 100%;
   /* max-width: 100%; */
-  background: white;
+  background: transparent;
   /* border: 1px solid #a0a096; */
   font-family: "S-CoreDream-3Light";
   line-height: 1.125em;
@@ -127,5 +127,4 @@
   font-family: "S-CoreDream-6Bold";
   font-size: 20px;
   color: var(--color-black);
-  
 }

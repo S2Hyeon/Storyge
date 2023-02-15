@@ -1,4 +1,4 @@
-import React, { useState, Suspense } from "react";
+import React, { useState } from "react";
 import * as G from "../../styles/index";
 import * as S from "./Music.js";
 import { OpenAI } from "../../openai/OpenAI";
@@ -16,8 +16,10 @@ export default function Music() {
   const [url, setUrl] = useState(null);
   const [content, setContent] = useState("");
   const [youtubeOpen, setYoutubeOpen] = useState(false);
+  const [btnToggle, setBtnToggle] = useState(0);
   // const [videoId, setVideoId] = useState();
   async function findMusic() {
+    setBtnToggle(1);
     const title = await OpenAI({ input: content, type: 0 });
     const result = title + " lylics";
     axios({
@@ -36,6 +38,7 @@ export default function Music() {
           `https://www.youtube.com/watch?v=${res.data.items[0].id.videoId}`
         );
         setYoutubeOpen(true);
+        setBtnToggle(2);
       })
       .catch((err) => {
         console.log(err);
@@ -51,9 +54,15 @@ export default function Music() {
           setContent(e.target.value);
         }}
       />
-      <G.longBtnDefault onClick={findMusic} style={{ marginBottom: "20px" }}>
-        <S.Text>분석하기</S.Text>
-      </G.longBtnDefault>
+      {btnToggle === 0 ? (
+        <G.longBtnDefault onClick={findMusic} style={{ marginBottom: "20px" }}>
+          <S.Text>분석하기</S.Text>
+        </G.longBtnDefault>
+      ) : btnToggle === 1 ? (
+        <G.longBtnDisabled style={{ marginBottom: "20px" }}>
+          <S.Text>분석중...</S.Text>
+        </G.longBtnDisabled>
+      ) : null}
       {!youtubeOpen ? (
         <div>
           <Lottie />

@@ -11,6 +11,7 @@ export const Header = styled.div`
   flex-direction: row;
   align-items: center;
   z-index: 2;
+  border-bottom: 0.1px solid var(--color-grey-light);
 
   font-size: 15px;
   font-family: "S-CoreDream-4Regular";

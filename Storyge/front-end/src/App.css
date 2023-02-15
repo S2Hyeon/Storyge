@@ -50,18 +50,18 @@
 
 :root {
   /* 색상 */
-  --color-primary: #accebc;
-  /* --color-primary: #84b9c0; */
-  --color-background: #eaf2ea;
-  /* --color-background: #fcfee6; */
+  /* --color-primary: #accebc; */
+  --color-primary: #84b9c0;
+  /* --color-background: #eaf2ea; */
+  --color-background: #ffffff;
   --color-warning: #ff7272;
   --color-darkgrey: #c0bcbc;
   --color-lightgrey: #f6f6f6;
   --color-grey: #eeefec;
-  --color-grey-light: #7f8074;
+  --color-grey-light: #cfcece;
   --color-grey-dark: #3f403a;
   --color-black: #222222;
-  --color-white: #ffffff;
+  --color-white: #ffffffd4;
   --color-naver: #03c75a;
   --color-yellow-light: #fcfee6;
   --color-yellow-dark: #ffe697;

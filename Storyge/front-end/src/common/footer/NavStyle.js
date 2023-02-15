@@ -36,7 +36,7 @@ export const Alert = styled.div`
 `;
 
 export const CenterCircle = styled.div`
-  background-color: #accebc;
+  background-color: var(--color-primary);
   height: 50px;
   width: 50px;
   border-radius: 100px;

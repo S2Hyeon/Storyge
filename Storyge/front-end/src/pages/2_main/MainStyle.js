@@ -25,10 +25,23 @@ export const NoNewDiary = styled.div`
   font-family: "S-CoreDream-5Medium";
 `;
 
-export const Profile = styled.div`
+export const ProfileContainer = styled.div`
   height: 70px;
   width: 70px;
   margin: 0 8px;
+  border-radius: 100px;
+  outline: 3px solid var(--color-primary);
+  // flex: 0 0 auto;
+  padding: 2px;
+  background-color: transparent;
+
+  flex: 0 0 auto;
+`;
+
+export const Profile = styled.div`
+  height: 66px;
+  width: 66px;
+  // margin: 0 8px;
   background-image: url(${(props) => props.profile});
   background-size: cover;
   border-radius: 100px;
@@ -56,6 +69,7 @@ export const CalendarBox = styled.div`
   min-height: 10px;
   width: 100%;
   background: var(--color-white);
+  // background: var(--color-lightgrey);
   box-shadow: 0px 16px 40px -4px rgba(112, 144, 176, 0.2);
   border-radius: 12px;
   display: flex;
@@ -82,7 +96,7 @@ export const ToggleOne = styled.div`
 export const WiseBox = styled.div`
   width: 100%;
   height: 108px;
-  background: var(--color-white);
+  background: var(--color-lightgrey);
   box-shadow: 0px 16px 40px -4px rgba(112, 144, 176, 0.2);
   border-radius: 12px;
   margin: 10px 0;

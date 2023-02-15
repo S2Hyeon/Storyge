@@ -145,18 +145,23 @@ public class DiaryServiceImpl implements DiaryService {
         if (diary.getUpdateCnt() == 0) {
             if (!param.getEmoticonName().equals(diary.getEmoticonName())) {
                 LocalDate date = diary.getCreatedAt().toLocalDate();
+                diary.updateDiary(param.getEmoticonName(),
+                        param.getDiaryContent(),
+                        param.getScope(),
+                        1,
+                        param.getAnalyzedResult());
                 Optional<DailyEmotionStatistic> dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date);
 
-                if (dailyEmotionStatistic.isPresent())
-                    dailyEmotionService.updateDailyEmotion(userId, date, dailyEmotionStatistic.get().getEmoticonName());
+                dailyEmotionStatistic.ifPresent(emotionStatistic -> dailyEmotionService.updateDailyEmotion(userId, date, emotionStatistic.getEmoticonName()));
 
             }
-
-            diary.updateDiary(param.getEmoticonName(),
-                    param.getDiaryContent(),
-                    param.getScope(),
-                    1,
-                    param.getAnalyzedResult());
+            else {
+                diary.updateDiary(param.getEmoticonName(),
+                        param.getDiaryContent(),
+                        param.getScope(),
+                        1,
+                        param.getAnalyzedResult());
+            }
 
             return true;
         }

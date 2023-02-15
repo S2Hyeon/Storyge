@@ -53,13 +53,13 @@ export default function Creatediary() {
   function onChange(e) {
     setContent(e.target.value);
     if (content.length > 99) {
-      alert("일기가 너무 길어요~");
+      alert("일기는 100자 이하로 입력 가능합니다.");
       setContent(content.substr(0, 99));
     }
   }
   async function isWritten() {
     if (content.length === 0) {
-      alert("일기를 작성하세요~");
+      alert("일기 내용을 입력해주세요.");
     } else if (content.length > 100) {
     } else {
       // 일기를 작성 할 수 있는 횟수 검사
@@ -68,7 +68,7 @@ export default function Creatediary() {
         const test = await getInfo(content, setModalOpen);
         setInfo(test);
       } else {
-        alert("하루 작성 가능한 일기를 모두 작성함");
+        alert("하루 작성 가능 24개의 일기를 모두 작성하셨습니다.");
       }
     }
   }
@@ -119,19 +119,13 @@ export default function Creatediary() {
         <S.card backgroundColor="var(--color-white)">
           <S.TextBox
             type="text"
-            placeholder="대충 멋진 문구로 글쓰기를 자극하라"
+            placeholder="현재의 상황을 입력해주세요."
             ref={contentRef}
             value={content}
             onChange={onChange}
           />
           <S.CardFoot height="30px" backgroundColor="var(--color-white)">
             <S.CountDiary>{content.length} / 100</S.CountDiary>
-            {/* <Switch
-              onChange={handleChange}
-              checked={checked}
-              offColor="#c0bcbc"
-              onColor="#accebc"
-            /> */}
 
             {!checked ? (
               <div

@@ -10,7 +10,7 @@ export const Rectangle = styled.textarea`
   border: none;
   border-radius: 20px;
   padding: 20px;
-  font-size: 18px;
+  font-size: 15px;
   outline-color: transparent; //textarea onfocus 됐을 때 보더 없앰
 `;
 

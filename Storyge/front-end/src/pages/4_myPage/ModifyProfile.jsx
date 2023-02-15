@@ -46,7 +46,6 @@ export default function ModifyProfile() {
       console.log("이미지 파일 : " + userFile);
       console.log("수정된 닉네임 : " + userNickname);
       putUser(userFile, userNickname);
-      alert("프로필 수정 완료");
       gomypage();
     }
   }

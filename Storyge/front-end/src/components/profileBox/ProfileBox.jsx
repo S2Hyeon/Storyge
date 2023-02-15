@@ -27,14 +27,11 @@ export default function ProfileBox(props) {
   const [isFollowing, setIsFollowing] = useState()
   useEffect(() => {
     async function getAndSetIsFollowing() {
-      console.log('다른 사람 페이지인가요?: ', isOtherProfileBox)
       if (props.otherUserId != null) {
         const response = await getIsFollowing(props.otherUserId)
-        console.log('누구냐 넌', response)
         setIsFollowing(response)
       }
     }
-    console.log('내가 이 사람을 팔로잉하고 있나요?', isFollowing)
     getAndSetIsFollowing()
   }, [isStateChanged])
 

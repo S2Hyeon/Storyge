@@ -19,6 +19,7 @@ export default function Follow() {
         <B.Follower
           onClick={() => {
             setCheck(true)
+            console.log(check)
           }}
           followAlarm={check}
         >

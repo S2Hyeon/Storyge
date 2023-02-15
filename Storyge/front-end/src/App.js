@@ -44,17 +44,13 @@ function App() {
 
   return (
     <div className="App">
-      {isConnected ? (
-        <BrowserRouter>
-          {windowSize.width < 440 && windowSize.height < 950 ? (
-            <AppRouter />
-          ) : (
-            <Size width={window.width} height={window.height} />
-          )}
-        </BrowserRouter>
-      ) : (
-        <ErrorPage text="network" />
-      )}
+      <BrowserRouter>
+        {windowSize.width < 440 && windowSize.height < 950 ? (
+          <AppRouter />
+        ) : (
+          <Size width={window.width} height={window.height} />
+        )}
+      </BrowserRouter>
     </div>
   );
 }

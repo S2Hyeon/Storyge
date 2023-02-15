@@ -3,10 +3,10 @@ import { getCookie } from "utils/Cookies";
 
 export async function putUser(file, nickName) {
   try {
-    console.log("여기서부터는 putUSer");
+    console.log("----여기서부터는 putUSer---");
     console.log("닉네임 : " + nickName);
+    console.log("파일");
     console.log(file);
-    // file.append("nickname", nickName);
 
     const blob = new Blob([nickName], {
       type: "application/json",
@@ -18,7 +18,6 @@ export async function putUser(file, nickName) {
     await Api.put("/user", file, {
       headers: {
         Authorization: getCookie("token"),
-        // "Context-Type": "multipart/form-data",
       },
     });
   } catch (error) {

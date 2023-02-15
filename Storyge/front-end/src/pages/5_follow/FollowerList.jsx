@@ -4,6 +4,7 @@ import { getCookie } from "./../../utils/Cookies";
 import Api from "lib/customApi";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { CiCircleRemove, CiCircleCheck } from "react-icons/ci";
 
 export default function FollowerList() {
   const [flag, setFlag] = useState(false);
@@ -144,24 +145,26 @@ export default function FollowerList() {
                 </S.AllBox>
                 {deleteFollow ? (
                   <S.BtnBox>
-                    <S.FollowBtn
+                    <CiCircleCheck
                       borderColor="var(--color-primary)"
                       color="var(--color-primary)"
+                      size="23"
                       onClick={(e) => {
                         acceptFollow(list.userId, e);
                       }}
                     >
                       확인
-                    </S.FollowBtn>
-                    <S.FollowBtn
+                    </CiCircleCheck>
+                    <CiCircleRemove
                       borderColor="var(--color-warning)"
                       color="var(--color-warning)"
+                      size="23"
                       onClick={(e) => {
                         deleteFollowWait(list.userId, e);
                       }}
                     >
                       삭제
-                    </S.FollowBtn>
+                    </CiCircleRemove>
                   </S.BtnBox>
                 ) : (
                   <S.Text>요청 거절됨</S.Text>
@@ -185,15 +188,16 @@ export default function FollowerList() {
                 <S.Text>{follower.nickname}</S.Text>
               </S.AllBox>
               <S.BtnBox>
-                <S.FollowBtn
+                <CiCircleRemove
                   borderColor="var(--color-warning)"
                   color="var(--color-warning)"
+                  size="23"
                   onClick={(e) => {
                     deleteFollower(follower.userId, e);
                   }}
                 >
                   삭제
-                </S.FollowBtn>
+                </CiCircleRemove>
               </S.BtnBox>
             </S.Profile>
           );

@@ -17,7 +17,6 @@ export const kakaoLogin = async (code) => {
           sameSite: "strict",
         });
       }
-      alert(`${typeof res.data.user} ---> ${res.data.user}`);
       if (res.data.user === true) {
         // 이미 가입된 사용자인 경우,
         window.location.href = `http://${CUR_URL}/`; // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)

@@ -16,11 +16,7 @@ export default function ProfileBoxImg({ profileImg, modifyFormData }) {
       setImgFile(reader.result);
     };
 
-    const formData = new FormData();
-    formData.append("multipartFile", file);
-    console.log(file);
-    console.log(">>>>>>>>>>>>");
-    modifyFormData(formData);
+    modifyFormData(file);
   };
 
   return (

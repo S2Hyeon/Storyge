@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 export default function Intro() {
   const movePage = useNavigate();
@@ -37,6 +39,13 @@ export default function Intro() {
     movePage("/otherdiarydetail");
   }
 
+  const MySwal = withReactContent(Swal);
+
+  function modal() {
+    Swal.fire("정보", "우울한 날이 14일 이상 지속되었습니다.", "info");
+    return <>{MySwal.fire}</>;
+  }
+
   return (
     <div>
       <button onClick={gologin}>로그인으로 이동</button>
@@ -53,6 +62,7 @@ export default function Intro() {
       <button onClick={goOtherPage}>다른 사람 메인페이지</button>
       <button onClick={goOtherDiaryList}>다른 사람 일기 목록</button>
       <button onClick={goOtherDiaryDetail}>다른 사람 일기 디테일</button>
+      <button onClick={modal}>우울 모달</button>
     </div>
   );
 }

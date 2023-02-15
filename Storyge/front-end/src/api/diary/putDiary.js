@@ -6,7 +6,7 @@ export async function putDiary(diary, content, diaryId, scope) {
     const response = await Api.put(
       "/diary",
       {
-        analizedResult: content[1],
+        analyzedResult: content[1],
         diaryContent: diary,
         emoticonName: content[0],
         scope: scope,

@@ -108,7 +108,9 @@ export default function Creatediary() {
     <>
       <heyhey.container>
         <h1>일기 작성 페이지</h1>
+
         <Clock format={"작성날짜 YYYY.MM.DD 작성시간 HH:mm"} ticking={true} />
+
         <heyhey.card backgroundColor="var(--color-white)">
           <heyhey.TextBox
             type="text"
@@ -119,19 +121,40 @@ export default function Creatediary() {
           />
           <heyhey.CardFoot height="30px" backgroundColor="var(--color-white)">
             <heyhey.CountDiary>{content.length} / 100</heyhey.CountDiary>
-            <Switch
+            {/* <Switch
               onChange={handleChange}
               checked={checked}
               offColor="#c0bcbc"
               onColor="#accebc"
-            />
+            /> */}
+
+            {!checked ? (
+              <GrUnlock
+                font-size="30px"
+                onClick={() => {
+                  setChecked(!checked);
+                }}
+              />
+            ) : (
+              <GrLock
+                font-size="30px"
+                onClick={() => {
+                  setChecked(!checked);
+                }}
+              />
+            )}
           </heyhey.CardFoot>
         </heyhey.card>
         <div>
+          <heyhey.Middle>
+            <div>오늘 남은 일기 : {24 - count}</div>
+          </heyhey.Middle>
           <div>
-            <G.longBtnDefault onClick={isWritten}>일기 작성</G.longBtnDefault>
+            <G.longBtnDefault onClick={isWritten}>
+              감정분석하기
+            </G.longBtnDefault>
           </div>
-          <G.longBtnBorder onClick={goback}>취소</G.longBtnBorder>
+          <G.longBtnBorder onClick={goback}>뒤로가기</G.longBtnBorder>
         </div>
       </heyhey.container>
       {modalOpen && (

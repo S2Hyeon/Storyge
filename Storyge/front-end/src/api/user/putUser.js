@@ -1,24 +1,27 @@
-import Api from 'lib/customApi'
-import { getCookie } from 'utils/Cookies'
+import Api from "lib/customApi";
+import { getCookie } from "utils/Cookies";
 
-export async function putUser(nickName, profileImg) {
+export async function putUser(file, nickName) {
   try {
-    console.log(nickName)
-    console.log(profileImg)
+    console.log("여기서부터는 putUSer");
+    console.log("닉네임 : " + nickName);
+    console.log(file);
+    // file.append("nickname", nickName);
 
-    await Api.put(
-      '/user',
-      {
-        nickname: nickName,
-        profile: profileImg,
+    const blob = new Blob([nickName], {
+      type: "application/json",
+    });
+    file.append("nickname", blob);
+
+    for (const keyValue of file) console.log(keyValue);
+
+    await Api.put("/user", file, {
+      headers: {
+        Authorization: getCookie("token"),
+        // "Context-Type": "multipart/form-data",
       },
-      {
-        headers: {
-          Authorization: getCookie('token'),
-        },
-      },
-    )
+    });
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }

@@ -7,7 +7,16 @@ import { useNavigate } from "react-router-dom";
 import { postDiary } from "api/diary/postDiary";
 import { putDiary } from "api/diary/putDiary";
 
-function Modal({ diary, content, num, classify, diaryId, scope }) {
+function Modal({
+  diary,
+  content,
+  num,
+  classify,
+  diaryId,
+  scope,
+  setModalOpen,
+  createdAt,
+}) {
   const movePage = useNavigate();
   const [reccomendEmotion, setRecommendEmotion] = useState(
     content && content[0]
@@ -28,14 +37,22 @@ function Modal({ diary, content, num, classify, diaryId, scope }) {
     console.log(diary, [reccomendEmotion, content[1]]);
     if (classify === "create") {
       await postDiary(diary, [reccomendEmotion, content[1]], scope);
+      movePage(`/diarylist`, { state: { date: new Date() } });
     } else {
       await putDiary(diary, [reccomendEmotion, content[1]], diaryId, scope);
+      movePage(`/diarylist`, { state: { date: createdAt } });
     }
-    movePage(`/diarylist`, { state: { date: new Date() } });
   }
 
   return (
     <S.Modal>
+      <button
+        onClick={() => {
+          setModalOpen(false);
+        }}
+      >
+        X
+      </button>
       {isChecked === 0 ? (
         <S.ModalItems>
           <p>우리가 분석한 감정이에요! 😍</p>

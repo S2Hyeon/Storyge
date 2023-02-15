@@ -81,6 +81,29 @@ export default function Creatediary() {
     }
   }
 
+  useEffect(() => {
+    if (content.length !== 0) {
+      // 새로고침과 타 사이트 이동 방지
+      window.onbeforeunload = function(e) {
+        return "페이지 나감?";
+      };
+    }
+  }, []);
+
+  function goback() {
+    if (content.length === 0) {
+      navigate(-1);
+    } else {
+      const check = window.confirm(
+        "작성중인 글이 있습니다. 페이지를 나가면 변경사항이 저장되지 않을 수 있습니다. 이전 페이지로 가시겠습니까?"
+      );
+
+      if (check) {
+        navigate(-1);
+      }
+    }
+  }
+
   return (
     <>
       <heyhey.container>
@@ -101,16 +124,6 @@ export default function Creatediary() {
               checked={checked}
               offColor="#c0bcbc"
               onColor="#accebc"
-              // uncheckedIcon={
-              //   <heyhey.Test>
-              //     <GrUnlock color="#ffffff" />
-              //   </heyhey.Test>
-              // }
-              // checkedIcon={
-              //   <heyhey.Test>
-              //     <GrLock color="#ffffff" />
-              //   </heyhey.Test>
-              // }
             />
           </heyhey.CardFoot>
         </heyhey.card>
@@ -120,9 +133,7 @@ export default function Creatediary() {
               감정분석하기 버튼
             </G.longBtnDefault>
           </div>
-          <G.longBtnBorder onClick={() => navigate(-1)}>
-            일단 뒤로가기 버튼
-          </G.longBtnBorder>
+          <G.longBtnBorder onClick={goback}>일단 뒤로가기 버튼</G.longBtnBorder>
         </div>
       </heyhey.container>
       {modalOpen && (

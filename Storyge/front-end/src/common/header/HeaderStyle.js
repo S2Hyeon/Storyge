@@ -12,7 +12,7 @@ export const Header = styled.div`
   align-items: center;
   z-index: 2;
 
-  font-size: 18px;
+  font-size: 15px;
   font-family: "S-CoreDream-4Regular";
   // font-family: "S-CoreDream-5Medium";
 `;

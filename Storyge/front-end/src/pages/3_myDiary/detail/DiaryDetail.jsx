@@ -19,12 +19,55 @@ import { deleteDiary } from "api/diary/deleteDiary";
 import { putDiaryScope } from "api/diary/putDiaryScope";
 import { useNavigate } from "react-router-dom";
 
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { useDispatch } from "react-redux";
+
+const MySwal = withReactContent(Swal);
+
+const Toast = MySwal.mixin({
+  toast: true,
+  position: "center-center",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
+
 export default function DiaryDetail() {
   const movePage = useNavigate();
   async function crud(event) {
     if (event === "delete") {
-      await deleteDiary(diaryId);
-      movePage(-1);
+      if (
+        Swal.fire({
+          text: "삭제하시겠습니까?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Toast.fire({
+              icon: "warning",
+              title: "삭제되었습니다.",
+            });
+            deleteDiary(diaryId);
+            movePage(-1);
+          }
+        })
+      ) {
+      }
+      // if (window.confirm("ㄹㅇ?")) {
+      //   // They clicked Yes
+      //   await deleteDiary(diaryId);
+      //   movePage(-1);
+      // } else {
+      //   // They clicked no
+      // }
     } else if (event === "put") {
       movePage("/modifyDiary", { state: { already: myDiaryDetailData } });
     } else {
@@ -41,7 +84,17 @@ export default function DiaryDetail() {
   //다이어리 세부 내용 가져오기
   const [myDiaryDetailData, setMyDiaryDetailData] = useState();
   const [isOpen, setIsOpen] = useState(location.state.scope); // 공개여부;
-  console.log("isOpen 0이면 비공개, 1이면 공개", isOpen);
+  const [isOther] = useState(location.state.otherUserId);
+
+  //!리덕스를 이용하여 다른 사람
+  const dispatch = useDispatch();
+  if (isOther != null) {
+    console.log(isOther);
+    dispatch({ type: "other", owner: location.state.nickname });
+  } else {
+    dispatch({ type: "me" });
+  }
+
   useEffect(() => {
     async function getMyUserId() {
       const response = await getUserId();
@@ -157,33 +210,21 @@ export default function DiaryDetail() {
         )}
       </S.AnalyzedContainer>
       <S.Row>
-        <S.InfoBtn onClick={(e) => crud(e.target.value)} value="delete">
-          삭제
-        </S.InfoBtn>
-        {myDiaryDetailData && myDiaryDetailData.updateCnt === 0 ? (
+        {!isOther && (
+          <S.InfoBtn onClick={(e) => crud(e.target.value)} value="delete">
+            삭제
+          </S.InfoBtn>
+        )}
+        {!isOther && myDiaryDetailData && myDiaryDetailData.updateCnt === 0 ? (
           <S.InfoBtn onClick={(e) => crud(e.target.value)} value="put">
             수정
           </S.InfoBtn>
         ) : null}
-        <S.InfoBtn onClick={handleChange}>
-          {isOpen === 0 ? "공개" : "비공개"}
-        </S.InfoBtn>
-        {/* <Switch
-          onChange={handleChange}
-          checked={isOpen}
-          offColor="#c0bcbc"
-          onColor="#accebc"
-          uncheckedIcon={
-            <S.Test>
-              <GrUnlock color="#ffffff" />
-            </S.Test>
-          }
-          checkedIcon={
-            <S.Test>
-              <GrLock color="#ffffff" />
-            </S.Test>
-          }
-        /> */}
+        {!isOther && (
+          <S.InfoBtn onClick={handleChange}>
+            {isOpen === 0 ? "비공개" : "공개"}
+          </S.InfoBtn>
+        )}
       </S.Row>
       <S.CommentWriteBox>
         <S.CommentWrite

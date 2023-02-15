@@ -1,5 +1,5 @@
 import React, { useState, Suspense } from "react";
-import * as G from "styles";
+import * as G from "../../styles/index";
 import * as S from "./Music.js";
 import { OpenAI } from "../../openai/OpenAI";
 // import MusicResult from "./MusicResult";

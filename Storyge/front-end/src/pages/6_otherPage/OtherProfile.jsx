@@ -55,6 +55,7 @@ function OtherPage() {
             follower={otherUserData.follower}
             following={otherUserData.following}
             isAlreadyApply={isAlreadyApply}
+            test={setIsFollowing}
           />
         )}
 
@@ -73,7 +74,10 @@ function OtherPage() {
           <S.CalendarContainer>
             <S.CalendarBox>
               {diary ? (
-                <CustomCalendar userId={otherUserId} />
+                <CustomCalendar
+                  userId={otherUserId}
+                  nickname={otherUserData.nickname}
+                />
               ) : (
                 <PieChart userId={otherUserId} />
               )}

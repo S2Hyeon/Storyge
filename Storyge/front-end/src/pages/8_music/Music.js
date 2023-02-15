@@ -19,3 +19,10 @@ export const Text = styled.div`
   font-family: "S-CoreDream-3Light";
   font-size: 18px;
 `;
+
+export const TestTextArea = styled.input`
+  width: 100%;
+  height: 200px;
+  margin: 50px 0;
+  border: 1px solid blue;
+`;

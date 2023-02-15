@@ -1,16 +1,14 @@
+import axios from "axios";
 import Api from "lib/customApi";
 import { getCookie } from "utils/Cookies";
 
-export async function putDiary(diary, content, diaryId, scope) {
+export async function putMakeReadAlarm(notificationId) {
   try {
     const response = await Api.put(
-      "/diary",
+      "/notification",
       {
-        analizedResult: content[1],
-        diaryContent: diary,
-        emoticonName: content[0],
-        scope: scope,
-        diaryId: diaryId,
+        notificationId: notificationId,
+        isRead: 1,
       },
       {
         headers: {
@@ -18,7 +16,8 @@ export async function putDiary(diary, content, diaryId, scope) {
         },
       }
     );
-    console.log(response.data);
+
+    console.log(">>>>>", response.data);
   } catch (error) {
     console.error(error);
   }

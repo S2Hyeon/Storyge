@@ -17,9 +17,10 @@ export default function ProfileBoxImg({ profileImg, modifyFormData }) {
     };
 
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append("multipartFile", file);
     console.log(file);
-    modifyFormData(file); // file? 넣는게 맞나?
+    console.log(">>>>>>>>>>>>");
+    modifyFormData(formData);
   };
 
   return (

@@ -11,7 +11,7 @@ export async function putDiary(diary, content, diaryId, scope) {
         emoticonName: content[0],
         scope: scope,
         diaryId: diaryId,
-      },  
+      },
       {
         headers: {
           Authorization: getCookie("token"),

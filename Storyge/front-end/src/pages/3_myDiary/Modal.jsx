@@ -15,6 +15,7 @@ function Modal({
   diaryId,
   scope,
   setModalOpen,
+  createdAt,
 }) {
   const movePage = useNavigate();
   const [reccomendEmotion, setRecommendEmotion] = useState(
@@ -36,10 +37,11 @@ function Modal({
     console.log(diary, [reccomendEmotion, content[1]]);
     if (classify === "create") {
       await postDiary(diary, [reccomendEmotion, content[1]], scope);
+      movePage(`/diarylist`, { state: { date: new Date() } });
     } else {
       await putDiary(diary, [reccomendEmotion, content[1]], diaryId, scope);
+      movePage(`/diarylist`, { state: { date: createdAt } });
     }
-    movePage(`/diarylist`, { state: { date: new Date() } });
   }
 
   return (

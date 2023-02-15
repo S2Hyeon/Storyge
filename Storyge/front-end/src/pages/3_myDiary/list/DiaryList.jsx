@@ -16,7 +16,11 @@ export default function DiaryList() {
   console.log(otherUserId);
 
   //넘어온 날짜 값
-  const [dateInfo, setDateInfo] = useState(location.state.date);
+  const [dateInfo, setDateInfo] = useState(
+    typeof location.state.date === "object"
+      ? location.state.date
+      : new Date(location.state.date)
+  );
 
   //해당 날짜의 내 일기 목록들
   const [diaryListData, setDiaryListData] = useState([]);

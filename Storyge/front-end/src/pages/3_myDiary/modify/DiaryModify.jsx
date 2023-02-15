@@ -18,6 +18,7 @@ export default function Modifydiary() {
   const [count, setCount] = useState(0);
   const [content, setContent] = useState(already.diaryContent);
   const [diaryId] = useState(already.diaryId);
+  const [createdAt] = useState(already.createdAt.substr(0, 10));
   const [modalOpen, setModalOpen] = useState(false);
   const [info, setInfo] = useState(["emotion", "comment"]);
   const [spinner, setSpinner] = useState(false);
@@ -83,7 +84,7 @@ export default function Modifydiary() {
     <>
       <heyhey.container>
         <h1>일기 작성 페이지</h1>
-        <Clock format={"작성날짜 YYYY.MM.DD 작성시간 HH:mm"} ticking={true} />
+        {/* <Clock format={"작성날짜 YYYY.MM.DD 작성시간 HH:mm"} ticking={true} /> */}
         <heyhey.card backgroundColor="var(--color-white)">
           <heyhey.TextBox
             type="text"
@@ -134,6 +135,7 @@ export default function Modifydiary() {
           diaryId={diaryId}
           classify="modify"
           scope={checked ? 0 : 1}
+          createdAt={createdAt}
         />
       )}
       {spinner && <Modal setModalOpen={setModalOpen} content={info} num={2} />}

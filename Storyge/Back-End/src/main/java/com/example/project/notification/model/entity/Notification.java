@@ -3,7 +3,6 @@ package com.example.project.notification.model.entity;
 import com.example.project.diary.model.entity.Diary;
 import com.example.project.user.model.entity.BaseTime;
 import com.example.project.user.model.entity.User;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +12,7 @@ import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @DynamicInsert
-@Builder
 @Getter
 public class Notification extends BaseTime {
 
@@ -50,6 +47,19 @@ public class Notification extends BaseTime {
 
     @Column(name = "read_check")
     private int readCheck;
+
+    @Builder
+    public Notification(Long notiId, Long userId, User user, Long follow, User followUser, String notiType, Long diaryId, Diary diary, int readCheck) {
+        this.notiId = notiId;
+        this.userId = userId;
+        this.user = user;
+        this.follow = follow;
+        this.followUser = followUser;
+        this.notiType = notiType;
+        this.diaryId = diaryId;
+        this.diary = diary;
+        this.readCheck = readCheck;
+    }
 
     public void updateRead(int readCheck) {
         this.readCheck = readCheck;

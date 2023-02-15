@@ -88,7 +88,7 @@ public class JpaConfig {
 
     @Bean
     public ReviewService reviewService() {
-        return new ReviewServiceImpl(reviewRepository, userRepository, diaryRepository, notificationService());
+        return new ReviewServiceImpl(reviewRepository, diaryRepository, notificationService());
     }
 
 }

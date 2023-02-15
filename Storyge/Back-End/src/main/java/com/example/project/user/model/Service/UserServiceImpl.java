@@ -22,25 +22,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(Long userId, String nickname, String profileUrl) {
-        System.out.println("//////////////////////////////////////////////////////////////////////////////////");
-        System.out.println("userServiceImpl로 넘어옴");
         User user = userRepository.findById(userId).orElseThrow();
         //만약 넘어온 프로필만 null일 경우, 닉네임만 바꿔주기
-        if (Objects.isNull(profileUrl)) {
-            System.out.println("프로필 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-
+        if (Objects.isNull(profileUrl))
             user.update(nickname, user.getProfileImg());
-        }
-        //만약 넘어온 nickname만 null일 경우, 프로필만 바꿔주기
-        else if (Objects.isNull(nickname)) {
-            System.out.println("닉네임 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            //만약 넘어온 nickname만 null일 경우, 프로필만 바꿔주기
+        else if (Objects.isNull(nickname))
             user.update(user.getNickname(), profileUrl);
-        }
-        //둘다 제대로 넘어왔으면 둘다 변경
-        else {
-            System.out.println("둘다 있음 바꿔버려");
+
+            //둘다 제대로 넘어왔으면 둘다 변경
+        else
             user.update(nickname, profileUrl);
-        }
+
     }
 
 
@@ -62,7 +55,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> searchUser(String nickname, Long userId) {
         String myNickname = userRepository.findById(userId).get().getNickname();
-
         return userRepository.findByNicknameContainingAndNicknameNotLike(nickname, myNickname).stream().map(this::toDto).collect(Collectors.toList());
     }
 

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -67,7 +68,7 @@ public class RecentDiaryServiceImpl implements RecentDiaryService {
         if (diary == null || (diary.getEndsAt().isBefore(LocalDateTime.now()))) { // recent diary에 존재하지 않거나 이미 24시간이 지난 diary
             return false;
         } else {
-            if (diary.getUserId() != userId) { // 현재 user와 글 쓴 user가 다름
+            if (!Objects.equals(diary.getUserId(), userId)) { // 현재 user와 글 쓴 user가 다름
                 Long recentDiaryId = diary.getRecentId();
 
                 if (readDiaryRepository.findByUserIdAndAndRecentId(userId, recentDiaryId).isEmpty()) { // 아직 안읽었음

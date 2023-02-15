@@ -36,7 +36,6 @@ public class UserController {
     @ApiOperation(value = "사용자 정보 수정", notes = "본인의 닉네임 또는 프로필 사진을 수정")
     @PutMapping(value = "/user", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateUserInfo(HttpServletRequest request, @RequestPart(value = "multipartFile", required = false) MultipartFile multipartFile, @RequestPart(required = false) String nickname) throws IOException {
-        System.out.println("유저 프로필 변경이야 여기 와?");
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
         if (Objects.isNull(multipartFile) && Objects.isNull(nickname))
@@ -56,9 +55,7 @@ public class UserController {
     @ApiOperation(value = "본인 정보 불러오기", notes = "본인의 이름, 프로필, 팔로워/팔로잉 수 정보")
     @GetMapping("/user")
     public ResponseEntity<UserDto> selectOneUser(HttpServletRequest request) {
-        System.out.println("request header: " + request.getHeader(TOKEN_HEADER));
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
-        System.out.println("userId: " + userId);
         return new ResponseEntity<>(userService.selectOneUser(userId), HttpStatus.OK);
     }
 

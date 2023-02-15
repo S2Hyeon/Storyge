@@ -10,13 +10,13 @@ import java.util.List;
 public interface NotificationService {
 
     // 팔로우 신청 알림
-    Boolean insertFollowWaitNotification(NotificationFollowDto notificationFollowDto);
+    void insertFollowWaitNotification(NotificationFollowDto notificationFollowDto);
 
     // 팔로우 수락 알림
-    Boolean insertFollowNotification(NotificationFollowDto notificationFollowDto);
+    void insertFollowNotification(NotificationFollowDto notificationFollowDto);
 
     // 댓글 알림
-    Boolean insertReviewNotification(NotificationReviewDto notificationReviewDto);
+    void insertReviewNotification(NotificationReviewDto notificationReviewDto);
 
     // 알림 목록 가져오기
     List<NotificationResponseDto> selectAllNotification(Long userId);

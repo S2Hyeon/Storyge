@@ -2,7 +2,6 @@ package com.example.project.diary.model.entity;
 
 import com.example.project.user.model.entity.BaseTime;
 import com.example.project.user.model.entity.User;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +10,8 @@ import org.hibernate.annotations.DynamicInsert;
 import javax.persistence.*;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @DynamicInsert
-@Builder
 @Getter
 public class Diary extends BaseTime {
 
@@ -35,6 +32,18 @@ public class Diary extends BaseTime {
     private Integer scope;
     private Integer updateCnt;
     private String analyzedResult;
+
+    @Builder
+    public Diary(Long diaryId, Long userId, User user, String emoticonName, String diaryContent, Integer scope, Integer updateCnt, String analyzedResult) {
+        this.diaryId = diaryId;
+        this.userId = userId;
+        this.user = user;
+        this.emoticonName = emoticonName;
+        this.diaryContent = diaryContent;
+        this.scope = scope;
+        this.updateCnt = updateCnt;
+        this.analyzedResult = analyzedResult;
+    }
 
     public void updateDiary(String emoticonName, String diaryContent, Integer scope, Integer updateCnt, String analyzedResult) {
         this.emoticonName = emoticonName;

@@ -32,7 +32,7 @@ public class NotificationServiceImpl implements NotificationService {
     //follow 현재 사용자
 
     @Override
-    public Boolean insertFollowWaitNotification(NotificationFollowDto notificationFollowDto) {
+    public void insertFollowWaitNotification(NotificationFollowDto notificationFollowDto) {
 
         Long notificationUser = notificationFollowDto.getUserId(); // 알림 받을 사람, 즉 팔로우 신청을 받은 사람
         Long followUser = notificationFollowDto.getFollow(); // 팔로우 신청을 한 사람
@@ -53,11 +53,10 @@ public class NotificationServiceImpl implements NotificationService {
             }
         }
 
-        return true;
     }
 
     @Override
-    public Boolean insertFollowNotification(NotificationFollowDto notificationFollowDto) {
+    public void insertFollowNotification(NotificationFollowDto notificationFollowDto) {
 
         Long notificationUserId = notificationFollowDto.getUserId(); //알림 받을 사람 id 즉 팔로우 수락이 된 사람
         Long followUserId = notificationFollowDto.getFollow(); // 팔로우를 수락한 사람
@@ -77,11 +76,10 @@ public class NotificationServiceImpl implements NotificationService {
             }
         }
 
-        return true;
     }
 
     @Override
-    public Boolean insertReviewNotification(NotificationReviewDto notificationReviewDto) {
+    public void insertReviewNotification(NotificationReviewDto notificationReviewDto) {
 
         Long notificationUserId = notificationReviewDto.getUserId(); //알림 받을 사람 id, 다이어리 쓴 사람
         Long followUserId = notificationReviewDto.getFollow(); // 댓글 단 사람
@@ -103,7 +101,6 @@ public class NotificationServiceImpl implements NotificationService {
             }
         }
 
-        return true;
     }
 
     @Override

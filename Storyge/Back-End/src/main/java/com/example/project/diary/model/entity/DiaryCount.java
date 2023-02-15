@@ -1,7 +1,10 @@
 package com.example.project.diary.model.entity;
 
 import com.example.project.user.model.entity.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -12,7 +15,6 @@ import javax.persistence.*;
 @DynamicInsert
 @Builder
 @Getter
-@Setter
 public class DiaryCount {
 
     @Id
@@ -25,7 +27,7 @@ public class DiaryCount {
 
     private Integer diaryCnt;
 
-    public void updateCount(int diaryCnt) {
+    public void updateCount(Integer diaryCnt) {
         this.diaryCnt = diaryCnt;
     }
 }

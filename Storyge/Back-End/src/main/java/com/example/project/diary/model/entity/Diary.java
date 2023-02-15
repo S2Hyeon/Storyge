@@ -1,11 +1,14 @@
 package com.example.project.diary.model.entity;
 
+import com.example.project.user.model.entity.BaseTime;
 import com.example.project.user.model.entity.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -13,8 +16,7 @@ import java.time.LocalDateTime;
 @DynamicInsert
 @Builder
 @Getter
-@Setter
-public class Diary {
+public class Diary extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,17 +36,15 @@ public class Diary {
     private Integer updateCnt;
     private String analyzedResult;
 
-    private LocalDateTime createdAt;
-
-    public void updateDiary(String emoticonName, String diaryContent, int scope, int updateCnt, String analizedResult) {
+    public void updateDiary(String emoticonName, String diaryContent, Integer scope, Integer updateCnt, String analyzedResult) {
         this.emoticonName = emoticonName;
         this.diaryContent = diaryContent;
         this.scope = scope;
         this.updateCnt = updateCnt;
-        this.analyzedResult = analizedResult;
+        this.analyzedResult = analyzedResult;
     }
 
-    public void updateScope(int scope) {
+    public void updateScope(Integer scope) {
         this.scope = scope;
     }
 }

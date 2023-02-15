@@ -12,7 +12,7 @@ public class EmotionStatistic {
     private Long emoticonAmount;
 
     @QueryProjection
-    public EmotionStatistic(String emoticonName, long emoticonAmount) {
+    public EmotionStatistic(String emoticonName, Long emoticonAmount) {
         this.emoticonName = emoticonName;
         this.emoticonAmount = emoticonAmount;
     }

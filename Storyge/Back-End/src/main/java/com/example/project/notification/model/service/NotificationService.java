@@ -1,7 +1,7 @@
 package com.example.project.notification.model.service;
 
 import com.example.project.notification.model.dto.NotificationFollowDto;
-import com.example.project.notification.model.dto.NotificationReponseDto;
+import com.example.project.notification.model.dto.NotificationResponseDto;
 import com.example.project.notification.model.dto.NotificationReviewDto;
 import com.example.project.notification.model.dto.NotificationUpdateParam;
 
@@ -19,7 +19,7 @@ public interface NotificationService {
     Boolean insertReviewNotification(NotificationReviewDto notificationReviewDto);
 
     // 알림 목록 가져오기
-    List<NotificationReponseDto> selectAllNotification(Long userId);
+    List<NotificationResponseDto> selectAllNotification(Long userId);
 
     //읽음
     void updateNotificationRead(NotificationUpdateParam updateParam);

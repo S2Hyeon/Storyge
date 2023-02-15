@@ -1,6 +1,6 @@
 package com.example.project.notification.controller;
 
-import com.example.project.notification.model.dto.NotificationReponseDto;
+import com.example.project.notification.model.dto.NotificationResponseDto;
 import com.example.project.notification.model.dto.NotificationUpdateParam;
 import com.example.project.notification.model.service.NotificationService;
 import com.example.project.user.model.jwt.JwtUtil;
@@ -34,11 +34,10 @@ public class NotificationController {
             "notiType: FOLLOW: 팔로우 수락, WAIT: 팔로우 신청, REVIEW: 댓글\n" +
             "isRead- 읽음:1, 안읽음:0")
     @GetMapping("/notification")
-    public ResponseEntity<List<NotificationReponseDto>> selectAllNotification(HttpServletRequest request) {
-        String token = request.getHeader(TOKEN_HEADER);
-        Long userId = jwtUtil.getUserId(token);
+    public ResponseEntity<List<NotificationResponseDto>> selectAllNotification(HttpServletRequest request) {
+        Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
-        List<NotificationReponseDto> notificationList = notificationService.selectAllNotification(userId);
+        List<NotificationResponseDto> notificationList = notificationService.selectAllNotification(userId);
         return new ResponseEntity<>(notificationList, HttpStatus.OK);
     }
 

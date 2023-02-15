@@ -37,7 +37,7 @@ public class DiaryController {
     public ResponseEntity<?> insertDiary(@RequestBody DiaryRequestDto diaryRequestDto, HttpServletRequest request) {
 
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
-
+        diaryRequestDto.setUserId(userId);
         Optional<Long> optionalDiaryId = diaryService.insertDiary(userId, diaryRequestDto);
         if (optionalDiaryId.isPresent()) {
             return new ResponseEntity<>(optionalDiaryId.get(), HttpStatus.OK);
@@ -121,7 +121,7 @@ public class DiaryController {
         if (!followService.checkFollow(myId, userId)) {
             return new ResponseEntity<>(FAIL, HttpStatus.NOT_FOUND);
         }
-
+//400이맞는거같아
         List<EmotionStatistic> emotionStatisticList = diaryService.selectEmotionStatistic(period, stringDate, userId);
         if (emotionStatisticList == null) {
             return new ResponseEntity<>(FAIL, HttpStatus.NOT_FOUND);

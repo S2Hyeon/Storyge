@@ -1,7 +1,7 @@
 package com.example.project.notification.model.service;
 
 import com.example.project.notification.model.dto.NotificationFollowDto;
-import com.example.project.notification.model.dto.NotificationReponseDto;
+import com.example.project.notification.model.dto.NotificationResponseDto;
 import com.example.project.notification.model.dto.NotificationReviewDto;
 import com.example.project.notification.model.dto.NotificationUpdateParam;
 import com.example.project.notification.model.entity.Notification;
@@ -107,12 +107,12 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<NotificationReponseDto> selectAllNotification(Long userId) {
+    public List<NotificationResponseDto> selectAllNotification(Long userId) {
 
 
         List<Notification> notifications = notificationRepository.findTop30ByUserIdOrderByCreatedAtDesc(userId); // 현재 로그인한 user의 알림
 
-        List<NotificationReponseDto> notificationList = new ArrayList<>(); // 알림 목록을 담을 list
+        List<NotificationResponseDto> notificationList = new ArrayList<>(); // 알림 목록을 담을 list
 
         for (Notification noti : notifications) {
 
@@ -120,7 +120,7 @@ public class NotificationServiceImpl implements NotificationService {
             String type = noti.getNotiType();
 
             if (type.equals("REVIEW")) { // 댓글일 때
-                notificationList.add(NotificationReponseDto.builder()
+                notificationList.add(NotificationResponseDto.builder()
                         .notificationId(noti.getNotiId())
                         .follow(noti.getFollow())
                         .nickname(followUser.getNickname())
@@ -130,7 +130,7 @@ public class NotificationServiceImpl implements NotificationService {
                         .isRead(noti.getReadCheck())
                         .build());
             } else { // 팔로우 수락, 신청일 때
-                notificationList.add(NotificationReponseDto.builder()
+                notificationList.add(NotificationResponseDto.builder()
                         .notificationId(noti.getNotiId())
                         .follow(noti.getFollow())
                         .nickname(followUser.getNickname())

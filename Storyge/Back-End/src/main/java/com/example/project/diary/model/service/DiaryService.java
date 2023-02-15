@@ -42,7 +42,7 @@ public interface DiaryService {
                 .diaryContent(diary.getDiaryContent())
                 .scope(diary.getScope())
                 .updateCnt(diary.getUpdateCnt())
-                .analizedResult(diary.getAnalyzedResult())
+                .analyzedResult(diary.getAnalyzedResult())
                 .createdAt(diary.getCreatedAt())
                 .build();
     }
@@ -50,10 +50,11 @@ public interface DiaryService {
     //서버 -> DB
     default Diary toEntity(DiaryRequestDto diaryRequestDto) {
         return Diary.builder()
+                .userId(diaryRequestDto.getUserId())
                 .emoticonName(diaryRequestDto.getEmoticonName())
                 .diaryContent(diaryRequestDto.getDiaryContent())
                 .scope(diaryRequestDto.getScope())
-                .analyzedResult(diaryRequestDto.getAnalizedResult())
+                .analyzedResult(diaryRequestDto.getAnalyzedResult())
                 .build();
     }
 

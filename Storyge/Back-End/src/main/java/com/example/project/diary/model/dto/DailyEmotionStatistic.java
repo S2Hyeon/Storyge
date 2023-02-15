@@ -17,7 +17,7 @@ public class DailyEmotionStatistic {
     private LocalDateTime recentUpdate;
 
     @QueryProjection
-    public DailyEmotionStatistic(String emoticonName, long emoticonAmount, LocalDateTime recentUpdate) {
+    public DailyEmotionStatistic(String emoticonName, Long emoticonAmount, LocalDateTime recentUpdate) {
         this.emoticonName = emoticonName;
         this.emoticonAmount = emoticonAmount;
         this.recentUpdate = recentUpdate;

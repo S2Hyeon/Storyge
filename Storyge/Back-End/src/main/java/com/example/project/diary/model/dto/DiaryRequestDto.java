@@ -6,13 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class DiaryRequestDto {
+    private Long userId;
 
     @ApiModelProperty(example = "이모티콘 이름 ex) angry")
     private String emoticonName;
@@ -23,5 +22,5 @@ public class DiaryRequestDto {
     private Integer scope;
 
     @ApiModelProperty(example = "감정분석 결과")
-    private String analizedResult;
+    private String analyzedResult;
 }

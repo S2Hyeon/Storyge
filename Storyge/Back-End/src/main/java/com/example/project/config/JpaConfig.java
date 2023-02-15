@@ -73,7 +73,7 @@ public class JpaConfig {
 
     @Bean
     public NotificationService notificationService() {
-        return new NotificationServiceImpl(notificationRepository, userRepository, diaryRepository);
+        return new NotificationServiceImpl(notificationRepository);
     }
 
     @Bean
@@ -83,7 +83,7 @@ public class JpaConfig {
 
     @Bean
     public RecentDiaryService recentDiaryService() {
-        return new RecentDiaryServiceImpl(recentDiaryRepository, readDiaryRepository, followRepository, userRepository, recentDiaryCustomRepository, diaryRepository);
+        return new RecentDiaryServiceImpl(recentDiaryRepository, readDiaryRepository, followRepository, recentDiaryCustomRepository, diaryRepository);
     }
 
     @Bean

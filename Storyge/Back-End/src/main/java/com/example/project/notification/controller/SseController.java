@@ -35,8 +35,7 @@ public class SseController {
     @GetMapping(value = "/sub", consumes = MediaType.ALL_VALUE, produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<SseEmitter> subscribe(HttpServletRequest request) {
         //현재 로그인한 user 값(pk)
-        String token = request.getHeader(TOKEN_HEADER);
-        Long userId = jwtUtil.getUserId(token);
+        Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
         // 현재 클라이언트를 위한 SseEmitter 생성
         SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);

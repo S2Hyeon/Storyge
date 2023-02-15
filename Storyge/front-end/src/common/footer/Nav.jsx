@@ -14,7 +14,7 @@ function Footer(props) {
   const eventSource = new EventSourcePolyfill("https://storyge.xyz/api/sub", {
     headers: {
       Authorization: getCookie("token"),
-      // "Content-Type": "text/event-stream",
+      // "Content-Type": "text/evnent-stream",
       // "Cache-Control": "no-cache",
       // Connection: "keep-alive",
       // "X-Accel-Buffering": "no",

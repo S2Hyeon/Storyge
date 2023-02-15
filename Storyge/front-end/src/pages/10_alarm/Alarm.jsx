@@ -4,6 +4,7 @@ import * as G from "styles";
 import { getCookie } from "./../../utils/Cookies";
 import Api from "lib/customApi";
 import { useNavigate } from "react-router-dom";
+import { putMakeReadAlarm } from "api/alarm/putMakeReadAlarm";
 
 export default function Alarm() {
   const [userData, setUserData] = useState([]);
@@ -42,14 +43,27 @@ export default function Alarm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //클릭했을 때 알림 배경 없애기
+  async function makeReadAlarm(notificationId, isRead) {
+    if (isRead === 0) {
+      await putMakeReadAlarm(notificationId);
+    }
+  }
+
   return (
-    <G.BodyContainer>
+    <S.Container>
       {userData && (
         <S.List>
           {userData.map((alarm, key) => {
             if (alarm.notiType === "WAIT") {
               return (
-                <S.Alarm key={key} onClick={goMyFollowList}>
+                <S.Alarm
+                  key={key}
+                  onClick={() => {
+                    makeReadAlarm(alarm.notificationId, alarm.isRead);
+                    goMyFollowList();
+                  }}
+                >
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>
                     <S.BoldText>{alarm.nickname}</S.BoldText>님이{" "}
@@ -59,7 +73,13 @@ export default function Alarm() {
               );
             } else if (alarm.notiType === "REVIEW") {
               return (
-                <S.Alarm key={key} onClick={() => goDiaryPage(alarm.diaryId)}>
+                <S.Alarm
+                  key={key}
+                  onClick={() => {
+                    makeReadAlarm(alarm.notificationId, alarm.isRead);
+                    goDiaryPage(alarm.diaryId);
+                  }}
+                >
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>
                     <S.BoldText>{alarm.nickname}</S.BoldText>님이{" "}
@@ -69,7 +89,13 @@ export default function Alarm() {
               );
             } else if (alarm.notiType === "FOLLOW") {
               return (
-                <S.Alarm key={key} onClick={() => goOtherPage(alarm.follow)}>
+                <S.Alarm
+                  key={key}
+                  onClick={() => {
+                    makeReadAlarm(alarm.notificationId, alarm.isRead);
+                    goOtherPage(alarm.follow);
+                  }}
+                >
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>
                     <S.BoldText>{alarm.nickname}</S.BoldText>님이{" "}
@@ -81,6 +107,6 @@ export default function Alarm() {
           })}
         </S.List>
       )}
-    </G.BodyContainer>
+    </S.Container>
   );
 }

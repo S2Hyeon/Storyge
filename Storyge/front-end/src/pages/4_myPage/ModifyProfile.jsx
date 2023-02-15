@@ -8,22 +8,24 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { getCookie } from "./../../utils/Cookies";
 import { putUser } from "api/user/putUser";
+import { putUserNickname } from "api/user/putUserNickname";
 import { getUserCheck } from "api/user/getUserCheck";
 
 export default function ModifyProfile() {
   const movePage = useNavigate();
 
   const [userNickname, setUserNickname] = useState("");
+  const [newNickname, setNewNickname] = useState("");
   const [userImg, setUserImg] = useState("");
   const [userFile, setUserFile] = useState();
 
-  const len = `${userNickname.length} / 8`;
+  const len = `${newNickname.length} / 8`;
 
   function onChange(e) {
-    setUserNickname(e.target.value);
-    if (userNickname.length >= 8) {
+    setNewNickname(e.target.value);
+    if (newNickname.length >= 8) {
       alert("닉네임은 8자 이내로 작성해주세요.");
-      setUserNickname(userNickname.substr(0, 8));
+      setNewNickname(newNickname.substr(0, 8));
     }
   }
 
@@ -33,21 +35,39 @@ export default function ModifyProfile() {
   }, [userFile]);
 
   function gomypage() {
-    movePage("/mypage");
+    movePage("/");
   }
 
   async function onsubmit() {
-    // 닉네임 중복 검사
-    let response = await getUserCheck(userNickname);
-    if (response === true) {
-      alert("이미 존재하는 닉네임입니다.");
-    } else {
-      console.log("제출 버튼 클릭");
-      console.log("이미지 파일 : " + userFile);
-      console.log("수정된 닉네임 : " + userNickname);
+    let response = await getUserCheck(newNickname);
+
+    console.log("수정 시작>>>>>>>>>>>>>>");
+    console.log("파일 : " + userFile);
+    console.log("닉네임 : " + newNickname);
+
+    if (userFile === undefined && newNickname === "") {
+      alert("수정된 정보가 없습니다.");
+    } else if (newNickname === "") {
+      // 이미지만 변경 -> 닉네임 중복 검사 X
       putUser(userFile, userNickname);
-      gomypage();
+    } else if (userFile === undefined) {
+      // 닉네임 중복 검사
+      console.log("닉네임만 변경하는 경우!!!!!!");
+      if (response === true) {
+        alert("이미 존재하는 닉네임입니다.");
+      } else {
+        // 닉네임만 변경
+        putUserNickname(newNickname);
+      }
+    } else {
+      console.log("둘 다 변경");
+      if (response === true) {
+        alert("이미 존재하는 닉네임입니다.");
+      } else {
+        putUser(userFile, newNickname);
+      }
     }
+    // gomypage();
   }
 
   //처음 렌더링이 될 때만 실행
@@ -62,6 +82,7 @@ export default function ModifyProfile() {
         console.log("수정페이지로 이동");
         console.log(response.data);
         setUserImg(response.data.profileImg);
+        setUserNickname(response.data.nickname);
       } catch (err) {
         console.log(err);
       }

@@ -5,6 +5,7 @@ import { getCookie } from "./../../utils/Cookies";
 import Api from "lib/customApi";
 import { useNavigate } from "react-router-dom";
 import { putMakeReadAlarm } from "api/alarm/putMakeReadAlarm";
+import axios from "axios";
 
 export default function Alarm() {
   const [userData, setUserData] = useState([]);
@@ -25,15 +26,29 @@ export default function Alarm() {
 
   //처음 렌더링이 될 때만 실행
   useEffect(() => {
+    // async function getUserData() {
+    //   try {
+    //     const response = await Api.get("/notification", {
+    //       headers: {
+    //         Authorization: getCookie("token"),
+    //       },
+    //     });
+    //     setUserData(response.data);
+    //     console.log("알림페이지 : 알림 데이터");
+    //     console.log(response.data);
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
     async function getUserData() {
+      
       try {
-        const response = await Api.get("/notification", {
+        const response = await axios.get("http://localhost:8080/notification", {
           headers: {
             Authorization: getCookie("token"),
           },
         });
         setUserData(response.data);
-        console.log("알림페이지 : 알림 데이터");
+        console.log("알림페이지 : 알림 데이터!!!!!!!!!!!!1");
         console.log(response.data);
       } catch (err) {
         console.log(err);
@@ -45,7 +60,9 @@ export default function Alarm() {
 
   //클릭했을 때 알림 배경 없애기
   async function makeReadAlarm(notificationId, isRead) {
+    console.log("알림id: ", notificationId, " 읽음?: ", isRead);
     if (isRead === 0) {
+      console.log("들어옴????????");
       await putMakeReadAlarm(notificationId);
     }
   }
@@ -63,6 +80,7 @@ export default function Alarm() {
                     makeReadAlarm(alarm.notificationId, alarm.isRead);
                     goMyFollowList();
                   }}
+                  isReadColor={alarm.isRead}
                 >
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>
@@ -79,6 +97,7 @@ export default function Alarm() {
                     makeReadAlarm(alarm.notificationId, alarm.isRead);
                     goDiaryPage(alarm.diaryId);
                   }}
+                  isReadColor={alarm.isRead}
                 >
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>
@@ -95,6 +114,7 @@ export default function Alarm() {
                     makeReadAlarm(alarm.notificationId, alarm.isRead);
                     goOtherPage(alarm.follow);
                   }}
+                  isReadColor={alarm.isRead}
                 >
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>

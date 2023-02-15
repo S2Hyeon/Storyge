@@ -130,14 +130,12 @@ export default function Creatediary() {
 
             {!checked ? (
               <GrUnlock
-                font-size="30px"
                 onClick={() => {
                   setChecked(!checked);
                 }}
               />
             ) : (
               <GrLock
-                font-size="30px"
                 onClick={() => {
                   setChecked(!checked);
                 }}

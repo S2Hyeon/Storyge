@@ -175,6 +175,7 @@ export const Row = styled.div`
   justify-content: flex-end;
   align-items: center;
   margin: 10px 0 0 0;
+  width: 100%;
 `;
 
 export const InfoBtn = styled.button`
@@ -191,23 +192,33 @@ export const Test = styled.div`
   margin: 0 0 0 7px;
 `;
 
-export const ModifyBtn = styled.button`
-  margin: 0 5px;
+export const DeleteBtn = styled.button`
+  margin: 0 2.5px 0 0;
   border: none;
   height: 30px;
-  width: 70px;
+  width: ${(props) => props.thisWidth};
+  border-radius: 100px;
+  background-color: var(--color-warning);
+  font-family: "S-CoreDream-4Regular";
+`;
+
+export const ModifyBtn = styled.button`
+  margin: 0 2.5px;
+  border: none;
+  height: 30px;
+  width: ${(props) => props.thisWidth};
   border-radius: 100px;
   background-color: var(--color-primary);
   font-family: "S-CoreDream-4Regular";
 `;
 
-export const DeleteBtn = styled.button`
-  margin: 0 5px;
+export const PublicBtn = styled.button`
+  margin: 0 0 0 2.5px;
   border: none;
   height: 30px;
-  width: 70px;
+  width: ${(props) => props.thisWidth};
   border-radius: 100px;
-  background-color: var(--color-warning);
+  background-color: var(--color-grey-light);
   font-family: "S-CoreDream-4Regular";
 `;
 
@@ -216,17 +227,6 @@ export const BtnText = styled.div`
   color: var(--color-white);
 `;
 
-export const PublicBtn = styled.button`
-  margin: 0 5px;
-  border: none;
-  height: 30px;
-  width: 70px;
-  border-radius: 100px;
-  background-color: var(--color-grey-light);
-  font-family: "S-CoreDream-4Regular";
-`;
-
 export const DivideDiv = styled.div`
   padding: 5px;
-  width: ${(1 / 3) * 100}%;
 `;

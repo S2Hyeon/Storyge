@@ -48,8 +48,8 @@ export default function DiaryDetail() {
         text: "삭제하시겠습니까?",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
+        confirmButtonColor: "var(--color-primary)",
+        cancelButtonColor: "var(--color-warning)",
         confirmButtonText: "Yes",
       }).then((result) => {
         if (result.isConfirmed) {
@@ -201,22 +201,34 @@ export default function DiaryDetail() {
         {!isOther &&
           (myDiaryDetailData && myDiaryDetailData.updateCnt === 0 ? (
             <>
-              <S.DeleteBtn onClick={() => crud("delete")} value="delete">
+              <S.DeleteBtn
+                onClick={() => crud("delete")}
+                value="delete"
+                thisWidth="33%"
+              >
                 <S.BtnText>삭제</S.BtnText>
               </S.DeleteBtn>
-              <S.ModifyBtn onClick={() => crud("put")} value="put">
+              <S.ModifyBtn
+                onClick={() => crud("put")}
+                value="put"
+                thisWidth="33%"
+              >
                 <S.BtnText>수정</S.BtnText>
               </S.ModifyBtn>
-              <S.PublicBtn onClick={handleChange}>
-                <S.BtnText>{isOpen === 0 ? "비공개" : "공개"}</S.BtnText>
+              <S.PublicBtn onClick={handleChange} thisWidth="33%">
+                {isOpen === 0 ? "비공개" : "공개"}
               </S.PublicBtn>
             </>
           ) : (
             <>
-              <S.DeleteBtn onClick={() => crud("delete")} value="delete">
-                삭제
+              <S.DeleteBtn
+                onClick={() => crud("delete")}
+                value="delete"
+                thisWidth="50%"
+              >
+                <S.BtnText>삭제</S.BtnText>
               </S.DeleteBtn>
-              <S.PublicBtn onClick={handleChange}>
+              <S.PublicBtn onClick={handleChange} thisWidth="50%">
                 {isOpen === 0 ? "비공개" : "공개"}
               </S.PublicBtn>
             </>

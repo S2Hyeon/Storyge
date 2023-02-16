@@ -26,7 +26,7 @@ export const NewDiary = styled.div`
 
 export const NoNewDiary = styled.div`
   margin: 60px 0 0 0;
-  padding: 10px 20px;
+  padding: 35px 0px 20px 0px;
   height: 50px;
   display: flex;
   justify-content: center;

@@ -43,7 +43,7 @@ export const longBtnBorder = styled.button`
   height: 48px;
   width: 100%;
   font-size: 18px;
-  border: 3px solid var(--color-primary);
+  border: 2px solid var(--color-primary);
   margin-top: 10px;
   color: var(--color-black);
   font-family: "S-CoreDream-4Regular";

@@ -82,7 +82,7 @@ const Chatbot = () => {
     headerBgColor: "#EF6C00",
     headerFontColor: "#fff",
     headerFontSize: "15px",
-    botBubbleColor: "#accebc",
+    botBubbleColor: "var(--color-chatbot)",
     botFontColor: "#FFF",
     userBubbleColor: "#fff",
     userFontColor: "#4a4a4a",

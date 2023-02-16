@@ -1,5 +1,5 @@
 import { useLottie } from "lottie-react";
-import lock from "./../../assets/animation/lock2.json";
+import book from "./../../assets/animation/book.json";
 
 const style = {
   height: 300,
@@ -7,7 +7,7 @@ const style = {
 
 const LockLottie = () => {
   const options = {
-    animationData: lock,
+    animationData: book,
     loop: true,
     autoplay: true,
   };

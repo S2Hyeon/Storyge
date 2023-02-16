@@ -52,7 +52,8 @@ export const test = styled.button`
   justify-content: center;
   align-items: center;
   border: hidden;
-  box-shadow: 0 0 10px var(--color-${(props) => props.emotion}), 0 0 20px var(--color-${(props) => props.emotion});
+  box-shadow: 0 0 10px var(--color-${(props) => props.emotion}),
+    0 0 20px var(--color-${(props) => props.emotion});
   margin: 5px;
 `;
 
@@ -85,6 +86,7 @@ export const YesBtn = styled.button`
   border-radius: 100px;
   background-color: var(--color-primary);
   font-family: "S-CoreDream-4Regular";
+  color: var(--color-white);
 `;
 
 export const NoBtn = styled.button`
@@ -95,6 +97,7 @@ export const NoBtn = styled.button`
   border-radius: 100px;
   background-color: var(--color-warning);
   font-family: "S-CoreDream-4Regular";
+  color: var(--color-white);
 `;
 
 export const CancelBtn = styled.button`

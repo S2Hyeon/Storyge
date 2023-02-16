@@ -35,7 +35,6 @@ export const Text = styled.div`
   justify-content: center;
   align-items: center;
   color: black;
-  display: flex;
 `;
 
 export const BoldText = styled.span`

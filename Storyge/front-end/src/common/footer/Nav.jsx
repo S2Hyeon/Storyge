@@ -19,7 +19,7 @@ function Footer(props) {
       // Connection: "keep-alive",
       // "X-Accel-Buffering": "no",
     },
-    heartbeatTimeout: 1200000,
+    heartbeatTimeout: 1200000000,
     withCredentials: true,
   });
   eventSource.addEventListener("connect", (e) => {
@@ -68,8 +68,9 @@ function Footer(props) {
           movePage("/alarm");
           setIsNewAlert(false);
         }}
+        style={{ position: "relative" }}
       >
-        <div style={{ position: "absolute" }}>
+        <div style={{ position: "absolute", height: "30px" }}>
           <TbBell
             size={30}
             color={
@@ -78,13 +79,14 @@ function Footer(props) {
                 : "#D9D9D9"
             }
           />
-          {isNewAlert ? (
-            <S.AlertContainer style={{ position: "absolute" }}>
-              <S.Alert />
-            </S.AlertContainer>
-          ) : null}
         </div>
+        {isNewAlert ? (
+          <S.AlertContainer style={{ position: "absolute" }}>
+            <S.Alert />
+          </S.AlertContainer>
+        ) : null}
       </S.IconContainer>
+
       <S.IconContainer
         onClick={() => {
           movePage("/mypage");

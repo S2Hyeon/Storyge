@@ -71,7 +71,7 @@ export default function Alarm() {
                 >
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>
-                    <S.BoldText>{alarm.nickname}</S.BoldText>님이
+                    <S.BoldText>{alarm.nickname}</S.BoldText>님이&nbsp;
                     <S.BoldText>팔로우 요청</S.BoldText>을 보냈습니다.
                   </S.Text>
                 </S.Alarm>
@@ -88,7 +88,7 @@ export default function Alarm() {
                 >
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>
-                    <S.BoldText>{alarm.nickname}</S.BoldText>님이{" "}
+                    <S.BoldText>{alarm.nickname}</S.BoldText>님이&nbsp;
                     <S.BoldText>댓글</S.BoldText>을 달았습니다.
                   </S.Text>
                 </S.Alarm>
@@ -105,7 +105,7 @@ export default function Alarm() {
                 >
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>
-                    <S.BoldText>{alarm.nickname}</S.BoldText>님이{" "}
+                    <S.BoldText>{alarm.nickname}</S.BoldText>님이&nbsp;
                     <S.BoldText>팔로우 요청을 수락</S.BoldText>했습니다.
                   </S.Text>
                 </S.Alarm>

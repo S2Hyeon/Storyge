@@ -21,39 +21,38 @@ export default function Music() {
   // const [videoId, setVideoId] = useState();
   async function findMusic() {
     if (content.length === 0) {
-        Swal.fire({
-            text: "추천받을 문구를 작성해주세요.",
-            icon: "warning",
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes",
-          })
+      Swal.fire({
+        text: "추천받을 문구를 작성해주세요.",
+        icon: "warning",
+        confirmButtonColor: "var(--color-primary)",
+        cancelButtonColor: "var(--color-warning)",
+        confirmButtonText: "OK",
+      });
     } else {
-
-        setBtnToggle(1);
-        const title = await OpenAI({ input: content, type: 0 });
-        const result = title + " lylics";
-        axios({
-          method: "get",
-          url: "https://www.googleapis.com/youtube/v3/search?",
-          params: {
-            key: process.env.REACT_APP_YOUTUBE_API_KEY,
-            part: "snippet",
-            q: result,
-          },
+      setBtnToggle(1);
+      const title = await OpenAI({ input: content, type: 0 });
+      const result = title + " lylics";
+      axios({
+        method: "get",
+        url: "https://www.googleapis.com/youtube/v3/search?",
+        params: {
+          key: process.env.REACT_APP_YOUTUBE_API_KEY,
+          part: "snippet",
+          q: result,
+        },
+      })
+        .then((res) => {
+          console.log(res);
+          // setVideoId(res.data.items[0].id.videoId);
+          setUrl(
+            `https://www.youtube.com/watch?v=${res.data.items[0].id.videoId}`
+          );
+          setYoutubeOpen(true);
+          setBtnToggle(2);
         })
-          .then((res) => {
-            console.log(res);
-            // setVideoId(res.data.items[0].id.videoId);
-            setUrl(
-              `https://www.youtube.com/watch?v=${res.data.items[0].id.videoId}`
-            );
-            setYoutubeOpen(true);
-            setBtnToggle(2);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 

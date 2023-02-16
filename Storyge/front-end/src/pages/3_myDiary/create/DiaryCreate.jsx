@@ -20,7 +20,7 @@ export default function Creatediary() {
   const [info, setInfo] = useState(["emotion", "분석 건너뜀"]);
   const [spinner, setSpinner] = useState(false);
   const [checked, setChecked] = useState(false);
-  const [num, setNum] = useState(0)
+  const [num, setNum] = useState(0);
 
   useEffect(() => {
     async function getDiaryCount() {
@@ -41,14 +41,14 @@ export default function Creatediary() {
           })
           .catch((err) => {
             console.log(err);
-            setNum(1)
-            setModalOpen(true)
+            setNum(1);
+            setModalOpen(true);
           });
       })
       .catch((err) => {
         console.log(err);
-        setNum(1)
-        setModalOpen(true)
+        setNum(1);
+        setModalOpen(true);
       });
   }
 

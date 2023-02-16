@@ -76,10 +76,10 @@ export default function MyPage({ setToken }) {
     getUserData();
   }, []);
 
-  let [chatbot, setCharbot] = useState(false);
+  let [chatbot, setChatbot] = useState(false);
 
   function chatbotStatus() {
-    setCharbot(!chatbot);
+    setChatbot(!chatbot);
   }
 
   return (

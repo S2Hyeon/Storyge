@@ -47,7 +47,7 @@ public class NotificationServiceImpl implements NotificationService {
         if (sseEmitters.containsKey(notificationUser)) {
             SseEmitter sseEmitter = sseEmitters.get(notificationUser);
             try {
-                sseEmitter.send(SseEmitter.event().reconnectTime(500).name("notification").data("follow wait"));
+                sseEmitter.send(SseEmitter.event().reconnectTime(1000).name("notification").data("follow wait"));
             } catch (Exception e) {
                 sseEmitters.remove(notificationUser);
             }
@@ -70,7 +70,7 @@ public class NotificationServiceImpl implements NotificationService {
         if (sseEmitters.containsKey(notificationUserId)) {
             SseEmitter sseEmitter = sseEmitters.get(notificationUserId);
             try {
-                sseEmitter.send(SseEmitter.event().reconnectTime(500).name("notification").data("follow accept"));
+                sseEmitter.send(SseEmitter.event().reconnectTime(1000).name("notification").data("follow accept"));
             } catch (Exception e) {
                 sseEmitters.remove(notificationUserId);
             }
@@ -95,7 +95,7 @@ public class NotificationServiceImpl implements NotificationService {
         if (sseEmitters.containsKey(notificationUserId)) {
             SseEmitter sseEmitter = sseEmitters.get(notificationUserId);
             try {
-                sseEmitter.send(SseEmitter.event().reconnectTime(500).name("notification").data("review"));
+                sseEmitter.send(SseEmitter.event().reconnectTime(1000).name("notification").data("review"));
             } catch (Exception e) {
                 sseEmitters.remove(notificationUserId);
             }

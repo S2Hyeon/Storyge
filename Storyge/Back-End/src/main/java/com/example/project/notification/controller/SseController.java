@@ -4,6 +4,7 @@ import com.example.project.user.model.jwt.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,21 +39,25 @@ public class SseController {
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
         // 현재 클라이언트를 위한 SseEmitter 생성
-        SseEmitter sseEmitter = new SseEmitter(300000L);
+        SseEmitter sseEmitter = new SseEmitter(60000L);
+        // user의 pk 값을 key 값으로 해서 SseEmitter를 저장
+        sseEmitters.put(userId, sseEmitter);
         try {
             sseEmitter.send(SseEmitter.event().name("connect").data("connected")); // 연결
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // user의 pk 값을 key 값으로 해서 SseEmitter를 저장
-        sseEmitters.put(userId, sseEmitter);
-
         sseEmitter.onCompletion(() -> sseEmitters.remove(userId));
         sseEmitter.onTimeout(() -> sseEmitters.remove(userId));
         sseEmitter.onError((e) -> sseEmitters.remove(userId));
 
-        return ResponseEntity.ok(sseEmitter);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "text/event-stream");
+        headers.set("Cache-Control", "no-cache");
+        headers.set("X-Accel-Buffering", "no");
+
+        return ResponseEntity.ok().headers(headers).body(sseEmitter);
 
 
     }

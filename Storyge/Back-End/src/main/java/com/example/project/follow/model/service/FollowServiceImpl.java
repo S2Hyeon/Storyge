@@ -42,14 +42,14 @@ public class FollowServiceImpl implements FollowService {
 
         Optional<User> followingUser = userRepository.findById(followingUserId); // 팔로우 신청할 사람
 
-        if (followingUser.isEmpty()) {
+        if (followingUser.isEmpty())
             return false;
-        }
+
 
         Optional<FollowWait> checkExist = followWaitRepository.findByFollowingAndAndUserId(followingUserId, userId); // 이미 신청 내역이 존재하는지 확인
-        if (checkExist.isPresent()) { // 존재하면 false 반환
+        if (checkExist.isPresent())  // 존재하면 false 반환
             return false;
-        } else { // 신청 내역이 존재하지 않으면
+        else { // 신청 내역이 존재하지 않으면
             if (followRepository.findByFollowingAndFollower(followingUserId, userId).isPresent()) { // 팔로우 중인지 확인
                 return false; // 팔로우 중이면 false 반환
             } else {// 신청 상태도 아니고 팔로우 중도 아니라면 팔로우 신청 보냄
@@ -85,13 +85,13 @@ public class FollowServiceImpl implements FollowService {
 
         Optional<User> followerUser = userRepository.findById(followerUserId); // 팔로우 신청한 사람
 
-        if (followerUser.isEmpty()) {
+        if (followerUser.isEmpty())
             return false;
-        }
 
-        if (followRepository.findByFollowingAndFollower(userId, followerUserId).isPresent()) { // 이미 상대가 팔로우 중임
+
+        if (followRepository.findByFollowingAndFollower(userId, followerUserId).isPresent()) // 이미 상대가 팔로우 중임
             return false;
-        }
+
 
         // 대기 상태에서 삭제
         followWaitRepository.deleteByFollowingAndUserId(userId, followerUserId);
@@ -236,9 +236,9 @@ public class FollowServiceImpl implements FollowService {
 //            return false;
 //        }
 
-        if (followRepository.findByFollowingAndFollower(following, follower).isEmpty()) { // 만약 팔로우 중이 아니거나 상대가 먼저 삭제 해버림
+        if (followRepository.findByFollowingAndFollower(following, follower).isEmpty())// 만약 팔로우 중이 아니거나 상대가 먼저 삭제 해버림
             return false;
-        }
+
 
         followRepository.deleteByFollowingAndFollower(following, follower);
 

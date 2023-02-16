@@ -85,9 +85,7 @@ function Header() {
     //
     // !!!기본 상태: 로고
     else {
-      return (
-        <S.Img src={Logo} alt="LogoImage" onClick={() => navigate("/intro")} />
-      );
+      return <S.Img src={Logo} alt="LogoImage" onClick={() => navigate("/")} />;
     }
   };
 

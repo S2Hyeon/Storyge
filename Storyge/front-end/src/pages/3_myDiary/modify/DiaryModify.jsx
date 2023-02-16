@@ -8,7 +8,7 @@ import { OpenAI } from "../../../openai/OpenAI";
 import Switch from "react-switch";
 import { BiLockAlt, BiLockOpenAlt } from "react-icons/bi";
 
-import { getCount } from 'api/diary/getCount'
+import { getCount } from "api/diary/getCount";
 
 export default function Modifydiary() {
   const location = useLocation();
@@ -23,15 +23,15 @@ export default function Modifydiary() {
   const [info, setInfo] = useState(["emotion", "분석 건너뜀"]);
   const [spinner, setSpinner] = useState(false);
   const [checked, setChecked] = useState(already.scope === 0 ? true : false);
-  const [num, setNum] = useState(0)
+  const [num, setNum] = useState(0);
 
   useEffect(() => {
     async function getDiaryCount() {
       const response = await getCount();
       setCount(response);
     }
-    getDiaryCount()
-  }, [count])
+    getDiaryCount();
+  }, [count]);
 
   async function getInfo(content, setModalOpen) {
     await OpenAI({ input: content, type: 1 })
@@ -44,27 +44,27 @@ export default function Modifydiary() {
           })
           .catch((err) => {
             console.log(err);
-            setNum(1)
-            setModalOpen(true)
+            setNum(1);
+            setModalOpen(true);
           });
       })
       .catch((err) => {
         console.log(err);
-        setNum(1)
-        setModalOpen(true)
+        setNum(1);
+        setModalOpen(true);
       });
   }
 
   function onChange(e) {
-    setContent(e.target.value)
+    setContent(e.target.value);
     if (content.length > 99) {
-      alert('일기가 너무 길어요~')
-      setContent(content.substr(0, 99))
+      alert("일기가 너무 길어요~");
+      setContent(content.substr(0, 99));
     }
   }
   async function isWritten() {
     if (content.length === 0) {
-      alert('일기를 작성하세요~')
+      alert("일기를 작성하세요~");
     } else if (content.length > 100) {
     } else {
       // 일기를 작성 할 수 있는 횟수 검사
@@ -99,7 +99,7 @@ export default function Modifydiary() {
                   setChecked(!checked);
                 }}
               >
-                <BiLockOpenAlt font-size="20px" color="var(--color-primary)" />
+                <BiLockOpenAlt fontSize="20px" color="var(--color-primary)" />
               </div>
             ) : (
               <div
@@ -108,7 +108,7 @@ export default function Modifydiary() {
                   setChecked(!checked);
                 }}
               >
-                <BiLockAlt font-size="20px" color="var(--color-warning)" />
+                <BiLockAlt fontSize="20px" color="var(--color-warning)" />
               </div>
             )}
           </heyhey.CardFoot>
@@ -138,5 +138,5 @@ export default function Modifydiary() {
       )}
       {spinner && <Modal setModalOpen={setModalOpen} content={info} num={2} />}
     </>
-  )
+  );
 }

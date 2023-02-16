@@ -6,7 +6,7 @@ export async function postDiary(diary, content, scope) {
     await Api.post(
       "/diary",
       {
-        analizedResult: content[1],
+        analyzedResult: content[1],
         diaryContent: diary,
         emoticonName: content[0],
         scope: scope,

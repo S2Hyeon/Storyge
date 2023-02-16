@@ -33,7 +33,7 @@ export const kakaoLogin = async (code) => {
 export const googleLogin = async (code) => {
   axios({
     method: "GET",
-    url: `http://storyge.xyz/oauth/callback/google?code=${code}&state=google`,
+    url: `https://storyge.xyz/api/oauth/callback/google?code=${code}&state=google`,
   })
     .then((res) => {
       const ACCESS_TOKEN = res.data.accessToken;
@@ -62,7 +62,7 @@ export const googleLogin = async (code) => {
 export const naverLogin = async (code) => {
   axios({
     method: "GET",
-    url: `http://storyge.xyz/oauth/callback/naver?code=${code}&state=naver`,
+    url: `https://storyge.xyz/api/oauth/callback/naver?code=${code}&state=naver`,
   })
     .then((res) => {
       if (res.data.accessToken) {

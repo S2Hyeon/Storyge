@@ -84,7 +84,7 @@ function Main() {
   }, []);
 
   return (
-    <S.All>
+    <>
       {recentDiaryData.length > 0 ? (
         <S.NewDiary>
           {recentDiaryData.map((recentDiary) => {
@@ -159,7 +159,7 @@ function Main() {
         </S.WiseBox>
       </G.BodyContainer>
       {isGloomy && showGloomy && <Modal setIsGloomy={setIsGloomy} />}
-    </S.All>
+    </>
   );
 }
 

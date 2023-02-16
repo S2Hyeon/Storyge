@@ -41,7 +41,7 @@ export default function DiaryDetail() {
     await deleteDiary(diaryId);
     movePage(-1);
   }
-  const movePage = useNavigate();
+
   async function crud(event) {
     if (event === "delete") {
       if (

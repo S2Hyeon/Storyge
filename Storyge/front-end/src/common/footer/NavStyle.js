@@ -22,7 +22,7 @@ export const IconContainer = styled.div`
 export const AlertContainer = styled.div`
   height: 40px;
   width: 30px;
-  margin-top: 3spx;
+  margin-top: 5px;
   margin-right: 5px;
   display: flex;
   justify-content: right;

@@ -19,7 +19,7 @@ function Footer(props) {
       // Connection: "keep-alive",
       // "X-Accel-Buffering": "no",
     },
-    heartbeatTimeout: 1200000,
+    heartbeatTimeout: 1200000000,
     withCredentials: true,
   });
   eventSource.addEventListener("connect", (e) => {
@@ -70,10 +70,14 @@ function Footer(props) {
         }}
         style={{ position: "relative" }}
       >
-        <div style={{ position: "absolute" }}>
+        <div style={{ position: "absolute", height: "30px" }}>
           <TbBell
             size={30}
-            color={location.pathname === "/alarm" ? "#ACCEBC" : "#D9D9D9"}
+            color={
+              location.pathname === "/alarm"
+                ? "var(--color-primary)"
+                : "#D9D9D9"
+            }
           />
         </div>
         {isNewAlert ? (

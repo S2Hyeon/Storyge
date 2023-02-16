@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 import { AiOutlineDelete } from "react-icons/ai";
-import { BsBook } from "react-icons/bs";
 import { useLocation } from "react-router";
 
 import * as S from "./DiaryDetailStyle";
@@ -36,9 +35,8 @@ const Toast = MySwal.mixin({
   },
 });
 
-const movePage = useNavigate();
-
 export default function DiaryDetail() {
+  const movePage = useNavigate();
   async function doDeleteDiary(diaryId) {
     await deleteDiary(diaryId);
     movePage(-1);
@@ -197,34 +195,35 @@ export default function DiaryDetail() {
         </S.Toggle>
         {isChecked ? null : (
           <S.Analyzed>
-            {myDiaryDetailData && myDiaryDetailData.analizedResult}
+            {myDiaryDetailData && myDiaryDetailData.analyzedResult}
           </S.Analyzed>
         )}
       </S.AnalyzedContainer>
 
       <S.Row>
-        {!isOther && myDiaryDetailData && myDiaryDetailData.updateCnt === 0 ? (
-          <>
-            <S.DeleteBtn onClick={(e) => crud(e.target.value)} value="delete">
-              <S.BtnText>삭제</S.BtnText>
-            </S.DeleteBtn>
-            <S.ModifyBtn onClick={(e) => crud(e.target.value)} value="put">
-              <S.BtnText>수정</S.BtnText>
-            </S.ModifyBtn>
-            <S.PublicBtn onClick={handleChange}>
-              <S.BtnText>{isOpen === 0 ? "비공개" : "공개"}</S.BtnText>
-            </S.PublicBtn>
-          </>
-        ) : (
-          <>
-            <S.DeleteBtn onClick={(e) => crud(e.target.value)} value="delete">
-              삭제
-            </S.DeleteBtn>
-            <S.PublicBtn onClick={handleChange}>
-              {isOpen === 0 ? "비공개" : "공개"}
-            </S.PublicBtn>
-          </>
-        )}
+        {!isOther &&
+          (myDiaryDetailData && myDiaryDetailData.updateCnt === 0 ? (
+            <>
+              <S.DeleteBtn onClick={(e) => crud(e.target.value)} value="delete">
+                <S.BtnText>삭제</S.BtnText>
+              </S.DeleteBtn>
+              <S.ModifyBtn onClick={(e) => crud(e.target.value)} value="put">
+                <S.BtnText>수정</S.BtnText>
+              </S.ModifyBtn>
+              <S.PublicBtn onClick={handleChange}>
+                <S.BtnText>{isOpen === 0 ? "비공개" : "공개"}</S.BtnText>
+              </S.PublicBtn>
+            </>
+          ) : (
+            <>
+              <S.DeleteBtn onClick={(e) => crud(e.target.value)} value="delete">
+                삭제
+              </S.DeleteBtn>
+              <S.PublicBtn onClick={handleChange}>
+                {isOpen === 0 ? "비공개" : "공개"}
+              </S.PublicBtn>
+            </>
+          ))}
       </S.Row>
 
       <S.CommentWriteBox>

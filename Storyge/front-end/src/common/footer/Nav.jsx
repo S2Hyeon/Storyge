@@ -68,23 +68,21 @@ function Footer(props) {
           movePage("/alarm");
           setIsNewAlert(false);
         }}
+        style={{ position: "relative" }}
       >
         <div style={{ position: "absolute" }}>
           <TbBell
             size={30}
-            color={
-              location.pathname === "/alarm"
-                ? "var(--color-primary)"
-                : "#D9D9D9"
-            }
+            color={location.pathname === "/alarm" ? "#ACCEBC" : "#D9D9D9"}
           />
-          {isNewAlert ? (
-            <S.AlertContainer style={{ position: "absolute" }}>
-              <S.Alert />
-            </S.AlertContainer>
-          ) : null}
         </div>
+        {isNewAlert ? (
+          <S.AlertContainer style={{ position: "absolute" }}>
+            <S.Alert />
+          </S.AlertContainer>
+        ) : null}
       </S.IconContainer>
+
       <S.IconContainer
         onClick={() => {
           movePage("/mypage");

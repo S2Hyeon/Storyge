@@ -12,17 +12,15 @@ import { BiLockAlt, BiLockOpenAlt } from 'react-icons/bi'
 import { getCount } from 'api/diary/getCount'
 
 export default function Creatediary() {
-  const navigate = useNavigate()
-  const contentRef = useRef()
-  const [count, setCount] = useState(0)
-  const [content, setContent] = useState('')
-  const [modalOpen, setModalOpen] = useState(false)
-  const [info, setInfo] = useState(['emotion', 'comment'])
-  const [spinner, setSpinner] = useState(false)
-  const [checked, setChecked] = useState(false)
-  const handleChange = (nextChecked) => {
-    setChecked(nextChecked);
-  };
+  const navigate = useNavigate();
+  const contentRef = useRef();
+  const [count, setCount] = useState(0);
+  const [content, setContent] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [info, setInfo] = useState(["emotion", "분석 건너뜀"]);
+  const [spinner, setSpinner] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const [num, setNum] = useState(0)
 
   useEffect(() => {
     async function getDiaryCount() {
@@ -42,12 +40,16 @@ export default function Creatediary() {
             setInfo([data1[0], data2]);
           })
           .catch((err) => {
-            console.log(err)
-          })
+            console.log(err);
+            setNum(1)
+            setModalOpen(true)
+          });
       })
       .catch((err) => {
-        console.log(err)
-      })
+        console.log(err);
+        setNum(1)
+        setModalOpen(true)
+      });
   }
 
   function onChange(e) {
@@ -165,7 +167,7 @@ export default function Creatediary() {
           setModalOpen={setModalOpen}
           diary={content}
           content={info}
-          num={0}
+          num={num}
           classify="create"
           scope={checked ? 0 : 1}
         />

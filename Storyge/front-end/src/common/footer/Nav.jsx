@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as S from "./NavStyle";
 import { TbHome, TbMusic, TbPlus, TbBell, TbUser } from "react-icons/tb";
@@ -14,12 +14,12 @@ function Footer(props) {
   const eventSource = new EventSourcePolyfill("https://storyge.xyz/api/sub", {
     headers: {
       Authorization: getCookie("token"),
-      // "Content-Type": "text/evnent-stream",
-      // "Cache-Control": "no-cache",
-      // Connection: "keep-alive",
-      // "X-Accel-Buffering": "no",
+      "Content-Type": "text/event-stream",
+      "Cache-Control": "no-cache",
+      Connection: "keep-alive",
+      "X-Accel-Buffering": "no",
     },
-    heartbeatTimeout: 1200000000,
+    heartbeatTimeout: 61000,
     withCredentials: true,
   });
   eventSource.addEventListener("connect", (e) => {
@@ -30,7 +30,7 @@ function Footer(props) {
     setIsNewAlert(true);
   });
 
-  return (
+  return ( 
     <S.Nav>
       <S.IconContainer
         onClick={() => {

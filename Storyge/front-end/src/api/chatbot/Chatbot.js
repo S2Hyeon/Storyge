@@ -19,7 +19,7 @@ const Chatbot = () => {
     {
       id: "0",
       message: `안녕하세요.
-           Storyge 상담 챗봇입니다.`,
+          Storyge 상담 챗봇입니다.`,
       trigger: "1",
     },
     {
@@ -71,7 +71,8 @@ const Chatbot = () => {
     },
     {
       id: "9",
-      message: "챗봇이 종료되었습니다.",
+      message:
+        "종료하기를 선택하셨습니다. 서비스 알아보기 버튼을 클릭하면 챗봇이 종료됩니다.",
       end: true,
     },
   ];

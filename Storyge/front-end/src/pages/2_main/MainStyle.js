@@ -29,10 +29,11 @@ export const NoNewDiary = styled.div`
 `;
 
 export const ProfileNickName = styled.div`
-  font-size: 12px;
+  font-size: 10px;
   width: 100%;
   text-align: center;
   font-family: "S-CoreDream-3Light";
+  color: var(--color-grey-dark);
 `;
 
 export const ProfileContainer = styled.div`

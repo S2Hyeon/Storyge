@@ -133,7 +133,7 @@ public class FollowController {
 
         Long currentUser = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
-        if (followService.deleteFollow(currentUser, userId)) {
+        if (followService.deleteFollow(userId, currentUser)) {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
@@ -155,7 +155,7 @@ public class FollowController {
 
         Long currentUser = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
-        if (followService.deleteFollow(userId, currentUser)) {
+        if (followService.deleteFollow(currentUser, userId)) {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);

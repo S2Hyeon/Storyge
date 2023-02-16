@@ -4,21 +4,18 @@ import java.util.Map;
 
 public class KakaoUserInfo implements OAuth2UserInfo {
     private final Map<String, Object> attributes;
-    private Map<String, String> properties;
-    private Map<String, String> account;
+    private final Map<?, ?> properties;
+    private final Map<?, ?> account;
 
 
     public KakaoUserInfo(Map<String, Object> attributes) {
         this.attributes = attributes;
-        properties = (Map<String, String>) attributes.get("properties");
-        account = (Map<String, String>) attributes.get("kakao_account");
+        properties = (Map<?, ?>) attributes.get("properties");
+        account = (Map<?, ?>) attributes.get("kakao_account");
     }
 
     @Override
     public String getProviderId() {
-        System.out.println("KakaoUserInfo의 getProvider");
-        System.out.println("providerId : " + attributes.get("id").toString());
-        System.out.println("============================================================================");
         return attributes.get("id").toString();
     }
 
@@ -29,17 +26,17 @@ public class KakaoUserInfo implements OAuth2UserInfo {
 
     @Override
     public String getEmail() {
-        return account.get("email");
+        return account.get("email").toString();
     }
 
     @Override
     public String getName() {
-        return properties.get("nickname");
+        return properties.get("nickname").toString();
     }
 
     @Override
     public String getProfileImg() {
         //다시 생각해봐야할 수 있음
-        return properties.get("profile_image");
+        return properties.get("profile_image").toString();
     }
 }

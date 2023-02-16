@@ -1,17 +1,17 @@
 package com.example.project.follow.model.repository;
 
 import com.example.project.follow.model.entity.Follow;
-import com.example.project.user.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface FollowRepository extends JpaRepository<Follow, Long> {
     List<Follow> findAllByFollower(Long follower);
 
     List<Follow> findAllByFollowing(Long following);
 
-    Follow findByFollowingAndFollower(Long following, Long follower);
+    Optional<Follow> findByFollowingAndFollower(Long following, Long follower);
 
     void deleteByFollowingAndFollower(Long following, Long follower);
 

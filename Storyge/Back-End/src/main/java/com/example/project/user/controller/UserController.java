@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.example.project.user.model.jwt.JwtProperties.TOKEN_HEADER;
 
@@ -34,21 +35,17 @@ public class UserController {
 
     @ApiOperation(value = "사용자 정보 수정", notes = "본인의 닉네임 또는 프로필 사진을 수정")
     @PutMapping(value = "/user", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> updateUserInfo(HttpServletRequest request, @RequestPart(value = "multipartFile", required = false) MultipartFile multipartFile, @RequestPart(value = "nickname", required = false) String nickname) throws IOException {
-
+    public ResponseEntity<?> updateUserInfo(HttpServletRequest request, @RequestPart(value = "multipartFile", required = false) MultipartFile multipartFile, @RequestPart(required = false) String nickname) throws IOException {
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
-        //파일이 비었을 경우 그냥 null 로 보내기
+        if (Objects.isNull(multipartFile) && Objects.isNull(nickname))
+            return new ResponseEntity<>(FAIL, HttpStatus.OK);
+
         String url;
-        if (multipartFile.isEmpty())
+        if (Objects.isNull(multipartFile))
             url = null;
         else
-            //프로필 경로 s3에 업로드 후 올려주기
             url = fileService.upload(multipartFile, "profile");
-
-        //닉네임도 null이고 넘어온 파일도 없으면 그냥 바로 보내버리기
-        if (url == null && nickname == null)
-            return new ResponseEntity<>(FAIL, HttpStatus.OK);
 
         userService.updateUser(userId, nickname, url);
         return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
@@ -58,9 +55,7 @@ public class UserController {
     @ApiOperation(value = "본인 정보 불러오기", notes = "본인의 이름, 프로필, 팔로워/팔로잉 수 정보")
     @GetMapping("/user")
     public ResponseEntity<UserDto> selectOneUser(HttpServletRequest request) {
-        System.out.println("request header: " + request.getHeader(TOKEN_HEADER));
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
-        System.out.println("userId: " + userId);
         return new ResponseEntity<>(userService.selectOneUser(userId), HttpStatus.OK);
     }
 

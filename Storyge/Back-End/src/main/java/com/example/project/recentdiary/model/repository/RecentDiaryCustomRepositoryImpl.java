@@ -1,13 +1,10 @@
 package com.example.project.recentdiary.model.repository;
 
 import com.example.project.recentdiary.model.entity.RecentDiary;
-import com.example.project.user.model.entity.User;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,25 +12,26 @@ import static com.example.project.follow.model.entity.QFollow.follow;
 import static com.example.project.recentdiary.model.entity.QRecentDiary.recentDiary;
 
 @Repository
-@RequiredArgsConstructor
 public class RecentDiaryCustomRepositoryImpl implements RecentDiaryCustomRepository {
 
+    private final JPAQueryFactory query;
 
-    private final EntityManager em;
+    public RecentDiaryCustomRepositoryImpl(JPAQueryFactory query) {
+        this.query = query;
+    }
 
     @Override
     public List<RecentDiary> selectAllRecentDiaryByFollowing(Long userId) {
 
-        JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
 
-        List<RecentDiary> recentDiaryList = jpaQueryFactory
+        List<RecentDiary> recentDiaryList = query
                 .selectFrom(recentDiary)
                 .where(
                         (recentDiary.userId.in(
-                        JPAExpressions
-                                .select(follow.following)
-                                .from(follow)
-                                .where(follow.follower.eq(userId))
+                                JPAExpressions
+                                        .select(follow.following)
+                                        .from(follow)
+                                        .where(follow.follower.eq(userId))
                         )).and(recentDiary.endsAt.after(LocalDateTime.now()))
 
                 )

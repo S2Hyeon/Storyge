@@ -10,6 +10,7 @@ public interface UserService {
     //유저 정보 수정
     void updateUser(Long userId, String nickname, String profileUrl);
 
+
     UserDto selectOneUser(Long userId);
 
     // 사용자 검색

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel(value = "알림", description = "알림 목록 요청시 반환하는 정보")
 // 알림 리스트 반환시 필요한 dto
-public class NotificationReponseDto {
+public class NotificationResponseDto {
 
     @ApiModelProperty(value = "notification id", example = "0")
     private Long notificationId;

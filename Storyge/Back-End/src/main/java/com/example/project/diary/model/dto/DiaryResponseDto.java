@@ -26,7 +26,7 @@ public class DiaryResponseDto {
     @ApiModelProperty(example = "업데이트 횟수 (0 => 수정한 적 없음, 1 => 수정기록 있음")
     private Integer updateCnt;
 
-    private String analizedResult;
+    private String analyzedResult;
     @ApiModelProperty(example = "작성날짜 ex) 2023-02-07")
     private LocalDateTime createdAt;
 }

@@ -41,9 +41,6 @@ public class TokenProvider {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
-        System.out.println("==========================================================");
-        System.out.println("TokenProvider generateToken의 authorities: " + authorities);
-        System.out.println("==========================================================");
         Optional<User> user = userRepository.findByEmail(authorities);
         long now = (new Date()).getTime();
 
@@ -64,11 +61,9 @@ public class TokenProvider {
         boolean check;
         Optional<Token> restoreToken = tokenRepository.findByUserId(user.get().getUserId());
         if (restoreToken.isPresent()) {
-            System.out.println("refreshToken이 이미 존재하는 유저입니다.");
             refreshToken = String.valueOf(restoreToken);
             check = true;
         } else {
-            System.out.println("refreshToken이 없는 유저입니다.");
             check = false;
             refreshToken = Jwts.builder()
                     .setExpiration(new Date(now + JwtProperties.REFRESH_TOKEN_TIME))

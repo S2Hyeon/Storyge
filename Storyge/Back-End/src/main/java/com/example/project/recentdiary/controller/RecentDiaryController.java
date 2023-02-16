@@ -21,9 +21,6 @@ import static com.example.project.user.model.jwt.JwtProperties.TOKEN_HEADER;
 @RequiredArgsConstructor
 @Api(tags = {"팔로잉의 최근 일기(스토리) API"})
 public class RecentDiaryController {
-
-    private static final String SUCCESS = "Success";
-    private static final String FAIL = "Fail";
     private final RecentDiaryService recentDiaryService;
     private final JwtUtil jwtUtil;
 
@@ -31,8 +28,7 @@ public class RecentDiaryController {
     @ApiOperation(value = "팔로잉 최근 다이어리(스토리)", notes = "팔로잉들의 가장 최근 일기 중, 공개이면서 읽지 않은 일기 목록 최신순으로 반환(최대 20개)")
     public ResponseEntity<List<RecentDiaryResponseDto>> selectAllRecentDiary(HttpServletRequest request) {
 
-        String token = request.getHeader(TOKEN_HEADER);
-        Long userId = jwtUtil.getUserId(token);
+        Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
         List<RecentDiaryResponseDto> recentDiaryList = recentDiaryService.selectAllRecentDiary(userId);
         if (recentDiaryList == null) {
             return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);

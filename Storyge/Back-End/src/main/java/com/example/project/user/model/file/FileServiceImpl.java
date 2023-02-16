@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -29,7 +30,6 @@ public class FileServiceImpl implements FileService {
         File uploadFile = convert(multipartFile)
                 .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
 
-//        return upload(userId, param.getNickname(), uploadFile, dirName);
         return upload(uploadFile, dirName);
     }
 
@@ -38,7 +38,6 @@ public class FileServiceImpl implements FileService {
         String uploadImageUrl = putS3(uploadFile, fileName);
         removeNewFile(uploadFile); // 로컬에 생성된 File 삭제 (MultipartFile -> File 전환 하며 로컬에 파일 생성됨)
 
-//FileUploadResponse DTO로 반환해준다.
         return uploadImageUrl; // 업로드 된 파일의 S3 URL 주소 반환
     }
 
@@ -57,18 +56,11 @@ public class FileServiceImpl implements FileService {
     }
 
     private Optional<File> convert(MultipartFile file) throws IOException {
-        System.out.println("convert 파일");
-        File convertFile = new File(file.getOriginalFilename());
-        System.out.println("getOriginalFilename(): " + file.getOriginalFilename());
-        System.out.println("convertFile: " + convertFile.getName());
+        File convertFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
         if (convertFile.createNewFile()) {
-            System.out.println("if 안에 들어옴?");
             try (FileOutputStream fos = new FileOutputStream(convertFile)) {
-                System.out.println("try 안에 들어옴?");
                 fos.write(file.getBytes());
             }
-
-            System.out.println("return 전임?");
             return Optional.of(convertFile);
         }
 

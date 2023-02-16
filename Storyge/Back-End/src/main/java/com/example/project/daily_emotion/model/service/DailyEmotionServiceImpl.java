@@ -68,16 +68,14 @@ public class DailyEmotionServiceImpl implements DailyEmotionService {
     @Override
     public void updateDailyEmotion(Long userId, LocalDate date, String emoticonName) {
         Optional<DailyEmotion> dailyEmotion = selectOneDailyEmotion(userId, date);
-        if(dailyEmotion.isPresent()) {
-            dailyEmotion.get().updateDailyEmotion(emoticonName);
-        }
+        dailyEmotion.ifPresent(emotion -> emotion.updateDailyEmotion(emoticonName));
 
     }
 
     @Override
     public void deleteDailyEmotion(Long userId, LocalDate date) {
         Optional<DailyEmotion> dailyEmotion = selectOneDailyEmotion(userId, date);
-        if(dailyEmotion.isPresent()) {
+        if (dailyEmotion.isPresent()) {
             Long dailyId = dailyEmotion.get().getDailyId();
             dailyEmotionRepository.deleteById(dailyId);
         }

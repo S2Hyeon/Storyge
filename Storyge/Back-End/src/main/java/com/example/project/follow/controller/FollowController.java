@@ -33,8 +33,7 @@ public class FollowController {
     @PostMapping("/follow-wait")
     public ResponseEntity<String> insertFollowWait(HttpServletRequest request, @RequestBody @ApiParam(value = "신청할 사용자의 userId(pk)") UserIdDto userIdDto) {
 
-        String token = request.getHeader(TOKEN_HEADER);
-        Long userId = jwtUtil.getUserId(token);
+        Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
         if (followService.insertFollowWait(userId, userIdDto)) { // 신청 성공
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
@@ -50,8 +49,7 @@ public class FollowController {
     @PostMapping("/follow")
     public ResponseEntity<String> insertFollower(HttpServletRequest request, @RequestBody @ApiParam(value = "수락할 사용자의 userId(pk)") UserIdDto userIdDto) {
 
-        String token = request.getHeader(TOKEN_HEADER);
-        Long userId = jwtUtil.getUserId(token);
+        Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
         if (followService.insertFollower(userId, userIdDto)) {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
@@ -67,8 +65,7 @@ public class FollowController {
     @GetMapping("/follow-wait")
     public ResponseEntity<List<FollowUserInfoDto>> selectAllFollowWait(HttpServletRequest request) {
 
-        String token = request.getHeader(TOKEN_HEADER);
-        Long userId = jwtUtil.getUserId(token);
+        Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
         List<FollowUserInfoDto> followWaitList = followService.selectAllFollowWait(userId);
         return new ResponseEntity<>(followWaitList, HttpStatus.OK);
@@ -81,8 +78,7 @@ public class FollowController {
     @GetMapping("/following")
     public ResponseEntity<List<FollowUserInfoDto>> selectAllFollowing(HttpServletRequest request) {
 
-        String token = request.getHeader(TOKEN_HEADER);
-        Long userId = jwtUtil.getUserId(token);
+        Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
         List<FollowUserInfoDto> followingList = followService.selectAllFollowing(userId);
         return new ResponseEntity<>(followingList, HttpStatus.OK);
@@ -95,8 +91,7 @@ public class FollowController {
     public ResponseEntity<List<FollowUserInfoDto>> selectAllFollower(HttpServletRequest request) {
 
 
-        String token = request.getHeader(TOKEN_HEADER);
-        Long userId = jwtUtil.getUserId(token);
+        Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
         List<FollowUserInfoDto> followerList = followService.selectAllFollower(userId);
         return new ResponseEntity<>(followerList, HttpStatus.OK);
@@ -107,8 +102,7 @@ public class FollowController {
     @GetMapping("following/check/{userId}")
     public ResponseEntity<Boolean> checkFollow(HttpServletRequest request, @PathVariable Long userId) {
 
-        String token = request.getHeader(TOKEN_HEADER);
-        Long myId = jwtUtil.getUserId(token);
+        Long myId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
         Boolean result = followService.checkFollow(myId, userId);
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -121,8 +115,7 @@ public class FollowController {
     @DeleteMapping("/follow-wait/{userId}")
     public ResponseEntity<String> deleteFollowWait(HttpServletRequest request, @PathVariable Long userId) {
 
-        String token = request.getHeader(TOKEN_HEADER);
-        Long currentUser = jwtUtil.getUserId(token);
+        Long currentUser = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
         if (followService.deleteFollowWait(currentUser, userId)) {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
@@ -138,14 +131,19 @@ public class FollowController {
     @DeleteMapping("/following/{userId}")
     public ResponseEntity<String> deleteFollowing(HttpServletRequest request, @PathVariable Long userId) {
 
-        String token = request.getHeader(TOKEN_HEADER);
-        Long currentUser = jwtUtil.getUserId(token);
+        Long currentUser = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
-        if (followService.deleteFollowing(currentUser, userId)) {
+        if (followService.deleteFollow(userId, currentUser)) {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
         }
+
+//        if (followService.deleteFollowing(currentUser, userId)) {
+//            return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+//        }
     }
 
     // 팔로워 삭제
@@ -155,15 +153,19 @@ public class FollowController {
     @DeleteMapping("/follower/{userId}")
     public ResponseEntity<String> deleteFollower(HttpServletRequest request, @PathVariable Long userId) {
 
-        String token = request.getHeader(TOKEN_HEADER);
-        Long currentUser = jwtUtil.getUserId(token);
+        Long currentUser = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
-
-        if (followService.deleteFollower(currentUser, userId)) {
+        if (followService.deleteFollow(currentUser, userId)) {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
         }
+
+//        if (followService.deleteFollower(currentUser, userId)) {
+//            return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+//        }
     }
 
 

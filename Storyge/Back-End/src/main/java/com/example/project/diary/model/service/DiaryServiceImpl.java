@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -62,8 +63,6 @@ public class DiaryServiceImpl implements DiaryService {
         diaryCount.updateCount(currentCount + 1);
 
         Diary diary = toEntity(diaryRequestDto);
-        diary.setUserId(userId);
-        diary.setCreatedAt(LocalDateTime.now());
         diaryRepository.save(diary);
 
         recentDiaryService.insertRecentDiary(user.getUserId(), diary.getDiaryId()); // 최근 다이어리 저장
@@ -76,7 +75,7 @@ public class DiaryServiceImpl implements DiaryService {
         // 평균 감정 없다면 바로 등록
         if (dailyEmotion.isEmpty()) {
             // 일일 감정 평균에 등록 실패 시 empty를 리턴
-            if(!dailyEmotionService.insertDailyEmotion(toDailyEmotionDto(diary)))
+            if (!dailyEmotionService.insertDailyEmotion(toDailyEmotionDto(diary)))
                 return Optional.empty();
         } else {  // 평균 감정 있다면 오늘 일기 모두 가져온 뒤 평균 재계산 후 수정
             DailyEmotionStatistic dailyEmotionStatistic = diaryCustomRepository.dailyEmotionStatistic(userId, date).orElseThrow();
@@ -136,7 +135,7 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public boolean updateDiary(Long userId, DiaryUpdateParam param) {
         Optional<Diary> optionalDiary = diaryRepository.findById(param.getDiaryId());
-        if (optionalDiary.isEmpty() || userId != optionalDiary.get().getUserId()) {
+        if (optionalDiary.isEmpty() || !Objects.equals(userId, optionalDiary.get().getUserId())) {
             return false;
         }
 
@@ -154,8 +153,7 @@ public class DiaryServiceImpl implements DiaryService {
 
                 dailyEmotionStatistic.ifPresent(emotionStatistic -> dailyEmotionService.updateDailyEmotion(userId, date, emotionStatistic.getEmoticonName()));
 
-            }
-            else {
+            } else {
                 diary.updateDiary(param.getEmoticonName(),
                         param.getDiaryContent(),
                         param.getScope(),
@@ -171,19 +169,18 @@ public class DiaryServiceImpl implements DiaryService {
 
     public boolean updateScope(Long userId, Long diaryId, int scope) {
         Optional<Diary> optionalDiary = diaryRepository.findById(diaryId);
-        if (optionalDiary.isEmpty() || userId != optionalDiary.get().getUserId()) {
+        if (optionalDiary.isEmpty() || !Objects.equals(userId, optionalDiary.get().getUserId())) {
             return false;
         }
 
         optionalDiary.get().updateScope(scope);
 
-        if(recentDiaryRepository.findByDiaryId(optionalDiary.get().getDiaryId()).isPresent()){ // 만약 recentdiary에 있다면
-            if(scope==0){ // 비공개로 바꿨으면
+        if (recentDiaryRepository.findByDiaryId(optionalDiary.get().getDiaryId()).isPresent()) { // 만약 recentdiary에 있다면
+            if (scope == 0) { // 비공개로 바꿨으면
                 recentDiaryRepository.deleteByDiaryId(optionalDiary.get().getDiaryId()); // 지우기
             }
-        }
-        else{ // 없고
-            if(optionalDiary.get().getCreatedAt().plusHours(24).isAfter(LocalDateTime.now())){ // 공개 다이어리라면
+        } else { // 없고
+            if (optionalDiary.get().getCreatedAt().plusHours(24).isAfter(LocalDateTime.now())) { // 공개 다이어리라면
                 recentDiaryService.insertRecentDiary(userId, diaryId); // recentdiary에 추가
             }
         }
@@ -195,7 +192,7 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public boolean deleteDiary(Long userId, Long diaryId) {
         Optional<DiaryResponseDto> diaryResponseDto = selectOneDiary(diaryId);
-        if (diaryResponseDto.isEmpty() || userId != diaryResponseDto.get().getUserId()) {
+        if (diaryResponseDto.isEmpty() || !Objects.equals(userId, diaryResponseDto.get().getUserId())) {
             return false;
         }
         diaryRepository.deleteById(diaryId);

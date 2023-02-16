@@ -31,15 +31,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        System.out.println("CustomOAuth2UserService 의 loadUser");
         OAuth2User oAuth2User = super.loadUser(userRequest);
-        System.out.println("oAuth2User : " + super.loadUser(userRequest));
-        System.out.println("======================================================================");
         return process(userRequest, oAuth2User);
     }
 
     private OAuth2User process(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
-        System.out.println("CustomOAuth2UserService 의 process");
         OAuth2UserInfo userInfo = null;
 
         //구글로 가입시 user정보 저장
@@ -58,15 +54,12 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String name = userInfo.getProvider() + '_' + userInfo.getProviderId();
 
 
-        System.out.println("CustomOAuth2UserService process name : " + name);
-
         // 이 유저가 가입이 되어있는지 확인
         Optional<User> userOptional = userRepository.findByName(name);
 
         User user;
         //만약 가입이 안되어 있다면 저장
         if (userOptional.isEmpty()) {
-            System.out.println("유저가 없으니까 저장하자");
             user = User.builder()
                     .email(userInfo.getEmail())
                     .name(name)
@@ -85,11 +78,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             diaryCountRepository.save(diaryCount);
         } else {
-            System.out.println("유저가 있으니까 있는 애로 바꿔주자");
             user = userOptional.get();
         }
 
-        System.out.println("======================================================================");
         return new UserDetailCustom(user, oAuth2User.getAttributes());
     }
 }

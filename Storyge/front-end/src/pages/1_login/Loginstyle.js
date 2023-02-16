@@ -8,6 +8,8 @@ export const Login = styled.div`
   flex-direction: column;
   min-height: 100vh;
   margin: 20px;
+  background-color: var(--color-secondary);
+  border-radius: 15px;
 `;
 
 export const Logo = styled.img`

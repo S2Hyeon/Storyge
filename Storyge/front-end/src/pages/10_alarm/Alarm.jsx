@@ -5,7 +5,7 @@ import { getCookie } from "./../../utils/Cookies";
 import Api from "lib/customApi";
 import { useNavigate } from "react-router-dom";
 import { putMakeReadAlarm } from "api/alarm/putMakeReadAlarm";
-import axios from "axios";
+import NodataLottie from "../../api/animation/Nodata.jsx";
 
 export default function Alarm() {
   const [userData, setUserData] = useState([]);
@@ -52,7 +52,10 @@ export default function Alarm() {
   return (
     <S.Container>
       {userData.length === 0 ? (
-        <S.NoAlarmList>보여드릴 알림이 없어요 🥲</S.NoAlarmList>
+        <>
+          <NodataLottie />
+          <S.NoAlarmList>보여드릴 알림이 없어요</S.NoAlarmList>
+        </>
       ) : (
         <S.List>
           {userData.map((alarm, key) => {

@@ -44,25 +44,22 @@ export default function DiaryDetail() {
 
   async function crud(event) {
     if (event === "delete") {
-      if (
-        Swal.fire({
-          text: "삭제하시겠습니까?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "var(--color-primary)",
-          cancelButtonColor: "var(--color-warning)",
-          confirmButtonText: "Yes",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Toast.fire({
-              icon: "warning",
-              title: "삭제되었습니다.",
-            });
-            doDeleteDiary(diaryId);
-          }
-        })
-      ) {
-      }
+      Swal.fire({
+        text: "삭제하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Toast.fire({
+            icon: "warning",
+            title: "삭제되었습니다.",
+          });
+          doDeleteDiary(diaryId);
+        }
+      });
     } else if (event === "put") {
       movePage("/modifyDiary", { state: { already: myDiaryDetailData } });
     } else {
@@ -204,10 +201,10 @@ export default function DiaryDetail() {
         {!isOther &&
           (myDiaryDetailData && myDiaryDetailData.updateCnt === 0 ? (
             <>
-              <S.DeleteBtn onClick={(e) => crud(e.target.value)} value="delete">
+              <S.DeleteBtn onClick={() => crud("delete")} value="delete">
                 <S.BtnText>삭제</S.BtnText>
               </S.DeleteBtn>
-              <S.ModifyBtn onClick={(e) => crud(e.target.value)} value="put">
+              <S.ModifyBtn onClick={() => crud("put")} value="put">
                 <S.BtnText>수정</S.BtnText>
               </S.ModifyBtn>
               <S.PublicBtn onClick={handleChange}>
@@ -216,7 +213,7 @@ export default function DiaryDetail() {
             </>
           ) : (
             <>
-              <S.DeleteBtn onClick={(e) => crud(e.target.value)} value="delete">
+              <S.DeleteBtn onClick={() => crud("delete")} value="delete">
                 삭제
               </S.DeleteBtn>
               <S.PublicBtn onClick={handleChange}>

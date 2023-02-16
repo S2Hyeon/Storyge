@@ -1,6 +1,6 @@
 import React from "react";
 import * as S from "./SizeStyle.js";
-import logo from "./../../assets/logo1.png";
+import logo from "./../../assets/StorygeColor.gif";
 
 export default function Size(props) {
   return (

@@ -1,90 +1,90 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import * as S from './MainStyle'
-import * as G from '../../styles'
-import { BsCircleFill } from 'react-icons/bs'
-import CustomCalendar from '../../components/calender/Calendar'
-import PieChart from '../../components/chart/PieChart'
-import { getCookie, setCookie } from './../../utils/Cookies'
-import { getQuote } from 'api/quote/getQuote'
-import { getRecentDiary } from 'api/recentDiary/getRecentDiary'
-import Modal from './Modal'
-import dayjs from 'dayjs'
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import * as S from "./MainStyle";
+import * as G from "../../styles";
+import { BsCircleFill } from "react-icons/bs";
+import CustomCalendar from "../../components/calender/Calendar";
+import PieChart from "../../components/chart/PieChart";
+import { getCookie, setCookie } from "./../../utils/Cookies";
+import { getQuote } from "api/quote/getQuote";
+import { getRecentDiary } from "api/recentDiary/getRecentDiary";
+import Modal from "./Modal";
+import dayjs from "dayjs";
 
 function Main() {
-  const [isGloomy, setIsGloomy] = useState(false)
-  const [showGloomy, setShowGloomy] = useState(false)
-  const curDate = dayjs(new Date()).format('YYYY-MM-DD')
+  const [isGloomy, setIsGloomy] = useState(false);
+  const [showGloomy, setShowGloomy] = useState(false);
+  const curDate = dayjs(new Date()).format("YYYY-MM-DD");
 
   //우울하시네요 모달창 띄우는거 하루로 제한
   useEffect(() => {
     //14일동안 우울하다면 저장
     if (isGloomy) {
       if (
-        getCookie('modalDate') != null &&
-        curDate != dayjs(getCookie('modalDate')).format('YYYY-MM-DD')
+        getCookie("modalDate") != null &&
+        curDate != dayjs(getCookie("modalDate")).format("YYYY-MM-DD")
       ) {
-        let expires = new Date()
-        expires = expires.setHours(expires.getHours() + 24)
-        setCookie('modalDate', new Date())
-        setShowGloomy(true)
+        let expires = new Date();
+        expires = expires.setHours(expires.getHours() + 24);
+        setCookie("modalDate", new Date());
+        setShowGloomy(true);
       } else if (
-        getCookie('modalDate') != null &&
-        curDate == dayjs(getCookie('modalDate')).format('YYYY-MM-DD')
+        getCookie("modalDate") != null &&
+        curDate == dayjs(getCookie("modalDate")).format("YYYY-MM-DD")
       ) {
-        setShowGloomy(false)
+        setShowGloomy(false);
       } else {
-        let expires = new Date()
-        expires = expires.setHours(expires.getHours() + 24)
-        setCookie('modalDate', new Date())
-        setShowGloomy(true)
+        let expires = new Date();
+        expires = expires.setHours(expires.getHours() + 24);
+        setCookie("modalDate", new Date());
+        setShowGloomy(true);
       }
     }
-  }, [isGloomy])
+  }, [isGloomy]);
 
   // 로그인 여부 확인 : 쿠키 값 가져오기
   useEffect(() => {
     const ACCESS_TOKEN = getCookie("token");
   }, []);
 
-  const movePage = useNavigate()
+  const movePage = useNavigate();
 
-  let [diary, setDiary] = useState(true)
+  let [diary, setDiary] = useState(true);
 
   //새로 업데이트 된 글로 이동!
   function goUpdatedDiary(diaryId, otherUserId, nickname) {
     movePage("/diary", {
       state: { diaryId: diaryId, otherUserId: otherUserId, nickname: nickname },
-    })
+    });
   }
 
   //달력 보일건지 통계 보일건지 전환하는 함수
   function switchBox() {
-    setDiary(!diary)
+    setDiary(!diary);
   }
 
   //내가 팔로잉하는 사람의 업데이트 내용 받기 api
-  const [recentDiaryData, setRecentDiaryData] = useState([])
+  const [recentDiaryData, setRecentDiaryData] = useState([]);
   useEffect(() => {
     async function getAndSetRecentDiaryData() {
       const response = await getRecentDiary();
       setRecentDiaryData(response);
     }
-    getAndSetRecentDiaryData()
-  }, [])
+    getAndSetRecentDiaryData();
+  }, []);
 
   //하루 글귀 받아오기 api
-  const [quoteData, setQuoteData] = useState()
+  const [quoteData, setQuoteData] = useState();
   useEffect(() => {
     async function getAndSetQuoteData() {
-      const response = await getQuote()
-      setQuoteData(response)
+      const response = await getQuote();
+      setQuoteData(response);
     }
-    getAndSetQuoteData()
-  }, [])
+    getAndSetQuoteData();
+  }, []);
 
   return (
-    <S.All>
+    <>
       {recentDiaryData.length > 0 ? (
         <S.NewDiary>
           {recentDiaryData.map((recentDiary) => {
@@ -132,7 +132,7 @@ function Main() {
                   color: diary ? "var(--color-black)" : "var(--color-grey)",
                 }}
               >
-                {' '}
+                {" "}
                 다이어리
               </span>
             </S.ToggleOne>
@@ -146,7 +146,7 @@ function Main() {
                   color: !diary ? "var(--color-black)" : "var(--color-grey)",
                 }}
               >
-                {' '}
+                {" "}
                 통계
               </span>
             </S.ToggleOne>
@@ -159,8 +159,8 @@ function Main() {
         </S.WiseBox>
       </G.BodyContainer>
       {isGloomy && showGloomy && <Modal setIsGloomy={setIsGloomy} />}
-    </S.All>
-  )
+    </>
+  );
 }
 
-export default Main
+export default Main;

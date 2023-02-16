@@ -6,7 +6,7 @@ import {
   NAVER_AUTH_URL,
 } from "../1_login/OAuth.js";
 
-import logo from "./../../assets/Storyge.gif";
+import logo from "./../../assets/StorygeColor.gif";
 import { AnimateOnChange } from "react-animation";
 
 export default function Login() {

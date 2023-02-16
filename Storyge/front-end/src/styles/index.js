@@ -18,10 +18,12 @@ export const longBtnDefault = styled.button`
   border: hidden;
   margin-top: 10px;
   color: var(--color-white);
+  font-family: "S-CoreDream-4Regular";
+  font-size: 16px;
 `;
 
 export const longBtnDisabled = styled.button`
-  background-color: var(--color-darkgrey);
+  background-color: var(--color-grey);
   color: var(--color-white);
   border-radius: 100px;
   height: 48px;
@@ -29,6 +31,8 @@ export const longBtnDisabled = styled.button`
   font-size: 18px;
   border: hidden;
   margin-top: 10px;
+  font-family: "S-CoreDream-4Regular";
+  font-size: 16px;
 `;
 
 export const longBtnBorder = styled.button`
@@ -42,6 +46,6 @@ export const longBtnBorder = styled.button`
   border: 3px solid var(--color-primary);
   margin-top: 10px;
   color: var(--color-black);
+  font-family: "S-CoreDream-4Regular";
+  font-size: 16px;
 `;
-
-export const profileBox = styled.div``;

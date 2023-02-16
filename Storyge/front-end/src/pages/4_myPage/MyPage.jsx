@@ -67,8 +67,8 @@ export default function MyPage({ setToken }) {
           headers: {
             Authorization: getCookie('token'),
           },
-        })
-        setUserData(response.data)
+        });
+        setUserData(response.data);
       } catch (err) {
         console.log(err)
       }
@@ -96,9 +96,9 @@ export default function MyPage({ setToken }) {
       <S.Menu onClick={gomodifyprofile}>
         <BsPersonCircle
           style={{
-            color: 'var(--color-primary)',
-            width: '30px',
-            height: '30px',
+            color: "var(--color-primary)",
+            width: "18px",
+            height: "18px",
           }}
         />
         <S.Text>프로필 수정하기</S.Text>
@@ -106,9 +106,9 @@ export default function MyPage({ setToken }) {
       <S.Menu onClick={chatbotStatus}>
         <BsQuestionCircle
           style={{
-            color: 'var(--color-primary)',
-            width: '30px',
-            height: '30px',
+            color: "var(--color-primary)",
+            width: "18px",
+            height: "18px",
           }}
         />
         <S.Text>서비스 알아보기</S.Text>

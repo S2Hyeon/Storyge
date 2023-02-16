@@ -6,11 +6,11 @@ export const Rectangle = styled.textarea`
   height: 300px;
   margin-top: 20px;
   margin-bottom: 20px;
-  background-color: var(--color-lightgrey);
+  background-color: var(--color-grey-light);
   border: none;
   border-radius: 20px;
   padding: 20px;
-  font-size: 18px;
+  font-size: 15px;
   outline-color: transparent; //textarea onfocus 됐을 때 보더 없앰
 `;
 

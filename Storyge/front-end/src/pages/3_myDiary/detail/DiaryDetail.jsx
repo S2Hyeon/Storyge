@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { BsFillCaretDownFill, BsFillCaretUpFill } from 'react-icons/bs'
-import { AiOutlineDelete } from 'react-icons/ai'
-import { useLocation } from 'react-router'
-import Switch from 'react-switch'
-import { GrLock, GrUnlock } from 'react-icons/gr'
+import React, { useState, useEffect } from "react";
+import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
+import { AiOutlineDelete } from "react-icons/ai";
+import { useLocation } from "react-router";
 
 import * as S from './DiaryDetailStyle'
 import * as G from 'styles/index'
@@ -65,7 +63,7 @@ export default function DiaryDetail() {
       movePage('/modifyDiary', { state: { already: myDiaryDetailData } })
     } else {
       // await putDiary();
-      setIsOpen(!isOpen)
+      setIsOpen(!isOpen);
     }
   }
   const location = useLocation()
@@ -81,20 +79,20 @@ export default function DiaryDetail() {
   //!리덕스를 이용하여 다른 사람
   const dispatch = useDispatch()
   if (isOther != null) {
-    dispatch({ type: 'other', owner: location.state.nickname })
+    dispatch({ type: "other", owner: location.state.nickname });
   } else {
     dispatch({ type: 'me' })
   }
 
   useEffect(() => {
     async function getMyUserId() {
-      const response = await getUserId()
-      setUserNumber(response.userId)
+      const response = await getUserId();
+      setUserNumber(response.userId);
     }
 
     async function getAndSetMyDiaryDetail() {
-      const response = await getMyDiaryDetail(diaryId)
-      setMyDiaryDetailData(response)
+      const response = await getMyDiaryDetail(diaryId);
+      setMyDiaryDetailData(response);
     }
 
     getMyUserId()
@@ -117,8 +115,8 @@ export default function DiaryDetail() {
   const [commentData, setCommentData] = useState([])
   useEffect(() => {
     async function getAndSetCommentData() {
-      const response = await getComment(diaryId)
-      setCommentData(response)
+      const response = await getComment(diaryId);
+      setCommentData(response);
     }
     getAndSetCommentData()
   }, [changedCount])
@@ -147,8 +145,8 @@ export default function DiaryDetail() {
   }
 
   async function deleteComment(reviewId, e) {
-    await deleteReview(reviewId)
-    setChangedCount(changedCount + 1)
+    await deleteReview(reviewId);
+    setChangedCount(changedCount + 1);
   }
 
   return (
@@ -193,23 +191,32 @@ export default function DiaryDetail() {
           </S.Analyzed>
         )}
       </S.AnalyzedContainer>
+
       <S.Row>
-        {!isOther && (
-          <S.InfoBtn onClick={(e) => crud(e.target.value)} value="delete">
-            삭제
-          </S.InfoBtn>
-        )}
         {!isOther && myDiaryDetailData && myDiaryDetailData.updateCnt === 0 ? (
-          <S.InfoBtn onClick={(e) => crud(e.target.value)} value="put">
-            수정
-          </S.InfoBtn>
-        ) : null}
-        {!isOther && (
-          <S.InfoBtn onClick={handleChange}>
-            {isOpen === 0 ? '비공개' : '공개'}
-          </S.InfoBtn>
+          <>
+            <S.DeleteBtn onClick={(e) => crud(e.target.value)} value="delete">
+              삭제
+            </S.DeleteBtn>
+            <S.ModifyBtn onClick={(e) => crud(e.target.value)} value="put">
+              수정
+            </S.ModifyBtn>
+            <S.PublicBtn onClick={handleChange}>
+              {isOpen === 0 ? "비공개" : "공개"}
+            </S.PublicBtn>
+          </>
+        ) : (
+          <>
+            <S.DeleteBtn onClick={(e) => crud(e.target.value)} value="delete">
+              삭제
+            </S.DeleteBtn>
+            <S.PublicBtn onClick={handleChange}>
+              {isOpen === 0 ? "비공개" : "공개"}
+            </S.PublicBtn>
+          </>
         )}
       </S.Row>
+
       <S.CommentWriteBox>
         <S.CommentWrite
           placeholder="댓글 쓰기"
@@ -234,6 +241,7 @@ export default function DiaryDetail() {
                   onClick={(e) => {
                     deleteComment(comment.reviewId, e)
                   }}
+                  color="var(--color-warning)"
                 />
               ) : (
                 ''

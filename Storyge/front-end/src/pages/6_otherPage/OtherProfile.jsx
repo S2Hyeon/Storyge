@@ -12,7 +12,6 @@ import { getIsFollowing } from "api/user/getIsFollowing";
 import { TbLock } from "react-icons/tb";
 
 function OtherPage() {
-  // console.log("현재 클릭한 페이지 유저의 id: ", props.userId);
   let [diary, setDiary] = useState(true);
 
   const location = useLocation();
@@ -86,15 +85,11 @@ function OtherPage() {
               <S.ToggleOne>
                 <BsCircleFill
                   size={7}
-                  color={
-                    diary ? "var(--color-primary)" : "var(--color-darkgrey)"
-                  }
+                  color={diary ? "var(--color-primary)" : "var(--color-grey)"}
                 />
                 <span
                   style={{
-                    color: diary
-                      ? "var(--color-black)"
-                      : "var(--color-darkgrey)",
+                    color: diary ? "var(--color-black)" : "var(--color-grey)",
                   }}
                 >
                   {" "}
@@ -104,15 +99,11 @@ function OtherPage() {
               <S.ToggleOne>
                 <BsCircleFill
                   size={7}
-                  color={
-                    !diary ? "var(--color-primary)" : "var(--color-darkgrey)"
-                  }
+                  color={!diary ? "var(--color-primary)" : "var(--color-grey)"}
                 />
                 <span
                   style={{
-                    color: !diary
-                      ? "var(--color-black)"
-                      : "var(--color-darkgrey)",
+                    color: !diary ? "var(--color-black)" : "var(--color-grey)",
                   }}
                 >
                   {" "}

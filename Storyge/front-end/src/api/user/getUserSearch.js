@@ -9,8 +9,6 @@ export async function getUserSearch(keyword) {
           Authorization: getCookie("token"),
         },
       });
-      // console.log(response.data);
-      // console.log(response.data.length);
       return response.data;
     } catch (error) {
       console.error(error);

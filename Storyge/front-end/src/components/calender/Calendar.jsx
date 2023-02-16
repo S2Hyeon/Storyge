@@ -17,7 +17,7 @@ function CustomCalendar(props) {
   function lastmonth() {
     const year = now.getFullYear();
     const num = now.getMonth();
-    if (num === 0) {
+    if (num === 0) { 
       return `${year - 1}-12-01`;
     } else if (num === 10 || num === 11) {
       return `${year}-${num}-01`;
@@ -86,10 +86,15 @@ function CustomCalendar(props) {
       onActiveStartDateChange={(e) => {
         setCurDate(e.activeStartDate);
       }}
+      minDetail="month"
       calendarType="US"
       showNeighboringMonth={false} //  이전, 이후 달의 날짜는 보이지 않도록 설정
       formatDay={(locale, date) => dayjs(date).format("D")}
-      onClickDay={(date) => goDiaryList(date)}
+      onClickDay={(date) => {
+        if (curDate >= date) {
+          goDiaryList(date);
+        }
+      }}
       tileContent={({ date }) => {
         // getMonth(date);
         let chosenData;

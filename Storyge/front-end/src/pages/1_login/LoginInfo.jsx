@@ -24,8 +24,8 @@ export default function LoginInfo() {
           headers: {
             Authorization: getCookie('token'),
           },
-        })
-        setInitImg(response.data.profileImg)
+        });
+        setInitImg(response.data.profileImg);
       } catch (err) {
         console.log(err)
       }
@@ -45,8 +45,9 @@ export default function LoginInfo() {
   }
 
   async function onSubmit() {
-    putUser(initImg, content)
-    gomain()
+    putUser(initImg, content);
+    alert("프로필 추가 완료");
+    gomain();
   }
 
   return (

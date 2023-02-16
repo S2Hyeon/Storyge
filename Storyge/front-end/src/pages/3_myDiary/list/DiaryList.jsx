@@ -31,7 +31,7 @@ export default function DiaryList() {
   )
 
   //해당 날짜의 내 일기 목록들
-  const [diaryListData, setDiaryListData] = useState([])
+  const [diaryListData, setDiaryListData] = useState([]);
 
   useEffect(() => {
     async function getAndSetDiaryList() {

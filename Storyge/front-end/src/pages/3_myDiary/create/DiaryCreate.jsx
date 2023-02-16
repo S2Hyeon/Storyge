@@ -21,14 +21,13 @@ export default function Creatediary() {
   const [spinner, setSpinner] = useState(false)
   const [checked, setChecked] = useState(false)
   const handleChange = (nextChecked) => {
-    setChecked(nextChecked)
-    console.log(checked)
-  }
+    setChecked(nextChecked);
+  };
 
   useEffect(() => {
     async function getDiaryCount() {
-      const response = await getCount()
-      setCount(response)
+      const response = await getCount();
+      setCount(response);
     }
     getDiaryCount()
   }, [count])
@@ -38,9 +37,9 @@ export default function Creatediary() {
       .then((data1) => {
         OpenAI({ input: data1[1], type: 2 })
           .then((data2) => {
-            setSpinner(false)
-            setModalOpen(true)
-            setInfo([data1[0], data2])
+            setSpinner(false);
+            setModalOpen(true);
+            setInfo([data1[0], data2]);
           })
           .catch((err) => {
             console.log(err)
@@ -54,23 +53,22 @@ export default function Creatediary() {
   function onChange(e) {
     setContent(e.target.value)
     if (content.length > 99) {
-      alert('일기가 너무 길어요~')
-      setContent(content.substr(0, 99))
+      alert("일기는 100자 이하로 입력 가능합니다.");
+      setContent(content.substr(0, 99));
     }
   }
   async function isWritten() {
     if (content.length === 0) {
-      alert('일기를 작성하세요~')
+      alert("일기 내용을 입력해주세요.");
     } else if (content.length > 100) {
     } else {
       // 일기를 작성 할 수 있는 횟수 검사
       if (count < 24) {
-        setSpinner(true)
-        const test = await getInfo(content, setModalOpen)
-        // console.log(test);
-        setInfo(test)
+        setSpinner(true);
+        const test = await getInfo(content, setModalOpen);
+        setInfo(test);
       } else {
-        alert('하루 작성 가능한 일기를 모두 작성함')
+        alert("하루 작성 가능 24개의 일기를 모두 작성하셨습니다.");
       }
     }
   }
@@ -104,13 +102,13 @@ export default function Creatediary() {
         <h1>일기 작성 페이지</h1>
 
         <S.DateContainer>
-          <div style={{ color: 'var(--color-grey-light)', fontSize: '12px' }}>
+          <div style={{ color: "var(--color-grey-dark)", fontSize: "12px" }}>
             &nbsp;작성날짜&nbsp;
           </div>
           <div style={{ fontFamily: 'S-CoreDream-5Medium' }}>
             <Clock format={'YYYY.MM.DD'} ticking={true} />
           </div>
-          <div style={{ color: 'var(--color-grey-light)', fontSize: '12px' }}>
+          <div style={{ color: "var(--color-grey-dark)", fontSize: "12px" }}>
             &nbsp;작성시간&nbsp;
           </div>
           <div style={{ fontFamily: 'S-CoreDream-5Medium' }}>
@@ -121,19 +119,13 @@ export default function Creatediary() {
         <S.card backgroundColor="var(--color-white)">
           <S.TextBox
             type="text"
-            placeholder="대충 멋진 문구로 글쓰기를 자극하라"
+            placeholder="현재의 상황을 입력해주세요."
             ref={contentRef}
             value={content}
             onChange={onChange}
           />
           <S.CardFoot height="30px" backgroundColor="var(--color-white)">
             <S.CountDiary>{content.length} / 100</S.CountDiary>
-            {/* <Switch
-              onChange={handleChange}
-              checked={checked}
-              offColor="#c0bcbc"
-              onColor="#accebc"
-            /> */}
 
             {!checked ? (
               <div
@@ -142,7 +134,7 @@ export default function Creatediary() {
                   setChecked(!checked)
                 }}
               >
-                <BiLockOpenAlt font-size="20px" color="var(--color-primary)" />
+                <BiLockOpenAlt fontSize="20px" color="var(--color-primary)" />
               </div>
             ) : (
               <div
@@ -178,7 +170,11 @@ export default function Creatediary() {
           scope={checked ? 0 : 1}
         />
       )}
-      {spinner && <Modal setModalOpen={setModalOpen} content={info} num={2} />}
+      {spinner && (
+        <Modal setModalOpen={setModalOpen} content={info} num={2}>
+          여긴가?
+        </Modal>
+      )}
     </>
   )
 }

@@ -28,12 +28,12 @@ export default function ProfileBox(props) {
   useEffect(() => {
     async function getAndSetIsFollowing() {
       if (props.otherUserId != null) {
-        const response = await getIsFollowing(props.otherUserId)
-        setIsFollowing(response)
+        const response = await getIsFollowing(props.otherUserId);
+        setIsFollowing(response);
       }
     }
-    getAndSetIsFollowing()
-  }, [isStateChanged])
+    getAndSetIsFollowing();
+  }, [isStateChanged]);
 
   //이미 내가 팔로우를 신청했는지 여부
   const [isWaitingConfirm, setIsWaitingConfirm] = useState(props.isAlreadyApply)

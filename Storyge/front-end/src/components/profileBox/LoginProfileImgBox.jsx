@@ -16,10 +16,10 @@ export default function LoginProfileBoxImg({ profileImg, modifyFormData }) {
       setImgFile(reader.result)
     }
 
-    const formData = new FormData()
-    formData.append('multipartFile', file)
-    modifyFormData(formData)
-  }
+    const formData = new FormData();
+    formData.append("multipartFile", file);
+    modifyFormData(formData);
+  };
 
   return (
     <>

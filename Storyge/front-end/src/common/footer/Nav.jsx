@@ -21,14 +21,14 @@ function Footer(props) {
     },
     heartbeatTimeout: 1200000,
     withCredentials: true,
-  })
-  eventSource.addEventListener('connect', (e) => {
-    const { data: receivedConnectData } = e
-  })
-  eventSource.addEventListener('notification', function (event) {
-    const { data: receivedConnectData } = event
-    setIsNewAlert(true)
-  })
+  });
+  eventSource.addEventListener("connect", (e) => {
+    const { data: receivedConnectData } = e;
+  });
+  eventSource.addEventListener("notification", function(event) {
+    const { data: receivedConnectData } = event;
+    setIsNewAlert(true);
+  });
 
   return (
     <S.Nav>

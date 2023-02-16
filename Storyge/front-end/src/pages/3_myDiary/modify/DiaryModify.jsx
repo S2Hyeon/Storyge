@@ -24,12 +24,12 @@ export default function Modifydiary() {
   const [spinner, setSpinner] = useState(false)
   const [checked, setChecked] = useState(already.scope === 0 ? true : false)
   const handleChange = (nextChecked) => {
-    setChecked(nextChecked)
-  }
+    setChecked(nextChecked);
+  };
   useEffect(() => {
     async function getDiaryCount() {
-      const response = await getCount()
-      setCount(response)
+      const response = await getCount();
+      setCount(response);
     }
     getDiaryCount()
   }, [count])
@@ -39,9 +39,9 @@ export default function Modifydiary() {
       .then((data1) => {
         OpenAI({ input: data1[1], type: 2 })
           .then((data2) => {
-            setSpinner(false)
-            setModalOpen(true)
-            setInfo([data1[0], data2])
+            setSpinner(false);
+            setModalOpen(true);
+            setInfo([data1[0], data2]);
           })
           .catch((err) => {
             console.log(err)
@@ -65,9 +65,9 @@ export default function Modifydiary() {
     } else if (content.length > 100) {
     } else {
       // 일기를 작성 할 수 있는 횟수 검사
-      setSpinner(true)
-      const test = await getInfo(content, setModalOpen)
-      setInfo(test)
+      setSpinner(true);
+      const test = await getInfo(content, setModalOpen);
+      setInfo(test);
     }
   }
 

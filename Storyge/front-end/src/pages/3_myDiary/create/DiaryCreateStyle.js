@@ -13,7 +13,7 @@ export const DateContainer = styled.div`
 
 export const card = styled.div`
   border-radius: 20px;
-  border: 3px solid #accebc;
+  border: 3px solid var(--color-primary);
   background-color: ${(props) => props.backgroundColor};
   margin: 5px 0 10px 0;
   padding: 2px;
@@ -58,5 +58,5 @@ export const Middle = styled.div`
   display: flex;
   justify-content: right;
   margin: 0 20px 0 0;
-  color: var(--color-grey-light);
+  color: var(--color-grey-dark);
 `;

@@ -8,7 +8,6 @@ export async function getRecentDiary() {
         Authorization: getCookie("token"),
       },
     });
-    console.log("최근 업데이트 목록: ", response.data);
     return response.data;
   } catch (error) {
     console.error(error);

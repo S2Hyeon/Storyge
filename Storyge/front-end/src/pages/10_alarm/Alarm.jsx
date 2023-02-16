@@ -32,26 +32,28 @@ export default function Alarm() {
           headers: {
             Authorization: getCookie('token'),
           },
-        })
-        setUserData(response.data)
+        });
+        setUserData(response.data);
       } catch (err) {
         console.log(err)
       }
     }
 
-    getUserData()
-  }, [])
+    getUserData();
+  }, []);
 
   //클릭했을 때 알림 배경 없애기
   async function makeReadAlarm(notificationId, isRead) {
     if (isRead === 0) {
-      await putMakeReadAlarm(notificationId)
+      await putMakeReadAlarm(notificationId);
     }
   }
 
   return (
     <S.Container>
-      {userData && (
+      {userData.length === 0 ? (
+        <S.NoAlarmList>보여드릴 알림이 없어요 🥲</S.NoAlarmList>
+      ) : (
         <S.List>
           {userData.map((alarm, key) => {
             if (alarm.notiType === 'WAIT') {

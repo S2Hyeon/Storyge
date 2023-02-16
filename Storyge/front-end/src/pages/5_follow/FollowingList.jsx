@@ -20,14 +20,14 @@ export default function FollowingList() {
           headers: {
             Authorization: getCookie('token'),
           },
-        })
-        setFollowingList(response.data)
+        });
+        setFollowingList(response.data);
       } catch (err) {
         console.log(err)
       }
     }
-    getFollowingList()
-  }, [flag])
+    getFollowingList();
+  }, [flag]);
 
   const deleteFollowing = async (id, e) => {
     if (
@@ -46,9 +46,9 @@ export default function FollowingList() {
                 Authorization: getCookie('token'),
               },
             }).then(() => {
-              setFlag(!flag)
-              e.preventDefault()
-            })
+              setFlag(!flag);
+              e.preventDefault();
+            });
           } catch (err) {
             console.log(err)
           }
@@ -65,32 +65,39 @@ export default function FollowingList() {
   return (
     <S.Container>
       <S.LineText>ALL</S.LineText>
-      <S.List>
-        {followingList.map((list) => {
-          return (
-            <S.Profile key={list.userId}>
-              <S.AllBox
-                onClick={(e) => {
-                  goOtherPage(list.userId, e)
-                }}
-              >
-                <S.Img profile={list.profileImg}></S.Img>
-                <S.Text>{list.nickname}</S.Text>
-              </S.AllBox>
-              <S.BtnBox>
-                <CiCircleRemove
-                  borderColor="var(--color-primary)"
-                  color="var(--color-warning)"
-                  size="23"
+
+      {followingList.length === 0 ? (
+        <S.NoFollow>
+          <div>팔로우하고 있는 사람이 없어요 🥲</div>
+          <div>닉네임 검색으로 친구를 검색해보세요!</div>
+        </S.NoFollow>
+      ) : (
+        <S.List>
+          {followingList.map((list) => {
+            return (
+              <S.Profile key={list.userId}>
+                <S.AllBox
                   onClick={(e) => {
-                    deleteFollowing(list.userId, e)
+                    goOtherPage(list.userId, e);
                   }}
-                ></CiCircleRemove>
-              </S.BtnBox>
-            </S.Profile>
-          )
-        })}
-      </S.List>
+                >
+                  <S.Img profile={list.profileImg}></S.Img>
+                  <S.Text>{list.nickname}</S.Text>
+                </S.AllBox>
+                <S.BtnBox>
+                  <CiCircleRemove
+                    color="var(--color-warning)"
+                    size="23"
+                    onClick={(e) => {
+                      deleteFollowing(list.userId, e);
+                    }}
+                  ></CiCircleRemove>
+                </S.BtnBox>
+              </S.Profile>
+            );
+          })}
+        </S.List>
+      )}
     </S.Container>
   )
 }

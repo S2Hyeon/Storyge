@@ -68,7 +68,7 @@ export const CalendarContainer = styled.div`
 export const CalendarBox = styled.div`
   min-height: 10px;
   width: 100%;
-  background: var(--color-white);
+  background: var(--color-calendar);
   box-shadow: 0px 16px 40px -4px rgba(112, 144, 176, 0.2);
   border-radius: 12px;
   display: flex;

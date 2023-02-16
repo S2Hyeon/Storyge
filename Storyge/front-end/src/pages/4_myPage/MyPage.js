@@ -12,14 +12,13 @@ export const Menu = styled.div`
   justify-content: safe;
   flex-grow: 1 2;
 
-  font-family: 'S-CoreDream-4Regular';
-  font-size: 12px;
-  margin: 10px 0;
-`
+  font-family: "S-CoreDream-4Regular";
+  font-size: 16px;
+`;
 
 export const Text = styled.div`
-  font-family: 'S-CoreDream-4Regular';
-  font-size: 16px;
+  font-family: "S-CoreDream-4Regular";
+  font-size: 15px;
   width: 80%;
   text-align: left;
   margin-left: 20px;

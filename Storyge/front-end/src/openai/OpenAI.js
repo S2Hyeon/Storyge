@@ -62,7 +62,6 @@ export const OpenAI = async ({ input, type }) => {
   // type 0 : music, 1 : classify, 2 : translate
   result = response.data.choices[0].text;
   if (type === 0) {
-    console.log(result);
     let start, end;
     let trigger = 0;
     for (let i = 0; i < result.length; i++) {

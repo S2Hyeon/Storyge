@@ -11,7 +11,7 @@ export const submitBtn = styled.button`
 
 export const DiaryContainer = styled.div`
   border-radius: 20px 20px 0 0;
-  border: 3px solid #accebc;
+  border: 3px solid var(--color-primary);
   margin: 20px 0 0 0;
   width: 100%;
   background-color: var(--color-background);
@@ -62,7 +62,6 @@ export const ProfileImg = styled.div`
 `;
 
 export const TimeContainer = styled.div`
-  // border: 1px solid black;
   width: 100%;
   height: 26px;
   display: flex;
@@ -71,7 +70,6 @@ export const TimeContainer = styled.div`
 `;
 
 export const Content = styled.div`
-  // border: 1px solid pink;
   width: 100%;
   font-family: "S-CoreDream-3Light";
   font-size: 15px;
@@ -82,7 +80,7 @@ export const AnalyzedContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  border: 3px solid #accebc;
+  border: 3px solid var(--color-primary);
   background-color: var(--color-primary);
   min-height: ${(props) => props.height};
   border-radius: 0 0 20px 20px;
@@ -114,7 +112,7 @@ export const Analyzed = styled.div`
 export const CommentWriteBox = styled.div`
   // border: 1px solid red;
   border: hidden;
-  background-color: var(--color-grey);
+  background-color: var(--color-grey-light);
   border-radius: 100px;
   height: 35px;
   width: 100%;
@@ -125,7 +123,6 @@ export const CommentWriteBox = styled.div`
 `;
 
 export const CommentWrite = styled.input`
-  background-color: var(--color-grey);
   border-radius: 100px;
   border: hidden;
   font-size: 16px;
@@ -156,25 +153,21 @@ export const CommentInfo = styled.div`
 `;
 
 export const CommentNameTime = styled.div`
-  // border: 1px solid blue;
   font-size: 14px;
   margin-right: 43%;
 `;
 
 export const CommentName = styled.div`
-  // border: 1px solid green;
   font-family: "S-CoreDream-5Medium";
 `;
 
 export const CommentTime = styled.div`
-  // border: 1px solid red;
   font-family: "S-CoreDream-3Light";
-  color: #afafaf;
+  color: var(--color-grey-dark);
 `;
 
 export const CommentContent = styled.div`
-  // border: 1px solid purple;
-  margin: 0 0 5px 0;
+  margin: 3px 0 5px 0;
 `;
 
 export const Row = styled.div`
@@ -196,4 +189,39 @@ export const InfoBtn = styled.button`
 
 export const Test = styled.div`
   margin: 0 0 0 7px;
+`;
+
+export const ModifyBtn = styled.button`
+  margin: 0 5px;
+  border: none;
+  height: 30px;
+  width: 70px;
+  border-radius: 100px;
+  background-color: var(--color-primary);
+  font-family: "S-CoreDream-4Regular";
+`;
+
+export const DeleteBtn = styled.button`
+  margin: 0 5px;
+  border: none;
+  height: 30px;
+  width: 70px;
+  border-radius: 100px;
+  background-color: var(--color-warning);
+  font-family: "S-CoreDream-4Regular";
+`;
+
+export const PublicBtn = styled.button`
+  margin: 0 5px;
+  border: none;
+  height: 30px;
+  width: 70px;
+  border-radius: 100px;
+  background-color: var(--color-grey-light);
+  font-family: "S-CoreDream-4Regular";
+`;
+
+export const DivideDiv = styled.div`
+  padding: 5px;
+  width: ${(1 / 3) * 100}%;
 `;

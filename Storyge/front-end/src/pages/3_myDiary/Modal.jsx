@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import * as S from './MyDiaryStyle'
-import Spinner from '../../components/spinner/Spinner'
-import Emoji from 'components/emoji/Emoji'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from "react";
+import * as S from "./ModalStyle";
+import Spinner from "../../components/spinner/Spinner";
+import Emoji from "components/emoji/Emoji";
+import { useNavigate } from "react-router-dom";
 
 import { postDiary } from 'api/diary/postDiary'
 import { putDiary } from 'api/diary/putDiary'
@@ -33,10 +33,9 @@ function Modal({
   ]
   // // 작성된 일기와 분석 내용 서버에 전송
   async function writeDiary() {
-    // const curDate = dayjs(new Date()).format("YYYY-MM-DD");
-    if (classify === 'create') {
-      await postDiary(diary, [reccomendEmotion, content[1]], scope)
-      movePage(`/diarylist`, { state: { date: new Date() } })
+    if (classify === "create") {
+      await postDiary(diary, [reccomendEmotion, content[1]], scope);
+      movePage(`/diarylist`, { state: { date: new Date() } });
     } else {
       await putDiary(diary, [reccomendEmotion, content[1]], diaryId, scope)
       movePage(`/diarylist`, { state: { date: createdAt } })
@@ -50,17 +49,14 @@ function Modal({
           <p>우리가 분석한 감정이에요! 😍</p>
           <Emoji emotion={content[0]} thisWidth="30px" />
           <S.ModalBtnDiv>
-            <S.ModalBtn color="#84b9c0" onClick={writeDiary}>
-              <S.ModalText>맞아요</S.ModalText>
-            </S.ModalBtn>
-            <S.ModalBtn color="#cfcece" onClick={() => setIsChecked(1)}>
-              <S.ModalText>아니요</S.ModalText>
-            </S.ModalBtn>
+            <S.NoBtn onClick={() => setIsChecked(1)}>아니에요</S.NoBtn>
+            <S.CancelBtn onClick={() => setModalOpen(false)}>취소</S.CancelBtn>
+            <S.YesBtn onClick={writeDiary}>맞아요!</S.YesBtn>
           </S.ModalBtnDiv>
         </S.ModalItems>
       ) : isChecked === 1 ? (
         <S.ModalItems>
-          <p>감정을 선택해주세요</p>
+          <p>어떤 감정을 느끼고 계신가요?</p>
           <S.Row>
             {emotionList.map((emotion) => {
               return (
@@ -81,9 +77,8 @@ function Modal({
             })}
           </S.Row>
           <S.ModalBtnDiv>
-            <S.ModalBtn color="var(--color-primary)" onClick={writeDiary}>
-              <S.ModalText>확인</S.ModalText>
-            </S.ModalBtn>
+            <S.CancelBtn onClick={() => setModalOpen(false)}>취소</S.CancelBtn>
+            <S.YesBtn onClick={writeDiary}>등록하기</S.YesBtn>
           </S.ModalBtnDiv>
         </S.ModalItems>
       ) : isChecked === 2 ? (

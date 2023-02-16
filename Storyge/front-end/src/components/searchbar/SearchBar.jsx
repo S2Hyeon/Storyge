@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { AiOutlineSearch } from 'react-icons/ai'
-import * as S from './../searchbar/SearchBar.js'
-import data2 from './SearchBarData'
+import React, { useEffect, useState } from "react";
+import { AiOutlineSearch } from "react-icons/ai";
+import * as S from "./../searchbar/SearchBar.js";
 
 import { debounce } from 'lodash'
 import { getUserSearch } from 'api/user/getUserSearch'

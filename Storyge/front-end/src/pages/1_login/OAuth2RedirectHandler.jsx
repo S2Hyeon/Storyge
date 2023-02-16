@@ -9,8 +9,8 @@ import * as S from 'pages/1_login/Loginstyle'
 const OAuth2RedirectHandler = (props) => {
   // 인가코드
   useEffect(() => {
-    let code = new URL(window.location.href).searchParams.get('code')
-    let state = new URL(window.location.href).pathname.split('/')[3]
+    let code = new URL(window.location.href).searchParams.get("code");
+    let state = new URL(window.location.href).pathname.split("/")[3];
 
     if (state === 'google') {
       googleLogin(code)

@@ -30,15 +30,15 @@ export const LoginInfoText = styled.h2`
 `;
 
 export const NaverImg = styled.img`
-  width: 330px;
+  width: 300px;
   object-fit: scale-down;
 `;
 export const GoogleImg = styled.img`
-  width: 330px;
+  width: 300px;
   object-fit: scale-down;
 `;
 export const KakaoImg = styled.img`
-  width: 330px;
+  width: 300px;
   object-fit: scale-down;
 `;
 

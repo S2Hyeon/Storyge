@@ -29,10 +29,10 @@ const Toast = MySwal.mixin({
   showConfirmButton: false,
   timer: 3000,
   timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.addEventListener("mouseenter", Swal.stopTimer);
-    toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
+  // didOpen: (toast) => {
+  //   toast.addEventListener("mouseenter", Swal.stopTimer);
+  //   toast.addEventListener("mouseleave", Swal.resumeTimer);
+  // },
 });
 
 export default function DiaryDetail() {
@@ -49,8 +49,8 @@ export default function DiaryDetail() {
           text: "삭제하시겠습니까?",
           icon: "warning",
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
+          confirmButtonColor: "var(--color-primary)",
+          cancelButtonColor: "var(--color-warning)",
           confirmButtonText: "Yes",
         }).then((result) => {
           if (result.isConfirmed) {

@@ -26,7 +26,7 @@ export default function Music() {
         icon: "warning",
         confirmButtonColor: "var(--color-primary)",
         cancelButtonColor: "var(--color-warning)",
-        confirmButtonText: "Yes",
+        confirmButtonText: "OK",
       });
     } else {
       setBtnToggle(1);

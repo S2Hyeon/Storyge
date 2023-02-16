@@ -39,8 +39,8 @@ export default function MyPage({ setToken }) {
         text: "로그아웃하시겠습니까?",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
+        confirmButtonColor: "var(--color-primary)",
+        cancelButtonColor: "var(--color-warning)",
         confirmButtonText: "Yes",
       }).then((result) => {
         if (result.isConfirmed) {

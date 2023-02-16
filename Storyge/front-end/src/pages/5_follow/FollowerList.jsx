@@ -66,8 +66,8 @@ export default function FollowerList() {
           text: "삭제하시겠습니까?",
           icon: "warning",
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
+          confirmButtonColor: "var(--color-primary)",
+          cancelButtonColor: "var(--color-warning)",
           confirmButtonText: "Yes",
         }).then((result) => {
           if (result.isConfirmed) {

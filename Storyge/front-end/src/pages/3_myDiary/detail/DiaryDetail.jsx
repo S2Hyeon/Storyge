@@ -36,6 +36,8 @@ const Toast = MySwal.mixin({
   },
 });
 
+const movePage = useNavigate();
+
 export default function DiaryDetail() {
   async function doDeleteDiary(diaryId) {
     await deleteDiary(diaryId);

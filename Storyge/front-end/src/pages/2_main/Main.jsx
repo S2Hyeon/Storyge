@@ -155,7 +155,7 @@ function Main() {
 
         <S.WiseBox>
           <S.Wise>{quoteData && quoteData.quoteContent}</S.Wise>
-          <S.WiseFrom>{quoteData && quoteData.quoteSource}</S.WiseFrom>
+          <S.WiseFrom>- {quoteData && quoteData.quoteSource} -</S.WiseFrom>
         </S.WiseBox>
       </G.BodyContainer>
       {isGloomy && showGloomy && <Modal setIsGloomy={setIsGloomy} />}

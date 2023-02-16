@@ -13,7 +13,7 @@ export const DateContainer = styled.div`
 
 export const card = styled.div`
   border-radius: 20px;
-  border: 3px solid var(--color-primary);
+  border: 2px solid var(--color-primary);
   background-color: ${(props) => props.backgroundColor};
   margin: 5px 0 10px 0;
   padding: 2px;

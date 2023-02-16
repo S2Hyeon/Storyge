@@ -5,6 +5,7 @@ export async function putUser(file, nickName) {
   try {
     const formData = new FormData();
     const blob = new Blob([nickName], { type: "application/json" });
+    console.log("닉네임??????????????????????????", nickName);
     formData.append("multipartFile", file);
     formData.append("nickname", blob);
     const response = await Api.put("/user", formData, {

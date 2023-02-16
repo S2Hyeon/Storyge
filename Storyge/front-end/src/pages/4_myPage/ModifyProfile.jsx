@@ -87,7 +87,9 @@ export default function ModifyProfile() {
           onChange={onChange}
         />
       </Box>
-      <S.SubmitBtn onClick={onsubmit}>등록</S.SubmitBtn>
+      <S.SubmitBtn onClick={onsubmit}>
+        <S.BtnText>등 록</S.BtnText>
+      </S.SubmitBtn>
     </S.BodyContainer>
   );
 }

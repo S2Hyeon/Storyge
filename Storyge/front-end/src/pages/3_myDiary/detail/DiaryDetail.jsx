@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 import { AiOutlineDelete } from "react-icons/ai";
+import { BsBook } from "react-icons/bs";
 import { useLocation } from "react-router";
 
 import * as S from "./DiaryDetailStyle";
@@ -36,8 +37,6 @@ const Toast = MySwal.mixin({
 });
 
 export default function DiaryDetail() {
-  const movePage = useNavigate();
-
   async function doDeleteDiary(diaryId) {
     await deleteDiary(diaryId);
     movePage(-1);
@@ -181,11 +180,15 @@ export default function DiaryDetail() {
           <S.ToggleBtnBox>
             {isChecked ? (
               <div style={{ fontFamily: "S-CoreDream-5Medium" }}>
-                이 일기의 분석 결과 보기 <BsFillCaretDownFill />
+                <S.BtnText>
+                  이 일기의 분석 결과 보기 <BsFillCaretDownFill />
+                </S.BtnText>
               </div>
             ) : (
               <div style={{ fontFamily: "S-CoreDream-5Medium" }}>
-                이 일기의 분석 결과 닫기 <BsFillCaretUpFill />
+                <S.BtnText>
+                  이 일기의 분석 결과 닫기 <BsFillCaretUpFill />
+                </S.BtnText>
               </div>
             )}
           </S.ToggleBtnBox>
@@ -201,13 +204,13 @@ export default function DiaryDetail() {
         {!isOther && myDiaryDetailData && myDiaryDetailData.updateCnt === 0 ? (
           <>
             <S.DeleteBtn onClick={(e) => crud(e.target.value)} value="delete">
-              삭제
+              <S.BtnText>삭제</S.BtnText>
             </S.DeleteBtn>
             <S.ModifyBtn onClick={(e) => crud(e.target.value)} value="put">
-              수정
+              <S.BtnText>수정</S.BtnText>
             </S.ModifyBtn>
             <S.PublicBtn onClick={handleChange}>
-              {isOpen === 0 ? "비공개" : "공개"}
+              <S.BtnText>{isOpen === 0 ? "비공개" : "공개"}</S.BtnText>
             </S.PublicBtn>
           </>
         ) : (
@@ -229,7 +232,9 @@ export default function DiaryDetail() {
           onChange={onChangeCommentInput}
           onKeyUp={onKeyUpCommentInput}
         />
-        <S.submitBtn onClick={writeComment}>작성</S.submitBtn>
+        <S.submitBtn onClick={writeComment}>
+          <S.BtnText>작성</S.BtnText>
+        </S.submitBtn>
       </S.CommentWriteBox>
 
       {commentData.map((comment, index) => {

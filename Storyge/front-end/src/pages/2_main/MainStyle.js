@@ -32,6 +32,7 @@ export const ProfileNickName = styled.div`
   font-size: 12px;
   width: 100%;
   text-align: center;
+  font-family: "S-CoreDream-3Light";
 `;
 
 export const ProfileContainer = styled.div`

@@ -38,7 +38,7 @@ public class SseController {
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
 
         // 현재 클라이언트를 위한 SseEmitter 생성
-        SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
+        SseEmitter sseEmitter = new SseEmitter(300000L);
         try {
             sseEmitter.send(SseEmitter.event().name("connect").data("connected")); // 연결
         } catch (IOException e) {

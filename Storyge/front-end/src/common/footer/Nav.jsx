@@ -29,41 +29,8 @@ function Footer(props) {
     const { data: receivedConnectData } = event;
     setIsNewAlert(true);
   });
-  // const [isNewAlert, setIsNewAlert] = useState(false);
-  // useEffect(() => {
-  //   let eventSource;
-  //   const fetchSse = async () => {
-  //     try {
-  //       eventSource = new EventSource("https://storyge.xyz/api/sub", {
-  //         headers: {
-  //           Authorization: getCookie("token"),
-  //           "Content-Type": "text/event-stream",
-  //           "Cache-Control": "no-cache",
-  //           Connection: "keep-alive",
-  //           "X-Accel-Buffering": "no",
-  //         },
-  //         heartbeatTimeout: 12000,
-  //         withCredentials: true,
-  //       });
-  
-  //       //이벤트 소스에서 새로운 응답이 있을 경우
-  //       eventSource.onmessage = async (event) => {
-  //         const response = await event.data;
-  //         console.log(response); //뭐가 넘어오는지 확인해보기!!!
-  //         setIsNewAlert(true);
-  //       };
-  
-  //       //에러가 발생했을 경우
-  //       eventSource.onerror = async (event) => {
-  //         // No activity가 포함되지 않았을 경우 이벤트소스 닫기
-  //         eventSource.close();
-  //       };
-  //     } catch (error) {}
-  //   };
-  //   fetchSse();
-  //   return () => eventSource.close();
-  // });
-  return (
+
+  return ( 
     <S.Nav>
       <S.IconContainer
         onClick={() => {

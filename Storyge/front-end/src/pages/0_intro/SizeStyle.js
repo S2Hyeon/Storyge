@@ -6,12 +6,11 @@ export const Box = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: var(--color-yellow-light);
+  background-color: var(--color-secondary);
 `;
 
 export const Logo = styled.img`
   width: 30%;
-  margin-bottom: 10%;
 `;
 
 export const TextM = styled.div`

@@ -83,6 +83,9 @@ sourceSets {
     main.java.srcDir querydslDir
 }
 configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
     querydsl.extendsFrom compileClasspath
 }
 compileQuerydsl {
@@ -90,6 +93,14 @@ compileQuerydsl {
 }
 //querydsl 추가 끝
 
+//컴파일러
+//allprojects {
+//    gradle.projectsEvaluated {
+//        tasks.withType(JavaCompile) {
+//            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+//        }
+//    }
+//}
 //tasks.named('test') {
 //    useJUnitPlatform()
 //}

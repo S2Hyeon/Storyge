@@ -35,7 +35,6 @@ public class DiaryController {
     @ApiOperation(value = "일기 작성", notes = "일기 작성하기")
     @PostMapping("/diary")
     public ResponseEntity<?> insertDiary(@RequestBody DiaryRequestDto diaryRequestDto, HttpServletRequest request) {
-
         Long userId = jwtUtil.getUserId(request.getHeader(TOKEN_HEADER));
         diaryRequestDto.setUserId(userId);
         Optional<Long> optionalDiaryId = diaryService.insertDiary(userId, diaryRequestDto);
@@ -57,7 +56,7 @@ public class DiaryController {
             return new ResponseEntity<>(FAIL, HttpStatus.NOT_FOUND);
         }
         recentDiaryService.insertReadDiary(userId, diaryId);
-        return new ResponseEntity<>(diaryResponseDto, HttpStatus.OK);
+        return new ResponseEntity<>(diaryResponseDto.get(), HttpStatus.OK);
     }
 
     @ApiOperation(value = "일별 일기 목록(본인)", notes = "선택한 날짜의 본인 일기들을 가져온다 \ndate : 2023-02-07")

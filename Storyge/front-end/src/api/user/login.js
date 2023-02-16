@@ -10,14 +10,12 @@ export const kakaoLogin = async (code) => {
     url: `https://storyge.xyz/api/oauth/callback/kakao?code=${code}&state=kakao&prompt=none`,
   })
     .then((res) => {
-      console.log(res);
       if (res.data.accessToken) {
         setCookie("token", `Bearer ${res.data.accessToken}`, {
           path: "/", // 모든 페이지에서 쿠키 접근 가능
           sameSite: "strict",
         });
       }
-      alert(`${typeof res.data.user} ---> ${res.data.user}`);
       if (res.data.user === true) {
         // 이미 가입된 사용자인 경우,
         window.location.href = `http://${CUR_URL}/`; // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
@@ -27,7 +25,6 @@ export const kakaoLogin = async (code) => {
       }
     })
     .catch((err) => {
-      console.log("소셜로그인 에러", err);
       window.alert("로그인에 실패하였습니다.");
       window.location.href = `http://${CUR_URL}/login`; // 로그인 실패하면 로그인화면으로 돌려보냄
     });
@@ -36,19 +33,12 @@ export const kakaoLogin = async (code) => {
 export const googleLogin = async (code) => {
   axios({
     method: "GET",
-    url: `http://storyge.xyz/oauth/callback/google?code=${code}&state=google`,
+    url: `https://storyge.xyz/api/oauth/callback/google?code=${code}&state=google`,
   })
     .then((res) => {
-      console.log("구글 로그인 성공");
-      console.log(res);
-
       const ACCESS_TOKEN = res.data.accessToken;
       const REFRESH_TOKEN = res.data.refreshToken;
       const EXPIRATION_TIME = res.data.refreshTokenExpirationTime;
-
-      console.log(ACCESS_TOKEN);
-      console.log(REFRESH_TOKEN);
-      console.log(EXPIRATION_TIME);
 
       // 로컬 스토리지 : accessToken,토큰 만료시간
       // 쿠키 : refreshToken
@@ -64,7 +54,6 @@ export const googleLogin = async (code) => {
       window.location.href = `http://${CUR_URL}/`;
     })
     .catch((err) => {
-      console.log("소셜로그인 에러", err);
       window.alert("로그인에 실패하였습니다.");
       window.location.href = `http://${CUR_URL}/login`;
     });
@@ -73,10 +62,9 @@ export const googleLogin = async (code) => {
 export const naverLogin = async (code) => {
   axios({
     method: "GET",
-    url: `http://storyge.xyz/oauth/callback/naver?code=${code}&state=naver`,
+    url: `https://storyge.xyz/api/oauth/callback/naver?code=${code}&state=naver`,
   })
     .then((res) => {
-      console.log(res);
       if (res.data.accessToken) {
         // 쿠키에 access-token 저장
         setCookie("token", `Bearer ${res.data.accessToken}`, {
@@ -87,7 +75,6 @@ export const naverLogin = async (code) => {
       window.location.href = `http://${CUR_URL}/`;
     })
     .catch((err) => {
-      console.log("소셜로그인 에러", err);
       window.alert("로그인에 실패하였습니다.");
       window.location.href = `http://${CUR_URL}/login`;
     });

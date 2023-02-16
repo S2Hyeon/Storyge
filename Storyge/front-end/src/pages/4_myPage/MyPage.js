@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Menu = styled.div`
   // border: 1px solid red;
@@ -14,13 +14,12 @@ export const Menu = styled.div`
 
   font-family: "S-CoreDream-4Regular";
   font-size: 16px;
-  margin: 10px 0;
 `;
 
 export const Text = styled.div`
   font-family: "S-CoreDream-4Regular";
-  font-size: 20px;
+  font-size: 15px;
   width: 80%;
   text-align: left;
   margin-left: 20px;
-`;
+`

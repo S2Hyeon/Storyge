@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useLocation } from "react-router";
-import Switch from "react-switch";
-import { GrLock, GrUnlock } from "react-icons/gr";
 
 import * as S from "./DiaryDetailStyle";
 import * as G from "styles/index";
@@ -31,49 +29,42 @@ const Toast = MySwal.mixin({
   showConfirmButton: false,
   timer: 3000,
   timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.addEventListener("mouseenter", Swal.stopTimer);
-    toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
+  // didOpen: (toast) => {
+  //   toast.addEventListener("mouseenter", Swal.stopTimer);
+  //   toast.addEventListener("mouseleave", Swal.resumeTimer);
+  // },
 });
 
 export default function DiaryDetail() {
   const movePage = useNavigate();
+  async function doDeleteDiary(diaryId) {
+    await deleteDiary(diaryId);
+    movePage(-1);
+  }
+
   async function crud(event) {
     if (event === "delete") {
-      if (
-        Swal.fire({
-          text: "삭제하시겠습니까?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Toast.fire({
-              icon: "warning",
-              title: "삭제되었습니다.",
-            });
-            deleteDiary(diaryId);
-            movePage(-1);
-          }
-        })
-      ) {
-      }
-      // if (window.confirm("ㄹㅇ?")) {
-      //   // They clicked Yes
-      //   await deleteDiary(diaryId);
-      //   movePage(-1);
-      // } else {
-      //   // They clicked no
-      // }
+      Swal.fire({
+        text: "삭제하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "var(--color-primary)",
+        cancelButtonColor: "var(--color-warning)",
+        confirmButtonText: "Yes",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Toast.fire({
+            icon: "warning",
+            title: "삭제되었습니다.",
+          });
+          doDeleteDiary(diaryId);
+        }
+      });
     } else if (event === "put") {
       movePage("/modifyDiary", { state: { already: myDiaryDetailData } });
     } else {
       // await putDiary();
       setIsOpen(!isOpen);
-      console.log(isOpen);
     }
   }
   const location = useLocation();
@@ -89,7 +80,6 @@ export default function DiaryDetail() {
   //!리덕스를 이용하여 다른 사람
   const dispatch = useDispatch();
   if (isOther != null) {
-    console.log(isOther);
     dispatch({ type: "other", owner: location.state.nickname });
   } else {
     dispatch({ type: "me" });
@@ -98,17 +88,12 @@ export default function DiaryDetail() {
   useEffect(() => {
     async function getMyUserId() {
       const response = await getUserId();
-      console.log("유저 번호");
-      console.log(response.userId);
       setUserNumber(response.userId);
-      console.log("유저 번호 : " + userNumber);
     }
 
     async function getAndSetMyDiaryDetail() {
       const response = await getMyDiaryDetail(diaryId);
-      console.log(response);
       setMyDiaryDetailData(response);
-      console.log(myDiaryDetailData);
     }
 
     getMyUserId();
@@ -132,7 +117,6 @@ export default function DiaryDetail() {
   useEffect(() => {
     async function getAndSetCommentData() {
       const response = await getComment(diaryId);
-      console.log(response);
       setCommentData(response);
     }
     getAndSetCommentData();
@@ -163,7 +147,6 @@ export default function DiaryDetail() {
 
   async function deleteComment(reviewId, e) {
     await deleteReview(reviewId);
-    console.log("댓글 삭제 완료");
     setChangedCount(changedCount + 1);
   }
 
@@ -193,39 +176,65 @@ export default function DiaryDetail() {
         <S.Toggle fontSize="14px" onClick={() => setIsChecked((e) => !e)}>
           <S.ToggleBtnBox>
             {isChecked ? (
-              <div>
-                이 일기의 분석 결과 보기 <BsFillCaretDownFill />
+              <div style={{ fontFamily: "S-CoreDream-5Medium" }}>
+                <S.BtnText>
+                  이 일기의 분석 결과 보기 <BsFillCaretDownFill />
+                </S.BtnText>
               </div>
             ) : (
-              <div>
-                이 일기의 분석 결과 닫기 <BsFillCaretUpFill />
+              <div style={{ fontFamily: "S-CoreDream-5Medium" }}>
+                <S.BtnText>
+                  이 일기의 분석 결과 닫기 <BsFillCaretUpFill />
+                </S.BtnText>
               </div>
             )}
           </S.ToggleBtnBox>
         </S.Toggle>
         {isChecked ? null : (
           <S.Analyzed>
-            {myDiaryDetailData && myDiaryDetailData.analizedResult}
+            {myDiaryDetailData && myDiaryDetailData.analyzedResult}
           </S.Analyzed>
         )}
       </S.AnalyzedContainer>
+
       <S.Row>
-        {!isOther && (
-          <S.InfoBtn onClick={(e) => crud(e.target.value)} value="delete">
-            삭제
-          </S.InfoBtn>
-        )}
-        {!isOther && myDiaryDetailData && myDiaryDetailData.updateCnt === 0 ? (
-          <S.InfoBtn onClick={(e) => crud(e.target.value)} value="put">
-            수정
-          </S.InfoBtn>
-        ) : null}
-        {!isOther && (
-          <S.InfoBtn onClick={handleChange}>
-            {isOpen === 0 ? "비공개" : "공개"}
-          </S.InfoBtn>
-        )}
+        {!isOther &&
+          (myDiaryDetailData && myDiaryDetailData.updateCnt === 0 ? (
+            <>
+              <S.DeleteBtn
+                onClick={() => crud("delete")}
+                value="delete"
+                thisWidth="33%"
+              >
+                <S.BtnText>삭제</S.BtnText>
+              </S.DeleteBtn>
+              <S.ModifyBtn
+                onClick={() => crud("put")}
+                value="put"
+                thisWidth="33%"
+              >
+                <S.BtnText>수정</S.BtnText>
+              </S.ModifyBtn>
+              <S.PublicBtn onClick={handleChange} thisWidth="33%">
+                {isOpen === 0 ? "비공개" : "공개"}
+              </S.PublicBtn>
+            </>
+          ) : (
+            <>
+              <S.DeleteBtn
+                onClick={() => crud("delete")}
+                value="delete"
+                thisWidth="50%"
+              >
+                <S.BtnText>삭제</S.BtnText>
+              </S.DeleteBtn>
+              <S.PublicBtn onClick={handleChange} thisWidth="50%">
+                {isOpen === 0 ? "비공개" : "공개"}
+              </S.PublicBtn>
+            </>
+          ))}
       </S.Row>
+
       <S.CommentWriteBox>
         <S.CommentWrite
           placeholder="댓글 쓰기"
@@ -233,7 +242,9 @@ export default function DiaryDetail() {
           onChange={onChangeCommentInput}
           onKeyUp={onKeyUpCommentInput}
         />
-        <S.submitBtn onClick={writeComment}>작성</S.submitBtn>
+        <S.submitBtn onClick={writeComment}>
+          <S.BtnText>작성</S.BtnText>
+        </S.submitBtn>
       </S.CommentWriteBox>
 
       {commentData.map((comment, index) => {
@@ -250,6 +261,7 @@ export default function DiaryDetail() {
                   onClick={(e) => {
                     deleteComment(comment.reviewId, e);
                   }}
+                  color="var(--color-warning)"
                 />
               ) : (
                 ""

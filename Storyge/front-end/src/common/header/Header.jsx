@@ -2,8 +2,10 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import HeaderBackIcon from "./HeaderBackIcon";
 import * as S from "./HeaderStyle";
-import Logo from "../../assets/logo1.png";
+import Logo from "../../assets/logo3.png";
 import { TbMusic, TbBell, TbWriting, TbUser } from "react-icons/tb";
+import { BsBook } from "react-icons/bs";
+import { RiBookLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
 
 function Header() {
@@ -11,14 +13,13 @@ function Header() {
   const location = useLocation();
 
   const diaryOwner = useSelector((state) => state);
-  console.log(diaryOwner);
 
   const setHeaderContent = () => {
     // 1. 메인이 아니라면 해당 페이지에 맞는 화면 제목 띄우기
     if (location.pathname === "/music") {
       return (
         <>
-          <TbMusic />
+          <TbMusic color="var(--color-headerText)" size="18" />
           <S.TitleContainer>음악 추천</S.TitleContainer>
         </>
       );
@@ -27,7 +28,7 @@ function Header() {
     else if (location.pathname === "/alarm") {
       return (
         <>
-          <TbBell />
+          <TbBell color="var(--color-headerText)" size="18" />
           <S.TitleContainer>알림</S.TitleContainer>
         </>
       );
@@ -40,7 +41,7 @@ function Header() {
     ) {
       return (
         <>
-          <TbUser />
+          <TbUser color="var(--color-headerText)" size="18" />
           <S.TitleContainer>마이페이지</S.TitleContainer>
         </>
       );
@@ -49,7 +50,7 @@ function Header() {
     else if (location.pathname === "/createDiary") {
       return (
         <>
-          <TbWriting />
+          <TbWriting color="var(--color-headerText)" size="18" />
           <S.TitleContainer>일기 작성</S.TitleContainer>
         </>
       );
@@ -58,7 +59,8 @@ function Header() {
     else if (location.pathname === "/diarylist") {
       return (
         <>
-          <HeaderBackIcon />
+          <HeaderBackIcon color="var(--color-headerText)" size="18" />
+          <RiBookLine color="var(--color-headerText)" size="19" />
           <S.TitleContainer>
             {diaryOwner === "me" ? "나의 일기" : `${diaryOwner}'s diary`}
           </S.TitleContainer>
@@ -69,7 +71,8 @@ function Header() {
     else if (location.pathname === "/diary") {
       return (
         <>
-          <HeaderBackIcon />
+          <HeaderBackIcon color="var(--color-headerText)" size="18" />
+          <BsBook color="var(--color-headerText)" size="18" />
           <S.TitleContainer>
             {diaryOwner === "me" ? "나의 일기" : `${diaryOwner}'s diary`}
           </S.TitleContainer>

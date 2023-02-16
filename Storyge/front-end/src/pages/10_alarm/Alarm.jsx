@@ -5,7 +5,7 @@ import { getCookie } from "./../../utils/Cookies";
 import Api from "lib/customApi";
 import { useNavigate } from "react-router-dom";
 import { putMakeReadAlarm } from "api/alarm/putMakeReadAlarm";
-import axios from "axios";
+import NodataLottie from "../../api/animation/Nodata.jsx";
 
 export default function Alarm() {
   const [userData, setUserData] = useState([]);
@@ -34,29 +34,29 @@ export default function Alarm() {
           },
         });
         setUserData(response.data);
-        console.log("알림페이지 : 알림 데이터");
-        console.log(response.data);
       } catch (err) {
         console.log(err);
       }
     }
 
     getUserData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //클릭했을 때 알림 배경 없애기
   async function makeReadAlarm(notificationId, isRead) {
-    console.log("알림id: ", notificationId, " 읽음?: ", isRead);
     if (isRead === 0) {
-      console.log("들어옴????????");
       await putMakeReadAlarm(notificationId);
     }
   }
 
   return (
     <S.Container>
-      {userData && (
+      {userData.length === 0 ? (
+        <>
+          <NodataLottie />
+          <S.NoAlarmList>보여드릴 알림이 없어요</S.NoAlarmList>
+        </>
+      ) : (
         <S.List>
           {userData.map((alarm, key) => {
             if (alarm.notiType === "WAIT") {
@@ -71,7 +71,7 @@ export default function Alarm() {
                 >
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>
-                    <S.BoldText>{alarm.nickname}</S.BoldText>님이
+                    <S.BoldText>{alarm.nickname}</S.BoldText>님이&nbsp;
                     <S.BoldText>팔로우 요청</S.BoldText>을 보냈습니다.
                   </S.Text>
                 </S.Alarm>
@@ -88,7 +88,7 @@ export default function Alarm() {
                 >
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>
-                    <S.BoldText>{alarm.nickname}</S.BoldText>님이{" "}
+                    <S.BoldText>{alarm.nickname}</S.BoldText>님이&nbsp;
                     <S.BoldText>댓글</S.BoldText>을 달았습니다.
                   </S.Text>
                 </S.Alarm>
@@ -105,7 +105,7 @@ export default function Alarm() {
                 >
                   <S.Img profile={alarm.profileImg}></S.Img>
                   <S.Text>
-                    <S.BoldText>{alarm.nickname}</S.BoldText>님이{" "}
+                    <S.BoldText>{alarm.nickname}</S.BoldText>님이&nbsp;
                     <S.BoldText>팔로우 요청을 수락</S.BoldText>했습니다.
                   </S.Text>
                 </S.Alarm>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as S from "./MyDiaryStyle";
+import * as S from "./ModalStyle";
 import Spinner from "../../components/spinner/Spinner";
 import Emoji from "components/emoji/Emoji";
 import { useNavigate } from "react-router-dom";
@@ -33,8 +33,6 @@ function Modal({
   ];
   // // 작성된 일기와 분석 내용 서버에 전송
   async function writeDiary() {
-    // const curDate = dayjs(new Date()).format("YYYY-MM-DD");
-    console.log(diary, [reccomendEmotion, content[1]]);
     if (classify === "create") {
       await postDiary(diary, [reccomendEmotion, content[1]], scope);
       movePage(`/diarylist`, { state: { date: new Date() } });
@@ -46,31 +44,28 @@ function Modal({
 
   return (
     <S.Modal>
-      <button
-        onClick={() => {
-          setModalOpen(false);
-        }}
-      >
-        X
-      </button>
       {isChecked === 0 ? (
         <S.ModalItems>
           <p>우리가 분석한 감정이에요! 😍</p>
           <Emoji emotion={content[0]} thisWidth="30px" />
           <S.ModalBtnDiv>
-            <button onClick={writeDiary}>맞워요</button>
-            <button onClick={() => setIsChecked(1)}>않이요</button>
+            <S.NoBtn onClick={() => setIsChecked(1)}>아니에요</S.NoBtn>
+            <S.CancelBtn onClick={() => setModalOpen(false)}>취소</S.CancelBtn>
+            <S.YesBtn onClick={writeDiary}>맞아요!</S.YesBtn>
           </S.ModalBtnDiv>
         </S.ModalItems>
       ) : isChecked === 1 ? (
         <S.ModalItems>
-          <p>그럼 니가 골라보던가 흥 😡</p>
+          <p>어떤 감정을 느끼고 계신가요?</p>
           <S.Row>
             {emotionList.map((emotion) => {
               return (
                 <div key={emotion}>
                   {emotion === reccomendEmotion ? (
-                    <S.test onClick={(e) => setRecommendEmotion(e.target.alt)}>
+                    <S.test
+                      onClick={(e) => setRecommendEmotion(e.target.alt)}
+                      emotion={emotion}
+                    >
                       <Emoji emotion={emotion} thisWidth="30px" />
                     </S.test>
                   ) : (
@@ -85,7 +80,8 @@ function Modal({
             })}
           </S.Row>
           <S.ModalBtnDiv>
-            <button onClick={writeDiary}>확인</button>
+            <S.CancelBtn onClick={() => setModalOpen(false)}>취소</S.CancelBtn>
+            <S.YesBtn onClick={writeDiary}>등록하기</S.YesBtn>
           </S.ModalBtnDiv>
         </S.ModalItems>
       ) : isChecked === 2 ? (

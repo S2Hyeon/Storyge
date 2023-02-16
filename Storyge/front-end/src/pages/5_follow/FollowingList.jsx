@@ -4,6 +4,7 @@ import * as S from "./Follow.js";
 import { getCookie } from "./../../utils/Cookies";
 import Api from "lib/customApi";
 import Swal from "sweetalert2";
+import { MdClose } from "react-icons/md";
 
 export default function FollowingList() {
   const movePage = useNavigate();
@@ -20,16 +21,12 @@ export default function FollowingList() {
             Authorization: getCookie("token"),
           },
         });
-        console.log(response.data);
         setFollowingList(response.data);
-        console.log("팔로잉 리스트");
-        console.log(followingList);
       } catch (err) {
         console.log(err);
       }
     }
     getFollowingList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flag]);
 
   const deleteFollowing = async (id, e) => {
@@ -38,8 +35,8 @@ export default function FollowingList() {
         text: "언팔하시겠습니까?",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
+        confirmButtonColor: "var(--color-primary)",
+        cancelButtonColor: "var(--color-warning)",
         confirmButtonText: "Yes",
       }).then((result) => {
         if (result.isConfirmed) {
@@ -49,8 +46,6 @@ export default function FollowingList() {
                 Authorization: getCookie("token"),
               },
             }).then(() => {
-              console.log("팔로잉 삭제");
-              console.log(id); // error
               setFlag(!flag);
               e.preventDefault();
             });
@@ -70,33 +65,39 @@ export default function FollowingList() {
   return (
     <S.Container>
       <S.LineText>ALL</S.LineText>
-      <S.List>
-        {followingList.map((list) => {
-          return (
-            <S.Profile key={list.userId}>
-              <S.AllBox
-                onClick={(e) => {
-                  goOtherPage(list.userId, e);
-                }}
-              >
-                <S.Img profile={list.profileImg}></S.Img>
-                <S.Text>{list.nickname}</S.Text>
-              </S.AllBox>
-              <S.BtnBox>
-                <S.FollowBtn
-                  borderColor="var(--color-primary)"
-                  color="var(--color-primary)"
+
+      {followingList.length === 0 ? (
+        <S.NoFollow>
+          <div>팔로우하고 있는 사람이 없어요 🥲</div>
+          <div>닉네임 검색으로 친구를 검색해보세요!</div>
+        </S.NoFollow>
+      ) : (
+        <S.List>
+          {followingList.map((list) => {
+            return (
+              <S.Profile key={list.userId}>
+                <S.AllBox
                   onClick={(e) => {
-                    deleteFollowing(list.userId, e);
+                    goOtherPage(list.userId, e);
                   }}
                 >
-                  언팔로
-                </S.FollowBtn>
-              </S.BtnBox>
-            </S.Profile>
-          );
-        })}
-      </S.List>
+                  <S.Img profile={list.profileImg}></S.Img>
+                  <S.Text>{list.nickname}</S.Text>
+                </S.AllBox>
+                <S.BtnBox>
+                  <MdClose
+                    color="var(--color-warning)"
+                    size="23"
+                    onClick={(e) => {
+                      deleteFollowing(list.userId, e);
+                    }}
+                  ></MdClose>
+                </S.BtnBox>
+              </S.Profile>
+            );
+          })}
+        </S.List>
+      )}
     </S.Container>
   );
 }

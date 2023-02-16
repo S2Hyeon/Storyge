@@ -16,12 +16,29 @@ button {
   color: black;
 }
 
+button:active {
+  background-color: var(--color-blue-light);
+}
+
 div {
-  /* border: 1px solid red; */
   box-sizing: border-box;
 }
 
 textarea {
   box-sizing: border-box;
   font-family: "S-CoreDream-3Light";
+}
+
+textarea:focus {
+  outline: none;
+}
+
+input {
+  border: none;
+  font-family: "S-CoreDream-3Light";
+  background-color: transparent;
+}
+
+input:focus {
+  outline: none;
 }

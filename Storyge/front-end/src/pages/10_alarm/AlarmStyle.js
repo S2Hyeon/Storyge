@@ -11,7 +11,7 @@ export const Alarm = styled.div`
   align-items: center;
   padding: 0 20px;
   background-color: ${(props) =>
-    props.isReadColor === 0 ? "var(--color-grey)" : "transparent"};
+    props.isReadColor === 0 ? "var(--color-secondary)" : "transparent"};
 `;
 
 export const List = styled.div`
@@ -35,10 +35,18 @@ export const Text = styled.div`
   justify-content: center;
   align-items: center;
   color: black;
-  display: flex;
 `;
 
 export const BoldText = styled.span`
   font-family: "S-CoreDream-5Medium";
   font-size: 14px;
+`;
+
+export const NoAlarmList = styled.div`
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "S-CoreDream-6Bold";
 `;

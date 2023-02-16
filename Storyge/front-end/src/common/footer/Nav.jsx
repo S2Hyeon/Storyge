@@ -19,16 +19,14 @@ function Footer(props) {
       // Connection: "keep-alive",
       // "X-Accel-Buffering": "no",
     },
-    heartbeatTimeout: 1200000,
+    heartbeatTimeout: 1200000000,
     withCredentials: true,
   });
   eventSource.addEventListener("connect", (e) => {
     const { data: receivedConnectData } = e;
-    console.log("connected?", receivedConnectData);
   });
   eventSource.addEventListener("notification", function(event) {
     const { data: receivedConnectData } = event;
-    console.log("noti?", receivedConnectData);
     setIsNewAlert(true);
   });
 
@@ -41,7 +39,7 @@ function Footer(props) {
       >
         <TbHome
           size={30}
-          color={location.pathname === "/" ? "#ACCEBC" : "#D9D9D9"}
+          color={location.pathname === "/" ? "var(--color-primary)" : "#D9D9D9"}
         />
       </S.IconContainer>
       <S.IconContainer
@@ -51,7 +49,9 @@ function Footer(props) {
       >
         <TbMusic
           size={30}
-          color={location.pathname === "/music" ? "#ACCEBC" : "#D9D9D9"}
+          color={
+            location.pathname === "/music" ? "var(--color-primary)" : "#D9D9D9"
+          }
         />
       </S.IconContainer>
       <S.IconContainer
@@ -70,10 +70,14 @@ function Footer(props) {
         }}
         style={{ position: "relative" }}
       >
-        <div style={{ position: "absolute" }}>
+        <div style={{ position: "absolute", height: "30px" }}>
           <TbBell
             size={30}
-            color={location.pathname === "/alarm" ? "#ACCEBC" : "#D9D9D9"}
+            color={
+              location.pathname === "/alarm"
+                ? "var(--color-primary)"
+                : "#D9D9D9"
+            }
           />
         </div>
         {isNewAlert ? (
@@ -82,6 +86,7 @@ function Footer(props) {
           </S.AlertContainer>
         ) : null}
       </S.IconContainer>
+
       <S.IconContainer
         onClick={() => {
           movePage("/mypage");
@@ -91,7 +96,7 @@ function Footer(props) {
           size={30}
           color={
             location.pathname === "/mypage" || location.pathname === "/follower"
-              ? "#ACCEBC"
+              ? "var(--color-primary)"
               : "#D9D9D9"
           }
         />

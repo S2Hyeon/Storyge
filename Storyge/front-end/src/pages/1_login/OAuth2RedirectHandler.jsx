@@ -3,14 +3,13 @@
 
 import React, { useEffect } from "react";
 import { kakaoLogin, googleLogin, naverLogin } from "api/user/login";
-import Spinner from "./../../components/spinner/Spinner";
+import LockLottie from "../../api/animation/LockLottie.jsx";
 import * as S from "pages/1_login/Loginstyle";
 
 const OAuth2RedirectHandler = (props) => {
   // 인가코드
   useEffect(() => {
     let code = new URL(window.location.href).searchParams.get("code");
-    console.log(new URL(window.location.href).pathname.split("/")[3]);
     let state = new URL(window.location.href).pathname.split("/")[3];
 
     if (state === "google") {
@@ -24,7 +23,7 @@ const OAuth2RedirectHandler = (props) => {
 
   return (
     <S.Login>
-      <Spinner />
+      <LockLottie />
     </S.Login>
   );
 };

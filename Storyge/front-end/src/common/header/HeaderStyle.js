@@ -11,6 +11,7 @@ export const Header = styled.div`
   flex-direction: row;
   align-items: center;
   z-index: 2;
+  border-bottom: 0.1px solid var(--color-grey-light);
 
   font-size: 15px;
   font-family: "S-CoreDream-4Regular";
@@ -31,5 +32,7 @@ export const BtnContainer = styled.div`
 `;
 
 export const TitleContainer = styled.div`
+  font-family: "S-CoreDream-6Bold";
+  color: var(--color-headerText);
   margin: 0 0 0 5px;
 `;

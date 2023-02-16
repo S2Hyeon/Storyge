@@ -17,11 +17,13 @@ export default function DiaryList() {
 
   //!리덕스를 이용하여 다른 사람
   const dispatch = useDispatch();
-  if (otherUserId != null) {
-    dispatch({ type: "other", owner: location.state.nickname });
-  } else {
-    dispatch({ type: "me" });
-  }
+  useEffect(() => {
+    if (otherUserId != null) {
+      dispatch({ type: "other", owner: location.state.nickname });
+    } else {
+      dispatch({ type: "me" });
+    }
+  });
 
   //넘어온 날짜 값
   const [dateInfo, setDateInfo] = useState(
@@ -32,8 +34,6 @@ export default function DiaryList() {
 
   //해당 날짜의 내 일기 목록들
   const [diaryListData, setDiaryListData] = useState([]);
-
-  console.log("선택한 날짜: ", dayjs(dateInfo).format("YYYY-MM-DD"));
 
   useEffect(() => {
     async function getAndSetDiaryList() {
@@ -105,7 +105,6 @@ export default function DiaryList() {
     //그냥 다 넣기
     showDiaryData = diaryListData;
   }
-  console.log(showDiaryData);
 
   return (
     // 날짜 표시 및 날짜이동 부분

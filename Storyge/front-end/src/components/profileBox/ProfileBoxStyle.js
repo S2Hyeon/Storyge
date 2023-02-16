@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Container = styled.div`
   // border: 1px solid blue;
@@ -14,28 +14,28 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #d2d9d2;
+  background-color: var(--color-secondary);
   justify-content: space-around;
   border-radius: 10px;
   margin: 20px 0 10px 0;
-`;
+`
 
 export const Box = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
   width: 100%;
-`;
+`
 
 export const Img = styled.img`
   width: 60px;
   height: 60px;
   border-radius: 50%;
-`;
+`
 
 export const Name = styled.div`
   font-family: "S-CoreDream-5Medium";
-  font-size: 22px;
+  font-size: 15px;
 `;
 
 export const FollowBox = styled.div`
@@ -45,18 +45,18 @@ export const FollowBox = styled.div`
     margin: 10px;
   }
   text-align: center;
-`;
+`
 
 export const FollowText = styled.div`
   font-family: "S-CoreDream-4Regular";
-  font-size: 18px;
+  font-size: 15px;
 `;
 
 export const FollowNumber = styled.div`
   font-family: "S-CoreDream-4Regular";
-  font-size: 16px;
+  font-size: 15px;
 `;
 
-export const FollowBtn = styled.button``;
+export const FollowBtn = styled.button``
 
-export const UnfollowBtn = styled.button``;
+export const UnfollowBtn = styled.button``

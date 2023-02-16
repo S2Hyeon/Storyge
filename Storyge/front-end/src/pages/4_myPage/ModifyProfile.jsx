@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import * as S from "./ModifyProfile";
@@ -9,6 +8,8 @@ import TextField from "@mui/material/TextField";
 import { getCookie } from "./../../utils/Cookies";
 import { putUser } from "api/user/putUser";
 import { getUserCheck } from "api/user/getUserCheck";
+
+import Api from "lib/customApi";
 
 export default function ModifyProfile() {
   const movePage = useNavigate();
@@ -23,14 +24,9 @@ export default function ModifyProfile() {
     setUserNickname(e.target.value);
     if (userNickname.length >= 8) {
       alert("닉네임은 8자 이내로 작성해주세요.");
-      setUserNickname(userNickname.substr(0, 8));
+      setUserNickname(userNickname.substring(0, 8));
     }
   }
-
-  useEffect(() => {
-    console.log("수정됨");
-    console.log(userFile);
-  }, [userFile]);
 
   function gomypage() {
     movePage("/mypage");
@@ -38,14 +34,14 @@ export default function ModifyProfile() {
 
   async function onsubmit() {
     // 닉네임 중복 검사
-    let response = await getUserCheck(userNickname);
+    let response = false;
+    if (userNickname !== "") {
+      response = await getUserCheck(userNickname);
+    }
     if (response === true) {
       alert("이미 존재하는 닉네임입니다.");
     } else {
-      console.log("제출 버튼 클릭");
-      console.log("이미지 파일 : " + userFile);
-      console.log("수정된 닉네임 : " + userNickname);
-      putUser(userFile, userNickname);
+      await putUser(userFile, userNickname);
       gomypage();
     }
   }
@@ -54,13 +50,11 @@ export default function ModifyProfile() {
   useEffect(() => {
     async function getUserData() {
       try {
-        const response = await axios.get("https://storyge.xyz/api/user", {
+        const response = await Api.get("/user", {
           headers: {
             Authorization: getCookie("token"),
           },
         });
-        console.log("수정페이지로 이동");
-        console.log(response.data);
         setUserImg(response.data.profileImg);
       } catch (err) {
         console.log(err);
@@ -93,7 +87,9 @@ export default function ModifyProfile() {
           onChange={onChange}
         />
       </Box>
-      <S.SubmitBtn onClick={onsubmit}>등록</S.SubmitBtn>
+      <S.SubmitBtn onClick={onsubmit}>
+        <S.BtnText>등 록</S.BtnText>
+      </S.SubmitBtn>
     </S.BodyContainer>
   );
 }

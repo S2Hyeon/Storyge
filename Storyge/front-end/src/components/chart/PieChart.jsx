@@ -73,7 +73,7 @@ function PieChart(props) {
     year >= 2022;
     year--
   ) {
-    years.push({ value: String(year), label: String(year) + "년" });
+    years.push({ value: String(year), label: String(year % 100) + "년" });
   }
   const [yearValue, setYearValue] = useState(years[0].value);
   function onChangeYear(target) {

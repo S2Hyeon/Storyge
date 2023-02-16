@@ -4,6 +4,7 @@ import { getCookie } from "./../../utils/Cookies";
 import Api from "lib/customApi";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { MdClose, MdCheck } from "react-icons/md";
 
 export default function FollowerList() {
   const [flag, setFlag] = useState(false);
@@ -22,10 +23,7 @@ export default function FollowerList() {
             Authorization: getCookie("token"),
           },
         });
-        console.log(response.data);
         setNewList(response.data);
-        console.log("팔로우 대기");
-        console.log(newList);
       } catch (err) {
         console.log(err);
       }
@@ -38,17 +36,13 @@ export default function FollowerList() {
             Authorization: getCookie("token"),
           },
         });
-        console.log(response.data);
         setFollowerList(response.data);
-        console.log("팔로워 목록");
-        console.log(followerList);
       } catch (err) {
         console.log(err);
       }
     }
     getFollowerList();
     getNewList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flag]);
 
   const deleteFollowWait = async (id, e) => {
@@ -58,9 +52,7 @@ export default function FollowerList() {
           Authorization: getCookie("token"),
         },
       });
-      console.log("팔로우 거절");
       setdeleteFollow(true);
-      console.log(id); // error
       e.preventDefault();
     } catch (err) {
       console.log(err);
@@ -74,8 +66,8 @@ export default function FollowerList() {
           text: "삭제하시겠습니까?",
           icon: "warning",
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
+          confirmButtonColor: "var(--color-primary)",
+          cancelButtonColor: "var(--color-warning)",
           confirmButtonText: "Yes",
         }).then((result) => {
           if (result.isConfirmed) {
@@ -84,8 +76,6 @@ export default function FollowerList() {
                 Authorization: getCookie("token"),
               },
             }).then(() => {
-              console.log("팔로워 삭제");
-              console.log(id); // error
               setFlag(!flag);
               e.preventDefault();
             });
@@ -111,8 +101,6 @@ export default function FollowerList() {
           },
         }
       );
-      console.log(id);
-      console.log("팔로우 등록");
       setFlag(!flag);
       e.preventDefault();
     } catch (err) {
@@ -144,24 +132,24 @@ export default function FollowerList() {
                 </S.AllBox>
                 {deleteFollow ? (
                   <S.BtnBox>
-                    <S.FollowBtn
-                      borderColor="var(--color-primary)"
+                    <MdCheck
                       color="var(--color-primary)"
+                      size="23"
                       onClick={(e) => {
                         acceptFollow(list.userId, e);
                       }}
                     >
                       확인
-                    </S.FollowBtn>
-                    <S.FollowBtn
-                      borderColor="var(--color-warning)"
+                    </MdCheck>
+                    <MdClose
                       color="var(--color-warning)"
+                      size="23"
                       onClick={(e) => {
                         deleteFollowWait(list.userId, e);
                       }}
                     >
                       삭제
-                    </S.FollowBtn>
+                    </MdClose>
                   </S.BtnBox>
                 ) : (
                   <S.Text>요청 거절됨</S.Text>
@@ -172,33 +160,38 @@ export default function FollowerList() {
       </S.List>
 
       <S.LineText>ALL</S.LineText>
-      <S.List>
-        {followerList.map((follower) => {
-          return (
-            <S.Profile key={follower.userId}>
-              <S.AllBox
-                onClick={(e) => {
-                  goOtherPage(follower.userId, e);
-                }}
-              >
-                <S.Img profile={follower.profileImg}></S.Img>
-                <S.Text>{follower.nickname}</S.Text>
-              </S.AllBox>
-              <S.BtnBox>
-                <S.FollowBtn
-                  borderColor="var(--color-warning)"
-                  color="var(--color-warning)"
+
+      {followerList.length === 0 ? (
+        <S.NoFollow>팔로워가 없어요 🥲</S.NoFollow>
+      ) : (
+        <S.List>
+          {followerList.map((follower) => {
+            return (
+              <S.Profile key={follower.userId}>
+                <S.AllBox
                   onClick={(e) => {
-                    deleteFollower(follower.userId, e);
+                    goOtherPage(follower.userId, e);
                   }}
                 >
-                  삭제
-                </S.FollowBtn>
-              </S.BtnBox>
-            </S.Profile>
-          );
-        })}
-      </S.List>
+                  <S.Img profile={follower.profileImg}></S.Img>
+                  <S.Text>{follower.nickname}</S.Text>
+                </S.AllBox>
+                <S.BtnBox>
+                  <MdClose
+                    color="var(--color-warning)"
+                    size="23"
+                    onClick={(e) => {
+                      deleteFollower(follower.userId, e);
+                    }}
+                  >
+                    삭제
+                  </MdClose>
+                </S.BtnBox>
+              </S.Profile>
+            );
+          })}
+        </S.List>
+      )}
     </S.Container>
   );
 }

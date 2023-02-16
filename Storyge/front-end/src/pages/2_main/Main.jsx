@@ -5,19 +5,46 @@ import * as G from "../../styles";
 import { BsCircleFill } from "react-icons/bs";
 import CustomCalendar from "../../components/calender/Calendar";
 import PieChart from "../../components/chart/PieChart";
-import { getCookie } from "./../../utils/Cookies";
+import { getCookie, setCookie } from "./../../utils/Cookies";
 import { getQuote } from "api/quote/getQuote";
 import { getRecentDiary } from "api/recentDiary/getRecentDiary";
-import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
 import Modal from "./Modal";
+import dayjs from "dayjs";
 
 function Main() {
   const [isGloomy, setIsGloomy] = useState(false);
+  const [showGloomy, setShowGloomy] = useState(false);
+  const curDate = dayjs(new Date()).format("YYYY-MM-DD");
 
-  // 로그인 여부 확인 : 쿠기 값 가져오기
+  //우울하시네요 모달창 띄우는거 하루로 제한
+  useEffect(() => {
+    //14일동안 우울하다면 저장
+    if (isGloomy) {
+      if (
+        getCookie("modalDate") != null &&
+        curDate != dayjs(getCookie("modalDate")).format("YYYY-MM-DD")
+      ) {
+        let expires = new Date();
+        expires = expires.setHours(expires.getHours() + 24);
+        setCookie("modalDate", new Date());
+        setShowGloomy(true);
+      } else if (
+        getCookie("modalDate") != null &&
+        curDate == dayjs(getCookie("modalDate")).format("YYYY-MM-DD")
+      ) {
+        setShowGloomy(false);
+      } else {
+        let expires = new Date();
+        expires = expires.setHours(expires.getHours() + 24);
+        setCookie("modalDate", new Date());
+        setShowGloomy(true);
+      }
+    }
+  }, [isGloomy]);
+
+  // 로그인 여부 확인 : 쿠키 값 가져오기
   useEffect(() => {
     const ACCESS_TOKEN = getCookie("token");
-    console.log("메인 실행되면 액세스 토큰 받아옴" + ACCESS_TOKEN);
   }, []);
 
   const movePage = useNavigate();
@@ -26,7 +53,6 @@ function Main() {
 
   //새로 업데이트 된 글로 이동!
   function goUpdatedDiary(diaryId, otherUserId, nickname) {
-    console.log("toner user id ", otherUserId);
     movePage("/diary", {
       state: { diaryId: diaryId, otherUserId: otherUserId, nickname: nickname },
     });
@@ -42,7 +68,6 @@ function Main() {
   useEffect(() => {
     async function getAndSetRecentDiaryData() {
       const response = await getRecentDiary();
-      console.log("응답", response);
       setRecentDiaryData(response);
     }
     getAndSetRecentDiaryData();
@@ -59,30 +84,32 @@ function Main() {
   }, []);
 
   return (
-    <S.All>
+    <>
       {recentDiaryData.length > 0 ? (
         <S.NewDiary>
           {recentDiaryData.map((recentDiary) => {
             return (
-              <S.Profile
-                key={recentDiary.userId}
-                profile={recentDiary.profileImg}
-                onClick={() =>
-                  goUpdatedDiary(
-                    recentDiary.diaryId,
-                    recentDiary.userId,
-                    recentDiary.nickname
-                  )
-                }
-              />
+              <S.NewDiaryContainer key={recentDiary.diaryId}>
+                <S.ProfileContainer>
+                  <S.Profile
+                    key={recentDiary.userId}
+                    profile={recentDiary.profileImg}
+                    onClick={() =>
+                      goUpdatedDiary(
+                        recentDiary.diaryId,
+                        recentDiary.userId,
+                        recentDiary.nickname
+                      )
+                    }
+                  />
+                </S.ProfileContainer>
+                <S.ProfileNickName>{recentDiary.nickname}</S.ProfileNickName>
+              </S.NewDiaryContainer>
             );
           })}
         </S.NewDiary>
       ) : (
-        <S.NoNewDiary>
-          아무것도 없어요
-          <br />뭘 띄워야할까
-        </S.NoNewDiary>
+        <S.NoNewDiary>팔로잉하는 사람들의 최근 일기가 없어요🥲</S.NoNewDiary>
       )}
 
       <G.BodyContainer top="0" bottom="70px" color="true">
@@ -98,11 +125,11 @@ function Main() {
             <S.ToggleOne>
               <BsCircleFill
                 size={7}
-                color={diary ? "var(--color-primary)" : "var(--color-darkgrey)"}
+                color={diary ? "var(--color-primary)" : "var(--color-grey)"}
               />
               <span
                 style={{
-                  color: diary ? "var(--color-black)" : "var(--color-darkgrey)",
+                  color: diary ? "var(--color-black)" : "var(--color-grey)",
                 }}
               >
                 {" "}
@@ -112,15 +139,11 @@ function Main() {
             <S.ToggleOne>
               <BsCircleFill
                 size={7}
-                color={
-                  !diary ? "var(--color-primary)" : "var(--color-darkgrey)"
-                }
+                color={!diary ? "var(--color-primary)" : "var(--color-grey)"}
               />
               <span
                 style={{
-                  color: !diary
-                    ? "var(--color-black)"
-                    : "var(--color-darkgrey)",
+                  color: !diary ? "var(--color-black)" : "var(--color-grey)",
                 }}
               >
                 {" "}
@@ -132,11 +155,11 @@ function Main() {
 
         <S.WiseBox>
           <S.Wise>{quoteData && quoteData.quoteContent}</S.Wise>
-          <S.WiseFrom>{quoteData && quoteData.quoteSource}</S.WiseFrom>
+          <S.WiseFrom>- {quoteData && quoteData.quoteSource} -</S.WiseFrom>
         </S.WiseBox>
       </G.BodyContainer>
-      {isGloomy && <Modal setIsGloomy={setIsGloomy} />}
-    </S.All>
+      {isGloomy && showGloomy && <Modal setIsGloomy={setIsGloomy} />}
+    </>
   );
 }
 

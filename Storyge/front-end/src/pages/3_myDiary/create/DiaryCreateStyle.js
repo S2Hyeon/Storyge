@@ -1,15 +1,21 @@
 import styled from "styled-components";
 
-export const container = styled.div`
+export const Container = styled.div`
   margin: 0 20px 0 20px;
-  // border: 1px solid red;
+`;
+
+export const DateContainer = styled.div`
+  display: flex;
+  justify-content: right;
+  padding-right: 15px;
+  align-items: flex-end;
 `;
 
 export const card = styled.div`
   border-radius: 20px;
-  border: 3px solid #accebc;
+  border: 2px solid var(--color-primary);
   background-color: ${(props) => props.backgroundColor};
-  margin: 20px 0 20px 0;
+  margin: 5px 0 10px 0;
   padding: 2px;
   width: 100%;
   height: 230px;
@@ -41,9 +47,16 @@ export const CardFoot = styled.div`
 `;
 
 export const CountDiary = styled.div`
-  margin: 0 0 0 10px;
+  margin: 0 0 0 20px;
 `;
 
 export const Test = styled.div`
   margin: 0 0 0 7px;
+`;
+
+export const Middle = styled.div`
+  display: flex;
+  justify-content: right;
+  margin: 0 20px 0 0;
+  color: var(--color-grey-dark);
 `;

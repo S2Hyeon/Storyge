@@ -93,3 +93,13 @@ export const BtnBox = styled.div`
   align-items: center;
   width: 20%;
 `;
+
+export const NoFollow = styled.div`
+  width: 100%;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "S-CoreDream-6Bold";
+`;

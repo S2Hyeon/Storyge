@@ -3,10 +3,10 @@ import { getCookie } from "utils/Cookies";
 
 export async function postDiary(diary, content, scope) {
   try {
-    const response = await Api.post(
+    await Api.post(
       "/diary",
       {
-        analizedResult: content[1],
+        analyzedResult: content[1],
         diaryContent: diary,
         emoticonName: content[0],
         scope: scope,
@@ -17,7 +17,6 @@ export async function postDiary(diary, content, scope) {
         },
       }
     );
-    console.log(response);
   } catch (error) {
     console.error(error);
   }

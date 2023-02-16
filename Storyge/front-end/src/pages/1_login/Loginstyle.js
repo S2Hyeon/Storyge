@@ -8,6 +8,8 @@ export const Login = styled.div`
   flex-direction: column;
   min-height: 100vh;
   margin: 20px;
+  background-color: var(--color-secondary);
+  border-radius: 15px;
 `;
 
 export const Logo = styled.img`
@@ -28,15 +30,15 @@ export const LoginInfoText = styled.h2`
 `;
 
 export const NaverImg = styled.img`
-  width: 330px;
+  width: 300px;
   object-fit: scale-down;
 `;
 export const GoogleImg = styled.img`
-  width: 330px;
+  width: 300px;
   object-fit: scale-down;
 `;
 export const KakaoImg = styled.img`
-  width: 330px;
+  width: 300px;
   object-fit: scale-down;
 `;
 

@@ -18,7 +18,7 @@ const Toast = MySwal.mixin({
   toast: true,
   position: "center-center",
   showConfirmButton: false,
-  timer: 3000,
+  timer: 1000,
   timerProgressBar: true,
   didOpen: (toast) => {
     toast.addEventListener("mouseenter", Swal.stopTimer);
@@ -39,8 +39,8 @@ export default function MyPage({ setToken }) {
         text: "로그아웃하시겠습니까?",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
+        confirmButtonColor: "var(--color-primary)",
+        cancelButtonColor: "var(--color-warning)",
         confirmButtonText: "Yes",
       }).then((result) => {
         if (result.isConfirmed) {
@@ -68,7 +68,6 @@ export default function MyPage({ setToken }) {
             Authorization: getCookie("token"),
           },
         });
-        console.log("마이페이지");
         setUserData(response.data);
       } catch (err) {
         console.log(err);
@@ -77,10 +76,10 @@ export default function MyPage({ setToken }) {
     getUserData();
   }, []);
 
-  let [chatbot, setCharbot] = useState(false);
+  let [chatbot, setChatbot] = useState(false);
 
   function chatbotStatus() {
-    setCharbot(!chatbot);
+    setChatbot(!chatbot);
   }
 
   return (
@@ -96,13 +95,21 @@ export default function MyPage({ setToken }) {
 
       <S.Menu onClick={gomodifyprofile}>
         <BsPersonCircle
-          style={{ color: "#ACCEBC", width: "30px", height: "30px" }}
+          style={{
+            color: "var(--color-primary)",
+            width: "18px",
+            height: "18px",
+          }}
         />
         <S.Text>프로필 수정하기</S.Text>
       </S.Menu>
       <S.Menu onClick={chatbotStatus}>
         <BsQuestionCircle
-          style={{ color: "#ACCEBC", width: "30px", height: "30px" }}
+          style={{
+            color: "var(--color-primary)",
+            width: "18px",
+            height: "18px",
+          }}
         />
         <S.Text>서비스 알아보기</S.Text>
       </S.Menu>

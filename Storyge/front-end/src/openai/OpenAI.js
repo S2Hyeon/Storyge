@@ -62,7 +62,6 @@ export const OpenAI = async ({ input, type }) => {
   // type 0 : music, 1 : classify, 2 : translate
   result = response.data.choices[0].text;
   if (type === 0) {
-    console.log(result);
     let start, end;
     let trigger = 0;
     for (let i = 0; i < result.length; i++) {
@@ -105,7 +104,13 @@ export const OpenAI = async ({ input, type }) => {
 
     return [emotion, comment];
   } else {
-    const comment_kr = result;
+    let comment_kr;
+    if (input === undefined) {
+      comment_kr =
+        "일기가 감정을 분석하기에 충분하지 않습니다. 분석을 원하시면 수정을 통해 조금더 자세히 써봐요.";
+    } else {
+      comment_kr = result;
+    }
     return comment_kr;
   }
 };

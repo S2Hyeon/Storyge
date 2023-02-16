@@ -37,6 +37,10 @@ const Toast = MySwal.mixin({
 });
 
 export default function DiaryDetail() {
+  async function doDeleteDiary(diaryId) {
+    await deleteDiary(diaryId);
+    movePage(-1);
+  }
   const movePage = useNavigate();
   async function crud(event) {
     if (event === "delete") {
@@ -54,8 +58,7 @@ export default function DiaryDetail() {
               icon: "warning",
               title: "삭제되었습니다.",
             });
-            deleteDiary(diaryId);
-            movePage(-1);
+            doDeleteDiary(diaryId);
           }
         })
       ) {

@@ -52,7 +52,7 @@ export const test = styled.button`
   justify-content: center;
   align-items: center;
   border: hidden;
-  box-shadow: 0 0 10px #03e9f4, 0 0 20px #03e9f4;
+  box-shadow: 0 0 10px var(--color-${(props) => props.emotion}), 0 0 20px var(--color-${(props) => props.emotion});
   margin: 5px;
 `;
 

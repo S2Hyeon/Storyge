@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import * as S from "./Follow.js";
-import { getCookie } from "./../../utils/Cookies";
-import Api from "lib/customApi";
-import Swal from "sweetalert2";
-import { CiCircleRemove } from "react-icons/ci";
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import * as S from './Follow.js'
+import { getCookie } from './../../utils/Cookies'
+import Api from 'lib/customApi'
+import Swal from 'sweetalert2'
+import { CiCircleRemove } from 'react-icons/ci'
 
 export default function FollowingList() {
-  const movePage = useNavigate();
+  const movePage = useNavigate()
 
-  const [flag, setFlag] = useState(false);
-  const [followingList, setFollowingList] = useState([]);
+  const [flag, setFlag] = useState(false)
+  const [followingList, setFollowingList] = useState([])
 
   //처음 렌더링이 될 때만 실행
   useEffect(() => {
     async function getFollowingList() {
       try {
-        const response = await Api.get("/following", {
+        const response = await Api.get('/following', {
           headers: {
-            Authorization: getCookie("token"),
+            Authorization: getCookie('token'),
           },
         });
         setFollowingList(response.data);
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
     }
     getFollowingList();
@@ -32,34 +32,34 @@ export default function FollowingList() {
   const deleteFollowing = async (id, e) => {
     if (
       Swal.fire({
-        text: "언팔하시겠습니까?",
-        icon: "warning",
+        text: '언팔하시겠습니까?',
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes",
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes',
       }).then((result) => {
         if (result.isConfirmed) {
           try {
             Api.delete(`/following/${id}`, {
               headers: {
-                Authorization: getCookie("token"),
+                Authorization: getCookie('token'),
               },
             }).then(() => {
               setFlag(!flag);
               e.preventDefault();
             });
           } catch (err) {
-            console.log(err);
+            console.log(err)
           }
         }
       })
     ) {
     }
-  };
+  }
 
   function goOtherPage(id, e) {
-    movePage("/otherpage", { state: { otherId: id } });
+    movePage('/otherpage', { state: { otherId: id } })
   }
 
   return (
@@ -99,5 +99,5 @@ export default function FollowingList() {
         </S.List>
       )}
     </S.Container>
-  );
+  )
 }

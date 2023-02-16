@@ -1,33 +1,36 @@
-import React, { useState } from "react";
-import * as S from "./Follow.js";
-import * as B from "./FollowBtn.js";
-import * as G from "../../styles";
+import React, { useState } from 'react'
+import * as S from './Follow.js'
+import * as B from './FollowBtn.js'
+import * as G from '../../styles'
 
-import SearchBar from "./../../components/searchbar/SearchBar.jsx";
-import FollowerList from "./FollowerList.jsx";
-import FollowingList from "./FollowingList.jsx";
+import SearchBar from './../../components/searchbar/SearchBar.jsx'
+import FollowerList from './FollowerList.jsx'
+import FollowingList from './FollowingList.jsx'
 
-export default function Follow() {
-  const [followAlarm, setFollowAlarm] = useState(true);
+export default function Follow(props) {
+  const [followAlarm, setFollowAlarm] = useState(props.status)
 
   return (
     <G.BodyContainer>
       <SearchBar />
       <S.Box>
+        {/* props.status = true면, 팔로우 페이지 */}
+        {/* props.status = false면, 팔로잉 페이지 */}
+        {props.status}
         <B.Follower
-          followAlarm={followAlarm}
           onClick={() => {
-            setFollowAlarm(true);
+            setFollowAlarm(true)
           }}
+          followAlarm={followAlarm}
         >
           <B.Text>팔로워</B.Text>
         </B.Follower>
 
         <B.Following
-          followAlarm={followAlarm}
           onClick={() => {
-            setFollowAlarm(false);
+            setFollowAlarm(false)
           }}
+          followAlarm={followAlarm}
         >
           <B.Text>팔로잉</B.Text>
         </B.Following>
@@ -35,5 +38,5 @@ export default function Follow() {
 
       {followAlarm ? <FollowerList /> : <FollowingList />}
     </G.BodyContainer>
-  );
+  )
 }

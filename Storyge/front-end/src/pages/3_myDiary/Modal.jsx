@@ -4,8 +4,8 @@ import Spinner from "../../components/spinner/Spinner";
 import Emoji from "components/emoji/Emoji";
 import { useNavigate } from "react-router-dom";
 
-import { postDiary } from "api/diary/postDiary";
-import { putDiary } from "api/diary/putDiary";
+import { postDiary } from 'api/diary/postDiary'
+import { putDiary } from 'api/diary/putDiary'
 
 function Modal({
   diary,
@@ -17,28 +17,28 @@ function Modal({
   setModalOpen,
   createdAt,
 }) {
-  const movePage = useNavigate();
+  const movePage = useNavigate()
   const [reccomendEmotion, setRecommendEmotion] = useState(
-    content && content[0]
-  );
-  const [isChecked, setIsChecked] = useState(num);
+    content && content[0],
+  )
+  const [isChecked, setIsChecked] = useState(num)
   const emotionList = [
-    "angry",
-    "aversion",
-    "happy",
-    "sad",
-    "scared",
-    "soso",
-    "surprised",
-  ];
+    'angry',
+    'aversion',
+    'happy',
+    'sad',
+    'scared',
+    'soso',
+    'surprised',
+  ]
   // // 작성된 일기와 분석 내용 서버에 전송
   async function writeDiary() {
     if (classify === "create") {
       await postDiary(diary, [reccomendEmotion, content[1]], scope);
       movePage(`/diarylist`, { state: { date: new Date() } });
     } else {
-      await putDiary(diary, [reccomendEmotion, content[1]], diaryId, scope);
-      movePage(`/diarylist`, { state: { date: createdAt } });
+      await putDiary(diary, [reccomendEmotion, content[1]], diaryId, scope)
+      movePage(`/diarylist`, { state: { date: createdAt } })
     }
   }
 
@@ -73,7 +73,7 @@ function Modal({
                     </S.EmotionBtn>
                   )}
                 </div>
-              );
+              )
             })}
           </S.Row>
           <S.ModalBtnDiv>
@@ -87,7 +87,7 @@ function Modal({
         </S.ModalItems>
       ) : null}
     </S.Modal>
-  );
+  )
 }
 
-export default Modal;
+export default Modal

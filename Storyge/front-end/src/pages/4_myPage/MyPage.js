@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Menu = styled.div`
   // border: 1px solid red;
@@ -22,4 +22,4 @@ export const Text = styled.div`
   width: 80%;
   text-align: left;
   margin-left: 20px;
-`;
+`

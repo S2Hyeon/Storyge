@@ -43,7 +43,6 @@ export default function FollowerList() {
     }
     getFollowerList();
     getNewList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flag]);
 
   const deleteFollowWait = async (id, e) => {

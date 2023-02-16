@@ -1,28 +1,28 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import Clock from "react-live-clock";
-import Modal from "../Modal";
-import * as heyhey from "./DiaryModifyStyle";
-import * as G from "../../../styles/index";
-import { OpenAI } from "../../../openai/OpenAI";
-import Switch from "react-switch";
-import { GrLock, GrUnlock } from "react-icons/gr";
+import React, { useEffect, useRef, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import Clock from 'react-live-clock'
+import Modal from '../Modal'
+import * as heyhey from './DiaryModifyStyle'
+import * as G from '../../../styles/index'
+import { OpenAI } from '../../../openai/OpenAI'
+import Switch from 'react-switch'
+import { GrLock, GrUnlock } from 'react-icons/gr'
 
-import { getCount } from "api/diary/getCount";
+import { getCount } from 'api/diary/getCount'
 
 export default function Modifydiary() {
-  const location = useLocation();
-  const [already] = useState(location.state.already);
-  const navigate = useNavigate();
-  const contentRef = useRef();
-  const [count, setCount] = useState(0);
-  const [content, setContent] = useState(already.diaryContent);
-  const [diaryId] = useState(already.diaryId);
-  const [createdAt] = useState(already.createdAt.substr(0, 10));
-  const [modalOpen, setModalOpen] = useState(false);
-  const [info, setInfo] = useState(["emotion", "comment"]);
-  const [spinner, setSpinner] = useState(false);
-  const [checked, setChecked] = useState(already.scope === 0 ? true : false);
+  const location = useLocation()
+  const [already] = useState(location.state.already)
+  const navigate = useNavigate()
+  const contentRef = useRef()
+  const [count, setCount] = useState(0)
+  const [content, setContent] = useState(already.diaryContent)
+  const [diaryId] = useState(already.diaryId)
+  const [createdAt] = useState(already.createdAt.substr(0, 10))
+  const [modalOpen, setModalOpen] = useState(false)
+  const [info, setInfo] = useState(['emotion', 'comment'])
+  const [spinner, setSpinner] = useState(false)
+  const [checked, setChecked] = useState(already.scope === 0 ? true : false)
   const handleChange = (nextChecked) => {
     setChecked(nextChecked);
   };
@@ -31,8 +31,8 @@ export default function Modifydiary() {
       const response = await getCount();
       setCount(response);
     }
-    getDiaryCount();
-  }, [count]);
+    getDiaryCount()
+  }, [count])
 
   async function getInfo(content, setModalOpen) {
     await OpenAI({ input: content, type: 1 })
@@ -44,24 +44,24 @@ export default function Modifydiary() {
             setInfo([data1[0], data2]);
           })
           .catch((err) => {
-            console.log(err);
-          });
+            console.log(err)
+          })
       })
       .catch((err) => {
-        console.log(err);
-      });
+        console.log(err)
+      })
   }
 
   function onChange(e) {
-    setContent(e.target.value);
+    setContent(e.target.value)
     if (content.length > 99) {
-      alert("일기가 너무 길어요~");
-      setContent(content.substr(0, 99));
+      alert('일기가 너무 길어요~')
+      setContent(content.substr(0, 99))
     }
   }
   async function isWritten() {
     if (content.length === 0) {
-      alert("일기를 작성하세요~");
+      alert('일기를 작성하세요~')
     } else if (content.length > 100) {
     } else {
       // 일기를 작성 할 수 있는 횟수 검사
@@ -132,5 +132,5 @@ export default function Modifydiary() {
       )}
       {spinner && <Modal setModalOpen={setModalOpen} content={info} num={2} />}
     </>
-  );
+  )
 }

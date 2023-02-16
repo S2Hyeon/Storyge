@@ -26,7 +26,7 @@ export const NewDiary = styled.div`
 
 export const NoNewDiary = styled.div`
   margin: 60px 0 0 0;
-  padding: 10px 20px;
+  padding: 35px 0px 20px 0px;
   height: 50px;
   display: flex;
   justify-content: center;
@@ -109,7 +109,6 @@ export const WiseBox = styled.div`
   border-radius: 12px;
   margin: 10px 0;
   font-family: "SeoulHangangM";
-  font-size: 12px;
   text-align: center;
   background: var(--color-calendar);
 `;
@@ -117,6 +116,7 @@ export const WiseBox = styled.div`
 export const Wise = styled.div`
   padding-top: 25px;
   line-height: 130%;
+  font-size: 14px;
   white-space: pre-wrap;
 `;
 
@@ -124,4 +124,5 @@ export const WiseFrom = styled.div`
   // color: #b8b8d2;
   color: var(--color-grey-dark);
   padding-top: 10px;
+  font-size: 12px;
 `;

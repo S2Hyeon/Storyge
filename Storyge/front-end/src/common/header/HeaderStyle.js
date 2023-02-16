@@ -32,5 +32,7 @@ export const BtnContainer = styled.div`
 `;
 
 export const TitleContainer = styled.div`
+  font-family: "S-CoreDream-6Bold";
+  color: var(--color-headerText);
   margin: 0 0 0 5px;
 `;

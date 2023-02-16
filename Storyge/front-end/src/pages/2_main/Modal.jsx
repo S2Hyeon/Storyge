@@ -1,13 +1,16 @@
 import React from "react";
-import * as S from "./MyDiaryStyle";
 
-function Modal({ setIsGloomy }) {
-  return (
-    <S.Modal>
-      <S.ModalItems>당신은 우울해 보입니다.</S.ModalItems>
-      <button onClick={() => setIsGloomy(false)}>확인</button>
-    </S.Modal>
-  );
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal);
+
+export default function Modal(setIsGloomy) {
+  Swal.fire("", "슬픈 감정이 14일 이상 지속되었어요.", "info").then((res) => {
+    if (res.isConfirmed) {
+      setIsGloomy(false);
+    }
+  });
+
+  return <>{MySwal.fire}</>;
 }
-
-export default Modal;

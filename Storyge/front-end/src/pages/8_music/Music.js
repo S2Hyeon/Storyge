@@ -6,7 +6,7 @@ export const Rectangle = styled.textarea`
   height: 300px;
   margin-top: 20px;
   margin-bottom: 20px;
-  background-color: var(--color-grey-light);
+  background-color: var(--color-secondary);
   border: none;
   border-radius: 20px;
   padding: 20px;

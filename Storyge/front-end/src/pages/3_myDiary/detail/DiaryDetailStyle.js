@@ -211,6 +211,11 @@ export const DeleteBtn = styled.button`
   font-family: "S-CoreDream-4Regular";
 `;
 
+export const BtnText = styled.div`
+  font-family: "S-CoreDream-4Regular";
+  color: var(--color-white);
+`;
+
 export const PublicBtn = styled.button`
   margin: 0 5px;
   border: none;

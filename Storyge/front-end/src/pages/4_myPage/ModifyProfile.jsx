@@ -12,7 +12,7 @@ import { getUserCheck } from "api/user/getUserCheck";
 import Api from "lib/customApi";
 
 export default function ModifyProfile() {
-  const movePage = useNavigate()
+  const movePage = useNavigate();
 
   const [userNickname, setUserNickname] = useState("");
   const [userImg, setUserImg] = useState("");
@@ -49,16 +49,16 @@ export default function ModifyProfile() {
       try {
         const response = await Api.get("/user", {
           headers: {
-            Authorization: getCookie('token'),
+            Authorization: getCookie("token"),
           },
         });
         setUserImg(response.data.profileImg);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     }
-    getUserData()
-  }, [])
+    getUserData();
+  }, []);
 
   return (
     <S.BodyContainer>
@@ -70,7 +70,7 @@ export default function ModifyProfile() {
         className="box"
         component="form"
         sx={{
-          '& > :not(style)': { m: 1, width: '25ch' },
+          "& > :not(style)": { m: 1, width: "25ch" },
         }}
         noValidate
         autoComplete="off"
@@ -84,7 +84,9 @@ export default function ModifyProfile() {
           onChange={onChange}
         />
       </Box>
-      <S.SubmitBtn onClick={onsubmit}>등록</S.SubmitBtn>
+      <S.SubmitBtn onClick={onsubmit}>
+        <S.BtnText>등 록</S.BtnText>
+      </S.SubmitBtn>
     </S.BodyContainer>
-  )
+  );
 }

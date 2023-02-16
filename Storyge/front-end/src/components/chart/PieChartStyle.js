@@ -4,7 +4,7 @@ import Select from "react-select";
 export const Title = styled.div`
   text-align: center;
   font-family: "S-CoreDream-5Medium";
-  font-size: 24px;
+  font-size: 22px;
   margin: 0 0 20px 0;
 `;
 

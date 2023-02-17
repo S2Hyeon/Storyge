@@ -21,7 +21,7 @@ export const kakaoLogin = async (code) => {
         window.location.href = `http://${CUR_URL}/`; // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
       } else {
         // 새로 가입한 사용자인 경우,
-        window.location.href = `http://${CUR_URL}/modify`;
+        window.location.href = `http://${CUR_URL}/logininfo`;
       }
     })
     .catch((err) => {
@@ -51,7 +51,13 @@ export const googleLogin = async (code) => {
           sameSite: "strict",
         });
       }
-      window.location.href = `http://${CUR_URL}/modify`;
+      if (res.data.user === true) {
+        // 이미 가입된 사용자인 경우,
+        window.location.href = `http://${CUR_URL}/`; // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+      } else {
+        // 새로 가입한 사용자인 경우,
+        window.location.href = `http://${CUR_URL}/logininfo`;
+      }
     })
     .catch((err) => {
       window.alert("로그인에 실패하였습니다.");
@@ -72,7 +78,13 @@ export const naverLogin = async (code) => {
           sameSite: "strict",
         });
       }
-      window.location.href = `http://${CUR_URL}/modify`;
+      if (res.data.user === true) {
+        // 이미 가입된 사용자인 경우,
+        window.location.href = `http://${CUR_URL}/`; // 토큰 받았았고 로그인됐으니 화면 전환시켜줌(메인으로)
+      } else {
+        // 새로 가입한 사용자인 경우,
+        window.location.href = `http://${CUR_URL}/logininfo`;
+      }
     })
     .catch((err) => {
       window.alert("로그인에 실패하였습니다.");

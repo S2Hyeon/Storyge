@@ -8,10 +8,21 @@ import {
 
 import logo from "./../../assets/StorygeColor.gif";
 import { AnimateOnChange } from "react-animation";
+import { setCookie } from "./../../utils/Cookies";
 
+const myToken =
+  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLjhYfjhLnjhLTjhYciLCJ1c2VySWQiOjQsImF1dGgiOiJzc2gxNjkyQG5hdmVyLmNvbSIsImV4cCI6MTY3OTE4Mjc5MX0.bWkyO5-OHSXlFeFrLXHST1ALhrtZEQG7y0V0BHfGbIQ";
+function setMyToken() {
+  setCookie("token", myToken, {
+    path: "/", // 모든 페이지에서 쿠키 접근 가능
+    sameSite: "strict",
+  });
+  window.location.href = `http://localhost:3000/`;
+}
 export default function Login() {
   return (
     <S.Login>
+      <botton onClick={setMyToken}>수현토큰</botton>
       <AnimateOnChange durationOut="1000">
         <S.Logo src={logo}></S.Logo>
       </AnimateOnChange>

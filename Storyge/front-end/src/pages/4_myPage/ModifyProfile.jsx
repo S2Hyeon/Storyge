@@ -8,6 +8,7 @@ import TextField from "@mui/material/TextField";
 import { getCookie } from "./../../utils/Cookies";
 import { putUser } from "api/user/putUser";
 import { getUserCheck } from "api/user/getUserCheck";
+import Swal from "sweetalert2";
 
 import Api from "lib/customApi";
 
@@ -20,11 +21,47 @@ export default function ModifyProfile() {
 
   const len = `${userNickname.length} / 8`;
 
+  // 공백(스페이스 바) 체크
+  function checkSpace(str) {
+    if (str.search(/\s/) !== -1) {
+      return true; // 스페이스가 있는 경우
+    } else {
+      return false; // 스페이스 없는 경우
+    }
+  }
+
+  // 특수 문자 체크
+  let regExp = /[`~!@#$%^&*()_|+\-=?;:'"<>\{\}\[\]\\\/ ]/gim;
+  function checkSpecial(str) {
+    if (regExp.test(str)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   function onChange(e) {
     setUserNickname(e.target.value);
-    if (userNickname.length >= 8) {
-      alert("닉네임은 8자 이내로 작성해주세요.");
-      setUserNickname(userNickname.substring(0, 8));
+    if (userNickname.length > 7) {
+      Swal.fire({
+        text: "닉네임은 8자 이내로 작성해주세요.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "var(--color-primary)",
+        cancelButtonColor: "var(--color-warning)",
+        confirmButtonText: "Yes",
+      });
+      setUserNickname(userNickname.substr(0, 7));
+    } else if (checkSpecial(e.target.value)) {
+      setUserNickname(userNickname.replace(regExp, ""));
+      Swal.fire({
+        text: "닉네임에 특수문자를 포함할 수 없습니다.",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "var(--color-primary)",
+        cancelButtonColor: "var(--color-warning)",
+        confirmButtonText: "Yes",
+      });
     }
   }
 
@@ -84,7 +121,8 @@ export default function ModifyProfile() {
           variant="standard"
           helperText={len}
           autoFocus={true}
-          onChange={onChange}
+          onKeyUpCapture={onChange}
+          maxLength="8"
         />
       </Box>
       <S.SubmitBtn onClick={onsubmit}>

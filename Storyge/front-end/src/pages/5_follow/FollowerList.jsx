@@ -47,12 +47,15 @@ export default function FollowerList() {
 
   const deleteFollowWait = async (id, e) => {
     try {
+      console.log("팔로우 삭제 클릭됨");
       await Api.delete(`/follow-wait/${id}`, {
         headers: {
           Authorization: getCookie("token"),
         },
       });
+      console.log("팔로우 삭제 완료");
       setdeleteFollow(true);
+      setFlag(!flag);
       e.preventDefault();
     } catch (err) {
       console.log(err);

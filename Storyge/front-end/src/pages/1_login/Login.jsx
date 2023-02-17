@@ -10,19 +10,19 @@ import logo from "./../../assets/StorygeColor.gif";
 import { AnimateOnChange } from "react-animation";
 import { setCookie } from "./../../utils/Cookies";
 
-const myToken =
-  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLjhYfjhLnjhLTjhYciLCJ1c2VySWQiOjQsImF1dGgiOiJzc2gxNjkyQG5hdmVyLmNvbSIsImV4cCI6MTY3OTE4Mjc5MX0.bWkyO5-OHSXlFeFrLXHST1ALhrtZEQG7y0V0BHfGbIQ";
-function setMyToken() {
-  setCookie("token", myToken, {
-    path: "/", // 모든 페이지에서 쿠키 접근 가능
-    sameSite: "strict",
-  });
-  window.location.href = `http://localhost:3000/`;
-}
+// const myToken =
+//   "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiItIiwidXNlcklkIjoxMCwiYXV0aCI6InNhdHVyZGF5bmlnaHRAa2FrYW8uY29tIiwiZXhwIjoxNjc5MTg2ODIzfQ.qJq0IMB42DDRkXin5X5ZNSqyy1jiBOsgLLE-8Y3pIFM";
+// function setMyToken() {
+//   setCookie("token", myToken, {
+//     path: "/", // 모든 페이지에서 쿠키 접근 가능
+//     sameSite: "strict",
+//   });
+//   window.location.href = `http://localhost:3000/`;
+// }
 export default function Login() {
   return (
     <S.Login>
-      <botton onClick={setMyToken}>수현토큰</botton>
+      {/* <botton onClick={setMyToken}>토큰설정</botton> */}
       <AnimateOnChange durationOut="1000">
         <S.Logo src={logo}></S.Logo>
       </AnimateOnChange>

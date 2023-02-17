@@ -1,38 +1,38 @@
-import React, { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
-import { getCookie } from './../utils/Cookies'
-import PrivateRoute from './PrivateRoute'
-import PublicRoute from './PublicRoute'
-import Layout from './Layout'
+import React, { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import { getCookie } from "./../utils/Cookies";
+import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
+import Layout from "./Layout";
 
-import Intro from '../pages/0_intro/Intro'
-import Login from '../pages/1_login/Login'
-import LoginInfo from '../pages/1_login/LoginInfo'
+import Intro from "../pages/0_intro/Intro";
+import Login from "../pages/1_login/Login";
+import LoginInfo from "../pages/1_login/LoginInfo";
 
-import Main from '../pages/2_main/Main'
-import Music from '../pages/8_music/Music.jsx'
-import MusicResult from '../pages/8_music/MusicResult.jsx'
-import ErrorPage from '../pages/9_errorPage/ErrorPage'
+import Main from "../pages/2_main/Main";
+import Music from "../pages/8_music/Music.jsx";
+import MusicResult from "../pages/8_music/MusicResult.jsx";
+import ErrorPage from "../pages/9_errorPage/ErrorPage";
 
-import Modifydiary from 'pages/3_myDiary/modify/DiaryModify'
-import Creatediary from 'pages/3_myDiary/create/DiaryCreate'
+import Modifydiary from "pages/3_myDiary/modify/DiaryModify";
+import Creatediary from "pages/3_myDiary/create/DiaryCreate";
 // import Diarylist from "../pages/3_myDiary/Diarylist";
-import Diarylist from 'pages/3_myDiary/list/DiaryList'
-import Diarydetial from 'pages/3_myDiary/detail/DiaryDetail'
+import Diarylist from "pages/3_myDiary/list/DiaryList";
+import Diarydetial from "pages/3_myDiary/detail/DiaryDetail";
 
-import MyPage from './../pages/4_myPage/MyPage.jsx'
-import ModifyProfile from './../pages/4_myPage/ModifyProfile.jsx'
-import Alarm from './../pages/10_alarm/Alarm.jsx'
-import Follow from '../pages/5_follow/Follow.jsx'
-import OtherPage from '../pages/6_otherPage/OtherProfile'
+import MyPage from "./../pages/4_myPage/MyPage.jsx";
+import ModifyProfile from "./../pages/4_myPage/ModifyProfile.jsx";
+import Alarm from "./../pages/10_alarm/Alarm.jsx";
+import Follow from "../pages/5_follow/Follow.jsx";
+import OtherPage from "../pages/6_otherPage/OtherProfile";
 
-import OAuth2RedirectHandler from 'pages/1_login/OAuth2RedirectHandler'
+import OAuth2RedirectHandler from "pages/1_login/OAuth2RedirectHandler";
 // import { Pages } from "@mui/icons-material";
 
 function AppRouter() {
   // const [token, setToken] = useState("");
   // let token = getCookie("token");
-  const [token, setToken] = useState(getCookie('token'))
+  const [token, setToken] = useState(getCookie("token"));
 
   return (
     <Routes>
@@ -48,7 +48,7 @@ function AppRouter() {
       <Route
         path="logininfo"
         element={
-          <PrivateRoute component={<LoginInfo />} authenticated={token} />
+          <PrivateRoute component={<ModifyProfile />} authenticated={token} />
         }
       />
       <Route
@@ -173,8 +173,8 @@ function AppRouter() {
         <Route path="/*" element={<ErrorPage text="404" />} />
       </Route>
     </Routes>
-  )
+  );
 }
 
-export default AppRouter
+export default AppRouter;
 //

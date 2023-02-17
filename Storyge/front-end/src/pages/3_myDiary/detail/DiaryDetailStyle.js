@@ -106,6 +106,7 @@ export const ToggleBtnBox = styled.div`
 export const Analyzed = styled.div`
   // border: 1px solid blue;
   margin: 0 10px 10px 10px;
+  color: var(--color-white);
 `;
 
 // 댓글 관련 요소

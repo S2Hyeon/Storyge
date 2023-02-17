@@ -51,7 +51,7 @@ export const googleLogin = async (code) => {
           sameSite: "strict",
         });
       }
-      window.location.href = `http://${CUR_URL}/`;
+      window.location.href = `http://${CUR_URL}/modify`;
     })
     .catch((err) => {
       window.alert("로그인에 실패하였습니다.");
@@ -72,7 +72,7 @@ export const naverLogin = async (code) => {
           sameSite: "strict",
         });
       }
-      window.location.href = `http://${CUR_URL}/`;
+      window.location.href = `http://${CUR_URL}/modify`;
     })
     .catch((err) => {
       window.alert("로그인에 실패하였습니다.");
